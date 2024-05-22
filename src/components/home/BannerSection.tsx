@@ -12,9 +12,9 @@ export default function BannerSection() {
         <Navbar />
         <div className='flex items-center  gap-36'>
           <div className=' w-2/5   text-start mt-0'>
-            <h2 className='text-[64px] font-bold text-blue-900 capitalize  leading-tight'>
+            <h2 className='text-[70px] font-extrabold text-blue-900 capitalize  leading-tight'>
               Transforming <br />
-              Ideas Into {""}
+              Ideas Into{" "}
               <span className='text-blue-900/80'>usable Products</span>
             </h2>
             <p className='text-start  font-normal text-gray-900 mt-0 my-10'>
@@ -23,9 +23,9 @@ export default function BannerSection() {
               brand and drive success.
             </p>
             <Link href='/' className='inline-block'>
-              <button className='group flex items-center p-3  bg-blue-900 text-white rounded-lg transition duration-300'>
+              <button className='group flex items-center py-3 px-6  space-x-3 bg-blue-900 text-white rounded-lg transition duration-300'>
                 <span className='mr-5 capitalize'>let&apos;s talk</span>
-                <div className='bg-gray-50  p-3 rounded-lg'>
+                <div className='bg-gray-50  px-5 py-3 rounded-lg'>
                   <svg
                     width='18'
                     height='19'
@@ -40,11 +40,11 @@ export default function BannerSection() {
             </Link>
           </div>
           <div className='relative py-20'>
-            {/* <div className='p-4 relative rounded-xl bg-white border '> */}
             <div
-              className="relative z-[-1] flex place-items-center before:absolute before:h-[150px] before:-translate-y-[120%] before:rounded-full 
-            before:-translate-x-[19%] before:bg-gradient-radial before:from-orange-500  before:blur-[90px] before:content-[''] before:bg-gradient-to-br before:w-[200px]"
-            >
+              className="relative z-[-1] flex place-items-center   bg-white  before:absolute before:h-[150px] before:translate-y-[47%] before:rounded-full 
+            before:-translate-x-[19%] before:bg-gradient-radial before:from-orange-400  before:blur-[90px] before:content-[''] before:bg-gradient-to-br before:w-[200px]"
+            ></div>
+            <div className='rounded-2xl p-4 border bg-white'>
               <Image
                 src={BannerImage}
                 alt='man with computer'
