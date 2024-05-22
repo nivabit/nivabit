@@ -7,10 +7,10 @@ import HoverCard from "../HoverCard";
 
 export default function BannerSection() {
   return (
-    <div className='h-screen'>
+    <div className='mb-[10rem]'>
       <div>
         <Navbar />
-        <div className='flex items-center  gap-36'>
+        <div className='flex items-center  gap-36 '>
           <div className=' w-2/5   text-start mt-0'>
             <h2 className='text-[70px] font-extrabold text-blue-900 capitalize  leading-tight'>
               Transforming <br />

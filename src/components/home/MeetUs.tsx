@@ -3,7 +3,7 @@ import MeetUsImage from "../../../public/meetus.png";
 
 export default function MeetUs() {
   return (
-    <div className='flex items-center justify-between gap-[8rem]'>
+    <div className='flex items-center justify-between gap-[8rem] mt-10'>
       <div className='w-1/2'>
         <h2 className='text-[50px] font-extrabold leading-tight'>
           Meet Nivabit, Your{" "}
@@ -61,17 +61,8 @@ export default function MeetUs() {
         </ul>
       </div>
       <div className='flex-1 relative'>
-        <div
-          className="flex place-items-center  
-           bg-white  before:absolute 
-           before:h-[150px] before:translate-y-[47%] 
-            before:-translate-x-[19%]  before:content-[''] before:w-[200px]"
-        ></div>
-        <Image
-          src={MeetUsImage}
-          alt='meet us'
-          className='h-[450px] relative z-[-1] '
-        />
+        <div className=' bg-orange-500 absolute h-[150px]  w-[200px]  bottom-[-2rem] right-[-3rem] rounded-2xl -z-10'></div>
+        <Image src={MeetUsImage} alt='meet us' className='h-[450px] ' />
       </div>
     </div>
   );
