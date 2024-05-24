@@ -24,22 +24,22 @@ export default function HoverCard({
     <>
       <div
         className={cn(
-          "group  w-[200px] transition-all duration-300",
+          "group  w-[155px] transition-all duration-300",
           className
         )}
       >
         <Card>
-          <CardHeader className='py-4'>
+          <CardHeader className='py-4 p-[.8rem]'>
             <CardTitle>
               <i className='fill-orange-500 font-medium group-hover:fill-blue-900/50 group-hover:pt-1 transition duration-300'>
                 {icon}
               </i>
             </CardTitle>
-            <CardDescription className='text-orange-500 font-medium group-hover:text-blue-900 group-hover:pt-1 transition-all duration-300'>
+            <CardDescription className='text-orange-500 font-medium group-hover:text-blue-900 group-hover:pt-1 transition-all duration-300 text-xs p-0'>
               {title}
             </CardDescription>
           </CardHeader>
-          <CardContent className='transition-all duration-300'>
+          <CardContent className='transition-all duration-300 p-3'>
             <div className='space-y-2 group-hover:hidden transition-all duration-300'>
               <Skeleton className='h-1 w-[60px] animate-none bg-gray-300' />
               <Skeleton className='h-1 w-[100px] animate-none bg-gray-300' />
