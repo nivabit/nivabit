@@ -22,7 +22,7 @@ export default function Navbar() {
         <NavigationMenu className=''>
           <NavigationMenuList className='flex items-center space-x-10'>
             <NavigationMenuItem>
-              <Link href='#service' legacyBehavior passHref>
+              <Link href='#services' legacyBehavior passHref>
                 <NavigationMenuLink className='capitalize cursor-pointer'>
                   Service
                 </NavigationMenuLink>
@@ -53,10 +53,12 @@ export default function Navbar() {
         </NavigationMenu>
         <Link
           href='/'
-          className='group flex items-center p-3  bg-blue-900 text-white rounded-lg transition duration-300'
+          className='group flex items-center p-2  bg-primary text-white rounded-lg transition duration-300'
         >
-          <span className='mr-5 capitalize'>let&apos;s talk</span>
-          <div className='bg-gray-50  p-3 rounded-lg'>
+          <span className='mr-5  ml-8  justify-self-start capitalize'>
+            let&apos;s talk
+          </span>
+          <div className='bg-gray-50  p-3 rounded-lg  justify-self-end'>
             <svg
               width='18'
               height='19'

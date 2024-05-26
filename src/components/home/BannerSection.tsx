@@ -10,43 +10,50 @@ import Container from "../ui/container";
 export default function BannerSection() {
   return (
     <Container>
-      <div className='h-[85vh]'>
+      <div className='h-[78vh]'>
         <div>
-          <div className='flex items-center  gap-36 '>
+          <div className='flex items-center justify-between'>
             <div className=' w-1/2   text-start mt-0'>
-              <h2 className='text-[70px] font-extrabold text-blue-900 capitalize  leading-tight'>
+              <h2 className='text-[70px] font-extrabold text-primary capitalize  leading-tight'>
                 Transforming <br />
                 Ideas Into{" "}
-                <span className='text-blue-900/80'>usable Products</span>
+                <span className='text-primary opacity-70'>usable Products</span>
               </h2>
               <p className='text-start  font-normal text-gray-900 mt-0 my-10'>
                 Transform your digital aspirations into reality with Nivabit. We
-                specialize in crafting bespoke digital solutions that elevate
-                your brand and drive success.
+                specialize in crafting <br />
+                bespoke digital solutions that elevate your brand and drive
+                success.
               </p>
-              <Link href='/' className='inline-block'>
-                <button className='group flex items-center py-3 px-6  space-x-3 bg-blue-900 text-white rounded-lg transition duration-300'>
-                  <span className='mr-5 capitalize'>let&apos;s talk</span>
-                  <div className='bg-gray-50  px-5 py-3 rounded-lg'>
-                    <svg
-                      width='18'
-                      height='19'
-                      viewBox='0 0 18 19'
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='w-6 h-6 transform transition-transform duration-300 ease-in-out group-hover:rotate-45 fill-red-500'
-                    >
-                      <path d='M17.5822 13.9009V2.11089C17.5822 1.39518 17.1301 0.917856 16.3892 0.917856L4.59917 0.943035C3.90864 0.943035 3.44417 1.45786 3.44417 2.04821C3.44417 2.63804 3.97131 3.14054 4.54881 3.14054H8.29078L14.2672 2.91446L11.9819 4.92339L0.76935 16.1611C0.543814 16.3871 0.418457 16.663 0.418457 16.9271C0.418457 17.5164 0.9456 18.0821 1.5606 18.0821C1.84989 18.0821 2.11346 17.9691 2.33899 17.743L13.5767 6.50536L15.5856 4.23286L15.3595 9.94571V13.9512C15.3595 14.5287 15.862 15.0559 16.4647 15.0559C17.0545 15.0559 17.5822 14.5663 17.5822 13.9009Z' />
-                    </svg>
-                  </div>
-                </button>
+              <Link
+                href='/'
+                className='group inline-flex items-center p-3 bg-primary text-white rounded-lg transition duration-300'
+              >
+                <span
+                  className='mr-5 capitalize ml-8 
+                '
+                >
+                  let&apos;s talk
+                </span>
+                <div className='bg-gray-50  p-3 rounded-lg  justify-self-end'>
+                  <svg
+                    width='18'
+                    height='19'
+                    viewBox='0 0 18 19'
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='w-6 h-6 transform transition-transform duration-300 ease-in-out group-hover:rotate-45 fill-secondary'
+                  >
+                    <path d='M17.5822 13.9009V2.11089C17.5822 1.39518 17.1301 0.917856 16.3892 0.917856L4.59917 0.943035C3.90864 0.943035 3.44417 1.45786 3.44417 2.04821C3.44417 2.63804 3.97131 3.14054 4.54881 3.14054H8.29078L14.2672 2.91446L11.9819 4.92339L0.76935 16.1611C0.543814 16.3871 0.418457 16.663 0.418457 16.9271C0.418457 17.5164 0.9456 18.0821 1.5606 18.0821C1.84989 18.0821 2.11346 17.9691 2.33899 17.743L13.5767 6.50536L15.5856 4.23286L15.3595 9.94571V13.9512C15.3595 14.5287 15.862 15.0559 16.4647 15.0559C17.0545 15.0559 17.5822 14.5663 17.5822 13.9009Z' />
+                  </svg>
+                </div>
               </Link>
             </div>
             <div className='relative py-20'>
               <div
                 className="relative z-[-1] flex place-items-center   bg-white  before:absolute before:h-[150px] before:translate-y-[47%] before:rounded-full 
-            before:-translate-x-[19%] before:bg-gradient-radial before:from-orange-400  before:blur-[90px] before:content-[''] before:bg-gradient-to-br before:w-[200px]"
+            before:-translate-x-[19%] before:bg-gradient-radial before:from-secondary  before:blur-[90px] before:content-[''] before:bg-gradient-to-br before:w-[200px]"
               ></div>
-              <div className='rounded-2xl p-4 border bg-white'>
+              <div className='rounded-2xl p-4 border bg-white mr-24'>
                 <Image
                   src={BannerImage}
                   alt='man with computer'
@@ -67,7 +74,7 @@ export default function BannerSection() {
                 content='Great service without compromising your budget.'
               />
               <HoverCard
-                className='absolute top-[7.5rem] -right-[4.75rem] w-[160px]'
+                className='absolute top-[7.5rem] -right-[0.16rem] w-[160px]'
                 icon={
                   <svg
                     className='group-hover:mt-1 size-6 '
@@ -80,7 +87,7 @@ export default function BannerSection() {
                 content='Prompt service delivery for quick, efficient solutions.'
               />
               <HoverCard
-                className='absolute -right-10  top-[30rem]'
+                className='absolute  right-[2.84rem]  top-[30rem]'
                 icon={
                   <svg
                     className='group-hover:mt-1 size-6 '

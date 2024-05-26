@@ -7,11 +7,14 @@ import Container from "../ui/container";
 export default function MeetUs() {
   return (
     <Container>
-      <div className='flex items-center justify-between gap-[8rem]'>
+      <div
+        className='flex items-center justify-between gap-[8rem] mb-28'
+        id='about-us'
+      >
         <div className='w-1/2'>
           <h2 className='text-[50px] font-extrabold leading-tight'>
             Meet Nivabit, Your{" "}
-            <span className='text-orange-500'>Digital Transformation</span>{" "}
+            <span className='text-secondary'>Digital Transformation</span>{" "}
             Partner
           </h2>
           <p className=' text-left text-gray-500 my-5'>
@@ -25,7 +28,7 @@ export default function MeetUs() {
           <ul className=' list-none space-y-4'>
             <li className='flex items-start space-x-2'>
               <svg
-                className='h-8 w-8 fill-orange-400'
+                className='h-8 w-8 fill-secondary'
                 xmlns='http://www.w3.org/2000/svg'
               >
                 <path d='M30 15.5C30 15.5 22.548 16.702 19.375 19.875C16.202 23.048 15 30.5 15 30.5C15 30.5 14.8068 21.9416 11.25 18.625C8.26697 15.8434 1.61916 15.5377 0.249635 15.5041C0.0879921 15.5028 0 15.5 0 15.5C0 15.5 0.0881032 15.5002 0.249635 15.5041C1.67523 15.5162 8.82949 15.4205 11.875 12.375C15.2658 8.98416 15 0.5 15 0.5C15 0.5 15.4754 8.47535 18.75 11.75C22.0246 15.0246 30 15.5 30 15.5Z' />
@@ -34,7 +37,7 @@ export default function MeetUs() {
             </li>
             <li className='flex items-center space-x-2'>
               <svg
-                className='h-8 w-8 fill-orange-400'
+                className='h-8 w-8 fill-secondary'
                 xmlns='http://www.w3.org/2000/svg'
               >
                 <path d='M30 15.5C30 15.5 22.548 16.702 19.375 19.875C16.202 23.048 15 30.5 15 30.5C15 30.5 14.8068 21.9416 11.25 18.625C8.26697 15.8434 1.61916 15.5377 0.249635 15.5041C0.0879921 15.5028 0 15.5 0 15.5C0 15.5 0.0881032 15.5002 0.249635 15.5041C1.67523 15.5162 8.82949 15.4205 11.875 12.375C15.2658 8.98416 15 0.5 15 0.5C15 0.5 15.4754 8.47535 18.75 11.75C22.0246 15.0246 30 15.5 30 15.5Z' />
@@ -45,7 +48,7 @@ export default function MeetUs() {
             </li>
             <li className='flex items-center space-x-2'>
               <svg
-                className='h-8 w-8 fill-orange-400'
+                className='h-8 w-8 fill-secondary'
                 xmlns='http://www.w3.org/2000/svg'
               >
                 <path d='M30 15.5C30 15.5 22.548 16.702 19.375 19.875C16.202 23.048 15 30.5 15 30.5C15 30.5 14.8068 21.9416 11.25 18.625C8.26697 15.8434 1.61916 15.5377 0.249635 15.5041C0.0879921 15.5028 0 15.5 0 15.5C0 15.5 0.0881032 15.5002 0.249635 15.5041C1.67523 15.5162 8.82949 15.4205 11.875 12.375C15.2658 8.98416 15 0.5 15 0.5C15 0.5 15.4754 8.47535 18.75 11.75C22.0246 15.0246 30 15.5 30 15.5Z' />
@@ -56,7 +59,7 @@ export default function MeetUs() {
             </li>
             <li className='flex items-center space-x-2'>
               <svg
-                className='h-8 w-8 fill-orange-400'
+                className='h-8 w-8 fill-secondary'
                 xmlns='http://www.w3.org/2000/svg'
               >
                 <path d='M30 15.5C30 15.5 22.548 16.702 19.375 19.875C16.202 23.048 15 30.5 15 30.5C15 30.5 14.8068 21.9416 11.25 18.625C8.26697 15.8434 1.61916 15.5377 0.249635 15.5041C0.0879921 15.5028 0 15.5 0 15.5C0 15.5 0.0881032 15.5002 0.249635 15.5041C1.67523 15.5162 8.82949 15.4205 11.875 12.375C15.2658 8.98416 15 0.5 15 0.5C15 0.5 15.4754 8.47535 18.75 11.75C22.0246 15.0246 30 15.5 30 15.5Z' />
@@ -68,7 +71,7 @@ export default function MeetUs() {
           </ul>
         </div>
         <div className='flex-1 relative'>
-          <div className=' bg-orange-500 absolute h-[150px]  w-[200px]  bottom-[-2rem] right-[-3rem] rounded-2xl -z-10'></div>
+          <div className=' bg-orange-500 absolute h-[150px]  w-[200px]  bottom-[-2rem] right-0 rounded-2xl -z-10'></div>
           <Image src={MeetUsImage} alt='meet us' className='h-[450px] ' />
         </div>
       </div>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import {
@@ -31,11 +30,11 @@ export default function HoverCard({
         <Card>
           <CardHeader className='py-4 p-[.8rem]'>
             <CardTitle>
-              <i className='fill-orange-500 font-medium group-hover:fill-blue-900/50 group-hover:pt-1 transition duration-300'>
+              <i className='fill-orange-500 font-medium group-hover:fill-primary/50 group-hover:pt-1 transition duration-300'>
                 {icon}
               </i>
             </CardTitle>
-            <CardDescription className='text-orange-500 font-medium group-hover:text-blue-900 group-hover:pt-1 transition-all duration-300 text-xs p-0'>
+            <CardDescription className='text-secondary font-medium group-hover:text-primary group-hover:pt-1 transition-all duration-300 text-xs p-0'>
               {title}
             </CardDescription>
           </CardHeader>

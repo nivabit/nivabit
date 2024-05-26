@@ -127,34 +127,41 @@ const services: {
 export default function Services() {
   return (
     <Container>
-      <div className='flex flex-col items-center justify-center gap-28 '>
+      <div
+        className='flex flex-col items-center justify-center gap-28 '
+        id='services'
+      >
         <div className='text-center space-y-4 w-3/5'>
           <h2 className='text-[50px] font-extrabold leading-tight text-center'>
             Elevate Your Digital Presence - Explore
-            <span className='text-orange-500'>Our Services</span>{" "}
+            <span className='text-secondary'>Our Services</span>{" "}
           </h2>
           <p className='text-md text-gray-700'>
             We offer a range of digital solutions tailored to your business
             needs.
           </p>
         </div>
-        <div className='flex flex-wrap gap-x-3 gap-y-10 items-center justify-center w-full'>
+        <div className='flex flex-wrap gap-x-4 gap-y-16 items-center justify-center w-full'>
           {services.map((service, index) => (
             <div
               className={`group  ${
                 service.size === "full"
-                  ? " basis-full md:basis-[49.5%]"
-                  : " basis-full md:basis-[32.7%]"
+                  ? " basis-full md:basis-[48.5%]"
+                  : " basis-full md:basis-[31.7%]"
               } `}
               key={index}
             >
-              <Card className='hover:bg-blue-900 rounded-tl-none   rounded-tr-none   border border-t-0  shadow-sm group-hover:rounded-md transition-all duration-500 relative'>
+              <Card
+                className={`hover:bg-primary rounded-tl-none shadow-none   rounded-tr-none   border border-t-0  group-hover:shadow-sm group-hover:rounded-md transition-all duration-500 relative ${
+                  service.size === "full" && "border-0"
+                }`}
+              >
                 <CardHeader
-                  className='fill-blue-800
-                 stroke-gray-50 group-hover:stroke-blue-800 group-hover:fill-gray-50'
+                  className='fill-primary
+                 stroke-gray-50 group-hover:stroke-primary group-hover:fill-gray-50'
                 >
                   <CardTitle className=' mb-4'>
-                    <div className='bg-blue-800 h-16 w-16 group-hover:bg-gray-50 rounded-md flex items-center justify-between pl-[1.2rem] pt-[.3rem] relative'>
+                    <div className='bg-primary h-16 w-16 group-hover:bg-gray-50 rounded-md flex items-center justify-between pl-[1.2rem] pt-[.3rem] relative'>
                       {service.icon("size-8")}
                     </div>
                     <div className='hidden group-hover:block absolute right-0 top-1'>
@@ -165,7 +172,7 @@ export default function Services() {
                         <path
                           opacity='0.3'
                           d='M170.667 80C170.667 80 128.439 86.8113 110.458 104.792C92.4778 122.772 85.6665 165 85.6665 165C85.6665 165 84.5718 116.502 64.4165 97.7083C47.5127 81.9461 9.84177 80.2135 2.0811 80.0234C1.16513 80.0156 0.666504 80 0.666504 80C0.666504 80 1.16575 80.001 2.0811 80.0234C10.1594 80.0919 50.7003 79.5496 67.9582 62.2917C87.1729 43.0769 85.6665 -5 85.6665 -5C85.6665 -5 88.3602 40.1937 106.917 58.75C125.473 77.3063 170.667 80 170.667 80Z'
-                          className='fill-blue-400/95'
+                          className='fill-muted'
                         />
                       </svg>
                     </div>

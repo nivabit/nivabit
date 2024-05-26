@@ -4,6 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layouts/Navbar";
 import Container from "@/components/ui/container";
+import { Toaster } from "@/components/ui/sonner";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,10 +22,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html
+      lang='en'
+      className='scroll-smooth animate-out'
+      suppressHydrationWarning
+    >
       <body
         className={cn(
-          "min-h-screen font-sans selection:text-gray-50 selection:bg-blue-900",
+          "min-h-screen font-sans selection:text-gray-50 selection:bg-primary ",
           fontSans.variable
         )}
       >
@@ -32,6 +37,7 @@ export default function RootLayout({
           <Navbar />
         </Container>
         {children}
+        <Toaster />
       </body>
     </html>
   );
