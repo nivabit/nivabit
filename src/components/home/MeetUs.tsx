@@ -71,7 +71,7 @@ export default function MeetUs() {
           </ul>
         </div>
         <div className='flex-1 relative'>
-          <div className=' bg-orange-500 absolute h-[150px]  w-[200px]  bottom-[-2rem] right-0 rounded-2xl -z-10'></div>
+          <div className=' bg-secondary absolute h-[150px]  w-[200px]  bottom-[-2rem] right-0 rounded-2xl -z-10'></div>
           <Image src={MeetUsImage} alt='meet us' className='h-[450px] ' />
         </div>
       </div>

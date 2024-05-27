@@ -141,7 +141,7 @@ export default function Services() {
             needs.
           </p>
         </div>
-        <div className='flex flex-wrap gap-x-4 gap-y-16 items-center justify-center w-full'>
+        <div className='flex flex-wrap gap-x-3 gap-y-6 items-center justify-center w-full'>
           {services.map((service, index) => (
             <div
               className={`group  ${
@@ -179,7 +179,7 @@ export default function Services() {
                   </CardTitle>
                   <CardDescription className='text-md text-gray-900 group-hover:text-gray-50 flex flex-col gap-2 text-xl font-extrabold'>
                     {service.title}
-                    <Skeleton className='h-1 w-[80px] bg-orange-500 group-hover:w-0 transition-all duration-500 animate-none' />
+                    <Skeleton className='h-1 w-[80px] bg-secondary group-hover:w-0 transition-all duration-500 animate-none' />
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -192,7 +192,7 @@ export default function Services() {
                     href={"/#contact"}
                     className='text-gray-900 group-hover:text-gray-50 capitalize'
                   >
-                    <span>let&apos;s talk</span>
+                    <span className='font-semibold'>let&apos;s talk</span>
                   </Link>
                   <Link
                     href={"/#contact"}

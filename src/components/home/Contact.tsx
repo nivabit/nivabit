@@ -32,6 +32,7 @@ const ContactSchema = z.object({
     .string()
     .min(2, { message: " Company name must be at least 2 characters" }),
   companyEmail: z.string({ message: "Company email is required" }).email(),
+  message: z.string().optional(),
 });
 
 export function ContactForm() {
@@ -59,7 +60,7 @@ export function ContactForm() {
             name='firstName'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First Name</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder='John' {...field} className='p-6 w-full' />
                 </FormControl>
@@ -72,7 +73,7 @@ export function ContactForm() {
             name='lastName'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Last Name</FormLabel>
+                <FormLabel className='invisible'>Last Name</FormLabel>
                 <FormControl>
                   <Input
                     placeholder='Suleiman'
@@ -123,10 +124,23 @@ export function ContactForm() {
             )}
           />
         </div>
-        <Textarea
-          placeholder='Type your message here.'
-          className='min-h-[87px]'
+        <FormField
+          control={form.control}
+          name='message'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Message</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder='Type your message here.'
+                  className='min-h-[87px]'
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
+
         <button className='group flex items-center p-3 bg-primary text-white rounded-lg transition duration-300'>
           <span className='mr-5 capitalize ml-8'>Send</span>
           <div className='bg-gray-50  px-4 py-3 rounded-lg'>
@@ -189,7 +203,7 @@ export default function Contact() {
         </div>
         <div className='text-left space-y-10'>
           <div className='space-y-4'>
-            <p className='text-gray-700'>Choose a Service</p>
+            <p className='text-gray-900 font-semibold pb-6'>Choose a Service</p>
             <div className='flex flex-wrap gap-x-4 gap-y-8'>
               {serviceList.map((service) => (
                 <div key={service.index}>

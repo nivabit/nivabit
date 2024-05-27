@@ -76,7 +76,7 @@ export function PortfolioCard({
         <Card className=' shadow-none border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md'>
           <CardHeader className=''>
             <CardTitle className='mb-4'>{title}</CardTitle>
-            <CardDescription className='group-hover:text-gray-800 '>
+            <CardDescription className='text-gray-900 '>
               {description}
             </CardDescription>
           </CardHeader>

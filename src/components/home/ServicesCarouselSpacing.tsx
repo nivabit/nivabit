@@ -40,7 +40,7 @@ export default function ServicesCarouselSpacing() {
                 <Card className='rounded-lg border-none bg-transparent text-card-foreground shadow-sm'>
                   <CardContent className='flex items-center justify-center p-2 h-[100px] w-full space-x-4'>
                     <svg
-                      className='size-[30px] fill-orange-500'
+                      className='size-[30px] fill-secondary'
                       fill='none'
                       xmlns='http://www.w3.org/2000/svg'
                     >

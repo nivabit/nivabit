@@ -30,7 +30,7 @@ export default function HoverCard({
         <Card>
           <CardHeader className='py-4 p-[.8rem]'>
             <CardTitle>
-              <i className='fill-orange-500 font-medium group-hover:fill-primary/50 group-hover:pt-1 transition duration-300'>
+              <i className='fill-secondary font-medium group-hover:fill-primary group-hover:pt-1 transition duration-300'>
                 {icon}
               </i>
             </CardTitle>
