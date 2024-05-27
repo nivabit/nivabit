@@ -186,11 +186,11 @@ export default function Contact() {
         className='grid grid-cols-2 items-start gap-20 mb-28'
         id='contact-us'
       >
-        <div className='space-y-8 '>
-          <h2 className='text-gray-gray-900 text-[45px] font-extrabold leading-tight capitalize text-left'>
+        <div className=''>
+          <h2 className='text-gray-gray-900 text-[45px] font-extrabold leading-tight capitalize text-left mb-4'>
             get in touch
           </h2>
-          <p className='text-gray-700 text-left first-letter:uppercase'>
+          <p className='text-gray-700 text-left first-letter:uppercase mb-10'>
             Ready to take the next step? Have questions about our services?
             We&apos;re here to help. Let&apos;s start building something
             incredible together.
@@ -198,7 +198,7 @@ export default function Contact() {
           <Image
             src={ContactImage}
             alt='two people discussing'
-            className='w-full  h-96 object-cover rounded-md'
+            className='w-full  h-auto object-cover rounded-md mt-5'
           />
         </div>
         <div className='text-left space-y-10'>
