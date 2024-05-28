@@ -10,10 +10,10 @@ import Container from "../ui/container";
 export default function BannerSection() {
   return (
     <Container>
-      <div className='h-[78vh]'>
+      <div className='max-h-[78vh] min-h-[90vh]'>
         <div>
-          <div className='flex items-center justify-between'>
-            <div className=' w-1/2   text-start mt-0'>
+          <div className='flex flex-col md:flex-row items-center justify-between'>
+            <div className=' w-full md:w-1/2   text-start mt-0'>
               <h2 className='text-[70px] font-extrabold text-primary capitalize  leading-tight'>
                 Transforming <br />
                 Ideas Into{" "}
@@ -95,7 +95,7 @@ export default function BannerSection() {
                   >
                     <path
                       d='M2.5091 14.9015C2.66617 14.8618 2.83063 14.8408 3 14.8408C4.10457 14.8408 5 15.7362 5 16.8408V18.8408C5 19.9454 4.10457 20.8408 3 20.8408C1.89543 20.8408 1 19.9454 1 18.8408V16.8408C1 15.9056 1.64187 15.1203 2.5091 14.9015ZM2.5091 14.9015L2.39658 14.1514C1.61838 8.9633 5.10139 4.09509 10.2629 3.15664C11.4115 2.94779 12.5885 2.94779 13.7371 3.15664C18.8986 4.09509 22.3816 8.9633 21.6034 14.1514L21.4909 14.9015M21.4909 14.9015C21.3338 14.8618 21.1694 14.8408 21 14.8408C19.8954 14.8408 19 15.7362 19 16.8408V18.8408C19 19.9454 19.8954 20.8408 21 20.8408C22.1046 20.8408 23 19.9454 23 18.8408V16.8408C23 15.9056 22.3581 15.1203 21.4909 14.9015Z'
-                      stroke-width='1.5'
+                      strokeWidth='1.5'
                     />
                   </svg>
                 }

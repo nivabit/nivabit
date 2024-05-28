@@ -127,7 +127,7 @@ export default function Portfolio() {
   return (
     <Container>
       <div className='mb-48' id='portfolio'>
-        <div className='grid  grid-cols-2 justify-between gap-10'>
+        <div className='grid  grid-cols-1 md:grid-cols-2 justify-between gap-10'>
           <h2 className='text-[50px] font-extrabold leading-snug text-left'>
             Take a Glimpse Into
             <span className='text-secondary'>What&apos;s Possible</span> With
@@ -140,7 +140,7 @@ export default function Portfolio() {
             exceptional results we&apos;ve achieved.
           </p>
         </div>
-        <div className='grid grid-cols-2 justify-between items-center gap-x-4 gap-y-8 mt-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-x-4 gap-y-8 mt-8'>
           {portfolios.map(({ title, description, url, image, tags }, index) => (
             <PortfolioCard
               title={title}

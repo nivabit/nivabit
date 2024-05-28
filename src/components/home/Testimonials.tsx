@@ -81,7 +81,7 @@ export default function Testimonials() {
     <Container>
       <div className=' mb-48 flex flex-col gap-16'>
         <div className=''>
-          <div className='flex items-center justify-start text-start'>
+          <div className='flex flex-col md:flex-row items-center justify-start text-start'>
             <h2 className='text-[50px] font-extrabold leading-snug text-left'>
               <span className='text-secondary '>Quotes </span>
               From Satisfied Clients Highlighting Their Experience
@@ -101,7 +101,10 @@ export default function Testimonials() {
           <CarouselContent className='flex items-center gap-5'>
             {CustomerQuotes.map(
               ({ name, position, description, company, image }, index) => (
-                <CarouselItem key={index} className=' basis-[25%]'>
+                <CarouselItem
+                  key={index}
+                  className=' basis-full md:basis-[25%]'
+                >
                   <Card
                     className='bg-accent border shadow-sm rounded-md transition-all duration-500 relative'
                     key={index}

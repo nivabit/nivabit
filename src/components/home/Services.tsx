@@ -131,7 +131,7 @@ export default function Services() {
         className='flex flex-col items-center justify-center gap-28 '
         id='services'
       >
-        <div className='text-center space-y-4 w-3/5'>
+        <div className='text-center space-y-4 md:w-3/5'>
           <h2 className='text-[50px] font-extrabold leading-tight text-center'>
             Elevate Your Digital Presence - Explore
             <span className='text-secondary'>Our Services</span>{" "}

@@ -8,10 +8,10 @@ export default function MeetUs() {
   return (
     <Container>
       <div
-        className='flex items-center justify-between gap-[8rem] mb-28'
+        className='flex  flex-col md:flex-row items-center justify-between gap-[8rem] mb-28'
         id='about-us'
       >
-        <div className='w-1/2'>
+        <div className='w-full md:w-1/2'>
           <h2 className='text-[50px] font-extrabold leading-tight'>
             Meet Nivabit, Your{" "}
             <span className='text-secondary'>Digital Transformation</span>{" "}
@@ -70,9 +70,8 @@ export default function MeetUs() {
             </li>
           </ul>
         </div>
-        <div className='flex-1 relative'>
-          <div className=' bg-secondary absolute h-[150px]  w-[200px]  bottom-[-2rem] right-0 rounded-2xl -z-10'></div>
-          <Image src={MeetUsImage} alt='meet us' className='h-[450px] ' />
+        <div className='flex-1 relative items-center justify-center bg-[url("/meetus.png")] h-[450px] w-full'>
+          <div className='bg-secondary absolute h-[150px]  w-[200px] bottom-[-2rem] -right-[56px] rounded-2xl -z-40 '></div>
         </div>
       </div>
     </Container>

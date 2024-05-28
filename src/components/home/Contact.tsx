@@ -183,10 +183,10 @@ export default function Contact() {
   return (
     <Container>
       <div
-        className='grid grid-cols-2 items-start gap-20 mb-28'
+        className='grid grid-cols-1 md:grid-cols-2 items-start justify-stretch gap-20 mb-28'
         id='contact-us'
       >
-        <div className=''>
+        <div className='h-full'>
           <h2 className='text-gray-gray-900 text-[45px] font-extrabold leading-tight capitalize text-left mb-4'>
             get in touch
           </h2>
@@ -198,7 +198,7 @@ export default function Contact() {
           <Image
             src={ContactImage}
             alt='two people discussing'
-            className='w-full  h-auto object-cover rounded-md mt-5'
+            className='w-full auto object-cover rounded-md mt-5'
           />
         </div>
         <div className='text-left space-y-10'>
