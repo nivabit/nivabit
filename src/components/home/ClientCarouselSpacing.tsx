@@ -48,7 +48,7 @@ export default function ClientCarouselSpacing() {
               className='pl-1 md:basis-1/2 lg:basis-[30%]'
             >
               <div className=''>
-                <Card className='border-none bg-transparent text-card-foreground shadow-none m-0  rounded-none'>
+                <Card className='border-none bg-white text-card-foreground shadow-none m-0  rounded-none'>
                   <CardContent
                     className='flex items-center justify-center
                   h-[100px] w-full space-x-4 p-6 shadow-none'

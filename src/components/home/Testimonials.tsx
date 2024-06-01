@@ -133,7 +133,7 @@ export default function Testimonials() {
                         </div>
                       </CardTitle>
                       <CardDescription className='flex flex-col gap-2'>
-                        <h3 className=' font-normal text-lg text-gray-700 text-left capitalize'>
+                        <h3 className=' font-normal text-lg text-gray-900 text-left capitalize'>
                           {name}
                         </h3>
                         <h3 className='font-normal text-lg text-primary text-left capitalize'>

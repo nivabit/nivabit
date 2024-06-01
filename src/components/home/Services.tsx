@@ -133,7 +133,8 @@ export default function Services() {
       >
         <div className='text-center space-y-4 md:w-3/5'>
           <h2 className='text-[50px] font-extrabold leading-tight text-center'>
-            Elevate Your Digital Presence - Explore
+            Elevate Your Digital Presence - Explore{" "}
+            
             <span className='text-secondary'>Our Services</span>{" "}
           </h2>
           <p className='text-md text-gray-700'>
