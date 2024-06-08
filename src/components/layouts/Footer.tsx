@@ -26,7 +26,7 @@ export default function Navbar() {
               incredible together.
             </p>
             <div className='flex items-center justify-start space-x-4'>
-              <Link href={"/"} className='p-3 bg-gray-50 rounded-md'>
+              <Link href={"/"} className='p-3 bg-gray-50 rounded-2xl'>
                 <svg
                   strokeLinecap='round'
                   strokeLinejoin='round'
@@ -46,7 +46,7 @@ export default function Navbar() {
                   </defs>
                 </svg>
               </Link>
-              <Link href={"/"} className='p-3 bg-gray-50 rounded-md'>
+              <Link href={"/"} className='p-3 bg-gray-50 rounded-2xl'>
                 <svg
                   strokeLinecap='round'
                   strokeLinejoin='round'
@@ -66,7 +66,7 @@ export default function Navbar() {
                   </defs>
                 </svg>
               </Link>
-              <Link href={"/"} className='p-3 bg-gray-50 rounded-md'>
+              <Link href={"/"} className='p-3 bg-gray-50 rounded-2xl'>
                 <svg
                   strokeWidth='2'
                   strokeLinecap='round'
@@ -142,13 +142,13 @@ export default function Navbar() {
             </p>
             <div className='flex flex-col items-start space-y-3'>
               <Link href='lorem' className='flex items-center space-x-4'>
-                <span className='p-3 bg-gray-50 rounded-md'>
+                <span className='p-3 bg-gray-50 rounded-2xl'>
                   <Mail className='fill-secondary size-4' />
                 </span>
                 <span className='opacity-80 '>Groupnivabit@gmail.com</span>
               </Link>
               <Link href='lorem' className='flex items-center space-x-3'>
-                <span className='p-3 bg-gray-50 rounded-md'>
+                <span className='p-3 bg-gray-50 rounded-2xl'>
                   <Phone className='fill-secondary size-4' />
                 </span>
                 <span className='opacity-80 '>+2349071133025</span>

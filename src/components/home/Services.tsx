@@ -134,7 +134,6 @@ export default function Services() {
         <div className='text-center space-y-4 md:w-3/5'>
           <h2 className='text-[50px] font-extrabold leading-tight text-center'>
             Elevate Your Digital Presence - Explore{" "}
-            
             <span className='text-secondary'>Our Services</span>{" "}
           </h2>
           <p className='text-md text-gray-700'>
@@ -153,7 +152,7 @@ export default function Services() {
               key={index}
             >
               <Card
-                className={`hover:bg-primary rounded-tl-none shadow-none   rounded-tr-none   border border-t-0  group-hover:shadow-sm group-hover:rounded-md transition-all duration-500 relative ${
+                className={`hover:bg-primary rounded-tl-none shadow-none   rounded-tr-none   border border-t-0  group-hover:shadow-sm group-hover:rounded-2xl transition-all duration-500 relative ${
                   service.size === "full" && "border-0"
                 }`}
               >
@@ -162,7 +161,7 @@ export default function Services() {
                  stroke-gray-50 group-hover:stroke-primary group-hover:fill-gray-50'
                 >
                   <CardTitle className=' mb-4'>
-                    <div className='bg-primary h-16 w-16 group-hover:bg-gray-50 rounded-md flex items-center justify-between pl-[1.2rem] pt-[.3rem] relative'>
+                    <div className='bg-primary h-16 w-16 group-hover:bg-gray-50 rounded-2xl flex items-center justify-between pl-[1.2rem] pt-[.3rem] relative'>
                       {service.icon("size-8")}
                     </div>
                     <div className='hidden group-hover:block absolute right-0 top-1'>
@@ -199,7 +198,7 @@ export default function Services() {
                     href={"/#contact"}
                     className=' group flex items-center justify-center text-center'
                   >
-                    <span className='bg-transparent group-hover:bg-gray-50 p-3 rounded-md flex items-center justify-between'>
+                    <span className='bg-transparent group-hover:bg-gray-50 p-3 rounded-xl flex items-center justify-between'>
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         className='w-6 h-5 transform  group-hover:rotate-45 fill-gray-900 mt-2'

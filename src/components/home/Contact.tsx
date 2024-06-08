@@ -141,9 +141,9 @@ export function ContactForm() {
           )}
         />
 
-        <button className='group flex items-center p-3 bg-primary text-white rounded-lg transition duration-300'>
+        <button className='group flex items-center p-2 bg-primary text-white rounded-2xl transition duration-300'>
           <span className='mr-5 capitalize ml-8'>Send</span>
-          <div className='bg-gray-50  px-4 py-3 rounded-lg'>
+          <div className='bg-gray-50  px-4 py-3 rounded-2xl'>
             <svg
               width='18'
               height='19'
@@ -198,7 +198,7 @@ export default function Contact() {
           <Image
             src={ContactImage}
             alt='two people discussing'
-            className='w-full auto object-cover rounded-md mt-5'
+            className='w-full auto object-cover rounded-2xl mt-5'
           />
         </div>
         <div className='text-left space-y-10'>
@@ -209,7 +209,7 @@ export default function Contact() {
                 <div key={service.index}>
                   <label
                     htmlFor={String(service.index)}
-                    className={`py-3 px-3 rounded-md cursor-pointer capitalize ${
+                    className={`py-3 px-3 rounded-2xl cursor-pointer capitalize ${
                       service.check
                         ? "border border-transparent bg-primary text-gray-50 "
                         : "border border-gray-400 text-gray-400"

@@ -27,7 +27,7 @@ export default function HoverCard({
           className
         )}
       >
-        <Card>
+        <Card className='rounded-2xl'>
           <CardHeader className='py-4 p-[.8rem]'>
             <CardTitle>
               <i className='fill-secondary font-medium group-hover:fill-primary group-hover:pt-1 transition duration-300'>

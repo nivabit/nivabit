@@ -27,7 +27,7 @@ export default function BannerSection() {
               </p>
               <Link
                 href='/'
-                className='group inline-flex items-center p-3 bg-primary text-white rounded-lg transition duration-300'
+                className='group inline-flex items-center p-2 bg-primary text-white rounded-2xl transition duration-300'
               >
                 <span
                   className='mr-5 capitalize ml-8 
@@ -35,7 +35,7 @@ export default function BannerSection() {
                 >
                   let&apos;s talk
                 </span>
-                <div className='bg-gray-50  p-3 rounded-lg  justify-self-end'>
+                <div className='bg-gray-50  p-3 rounded-2xl  justify-self-end'>
                   <svg
                     width='18'
                     height='19'

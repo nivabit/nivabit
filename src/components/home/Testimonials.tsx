@@ -106,7 +106,7 @@ export default function Testimonials() {
                   className=' basis-full md:basis-[25%]'
                 >
                   <Card
-                    className='bg-accent border shadow-sm rounded-md transition-all duration-500 relative'
+                    className='bg-accent border shadow-sm rounded-2xl transition-all duration-500 relative'
                     key={index}
                   >
                     <CardHeader>
@@ -115,7 +115,7 @@ export default function Testimonials() {
                           <Image
                             src={image ?? SampleImage}
                             alt={name}
-                            className='h-16 w-16 rounded-md shadow-md border'
+                            className='h-16 w-16 rounded-2xl shadow-md border'
                           />
                         </div>
                         <div className='absolute -right-4 top-6'>
@@ -133,7 +133,7 @@ export default function Testimonials() {
                         </div>
                       </CardTitle>
                       <CardDescription className='flex flex-col gap-2'>
-                        <h3 className=' font-normal text-lg text-gray-900 text-left capitalize'>
+                        <h3 className=' font-semibold text-lg text-gray-900 text-left capitalize'>
                           {name}
                         </h3>
                         <h3 className='font-normal text-lg text-primary text-left capitalize'>
@@ -153,7 +153,7 @@ export default function Testimonials() {
             )}
           </CarouselContent>
           <CarouselPrevious
-            className={`absolute transition-colors border border-primary duration-300 left-[88rem] top-[-100px] rounded-md h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 left-[88rem] top-[-100px] rounded-2xl h-12 w-12 ${
               preActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {
@@ -171,7 +171,7 @@ export default function Testimonials() {
             </svg>
           </CarouselPrevious>
           <CarouselNext
-            className={`absolute transition-colors border border-primary duration-300 -right-0 top-[-33%]  rounded-md h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 -right-0 top-[-33%]  rounded-2xl h-12 w-12 ${
               nextActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {

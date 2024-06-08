@@ -53,7 +53,7 @@ export default function Navbar() {
         </NavigationMenu>
         <Link
           href='/'
-          className='group flex items-center p-2  bg-primary text-white rounded-lg transition duration-300'
+          className='group flex items-center p-2  bg-primary text-white rounded-2xl transition duration-300'
         >
           <span className='mr-5  ml-8  justify-self-start capitalize'>
             let&apos;s talk

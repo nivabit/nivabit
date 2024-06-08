@@ -72,11 +72,11 @@ export function PortfolioCard({
 }) {
   return (
     <div className='group '>
-      <div className='group-hover:p-2 group-hover:bg-white rounded-md p-2 bg-transparent group-hover:shadow-md group-hover:rounded-md'>
-        <Card className=' shadow-none border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md'>
+      <div className='group-hover:p-2 group-hover:bg-white rounded-2xl p-2 bg-transparent group-hover:shadow-md group-hover:rounded-2xl'>
+        <Card className=' shadow-none border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md rounded-2xl'>
           <CardHeader className=''>
             <CardTitle className='mb-4'>{title}</CardTitle>
-            <CardDescription className='text-gray-900 '>
+            <CardDescription className='text-gray-900 w-2/3 '>
               {description}
             </CardDescription>
           </CardHeader>
@@ -95,7 +95,7 @@ export function PortfolioCard({
               <Image
                 src={image}
                 alt={title}
-                className='w-full  h-64 object-cover rounded-md'
+                className='w-full  h-64 object-cover rounded-2xl'
               />
             </div>
           </CardContent>
@@ -107,7 +107,7 @@ export function PortfolioCard({
               href={url}
               className=' group flex items-center justify-center text-center'
             >
-              <span className='bg-transparent group-hover:bg-gray-50 p-3 rounded-md flex items-center justify-between'>
+              <span className='bg-transparent group-hover:bg-gray-50 p-3 rounded-2xl flex items-center justify-between'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   className='w-6 h-5 transform  group-hover:rotate-45 fill-gray-900 mt-2'
@@ -126,7 +126,7 @@ export function PortfolioCard({
 export default function Portfolio() {
   return (
     <Container>
-      <div className='mb-48' id='portfolio'>
+      <div className='mb-48 space-y-32' id='portfolio'>
         <div className='grid  grid-cols-1 md:grid-cols-2 justify-between gap-10'>
           <h2 className='text-[50px] font-extrabold leading-snug text-left'>
             Take a Glimpse Into
