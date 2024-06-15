@@ -6,7 +6,6 @@ import Navbar from "@/components/layouts/Navbar";
 import Container from "@/components/ui/container";
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/layouts/Footer";
-
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -35,7 +34,7 @@ export default function RootLayout({
     >
       <body
         className={cn(
-          "min-h-screen font-sans selection:text-gray-50 selection:bg-primary ",
+          "min-h-screen font-sans selection:text-gray-50 selection:bg-primary",
           fontSans.variable,
           grotesk.variable
         )}

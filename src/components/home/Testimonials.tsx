@@ -79,10 +79,10 @@ export default function Testimonials() {
   const [nextActive, setNextActive] = useState(true);
   return (
     <Container>
-      <div className=' mb-48 flex flex-col gap-16'>
+      <div className='mb-48 flex flex-col gap-16'>
         <div className=''>
-          <div className='flex flex-col md:flex-row items-center justify-start text-start'>
-            <h2 className='text-[50px] font-extrabold leading-snug text-left'>
+          <div className='flex flex-col lg:flex-row lg:gap-0 gap-6  items-center justify-start text-start'>
+            <h2 className='lg:text-[50px] md:text-[45px]  text-[30px] font-extrabold leading-snug text-left'>
               <span className='text-secondary '>Quotes </span>
               From Satisfied Clients Highlighting Their Experience
             </h2>
@@ -103,7 +103,7 @@ export default function Testimonials() {
               ({ name, position, description, company, image }, index) => (
                 <CarouselItem
                   key={index}
-                  className=' basis-full md:basis-[25%]'
+                  className=' basis-full  md:basis-[50%] lg:basis-[25%]'
                 >
                   <Card
                     className='bg-accent border shadow-sm rounded-2xl transition-all duration-500 relative'
@@ -153,7 +153,7 @@ export default function Testimonials() {
             )}
           </CarouselContent>
           <CarouselPrevious
-            className={`absolute transition-colors border border-primary duration-300 left-[88rem] top-[-100px] rounded-2xl h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 left-[19rem] md:left-[38rem] -top-[22%] lg:left-[80rem]  lg:top-[-90px] rounded-2xl h-12 w-12 ${
               preActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {
@@ -171,7 +171,7 @@ export default function Testimonials() {
             </svg>
           </CarouselPrevious>
           <CarouselNext
-            className={`absolute transition-colors border border-primary duration-300 -right-0 top-[-33%]  rounded-2xl h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 lg:right-[8%] md:right-[0%] lg:-top-[31%]  -top-[22%] right-[66px] rounded-2xl h-12 w-12 ${
               nextActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {

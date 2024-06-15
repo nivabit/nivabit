@@ -10,11 +10,11 @@ import Container from "../ui/container";
 export default function BannerSection() {
   return (
     <Container>
-      <div className='max-h-[78vh] min-h-[90vh]'>
+      <div className='min-h-screen max-h-[70vh]  lg:min-h-0  '>
         <div>
-          <div className='flex flex-col md:flex-row items-center justify-between'>
-            <div className=' w-full md:w-1/2   text-start mt-0'>
-              <h2 className='text-[70px] font-extrabold text-primary capitalize  leading-tight'>
+          <div className='flex   flex-col-reverse lg:flex-row items-center justify-between sm:gap-20 md:gap-6'>
+            <div className='flex  flex-col items-start md:block  space-y-5 w-full lg:w-1/2  text-start mt-0 md:mb-20'>
+              <h2 className=' text-[35px] md:text-[50px] lg:text-[70px]   font-extrabold text-primary capitalize  leading-tight'>
                 Transforming <br />
                 Ideas Into{" "}
                 <span className='text-primary opacity-70'>usable Products</span>
@@ -48,20 +48,20 @@ export default function BannerSection() {
                 </div>
               </Link>
             </div>
-            <div className='relative py-20'>
+            <div className='relative py-12 lg:py-20'>
               <div
-                className="relative z-[-1] flex place-items-center   bg-white  before:absolute before:h-[150px] before:translate-y-[47%] before:rounded-full 
-            before:-translate-x-[19%] before:bg-gradient-radial before:from-secondary  before:blur-[90px] before:content-[''] before:bg-gradient-to-br before:w-[200px]"
+                className="relative z-[-1] flex place-items-center before:absolute before:h-[150px] before:-translate-y-[-3%] before:rounded-full 
+            md:before:-translate-x-[40%] before:-translate-x-[30%] before:bg-gradient-radial before:from-orange-500  before:blur-[85px] before:content-[''] before:bg-gradient-to-br md:before:w-[200px] before:w-[150px]"
               ></div>
-              <div className='rounded-2xl p-4 border bg-white mr-24'>
+              <div className='rounded-2xl p-4 border bg-white lg:mr-24'>
                 <Image
                   src={BannerImage}
                   alt='man with computer'
-                  className='relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] '
+                  className='relative dark:drop-shadow-[0_0_0.3rem_#ffffff70]  '
                 />
               </div>
               <HoverCard
-                className='absolute -left-10  top-72'
+                className='absolute top-[12rem] -left-[1.5rem] md:-left-10  md:top-72'
                 icon={
                   <svg
                     className='group-hover:mt-1 size-6 '
@@ -74,7 +74,7 @@ export default function BannerSection() {
                 content='Great service without compromising your budget.'
               />
               <HoverCard
-                className='absolute top-[7.5rem] -right-[0.16rem] w-[160px]'
+                className='absolute top-[6.5rem] md:top-[7.5rem] -right-[1.16rem]  md:-right-[0.16rem] '
                 icon={
                   <svg
                     className='group-hover:mt-1 size-6  '
@@ -87,7 +87,7 @@ export default function BannerSection() {
                 content='Prompt service delivery for quick, efficient solutions.'
               />
               <HoverCard
-                className='absolute  right-[2.84rem]  top-[30rem]'
+                className='absolute  -right-[0.84rem] md:right-[2.84rem]  top-[19rem] md:top-[30rem]'
                 icon={
                   <svg
                     className='size-6 stroke-secondary fill-none group-hover:mt-1 group-hover:stroke-primary'

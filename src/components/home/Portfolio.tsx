@@ -73,10 +73,10 @@ export function PortfolioCard({
   return (
     <div className='group '>
       <div className='group-hover:p-2 group-hover:bg-white rounded-2xl p-2 bg-transparent group-hover:shadow-md group-hover:rounded-2xl'>
-        <Card className=' shadow-none border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md rounded-2xl'>
+        <Card className=' shadow-md border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md rounded-2xl'>
           <CardHeader className=''>
             <CardTitle className='mb-4'>{title}</CardTitle>
-            <CardDescription className='text-gray-900 w-2/3 '>
+            <CardDescription className='text-gray-900 lg:w-2/3  mt-6'>
               {description}
             </CardDescription>
           </CardHeader>
@@ -126,14 +126,14 @@ export function PortfolioCard({
 export default function Portfolio() {
   return (
     <Container>
-      <div className='mb-48 space-y-32' id='portfolio'>
-        <div className='grid  grid-cols-1 md:grid-cols-2 justify-between gap-10'>
-          <h2 className='text-[50px] font-extrabold leading-snug text-left'>
-            Take a Glimpse Into
+      <div className='md:mb-48 mb-24 space-y-8 lg:space-y-32' id='portfolio'>
+        <div className='grid  grid-cols-1 lg:grid-cols-2 justify-between lg:gap-10 gap-5 md:gap-3'>
+          <h2 className='lg:text-[50px]  md:text-[45px] text-[30px] font-extrabold leading-snug text-left'>
+            Take a Glimpse Into {""}
             <span className='text-secondary'>What&apos;s Possible</span> With
             Nivabit
           </h2>
-          <p className=' text-start text-gray-500 my-5'>
+          <p className=' text-start text-gray-500 lg:my-5 my-3'>
             Explore a curated selection of our past projects. From innovative
             mobile apps to stunning websites, our portfolio showcases the
             diverse range of industries we&apos;ve worked with and the

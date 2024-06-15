@@ -128,11 +128,11 @@ export default function Services() {
   return (
     <Container>
       <div
-        className='flex flex-col items-center justify-center gap-28 '
+        className='flex flex-col items-start md:items-center justify-center md:gap-28 gap-14 '
         id='services'
       >
-        <div className='text-center space-y-4 md:w-3/5'>
-          <h2 className='text-[50px] font-extrabold leading-tight text-center'>
+        <div className=' text-left md:text-center space-y-4 lg:w-3/5'>
+          <h2 className='lg:text-[50px] md:text-[45px] text-[30px] font-extrabold leading-tight text-left md:text-center'>
             Elevate Your Digital Presence - Explore{" "}
             <span className='text-secondary'>Our Services</span>{" "}
           </h2>
@@ -146,8 +146,8 @@ export default function Services() {
             <div
               className={`group  ${
                 service.size === "full"
-                  ? " basis-full md:basis-[48.5%]"
-                  : " basis-full md:basis-[31.7%]"
+                  ? " basis-full mg:basis-[50%] lg:basis-[48.5%]"
+                  : " basis-full mg:basis-[50%] lg:basis-[31.7%]"
               } `}
               key={index}
             >
@@ -161,7 +161,7 @@ export default function Services() {
                  stroke-gray-50 group-hover:stroke-primary group-hover:fill-gray-50'
                 >
                   <CardTitle className=' mb-4'>
-                    <div className='bg-primary h-16 w-16 group-hover:bg-gray-50 rounded-2xl flex items-center justify-between pl-[1.2rem] pt-[.3rem] relative'>
+                    <div className='bg-primary size-14 md:size-16  group-hover:bg-gray-50 rounded-2xl flex items-center justify-between pl-[1rem] md:pl-[1.2rem] pt-[.3rem] relative'>
                       {service.icon("size-8")}
                     </div>
                     <div className='hidden group-hover:block absolute right-0 top-1'>

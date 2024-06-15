@@ -183,7 +183,7 @@ export default function Contact() {
   return (
     <Container>
       <div
-        className='grid grid-cols-1 md:grid-cols-2 items-start justify-stretch gap-20 mb-28'
+        className='grid grid-cols-1 lg:grid-cols-2 items-start justify-stretch gap-20 mb-28'
         id='contact-us'
       >
         <div className='h-full'>
@@ -204,7 +204,7 @@ export default function Contact() {
         <div className='text-left space-y-10'>
           <div className='space-y-4'>
             <p className='text-gray-900 font-semibold pb-6'>Choose a Service</p>
-            <div className='flex flex-wrap gap-x-4 gap-y-8'>
+            <div className='flex flex-wrap gap-x-2 lg:gap-x-4 gap-y-8'>
               {serviceList.map((service) => (
                 <div key={service.index}>
                   <label

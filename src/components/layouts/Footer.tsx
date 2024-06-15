@@ -5,22 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "../ui/container";
 import LightLogo from "../../../public/lightLogo.svg";
-import { Mail, Phone, Twitter } from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "../ui/navigation-menu";
+import { Mail, Phone } from "lucide-react";
 
 export default function Navbar() {
   return (
     <div className='w-full bg-primary text-accent  py-20'>
       <Container>
-        <div className='flex fle-col md:flex-row  items-start space-x-10'>
-          <div className='self-center space-y-6  basis-[55%] h-full flex-1'>
+        <div className='flex flex-col space-y-12 md:flex-row  items-start smd:pace-x-10'>
+          <div className='self-center space-y-6  md:basis-[55%] h-full flex-1'>
             <Image src={LightLogo} alt='logo' />
-            <p className='  w-3/5 text-gray-50 opacity-80  leading-relaxed'>
+            <p className=' w-full  md:w-3/5 text-gray-50 opacity-80  leading-relaxed'>
               Ready to take the next step? Have questions about our services?
               We&apos;re here to help. Let&apos;s start building something
               incredible together.
@@ -89,10 +83,12 @@ export default function Navbar() {
               </Link>
             </div>
           </div>
-          <div className='space-y-6 basis-[25%] self-center '>
-            <h3 className=' capitalize font-light'>Quick Links</h3>
+          <div className='md:space-y-6 space-y-3 md:basis-[25%] md:self-center '>
+            <h3 className=' capitalize md:font-light font-semibold'>
+              Quick Links
+            </h3>
 
-            <ul className='flex flex-col items-start space-y-6 justify-start '>
+            <ul className='flex flex-col items-start md:space-y-6 space-y-3 justify-start '>
               <li>
                 <Link
                   href='#services'
@@ -135,9 +131,11 @@ export default function Navbar() {
               </li>
             </ul>
           </div>
-          <div className='basis-[25%] self-center h-full'>
-            <h3 className='capitalize font-light'>Contact us</h3>
-            <p className='py-6 text-gray-50 opacity-80  leading-relaxed'>
+          <div className='md:basis-[25%] self-center h-full'>
+            <h3 className='capitalize md:font-light font-semibold '>
+              Contact us
+            </h3>
+            <p className='md:py-6 py-2 text-gray-50 opacity-80  leading-relaxed'>
               Ready to take the next step? Have questions about our services
             </p>
             <div className='flex flex-col items-start space-y-3'>
@@ -156,8 +154,8 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-        <hr className='bg-gray-50 my-10' />
-        <div className='flex flex-col md:flex-row justify-between'>
+        <hr className='bg-gray-50 my-7 lg:my-10' />
+        <div className='flex flex-col-reverse gap-6 lg:flex-row justify-between'>
           <p className=' capitalize font-light'>
             &copy; Nivabit {new Date().getFullYear()} all right reserved
           </p>

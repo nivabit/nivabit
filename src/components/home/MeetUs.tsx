@@ -8,11 +8,11 @@ export default function MeetUs() {
   return (
     <Container>
       <div
-        className='flex  flex-col md:flex-row items-center justify-between gap-[8rem] mb-28'
+        className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[8rem] gap-[4rem] lg:mt-[18rem]  lg:mb-28'
         id='about-us'
       >
-        <div className='w-full md:w-1/2'>
-          <h2 className='text-[50px] font-extrabold leading-tight'>
+        <div className='w-full lg:w-1/2'>
+          <h2 className='text-[30px]  md:text-[45px] lg:text-[50px] font-extrabold leading-tight'>
             Meet Nivabit, Your{" "}
             <span className='text-secondary'>Digital Transformation</span>{" "}
             Partner
@@ -70,10 +70,14 @@ export default function MeetUs() {
             </li>
           </ul>
         </div>
-        <div className='flex-1'>
-          <div className='relative'>
-            <div className=' bg-secondary absolute h-[150px]  w-[200px]  bottom-[-2rem] right-[21px] rounded-2xl -z-10'></div>
-            <Image src={MeetUsImage} alt='meet us' className='h-[450px] ' />
+        <div className='flex-1 w-full'>
+          <div className='relative w-full'>
+            <div className=' bg-secondary absolute lg:h-[150px] md:h-[150px] w-[100px] h-[90px] md:w-[200px]  bottom-[-2rem] -right-[23px]   lg:-right-[50px] rounded-2xl -z-10'></div>
+            <Image
+              src={MeetUsImage}
+              alt='meet us'
+              className='lg:h-[450px] w-full '
+            />
           </div>
         </div>
       </div>

@@ -26,9 +26,9 @@ const services: { title: string; logo: any }[] = [
 
 export default function ClientCarouselSpacing() {
   return (
-    <div className='flex justify-center  items-center  my-32 w-full  bg-white'>
-      <div className=' basis-[25%]'>
-        <h2 className='w-full self-center text-center font-bold text-2xl text-primary capitalize'>
+    <div className='flex justify-center  items-center my-16 md:my-32 w-full  bg-white'>
+      <div className=' lg:basis-[25%] md:basis-[40%]'>
+        <h2 className='w-full self-center text-center font-bold md:text-lg lg:text-2xl text-primary capitalize'>
           Trust clients
         </h2>
       </div>
@@ -45,7 +45,7 @@ export default function ClientCarouselSpacing() {
           {services.map(({ title, logo }, index) => (
             <CarouselItem
               key={index}
-              className='pl-1 md:basis-1/2 lg:basis-[30%]'
+              className='pl-1 basis-[40%] md:basis-1/2 lg:basis-[30%]'
             >
               <div className=''>
                 <Card className='border-none bg-white text-card-foreground shadow-none m-0  rounded-none'>

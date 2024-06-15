@@ -20,7 +20,7 @@ export const services = [
 
 export default function ServicesCarouselSpacing() {
   return (
-    <div className='justify-center flex items-center  my-32'>
+    <div className='justify-center flex items-center my-16 md:my-32'>
       <Carousel
         className='w-full  bg-primary'
         opts={{ loop: true, align: "center", duration: 3000 }}
