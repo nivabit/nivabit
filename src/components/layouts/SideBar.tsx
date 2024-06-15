@@ -8,19 +8,19 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "../ui/button";
 import { MenuIcon } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function SideBar() {
-  const [hideMenu, setHideMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const openSidebar = () => {
-    setHideMenu(false);
+    setShowMenu(true);
     const body = window.document.querySelector("body");
     if (body) {
       body.classList.add("fixed", "overflow-y-hidden");
     }
   };
   const hideSidebar = () => {
-    setHideMenu(true);
+    setShowMenu(false);
     const body = window.document.querySelector("body");
     if (body) {
       body.classList.remove("fixed", "overflow-y-hidden");
@@ -38,7 +38,7 @@ export default function SideBar() {
 
       <div
         className={`fixed top-0 left-0 bottom-0 right-0 transition-transform  duration-300 bg-black/70 z-50 ${
-          hideMenu ? "hidden" : "block"
+          showMenu ? "block" : "hidden"
         }`}
         onClick={hideSidebar}
       >
@@ -51,7 +51,7 @@ export default function SideBar() {
             <NavigationMenuList className='space-y-2 font-medium flex-col w-64'>
               <NavigationMenuItem className='flex items-center p-2 text-gray-50 rounded-lg hover:bg-primary/80'>
                 <NavigationMenuLink
-                  className='capitalize cursor-pointer flex-1 ms-3 whitespace-nowrap '
+                  className='capitalize cursor-pointer flex-1 ms-3 text-xl font-semibold whitespace-nowrap '
                   href='/#services'
                   onClick={hideSidebar}
                 >
@@ -60,7 +60,7 @@ export default function SideBar() {
               </NavigationMenuItem>
               <NavigationMenuItem className='flex items-center p-2 text-gray-50 rounded-lg hover:bg-primary/80'>
                 <NavigationMenuLink
-                  className='capitalize cursor-pointer flex-1 ms-3 whitespace-nowrap '
+                  className='capitalize cursor-pointer flex-1 ms-3 text-xl font-semibold whitespace-nowrap '
                   href='/#portfolio'
                   onClick={hideSidebar}
                 >
@@ -69,7 +69,7 @@ export default function SideBar() {
               </NavigationMenuItem>
               <NavigationMenuItem className='flex items-center p-2 text-gray-50 rounded-lg  hover:bg-primary/80'>
                 <NavigationMenuLink
-                  className='capitalize cursor-pointer flex-1 ms-3 whitespace-nowrap'
+                  className='capitalize cursor-pointer flex-1 ms-3 text-xl font-semibold whitespace-nowrap'
                   href='/#about-us'
                   onClick={hideSidebar}
                 >
@@ -78,7 +78,7 @@ export default function SideBar() {
               </NavigationMenuItem>
               <NavigationMenuItem className='flex items-center p-2 text-gray-50 rounded-lg hover:bg-primary/80'>
                 <NavigationMenuLink
-                  className='capitalize cursor-pointer flex-1 ms-3 whitespace-nowrap '
+                  className='capitalize cursor-pointer flex-1 ms-3 text-xl font-semibold whitespace-nowrap '
                   href='/#contact-us'
                   onClick={hideSidebar}
                 >
