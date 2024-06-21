@@ -8,7 +8,7 @@ export default function MeetUs() {
   return (
     <Container>
       <div
-        className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[8rem] gap-[4rem] mt-[12rem] lg:mt-[18rem]  lg:mb-28'
+        className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[8rem] gap-[4rem] mt-[8rem] lg:mt-[18rem]  lg:mb-28'
         id='about-us'
       >
         <div className='w-full lg:w-1/2'>
