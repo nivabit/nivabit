@@ -27,7 +27,7 @@ const services: { title: string; logo: any }[] = [
 export default function ClientCarouselSpacing() {
   return (
     <div className='flex justify-center  items-center my-16 md:my-32 w-full  bg-white'>
-      <div className=' lg:basis-[25%] md:basis-[40%]'>
+      <div className=' lg:basis-[25%] md:basis-[40%] hidden lg:flex'>
         <h2 className='w-full self-center text-center font-bold md:text-lg lg:text-2xl text-primary capitalize'>
           Trust clients
         </h2>
@@ -51,10 +51,10 @@ export default function ClientCarouselSpacing() {
                 <Card className='border-none bg-white text-card-foreground shadow-none m-0  rounded-none'>
                   <CardContent
                     className='flex items-center justify-center
-                  h-[100px] w-full space-x-10 p-6 shadow-none relative'
+                  h-[100px] w-full lg:space-x-10 p-4 lg:p-6 shadow-none relative'
                   >
                     <svg
-                      className='size-[30px] fill-secondary absolute left-0 '
+                      className=' size-8 lg:size-[30px] hidden lg:inline-table  fill-secondary absolute left-0 '
                       xmlns='http://www.w3.org/2000/svg'
                     >
                       <path d='M30 15.5C30 15.5 22.548 16.702 19.375 19.875C16.202 23.048 15 30.5 15 30.5C15 30.5 14.8068 21.9416 11.25 18.625C8.26697 15.8434 1.61916 15.5377 0.249635 15.5041C0.0879921 15.5028 0 15.5 0 15.5C0 15.5 0.0881032 15.5002 0.249635 15.5041C1.67523 15.5162 8.82949 15.4205 11.875 12.375C15.2658 8.98416 15 0.5 15 0.5C15 0.5 15.4754 8.47535 18.75 11.75C22.0246 15.0246 30 15.5 30 15.5Z' />
@@ -63,7 +63,7 @@ export default function ClientCarouselSpacing() {
                       <Image
                         src={logo}
                         alt={title}
-                        className='object-cover rounded-t-2xl w-[10rem]'
+                        className='object-cover w-[10rem]'
                         loading='lazy'
                       />
                     </div>

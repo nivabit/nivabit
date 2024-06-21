@@ -16,7 +16,7 @@ import SideBar from "./SideBar";
 export default function Navbar() {
   return (
     <div className='flex justify-between items-center py-2 w-full '>
-      <div className='flex items-center space-x-8'>
+      <div className='flex items-center'>
         <Link href='/'>
           <Image src={Logo} alt='logo' className=' size-32' />
         </Link>

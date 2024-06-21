@@ -10,7 +10,7 @@ import Container from "../ui/container";
 export default function BannerSection() {
   return (
     <Container>
-      <div className='min-h-screen max-h-[70vh]  lg:min-h-0  '>
+      <div className='min-h-screen max-h-[70vh]  lg:min-h-0 '>
         <div>
           <div className='flex   flex-col-reverse lg:flex-row items-center justify-between sm:gap-20 md:gap-6'>
             <div className='flex  flex-col items-start md:block  space-y-5 w-full lg:w-1/2  text-start mt-0 md:mb-20'>

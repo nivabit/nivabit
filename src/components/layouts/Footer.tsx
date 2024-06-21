@@ -9,9 +9,9 @@ import { Mail, Phone } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <div className='w-full bg-primary text-accent  py-20'>
+    <div className=' w-full bg-primary text-accent  py-20'>
       <Container>
-        <div className='flex flex-col space-y-12 md:flex-row  items-start smd:pace-x-10'>
+        <div className='flex flex-col space-y-12 md:flex-row  items-start md:pace-x-10'>
           <div className='self-center space-y-6  md:basis-[55%] h-full flex-1'>
             <Image src={LightLogo} alt='logo' />
             <p className=' w-full  md:w-3/5 text-gray-50 opacity-80  leading-relaxed'>
