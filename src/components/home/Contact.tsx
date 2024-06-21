@@ -187,7 +187,7 @@ export default function Contact() {
         id='contact-us'
       >
         <div className='h-full'>
-          <h2 className='text-gray-gray-900 text-[45px] font-extrabold leading-tight capitalize text-left mb-4'>
+          <h2 className='text-gray-gray-900 text-[45px] font-extrabold leading-tight capitalize text-left mb-4 font-sans'>
             get in touch
           </h2>
           <p className='text-gray-700 text-left first-letter:uppercase mb-10'>
@@ -203,7 +203,9 @@ export default function Contact() {
         </div>
         <div className='text-left space-y-10'>
           <div className='space-y-4'>
-            <p className='text-gray-900 font-semibold pb-6'>Choose a Service</p>
+            <p className='text-gray-900 font-semibold pb-6 font-sans'>
+              Choose a Service
+            </p>
             <div className='flex flex-wrap gap-x-2 lg:gap-x-4 gap-y-8'>
               {serviceList.map((service) => (
                 <div key={service.index}>

@@ -8,11 +8,11 @@ export default function MeetUs() {
   return (
     <Container>
       <div
-        className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[8rem] gap-[4rem] lg:mt-[18rem]  lg:mb-28'
+        className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[8rem] gap-[4rem] mt-[12rem] lg:mt-[18rem]  lg:mb-28'
         id='about-us'
       >
         <div className='w-full lg:w-1/2'>
-          <h2 className='text-[30px]  md:text-[45px] lg:text-[50px] font-extrabold leading-tight'>
+          <h2 className='text-[30px]  md:text-[45px] lg:text-[50px] font-extrabold leading-tight font-sans'>
             Meet Nivabit, Your{" "}
             <span className='text-secondary'>Digital Transformation</span>{" "}
             Partner

@@ -6,14 +6,16 @@ import Navbar from "@/components/layouts/Navbar";
 import Container from "@/components/ui/container";
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/layouts/Footer";
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
+import localFont from "next/font/local";
+
+const synonym = localFont({
+  src: "../../public/Synonym/141d0930d88f0321d415e423e22c8883.ttf",
+  variable: "--font-serif",
 });
 
-const grotesk = Schibsted_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-serif",
+const grotesk = localFont({
+  src: "../../public/grotek_font/CabinetGrotesk-Variable.ttf",
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
@@ -34,8 +36,8 @@ export default function RootLayout({
     >
       <body
         className={cn(
-          "min-h-screen font-sans selection:text-gray-50 selection:bg-primary",
-          fontSans.variable,
+          "min-h-screen font-serif selection:text-gray-50 selection:bg-primary",
+          synonym.variable,
           grotesk.variable
         )}
       >

@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "Synonym-Regular";
+  src: url("141d0930d88f0321d415e423e22c8883.eot");
+  src: url("141d0930d88f0321d415e423e22c8883.eot?#iefix")
+      format("embedded-opentype"),
+    url("141d0930d88f0321d415e423e22c8883.woff") format("woff"),
+    url("141d0930d88f0321d415e423e22c8883.woff2") format("woff2"),
+    url("141d0930d88f0321d415e423e22c8883.ttf") format("truetype"),
+    url("141d0930d88f0321d415e423e22c8883.svg#Synonym-Regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

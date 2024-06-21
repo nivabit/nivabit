@@ -10,11 +10,11 @@ import Container from "../ui/container";
 export default function BannerSection() {
   return (
     <Container>
-      <div className='min-h-screen max-h-[70vh]  lg:min-h-0 '>
+      <div className='min-h-screen max-h-[60vh]  lg:min-h-0 '>
         <div>
           <div className='flex   flex-col-reverse lg:flex-row items-center justify-between sm:gap-20 md:gap-6'>
             <div className='flex  flex-col items-start md:block  space-y-5 w-full lg:w-1/2  text-start mt-0 md:mb-20'>
-              <h2 className=' text-[35px] md:text-[50px] lg:text-[70px]   font-extrabold text-primary capitalize  leading-tight'>
+              <h2 className=' text-[35px] md:text-[50px] lg:text-[80px]   font-extrabold text-primary capitalize  leading-tight  font-sans'>
                 Transforming <br />
                 Ideas Into{" "}
                 <span className='text-primary opacity-70'>usable Products</span>

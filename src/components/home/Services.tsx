@@ -132,7 +132,7 @@ export default function Services() {
         id='services'
       >
         <div className=' text-left md:text-center space-y-4 lg:w-3/5'>
-          <h2 className='lg:text-[50px] md:text-[45px] text-[30px] font-extrabold leading-tight text-left md:text-center'>
+          <h2 className='lg:text-[50px] md:text-[45px] text-[30px] font-extrabold leading-tight text-left md:text-center font-sans'>
             Elevate Your Digital Presence - Explore{" "}
             <span className='text-secondary'>Our Services</span>{" "}
           </h2>
@@ -177,7 +177,7 @@ export default function Services() {
                       </svg>
                     </div>
                   </CardTitle>
-                  <CardDescription className='text-md text-gray-900 group-hover:text-gray-50 flex flex-col gap-2 text-xl font-extrabold'>
+                  <CardDescription className='text-md text-gray-900 group-hover:text-gray-50 flex flex-col gap-2 text-xl font-extrabold font-sans'>
                     {service.title}
                     <Skeleton className='h-1 w-[80px] bg-secondary group-hover:w-0 transition-all duration-500 animate-none' />
                   </CardDescription>

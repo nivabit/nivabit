@@ -75,7 +75,7 @@ export function PortfolioCard({
       <div className='group-hover:p-2 group-hover:bg-white rounded-2xl p-2 bg-transparent group-hover:shadow-md group-hover:rounded-2xl'>
         <Card className=' shadow-md border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md rounded-2xl'>
           <CardHeader className=''>
-            <CardTitle className='mb-4'>{title}</CardTitle>
+            <CardTitle className='mb-4 font-sans'>{title}</CardTitle>
             <CardDescription className='text-gray-900 lg:w-2/3  mt-6'>
               {description}
             </CardDescription>
@@ -128,7 +128,7 @@ export default function Portfolio() {
     <Container>
       <div className='md:mb-48 mb-24 space-y-8 lg:space-y-32' id='portfolio'>
         <div className='grid  grid-cols-1 lg:grid-cols-2 justify-between lg:gap-10 gap-5 md:gap-3'>
-          <h2 className='lg:text-[50px]  md:text-[45px] text-[30px] font-extrabold leading-snug text-left'>
+          <h2 className='lg:text-[50px]  md:text-[45px] text-[30px] font-extrabold leading-normal text-left font-sans'>
             Take a Glimpse Into {""}
             <span className='text-secondary'>What&apos;s Possible</span> With
             Nivabit

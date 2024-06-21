@@ -82,7 +82,7 @@ export default function Testimonials() {
       <div className='mb-48 flex flex-col gap-16'>
         <div className=''>
           <div className='flex flex-col lg:flex-row lg:gap-0 gap-6  items-center justify-start text-start'>
-            <h2 className='lg:text-[50px] md:text-[45px]  text-[30px] font-extrabold leading-snug text-left'>
+            <h2 className='lg:text-[50px] md:text-[45px]  text-[30px] font-extrabold leading-snug text-left font-sans'>
               <span className='text-secondary '>Quotes </span>
               From Satisfied Clients Highlighting Their Experience
             </h2>
@@ -133,7 +133,7 @@ export default function Testimonials() {
                         </div>
                       </CardTitle>
                       <CardDescription className='flex flex-col gap-2'>
-                        <h3 className=' font-semibold text-lg text-gray-900 text-left capitalize'>
+                        <h3 className=' font-bold text-lg text-gray-900 text-left capitalize font-sans'>
                           {name}
                         </h3>
                         <h3 className='font-normal text-lg text-primary text-left capitalize'>

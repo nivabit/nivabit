@@ -84,7 +84,7 @@ export default function Navbar() {
             </div>
           </div>
           <div className='md:space-y-6 space-y-3 md:basis-[25%] md:self-center '>
-            <h3 className=' capitalize md:font-light font-semibold'>
+            <h3 className=' capitalize md:font-light font-semibold font-sans'>
               Quick Links
             </h3>
 
@@ -94,7 +94,7 @@ export default function Navbar() {
                   href='#services'
                   legacyBehavior
                   passHref
-                  className='capitalize cursor-pointer'
+                  className='capitalize cursor-pointer text-gray-50/85 '
                 >
                   Service
                 </Link>
@@ -104,7 +104,7 @@ export default function Navbar() {
                   href='#portfolio'
                   legacyBehavior
                   passHref
-                  className='capitalize cursor-pointer'
+                  className='capitalize cursor-pointer text-gray-50/85 '
                 >
                   Portfolio
                 </Link>
@@ -114,7 +114,7 @@ export default function Navbar() {
                   href='#about-us'
                   legacyBehavior
                   passHref
-                  className='capitalize cursor-pointer'
+                  className='capitalize cursor-pointer text-gray-50/85 '
                 >
                   About Us
                 </Link>
@@ -124,7 +124,7 @@ export default function Navbar() {
                   href='#contact-us'
                   legacyBehavior
                   passHref
-                  className='capitalize cursor-pointer'
+                  className='capitalize cursor-pointer text-gray-50/85 '
                 >
                   Contact Us
                 </Link>
@@ -132,7 +132,7 @@ export default function Navbar() {
             </ul>
           </div>
           <div className='md:basis-[25%] self-center h-full'>
-            <h3 className='capitalize md:font-light font-semibold '>
+            <h3 className='capitalize md:font-light font-semibold font-sans'>
               Contact us
             </h3>
             <p className='md:py-6 py-2 text-gray-50 opacity-80  leading-relaxed'>
