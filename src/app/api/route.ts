@@ -34,7 +34,6 @@ export async function POST(req: NextRequest) {
         if (!data || !data.name || !data.email || !data.subject) {
                 return new NextResponse(JSON.stringify({ message: "Bad request" }), { status: 400 });
         }
-
         try {
                 await transporter.sendMail({
                         ...mailOptions,
