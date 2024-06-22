@@ -143,7 +143,7 @@ export default function Navbar() {
                 <span className='p-3 bg-gray-50 rounded-2xl'>
                   <Mail className='fill-secondary size-4' />
                 </span>
-                <span className='opacity-80 '>Groupnivabit@gmail.com</span>
+                <span className='opacity-80 '>contactnivabit@gmail.com</span>
               </Link>
               <Link href='lorem' className='flex items-center space-x-3'>
                 <span className='p-3 bg-gray-50 rounded-2xl'>
