@@ -189,13 +189,13 @@ export default function Services() {
                 </CardContent>
                 <CardFooter className='flex justify-between items-center'>
                   <Link
-                    href={"/#contact"}
+                     href='/#contact-us'
                     className='text-gray-900 group-hover:text-gray-50 capitalize'
                   >
                     <span className='font-semibold'>let&apos;s talk</span>
                   </Link>
                   <Link
-                    href={"/#contact"}
+                     href='/#contact-us'
                     className=' group flex items-center justify-center text-center'
                   >
                     <span className='bg-transparent group-hover:bg-gray-50 p-3 rounded-xl flex items-center justify-between'>

@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import React, { ReactEventHandler, useState } from "react";
+import React, { LegacyRef, ReactEventHandler, useRef, useState } from "react";
 import ContactImage from "../../../public/contact image.png";
+import { Check } from "lucide-react";
 import Container from "../ui/container";
 import { Textarea } from "@/components/ui/textarea";
 import { services } from "./ServicesCarouselSpacing";
@@ -19,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
+import { sendContactForm } from "@/lib/mail_sender";
 
 const ContactSchema = z.object({
   firstName: z.string().min(2, {
@@ -35,20 +37,34 @@ const ContactSchema = z.object({
   message: z.string().optional(),
 });
 
-export function ContactForm() {
+export function ContactForm({ services }: { services?: string[] }) {
   const form = useForm<z.infer<typeof ContactSchema>>({
     resolver: zodResolver(ContactSchema),
   });
 
-  function onSubmit(data: z.infer<typeof ContactSchema>) {
-    toast("Event has been created", {
-      description: "Sunday, December 03, 2023 at 9:00 AM",
-      action: {
-        label: "Undo",
-        onClick: () => console.log("Undo"),
-      },
+  async function onSubmit(data: z.infer<typeof ContactSchema>) {
+    const res = await sendContactForm({
+      name: `${data.firstName} ${data.lastName}`,
+      subject: "Lead from contact",
+      email: data.companyEmail,
+      message: data.message,
+      company: data.companyName,
+      services,
     });
-    form.reset();
+    if (res.ok) {
+      toast.success("Message was sent successfully", {
+        description: "Thanks for contact us, out team will contact you soon",
+        dismissible: true,
+        duration: 5000,
+        icon: <Check className='text-primary' />,
+      });
+
+      form.setValue("companyEmail", "");
+      form.setValue("companyName", "");
+      form.setValue("firstName", "");
+      form.setValue("lastName", "");
+      form.setValue("message", "");
+    }
   }
 
   return (
@@ -231,7 +247,14 @@ export default function Contact() {
             </div>
           </div>
           <div>
-            <ContactForm />
+            <ContactForm
+              services={serviceList.map((service) => {
+                if (service.check) {
+                  return service.name;
+                }
+                return "";
+              })}
+            />
           </div>
         </div>
       </div>

@@ -100,12 +100,12 @@ export function PortfolioCard({
             </div>
           </CardContent>
           <CardFooter className='flex justify-between items-center'>
-            <Link href={url} className='text-gray-900 capitalize'>
+            <Link href='/#contact-us' className='text-gray-900 capitalize'>
               <span>Take a look</span>
             </Link>
             <Link
-              href={url}
-              className=' group flex items-center justify-center text-center'
+              href='/#contact-us'
+              className='group flex items-center justify-center text-center'
             >
               <span className='bg-transparent group-hover:bg-gray-50 p-3 rounded-2xl flex items-center justify-between'>
                 <svg

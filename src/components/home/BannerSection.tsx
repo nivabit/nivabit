@@ -26,7 +26,7 @@ export default function BannerSection() {
                 success.
               </p>
               <Link
-                href='/'
+                href='/#contact-us'
                 className='group inline-flex items-center p-2 bg-primary text-white rounded-2xl transition duration-300'
               >
                 <span
