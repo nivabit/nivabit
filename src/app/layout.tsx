@@ -10,12 +10,12 @@ import localFont from "next/font/local";
 
 const synonym = localFont({
   src: "../../public/Synonym/141d0930d88f0321d415e423e22c8883.ttf",
-  variable: "--font-serif",
+  variable: "--font-synonym",
 });
 
 const grotesk = localFont({
   src: "../../public/grotek_font/CabinetGrotesk-Variable.ttf",
-  variable: "--font-sans",
+  variable: "--font-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ export default function RootLayout({
     >
       <body
         className={cn(
-          "min-h-screen font-serif selection:text-gray-50 selection:bg-primary",
+          "min-h-screen  selection:text-gray-50 selection:bg-primary font-synonym",
           synonym.variable,
           grotesk.variable
         )}

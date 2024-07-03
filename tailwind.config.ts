@@ -14,10 +14,12 @@ const config = {
       },
     },
     extend: {
-      fontFamily:{
-        // grotesk:["var(--grotesk)"],
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-  
+      fontFamily: {
+        grotesk: ["var(--font-grotesk)"],
+        synonym: ["var(--font-synonym)"],
+        sans: ["var(--font-grotesk)", ...fontFamily.sans],
+
+
       },
       colors: {
         border: "hsl(var(--border))",

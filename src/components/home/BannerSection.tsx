@@ -10,11 +10,11 @@ import Container from "../ui/container";
 export default function BannerSection() {
   return (
     <Container>
-      <div className='min-h-screen max-h-[60vh]  lg:min-h-0 lg:mt-48 mt-28  '>
+      <div className='min-h-screen max-h-[60vh]  lg:min-h-0 lg:mt-48 mt-28  bg-transparent '>
         <div>
           <div className='flex   flex-col-reverse lg:flex-row items-center justify-between sm:gap-20 md:gap-6'>
             <div className='flex  flex-col items-start md:block  space-y-5 w-full lg:w-1/2  text-start mt-0 md:mb-20'>
-              <h2 className=' text-[35px] md:text-[50px] lg:text-[80px]   font-extrabold text-primary capitalize  leading-tight  font-sans'>
+              <h2 className=' text-[35px] md:text-[50px] lg:text-[80px]   font-extrabold text-primary capitalize  leading-[1.2]  font-grotesk'>
                 Transforming <br />
                 Ideas Into{" "}
                 <span className='text-primary opacity-70'>usable Products</span>
@@ -27,7 +27,7 @@ export default function BannerSection() {
               </p>
               <Link
                 href='/#contact-us'
-                className='group inline-flex items-center p-2 bg-primary text-white rounded-2xl transition duration-300'
+                className='group inline-flex items-center p-2 bg-primary text-white rounded-[14px] transition duration-300'
               >
                 <span
                   className='mr-5 capitalize ml-8 
@@ -35,7 +35,7 @@ export default function BannerSection() {
                 >
                   let&apos;s talk
                 </span>
-                <div className='bg-gray-50  p-3 rounded-2xl  justify-self-end'>
+                <div className='bg-gray-50  p-3 rounded-[8px]  justify-self-end'>
                   <svg
                     width='18'
                     height='19'
@@ -53,7 +53,7 @@ export default function BannerSection() {
                 className="relative z-[-1] flex place-items-center before:absolute before:h-[150px] before:-translate-y-[-3%] before:rounded-full 
             md:before:-translate-x-[40%] before:-translate-x-[30%] before:bg-gradient-radial before:from-orange-500  before:blur-[85px] before:content-[''] before:bg-gradient-to-br md:before:w-[200px] before:w-[150px]"
               ></div>
-              <div className='rounded-2xl p-4 border bg-white lg:mr-24'>
+              <div className='rounded-[14px] p-4 border bg-white lg:mr-24'>
                 <Image
                   src={BannerImage}
                   alt='man with computer'

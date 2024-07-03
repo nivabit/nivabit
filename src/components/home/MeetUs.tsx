@@ -8,11 +8,11 @@ export default function MeetUs() {
   return (
     <Container>
       <div
-        className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[8rem] gap-[4rem] mt-[8rem] lg:mt-[18rem]  lg:mb-28'
+        className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[8rem] gap-[4rem] mt-[8rem] lg:mt-[18rem]  lg:mb-28 bg-[#FAFAFC]'
         id='about-us'
       >
         <div className='w-full lg:w-1/2'>
-          <h2 className='text-[30px]  md:text-[45px] lg:text-[50px] font-extrabold leading-tight font-sans'>
+          <h2 className='text-[30px]  md:text-[45px] lg:text-[50px] font-extrabold leading-tight font-grotesk text-primary'>
             Meet Nivabit, Your{" "}
             <span className='text-secondary'>Digital Transformation</span>{" "}
             Partner
@@ -26,7 +26,7 @@ export default function MeetUs() {
             :
           </p>
           <ul className=' list-none space-y-4'>
-            <li className='flex items-start space-x-2'>
+            <li className='flex items-center space-x-2'>
               <svg
                 className='h-8 w-8 fill-secondary'
                 xmlns='http://www.w3.org/2000/svg'
@@ -35,7 +35,7 @@ export default function MeetUs() {
               </svg>
               <span className='capitalize text-gray-700'>Agile Adaptation</span>
             </li>
-            <li className='flex items-center space-x-2'>
+            <li className='flex items-center space-x-2 '>
               <svg
                 className='h-8 w-8 fill-secondary'
                 xmlns='http://www.w3.org/2000/svg'
@@ -71,12 +71,13 @@ export default function MeetUs() {
           </ul>
         </div>
         <div className='flex-1 w-full'>
-          <div className='relative w-full'>
-            <div className=' bg-secondary absolute lg:h-[150px] md:h-[150px] w-[100px] h-[90px] md:w-[200px]  bottom-[-2rem] -right-[23px]   lg:-right-[50px] rounded-2xl -z-10'></div>
+          <div className='relative w-full bg-transparent'>
+            <div className=' bg-secondary absolute lg:h-[150px] md:h-[150px] w-[100px] h-[90px] md:w-[200px]  bottom-[-2rem] -right-[23px]   lg:-right-[50px] rounded-[14px] -z-10'></div>
+
             <Image
               src={MeetUsImage}
               alt='meet us'
-              className='lg:h-[450px] w-full '
+              className='lg:h-[450px] w-full group-hover:p-2 group-hover:bg-white rounded-[14px] p-2 bg-transparent group-hover:shadow-md group-hover:rounded-[14px]'
             />
           </div>
         </div>

@@ -34,7 +34,7 @@ export default function ServicesCarouselSpacing() {
           {services.map((name, index) => (
             <CarouselItem
               key={index}
-              className='pl-1 md:basis-1/2 lg:basis-[24%]'
+              className='pl-1 md:basis-1/2 lg:basis-[25%]'
             >
               <div className='p-1'>
                 <Card className='rounded-lg border-none bg-transparent text-card-foreground shadow-sm'>
@@ -46,7 +46,7 @@ export default function ServicesCarouselSpacing() {
                     >
                       <path d='M30 15.5C30 15.5 22.548 16.702 19.375 19.875C16.202 23.048 15 30.5 15 30.5C15 30.5 14.8068 21.9416 11.25 18.625C8.26697 15.8434 1.61916 15.5377 0.249635 15.5041C0.0879921 15.5028 0 15.5 0 15.5C0 15.5 0.0881032 15.5002 0.249635 15.5041C1.67523 15.5162 8.82949 15.4205 11.875 12.375C15.2658 8.98416 15 0.5 15 0.5C15 0.5 15.4754 8.47535 18.75 11.75C22.0246 15.0246 30 15.5 30 15.5Z' />
                     </svg>
-                    <span className='text-2xl font-semibold text-gray-50 capitalize font-serif'>
+                    <span className='text-3xl font-semibold text-gray-50 capitalize font-serif'>
                       {name}
                     </span>
                   </CardContent>

@@ -20,7 +20,7 @@ export default function Navbar() {
               incredible together.
             </p>
             <div className='flex items-center justify-start space-x-4'>
-              <Link href={"/"} className='p-3 bg-gray-50 rounded-2xl'>
+              <Link href={"/"} className='p-3 bg-gray-50 rounded-[8px]'>
                 <svg
                   strokeLinecap='round'
                   strokeLinejoin='round'
@@ -40,7 +40,7 @@ export default function Navbar() {
                   </defs>
                 </svg>
               </Link>
-              <Link href={"/"} className='p-3 bg-gray-50 rounded-2xl'>
+              <Link href={"/"} className='p-3 bg-gray-50 rounded-[8px]'>
                 <svg
                   strokeLinecap='round'
                   strokeLinejoin='round'
@@ -60,7 +60,7 @@ export default function Navbar() {
                   </defs>
                 </svg>
               </Link>
-              <Link href={"/"} className='p-3 bg-gray-50 rounded-2xl'>
+              <Link href={"/"} className='p-3 bg-gray-50 rounded-[8px]'>
                 <svg
                   strokeWidth='2'
                   strokeLinecap='round'
@@ -84,7 +84,7 @@ export default function Navbar() {
             </div>
           </div>
           <div className='md:space-y-6 space-y-3 md:basis-[25%] md:self-center '>
-            <h3 className=' capitalize md:font-light font-semibold font-sans'>
+            <h3 className=' capitalize md:font-light font-semibold font-grotesk'>
               Quick Links
             </h3>
 
@@ -132,7 +132,7 @@ export default function Navbar() {
             </ul>
           </div>
           <div className='md:basis-[25%] self-center h-full'>
-            <h3 className='capitalize md:font-light font-semibold font-sans'>
+            <h3 className='capitalize md:font-light font-semibold font-grotesk'>
               Contact us
             </h3>
             <p className='md:py-6 py-2 text-gray-50 opacity-80  leading-relaxed'>
@@ -140,13 +140,13 @@ export default function Navbar() {
             </p>
             <div className='flex flex-col items-start space-y-3'>
               <Link href='lorem' className='flex items-center space-x-4'>
-                <span className='p-3 bg-gray-50 rounded-2xl'>
+                <span className='p-3 bg-gray-50 rounded-[8px]'>
                   <Mail className='fill-secondary size-4' />
                 </span>
                 <span className='opacity-80 '>contactnivabit@gmail.com</span>
               </Link>
               <Link href='lorem' className='flex items-center space-x-3'>
-                <span className='p-3 bg-gray-50 rounded-2xl'>
+                <span className='p-3 bg-gray-50 rounded-[8px]'>
                   <Phone className='fill-secondary size-4' />
                 </span>
                 <span className='opacity-80 '>+2349071133025</span>

@@ -81,7 +81,11 @@ export function ContactForm({ services }: { services?: string[] }) {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder='John' {...field} className='p-6 w-full' />
+                  <Input
+                    placeholder='John'
+                    {...field}
+                    className='p-6 w-full rounded-[8px]'
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -97,7 +101,7 @@ export function ContactForm({ services }: { services?: string[] }) {
                   <Input
                     placeholder='Suleiman'
                     {...field}
-                    className='p-6  w-full'
+                    className='p-6  w-full rounded-[8px]'
                   />
                 </FormControl>
 
@@ -117,7 +121,7 @@ export function ContactForm({ services }: { services?: string[] }) {
                   <Input
                     placeholder='MicroSoft'
                     {...field}
-                    className='p-6  w-full'
+                    className='p-6  w-full rounded-[8px]'
                   />
                 </FormControl>
                 <FormMessage />
@@ -134,7 +138,7 @@ export function ContactForm({ services }: { services?: string[] }) {
                   <Input
                     placeholder='Email@company.com'
                     {...field}
-                    className='p-6  w-full'
+                    className='p-6  w-full rounded-[8px]'
                   />
                 </FormControl>
 
@@ -153,7 +157,7 @@ export function ContactForm({ services }: { services?: string[] }) {
                 <Textarea
                   {...field}
                   placeholder='Type your message here.'
-                  className='min-h-[87px]'
+                  className='min-h-[87px] rounded-[8px]'
                 />
               </FormControl>
               <FormMessage />
@@ -162,7 +166,7 @@ export function ContactForm({ services }: { services?: string[] }) {
         />
 
         <button
-          className={`group flex items-center p-2 bg-primary  text-white rounded-2xl transition duration-300 ${
+          className={`group flex items-center p-2 bg-primary  text-white rounded-[14px] transition duration-300 ${
             isSubmitting ? "cursor-wait opacity-50 " : "bg-primary"
           }`}
         >
@@ -171,7 +175,7 @@ export function ContactForm({ services }: { services?: string[] }) {
           ) : (
             <>
               <span className='mr-5 capitalize ml-8'>Send</span>
-              <div className='bg-gray-50  px-4 py-3 rounded-2xl'>
+              <div className='bg-gray-50  px-4 py-3 rounded-[8px]'>
                 <svg
                   width='18'
                   height='19'
@@ -213,11 +217,11 @@ export default function Contact() {
   return (
     <Container>
       <div
-        className='grid grid-cols-1 lg:grid-cols-2 items-start justify-stretch gap-20 mb-28'
+        className='grid grid-cols-1 lg:grid-cols-2 items-start justify-stretch gap-20 mb-28 bg-[#FAFAFC]'
         id='contact-us'
       >
         <div className='h-full'>
-          <h2 className='text-gray-gray-900 text-[45px] font-extrabold leading-tight capitalize text-left mb-4 font-sans'>
+          <h2 className='text-gray-gray-900 text-[45px] font-extrabold leading-tight capitalize text-left mb-4 font-grotesk text-primary'>
             get in touch
           </h2>
           <p className='text-gray-700 text-left first-letter:uppercase mb-10'>
@@ -228,12 +232,12 @@ export default function Contact() {
           <Image
             src={ContactImage}
             alt='two people discussing'
-            className='w-full auto object-cover rounded-2xl mt-5'
+            className='w-full auto object-cover rounded-[14px] mt-[75px]'
           />
         </div>
         <div className='text-left space-y-10'>
           <div className='space-y-4'>
-            <p className='text-gray-900 font-semibold pb-6 font-sans'>
+            <p className='text-gray-900 font-semibold pb-6 font-grotesk'>
               Choose a Service
             </p>
             <div className='flex flex-wrap gap-x-2 lg:gap-x-4 gap-y-8'>
@@ -241,7 +245,7 @@ export default function Contact() {
                 <div key={service.index}>
                   <label
                     htmlFor={String(service.index)}
-                    className={`py-3 px-3 rounded-2xl cursor-pointer capitalize ${
+                    className={`py-3 px-3 rounded-[8px] cursor-pointer capitalize ${
                       service.check
                         ? "border border-transparent bg-primary text-gray-50 "
                         : "border border-gray-400 text-gray-400"

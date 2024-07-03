@@ -79,10 +79,10 @@ export default function Testimonials() {
   const [nextActive, setNextActive] = useState(true);
   return (
     <Container>
-      <div className='mb-48 flex flex-col gap-16'>
+      <div className='mb-48 flex flex-col gap-16 bg-[#FAFAFC]'>
         <div className=''>
           <div className='flex flex-col lg:flex-row lg:gap-0 gap-6  items-center justify-start text-start'>
-            <h2 className='lg:text-[50px] md:text-[45px]  text-[30px] font-extrabold leading-snug text-left font-sans'>
+            <h2 className='lg:text-[50px] md:text-[45px]  text-[30px] font-extrabold leading-snug text-left font-grotesk text-primary'>
               <span className='text-secondary '>Quotes </span>
               From Satisfied Clients Highlighting Their Experience
             </h2>
@@ -106,7 +106,7 @@ export default function Testimonials() {
                   className=' basis-full  md:basis-[50%] lg:basis-[25%]'
                 >
                   <Card
-                    className='bg-accent border shadow-sm rounded-2xl transition-all duration-500 relative'
+                    className='bg-accent border shadow-sm rounded-[14px] transition-all duration-500 relative'
                     key={index}
                   >
                     <CardHeader>
@@ -115,7 +115,7 @@ export default function Testimonials() {
                           <Image
                             src={image ?? SampleImage}
                             alt={name}
-                            className='h-16 w-16 rounded-2xl shadow-md border'
+                            className='h-16 w-16 rounded-[14px] shadow-md border'
                           />
                         </div>
                         <div className='absolute -right-4 top-6'>
@@ -133,7 +133,7 @@ export default function Testimonials() {
                         </div>
                       </CardTitle>
                       <CardDescription className='flex flex-col gap-2'>
-                        <h3 className=' font-bold text-lg text-gray-900 text-left capitalize font-sans'>
+                        <h3 className=' font-bold text-lg text-gray-900 text-left capitalize font-grotesk'>
                           {name}
                         </h3>
                         <h3 className='font-normal text-lg text-primary text-left capitalize'>
@@ -153,7 +153,7 @@ export default function Testimonials() {
             )}
           </CarouselContent>
           <CarouselPrevious
-            className={`absolute transition-colors border border-primary duration-300 left-[19rem] md:left-[38rem] -top-[22%] lg:left-[80rem]  lg:top-[-90px] rounded-2xl h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 left-[55%] md:left-[38rem] top-[120%] lg:left-[80rem]  lg:top-[-90px] rounded-[8px] h-12 w-12 ${
               preActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {
@@ -167,11 +167,11 @@ export default function Testimonials() {
               }`}
               xmlns='http://www.w3.org/2000/svg'
             >
-              <path d='M7.15995 2.41586C7.52769 2.05138 7.53034 1.4578 7.16586 1.09005C6.80138 0.722305 6.2078 0.719657 5.84005 1.08414L3.59664 3.30762C2.75167 4.14505 2.06108 4.82949 1.57132 5.43932C1.06203 6.07348 0.693369 6.71716 0.594886 7.4898C0.551705 7.82858 0.551705 8.17142 0.594886 8.5102C0.693369 9.28284 1.06203 9.92652 1.57132 10.5607C2.06108 11.1705 2.75166 11.8549 3.59662 12.6924L5.84005 14.9159C6.2078 15.2803 6.80138 15.2777 7.16586 14.9099C7.53034 14.5422 7.52769 13.9486 7.15995 13.5841L4.95624 11.4C4.06187 10.5136 3.44837 9.90353 3.03324 9.38662C2.62999 8.8845 2.49166 8.56198 2.45484 8.27313C2.43172 8.09176 2.43172 7.90824 2.45484 7.72687C2.49166 7.43802 2.62999 7.1155 3.03324 6.61338C3.44837 6.09647 4.06187 5.48642 4.95624 4.6L7.15995 2.41586Z' />
+              <path d='M2.15995 1.08414C1.7922 0.719657 1.19862 0.722305 0.834136 1.09005C0.469657 1.4578 0.472305 2.05138 0.840052 2.41586L3.04376 4.6C3.93813 5.48642 4.55163 6.09647 4.96676 6.61338C5.37001 7.1155 5.50834 7.43802 5.54516 7.72687C5.56828 7.90824 5.56828 8.09176 5.54516 8.27313C5.50834 8.56198 5.37001 8.8845 4.96676 9.38662C4.55163 9.90353 3.93813 10.5136 3.04376 11.4L0.840052 13.5841C0.472305 13.9486 0.469657 14.5422 0.834136 14.9099C1.19862 15.2777 1.7922 15.2803 2.15995 14.9159L4.40336 12.6924C5.24833 11.855 5.93892 11.1705 6.42868 10.5607C6.93797 9.92652 7.30663 9.28284 7.40511 8.5102C7.4483 8.17142 7.4483 7.82858 7.40511 7.4898C7.30663 6.71716 6.93797 6.07348 6.42868 5.43932C5.93892 4.82948 5.24833 4.14505 4.40336 3.30762L2.15995 1.08414Z' />
             </svg>
           </CarouselPrevious>
           <CarouselNext
-            className={`absolute transition-colors border border-primary duration-300 lg:right-[8%] md:right-[0%] lg:-top-[31%]  -top-[22%] right-[66px] rounded-2xl h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 lg:right-[8%] md:right-[0%] lg:-top-[31%]  top-[120%] right-[55%] rounded-[8px]  h-12 w-12 ${
               nextActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {
@@ -185,7 +185,7 @@ export default function Testimonials() {
               }`}
               xmlns='http://www.w3.org/2000/svg'
             >
-              <path d='M2.15995 1.08414C1.7922 0.719657 1.19862 0.722305 0.834136 1.09005C0.469657 1.4578 0.472305 2.05138 0.840052 2.41586L3.04376 4.6C3.93813 5.48642 4.55163 6.09647 4.96676 6.61338C5.37001 7.1155 5.50834 7.43802 5.54516 7.72687C5.56828 7.90824 5.56828 8.09176 5.54516 8.27313C5.50834 8.56198 5.37001 8.8845 4.96676 9.38662C4.55163 9.90353 3.93813 10.5136 3.04376 11.4L0.840052 13.5841C0.472305 13.9486 0.469657 14.5422 0.834136 14.9099C1.19862 15.2777 1.7922 15.2803 2.15995 14.9159L4.40336 12.6924C5.24833 11.855 5.93892 11.1705 6.42868 10.5607C6.93797 9.92652 7.30663 9.28284 7.40511 8.5102C7.4483 8.17142 7.4483 7.82858 7.40511 7.4898C7.30663 6.71716 6.93797 6.07348 6.42868 5.43932C5.93892 4.82948 5.24833 4.14505 4.40336 3.30762L2.15995 1.08414Z' />
+              <path d='M7.15995 2.41586C7.52769 2.05138 7.53034 1.4578 7.16586 1.09005C6.80138 0.722305 6.2078 0.719657 5.84005 1.08414L3.59664 3.30762C2.75167 4.14505 2.06108 4.82949 1.57132 5.43932C1.06203 6.07348 0.693369 6.71716 0.594886 7.4898C0.551705 7.82858 0.551705 8.17142 0.594886 8.5102C0.693369 9.28284 1.06203 9.92652 1.57132 10.5607C2.06108 11.1705 2.75166 11.8549 3.59662 12.6924L5.84005 14.9159C6.2078 15.2803 6.80138 15.2777 7.16586 14.9099C7.53034 14.5422 7.52769 13.9486 7.15995 13.5841L4.95624 11.4C4.06187 10.5136 3.44837 9.90353 3.03324 9.38662C2.62999 8.8845 2.49166 8.56198 2.45484 8.27313C2.43172 8.09176 2.43172 7.90824 2.45484 7.72687C2.49166 7.43802 2.62999 7.1155 3.03324 6.61338C3.44837 6.09647 4.06187 5.48642 4.95624 4.6L7.15995 2.41586Z' />
             </svg>
           </CarouselNext>
         </Carousel>

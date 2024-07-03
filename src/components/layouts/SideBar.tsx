@@ -9,6 +9,7 @@ import {
 import { Button } from "../ui/button";
 import { MenuIcon } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function SideBar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -29,7 +30,7 @@ export default function SideBar() {
   return (
     <div className='md:hidden flex'>
       <Button
-        className='inline-block rounded-md hover:bg-primary hover:opacity-80'
+        className='inline-block rounded-[2px] hover:bg-primary hover:opacity-80'
         onClick={openSidebar}
       >
         <span className=' sr-only'>Open menu</span>

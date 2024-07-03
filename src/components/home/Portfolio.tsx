@@ -71,12 +71,12 @@ export function PortfolioCard({
   tags?: string[];
 }) {
   return (
-    <div className='group '>
-      <div className='group-hover:p-2 group-hover:bg-white rounded-2xl p-2 bg-transparent group-hover:shadow-md group-hover:rounded-2xl'>
-        <Card className=' shadow-md border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md rounded-2xl'>
+    <div className='group bg-[#FAFAFC]'>
+      <div className='group-hover:p-2 group-hover:bg-white rounded-[14px] p-2 bg-transparent group-hover:shadow-md group-hover:rounded-[14px]'>
+        <Card className=' shadow-md border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md rounded-[14px]'>
           <CardHeader className=''>
-            <CardTitle className='mb-4 font-sans'>{title}</CardTitle>
-            <CardDescription className='text-gray-900 lg:w-2/3  mt-6'>
+            <CardTitle className='mb-4 font-grotesk'>{title}</CardTitle>
+            <CardDescription className='text-gray-900  mt-6'>
               {description}
             </CardDescription>
           </CardHeader>
@@ -85,7 +85,7 @@ export function PortfolioCard({
               <div className='flex flex-wrap gap-3 mb-4'>
                 {tags.map((name, index) => (
                   <Button
-                    className='inline-block bg-accent   text-primary group-hover:bg-primary  group-hover:text-gray-50 capitalize font-bold'
+                    className='inline-block bg-accent   text-primary group-hover:bg-primary  group-hover:text-gray-50 capitalize font-bold rounded-[8px]'
                     key={index}
                   >
                     {name}
@@ -95,7 +95,7 @@ export function PortfolioCard({
               <Image
                 src={image}
                 alt={title}
-                className='w-full  h-64 object-cover rounded-2xl'
+                className='w-full  h-64 object-cover rounded-[14px]'
               />
             </div>
           </CardContent>
@@ -107,7 +107,7 @@ export function PortfolioCard({
               href='/#contact-us'
               className='group flex items-center justify-center text-center'
             >
-              <span className='bg-transparent group-hover:bg-gray-50 p-3 rounded-2xl flex items-center justify-between'>
+              <span className='bg-transparent group-hover:bg-gray-50 p-3 rounded-[8px] flex items-center justify-between'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   className='w-6 h-5 transform  group-hover:rotate-45 fill-gray-900 mt-2'
@@ -128,7 +128,7 @@ export default function Portfolio() {
     <Container>
       <div className='md:mb-48 mb-24 space-y-8 lg:space-y-32' id='portfolio'>
         <div className='grid  grid-cols-1 lg:grid-cols-2 justify-between lg:gap-10 gap-5 md:gap-3'>
-          <h2 className='lg:text-[50px]  md:text-[45px] text-[30px] font-extrabold leading-normal text-left font-sans'>
+          <h2 className='lg:text-[50px]  md:text-[45px] text-[30px] font-extrabold leading-normal text-left font-grotesk text-primary'>
             Take a Glimpse Into {""}
             <span className='text-secondary'>What&apos;s Possible</span> With
             Nivabit
