@@ -224,7 +224,7 @@ export default function Contact() {
           <h2 className='text-gray-gray-900 text-[56px] font-extrabold leading-tight capitalize text-left mb-5 font-grotesk text-primary'>
             get in touch
           </h2>
-          <p className='text-gray-700 text-left first-letter:uppercase mb-12'>
+          <p className='text-gray-700 text-left first-letter:uppercase mb-8'>
             Ready to take the next step? Have questions about our services?
             We&apos;re here to help. Let&apos;s start building something
             incredible together.

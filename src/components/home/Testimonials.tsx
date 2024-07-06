@@ -173,7 +173,7 @@ export default function Testimonials() {
             </svg>
           </CarouselPrevious>
           <CarouselNext
-            className={`absolute transition-colors border border-primary duration-300 lg:right-[8%] md:right-[0%] lg:-top-[28%]  top-[120%] right-[55%] rounded-[8px]  h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 lg:right-[12%] md:right-[0%] lg:-top-[28%]  top-[120%] right-[55%] rounded-[8px]  h-12 w-12 ${
               nextActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {
