@@ -28,7 +28,7 @@ export default function ClientCarouselSpacing() {
   return (
     <div className='flex justify-center  items-center my-16 md:my-32 w-full  bg-white'>
       <div className=' lg:basis-[25%] md:basis-[40%] hidden lg:flex'>
-        <h2 className='w-full self-center text-center font-bold md:text-lg lg:text-2xl text-primary capitalize font-grotesk'>
+        <h2 className='w-full  text-center ml-[72px] font-bold md:text-lg lg:text-2xl text-primary capitalize font-grotesk '>
           Trust clients
         </h2>
       </div>

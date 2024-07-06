@@ -73,7 +73,7 @@ export function PortfolioCard({
   return (
     <div className='group bg-[#FAFAFC]'>
       <div className='group-hover:p-2 group-hover:bg-white rounded-[14px] p-2 bg-transparent group-hover:shadow-md group-hover:rounded-[14px]'>
-        <Card className=' shadow-md border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md rounded-[14px]'>
+        <Card className=' shadow-md border-none bg-gray-50 group-hover:bg-accent  group-hover:shadow-md rounded-[14px] p-[8px] lg:p-[30px]'>
           <CardHeader className=''>
             <CardTitle className='mb-4 font-grotesk'>{title}</CardTitle>
             <CardDescription className='text-gray-900  mt-6'>
@@ -125,34 +125,38 @@ export function PortfolioCard({
 
 export default function Portfolio() {
   return (
-    <Container>
-      <div className='md:mb-48 mb-24 space-y-8 lg:space-y-32' id='portfolio'>
-        <div className='grid  grid-cols-1 lg:grid-cols-2 justify-between lg:gap-10 gap-5 md:gap-3'>
-          <h2 className='lg:text-[50px]  md:text-[45px] text-[30px] font-extrabold leading-normal text-left font-grotesk text-primary'>
-            Take a Glimpse Into {""}
-            <span className='text-secondary'>What&apos;s Possible</span> With
-            Nivabit
-          </h2>
-          <p className=' text-start text-gray-500 lg:my-5 my-3'>
-            Explore a curated selection of our past projects. From innovative
-            mobile apps to stunning websites, our portfolio showcases the
-            diverse range of industries we&apos;ve worked with and the
-            exceptional results we&apos;ve achieved.
-          </p>
+    <div className=''>
+      <Container>
+        <div className='md:mb-48 mb-24 space-y-8 lg:space-y-32' id='portfolio'>
+          <div className='grid  grid-cols-1 lg:grid-cols-2 justify-between lg:gap-10 gap-5 md:gap-3'>
+            <h2 className='lg:text-[56px]  md:text-[45px] text-[30px] font-extrabold leading-normal text-left font-grotesk text-primary'>
+              Take a Glimpse Into {""}
+              <span className='text-secondary'>What&apos;s Possible</span> With
+              Nivabit
+            </h2>
+            <p className=' text-start text-gray-500 lg:my-5 my-3'>
+              Explore a curated selection of our past projects. From innovative
+              mobile apps to stunning websites, our portfolio showcases the
+              diverse range of industries we&apos;ve worked with and the
+              exceptional results we&apos;ve achieved.
+            </p>
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-x-4 gap-y-8 mt-8'>
+            {portfolios.map(
+              ({ title, description, url, image, tags }, index) => (
+                <PortfolioCard
+                  title={title}
+                  description={description}
+                  image={image}
+                  url={url}
+                  key={index}
+                  tags={tags}
+                />
+              )
+            )}
+          </div>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-x-4 gap-y-8 mt-8'>
-          {portfolios.map(({ title, description, url, image, tags }, index) => (
-            <PortfolioCard
-              title={title}
-              description={description}
-              image={image}
-              url={url}
-              key={index}
-              tags={tags}
-            />
-          ))}
-        </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 }

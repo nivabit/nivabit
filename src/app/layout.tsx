@@ -36,7 +36,7 @@ export default function RootLayout({
     >
       <body
         className={cn(
-          "min-h-screen  selection:text-gray-50 selection:bg-primary font-synonym",
+          "min-h-screen  selection:text-gray-50 selection:bg-primary font-synonym bg-[#FAFAFC]",
           synonym.variable,
           grotesk.variable
         )}

@@ -23,11 +23,11 @@ export default function HoverCard({
     <>
       <div
         className={cn(
-          "group  w-32 md:w-[200px]  transition-all duration-300",
+          "group  w-32 md:w-[170px]    transition-all duration-300",
           className
         )}
       >
-        <Card className='rounded-[14px]'>
+        <Card className='rounded-[14px] p-2'>
           <CardHeader className=' py-2 md:py-4 px-[.8rem]'>
             <CardTitle>
               <i className='fill-secondary font-medium group-hover:fill-primary group-hover:pt-1 transition duration-300'>
@@ -38,11 +38,11 @@ export default function HoverCard({
               {title}
             </CardDescription>
           </CardHeader>
-          <CardContent className='transition-all duration-300 p-3 '>
+          <CardContent className='transition-all duration-300 p-2 '>
             <div className='space-y-1 md:space-y-2 group-hover:hidden transition-all duration-300'>
-              <Skeleton className='h-1 w-[60px] animate-none bg-gray-300' />
-              <Skeleton className='h-1 w-[100px] animate-none bg-gray-300' />
-              <Skeleton className='h-1 w-[80px] animate-none bg-gray-300' />
+              <Skeleton className='h-1 w-[70%] animate-none bg-gray-300' />
+              <Skeleton className='h-1 w-[90%] animate-none bg-gray-300' />
+              <Skeleton className='h-1 w-[80%] animate-none bg-gray-300' />
             </div>
             <p className='hidden group-hover:flex h-auto text-xs transition-all duration-300'>
               {content}

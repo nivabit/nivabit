@@ -61,7 +61,7 @@ export default function Navbar() {
           </NavigationMenu>
           <Link
             href='/#contact-us'
-            className='group lg:inline-flex items-center p-2 bg-primary text-white rounded-[14px] transition duration-300 hidden'
+            className='group lg:inline-flex items-center p-[10px] bg-primary text-white rounded-[14px] transition duration-300 hidden'
           >
             <span
               className='mr-5 capitalize ml-8 

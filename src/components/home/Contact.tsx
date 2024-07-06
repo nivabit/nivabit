@@ -166,7 +166,7 @@ export function ContactForm({ services }: { services?: string[] }) {
         />
 
         <button
-          className={`group flex items-center p-2 bg-primary  text-white rounded-[14px] transition duration-300 ${
+          className={`group flex items-center p-[10px] bg-primary  text-white rounded-[14px] transition duration-300 ${
             isSubmitting ? "cursor-wait opacity-50 " : "bg-primary"
           }`}
         >
@@ -221,10 +221,10 @@ export default function Contact() {
         id='contact-us'
       >
         <div className='h-full'>
-          <h2 className='text-gray-gray-900 text-[45px] font-extrabold leading-tight capitalize text-left mb-4 font-grotesk text-primary'>
+          <h2 className='text-gray-gray-900 text-[56px] font-extrabold leading-tight capitalize text-left mb-5 font-grotesk text-primary'>
             get in touch
           </h2>
-          <p className='text-gray-700 text-left first-letter:uppercase mb-10'>
+          <p className='text-gray-700 text-left first-letter:uppercase mb-12'>
             Ready to take the next step? Have questions about our services?
             We&apos;re here to help. Let&apos;s start building something
             incredible together.
@@ -232,12 +232,12 @@ export default function Contact() {
           <Image
             src={ContactImage}
             alt='two people discussing'
-            className='w-full auto object-cover rounded-[14px] mt-[75px]'
+            className='w-full auto object-cover rounded-[14px]'
           />
         </div>
         <div className='text-left space-y-10'>
           <div className='space-y-4'>
-            <p className='text-gray-900 font-semibold pb-6 font-grotesk'>
+            <p className='text-gray-900 font-semibold pb-3 font-grotesk'>
               Choose a Service
             </p>
             <div className='flex flex-wrap gap-x-2 lg:gap-x-4 gap-y-8'>

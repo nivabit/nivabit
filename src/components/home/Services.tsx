@@ -22,7 +22,7 @@ const services: {
   {
     title: "Brand Design",
     description:
-      "Our versatile team merges diverse talents, enabling us to approach projects from a comprehensive standpoint that seamlessly blends creativity with functionality.",
+      "our brand is the face of your business. Our brand design services help you create a strong, memorable identity that resonates with your target audience. From logo design to complete brand overhauls, we ensure your brand stands out in a crowded marketplace.",
 
     size: "normal",
     icon: (className) => (
@@ -42,7 +42,7 @@ const services: {
   {
     title: "Product Design",
     description:
-      "Our versatile team merges diverse talents, enabling us to approach projects from a comprehensive standpoint that seamlessly blends creativity with functionality.",
+      "Bring your vision to life with our product design services. We specialize in creating user-friendly, aesthetically pleasing products that meet the highest standards of functionality and design. Whether it's a new product or an upgrade, we ensure every detail is perfect.",
     size: "normal",
     icon: (className: string) => (
       <svg
@@ -63,7 +63,7 @@ const services: {
   {
     title: "Web Development",
     description:
-      "Our versatile team merges diverse talents, enabling us to approach projects from a comprehensive standpoint that seamlessly blends creativity with functionality.",
+      "In the digital age, a robust online presence is essential. Our web development team builds responsive, high-performance websites tailored to your business goals. From e-commerce platforms to corporate websites, we deliver web solutions that drive growth and engagement.",
     size: "normal",
     icon: (className) => (
       <svg
@@ -84,7 +84,7 @@ const services: {
   {
     title: "Project Research",
     description:
-      "Our versatile team merges diverse talents, enabling us to approach projects from a comprehensive standpoint that seamlessly blends creativity with functionality.",
+      "Make informed decisions with our comprehensive project research services. We provide in-depth analysis and insights to help you understand market trends, customer behavior, and competitive landscapes. Our research is the foundation of your project's success.",
     size: "full",
     icon: (className: string) => (
       <svg
@@ -104,7 +104,7 @@ const services: {
   {
     title: "SaaS & ERP Software",
     description:
-      "Our versatile team merges diverse talents, enabling us to approach projects from a comprehensive standpoint that seamlessly blends creativity with functionality.",
+      "Streamline your operations with our SaaS and ERP solutions. We offer customized software-as-a-service (SaaS) and enterprise resource planning (ERP) systems that improve efficiency, reduce costs, and enhance productivity. Our solutions are designed to scale with your business.",
     size: "full",
     icon: (className) => (
       <svg
@@ -128,11 +128,11 @@ export default function Services() {
   return (
     <Container>
       <div
-        className='flex flex-col items-start md:items-center justify-center md:gap-28 gap-14 bg-[#FAFAFC] '
+        className='flex flex-col items-start md:items-center justify-center md:gap-28 gap-x-[30px] gap-y-[60px] bg-[#FAFAFC] '
         id='services'
       >
         <div className=' text-left md:text-center space-y-4 lg:w-3/5'>
-          <h2 className='lg:text-[50px] md:text-[45px] text-[30px] font-extrabold leading-tight text-left md:text-center font-grotesk text-primary'>
+          <h2 className='lg:text-[56px] md:text-[45px] text-[30px] font-extrabold leading-tight text-left md:text-center font-grotesk text-primary'>
             Elevate Your Digital Presence - Explore{" "}
             <span className='text-secondary'>Our Services</span>{" "}
           </h2>
@@ -152,7 +152,7 @@ export default function Services() {
               key={index}
             >
               <Card
-                className={`hover:bg-primary drop-shadow-sm rounded-[14px] transition-all duration-500 relative`}
+                className={`hover:bg-primary drop-shadow-sm rounded-[14px] transition-all duration-500 relative p-[8px] lg:p-[30px]`}
               >
                 <CardHeader
                   className='fill-primary
@@ -162,9 +162,9 @@ export default function Services() {
                     <div className='bg-primary size-14 md:size-16  group-hover:bg-gray-50 rounded-[8px] flex items-center justify-between pl-[1rem] md:pl-[1.2rem] pt-[.3rem] relative'>
                       {service.icon("size-8")}
                     </div>
-                    <div className='hidden group-hover:block absolute right-0 top-1'>
+                    <div className='hidden group-hover:block absolute lg:right-[1.5rem] top-1 right-0'>
                       <svg
-                        className='w-[140px] h-[160px] stroke-none'
+                        className='w-[180px] h-[160px] stroke-none'
                         xmlns='http://www.w3.org/2000/svg'
                       >
                         <path
