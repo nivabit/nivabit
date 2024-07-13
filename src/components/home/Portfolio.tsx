@@ -100,7 +100,7 @@ export function PortfolioCard({
           </div>
         </CardContent>
         <CardFooter className='flex justify-between items-center mb-0 pb-0 pt-4'>
-          <Link href='/#contact-us' className='text-gray-900 capitalize'>
+          <Link href='#' className='text-gray-900 capitalize'>
             <span>Take a look</span>
           </Link>
           <Link
