@@ -10,7 +10,7 @@ import LinkButton from "../LinkButton";
 
 export default function BannerSection() {
   return (
-    <div className='bg-transparent mb-32 lg:mb-48 md:mb-60'>
+    <div className='bg-transparent mb-36 lg:mb-48 md:mb-60'>
       <Container>
         <div className='min-h-[75vh] max-h-[60vh]  lg:min-h-0 lg:mt-48 mt-28'>
           <div>
@@ -29,7 +29,7 @@ export default function BannerSection() {
                   bespoke digital solutions that elevate your brand and drive
                   success.
                 </p>
-                <LinkButton href="'/#contact-us'" label=" let's talk" />
+                <LinkButton href='/#contact-us' label=" let's talk" />
               </div>
               <div className='relative py-12 lg:py-20'>
                 <div

@@ -6,7 +6,7 @@ import Container from "../ui/container";
 
 export default function MeetUs() {
   return (
-    <div className='w-full '>
+    <div className='w-full  '>
       <Container className=' '>
         <div
           className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[4rem] gap-[4rem] mt-42 lg:mt-[12rem]  lg:mb-28 '
