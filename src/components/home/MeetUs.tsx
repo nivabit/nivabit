@@ -84,7 +84,7 @@ export default function MeetUs() {
           </div>
           <div className='flex-1 w-full relative '>
             <div className='w-full  '>
-              <div className=' bg-secondary absolute lg:h-[140px] md:h-[140px] w-[100px] h-[90px] md:w-[180px]  bottom-[-2rem] right-[17px]   lg:right-[26px] rounded-[14px] md:-bottom-12 -z-10'></div>
+              <div className=' bg-secondary absolute lg:h-[140px] md:h-[140px] w-[100px] h-[90px] md:w-[180px]  bottom-[-2rem] right-[17px]   lg:right-[0px] rounded-[14px] md:-bottom-12 -z-10'></div>
               <div className='w-[50] rounded-[14px]'>
                 <Image
                   src={MeetUsImage}
