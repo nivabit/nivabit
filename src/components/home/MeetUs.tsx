@@ -9,7 +9,7 @@ export default function MeetUs() {
     <div className='w-full '>
       <Container className=' '>
         <div
-          className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[8rem] gap-[4rem] mt-[8rem] lg:mt-[18rem]  lg:mb-28 '
+          className='flex  flex-col-reverse lg:flex-row items-center justify-between lg:gap-[4rem] gap-[4rem] mt-42 lg:mt-[12rem]  lg:mb-28 '
           id='about-us'
         >
           <div className='w-full lg:w-1/2 '>
@@ -84,12 +84,12 @@ export default function MeetUs() {
           </div>
           <div className='flex-1 w-full relative '>
             <div className='w-full  '>
-              <div className=' bg-secondary absolute lg:h-[150px] md:h-[150px] w-[100px] h-[90px] md:w-[200px]  bottom-[-2rem] -right-[8px]   lg:-right-[50px] rounded-[14px]  -z-10'></div>
-              <div className='p-2 bg-gray-50 rounded-[14px]'>
+              <div className=' bg-secondary absolute lg:h-[140px] md:h-[140px] w-[100px] h-[90px] md:w-[180px]  bottom-[-2rem] right-[17px]   lg:right-[26px] rounded-[14px] md:-bottom-12 -z-10'></div>
+              <div className='w-[50] rounded-[14px]'>
                 <Image
                   src={MeetUsImage}
                   alt='meet us'
-                  className='lg:h-[450px] w-full rounded-[14px] '
+                  className='lg:h-[450px] md:w-[93%] md:h-[450px] object-cover w-[22rem] p-2 border bg-gray-50 border-gray-50  rounded-[14px] '
                 />
               </div>
             </div>

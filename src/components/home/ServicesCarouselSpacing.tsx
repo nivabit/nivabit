@@ -20,7 +20,7 @@ export const services = [
 
 export default function ServicesCarouselSpacing() {
   return (
-    <div className='justify-center flex items-center my-16 md:my-32'>
+    <div className='justify-center flex items-center mt-20 lg:mt-48'>
       <Carousel
         className='w-full  bg-primary'
         opts={{ loop: true, align: "center", duration: 3000 }}
@@ -30,7 +30,7 @@ export default function ServicesCarouselSpacing() {
           }),
         ]}
       >
-        <CarouselContent className='-ml-1  h-[100px] lg:h-[150px] flex items-center w-full'>
+        <CarouselContent className='-ml-1  h-[75px] lg:h-[100px] flex items-center w-full'>
           {services.map((name, index) => (
             <CarouselItem
               key={index}
@@ -46,7 +46,7 @@ export default function ServicesCarouselSpacing() {
                     >
                       <path d='M30 15.5C30 15.5 22.548 16.702 19.375 19.875C16.202 23.048 15 30.5 15 30.5C15 30.5 14.8068 21.9416 11.25 18.625C8.26697 15.8434 1.61916 15.5377 0.249635 15.5041C0.0879921 15.5028 0 15.5 0 15.5C0 15.5 0.0881032 15.5002 0.249635 15.5041C1.67523 15.5162 8.82949 15.4205 11.875 12.375C15.2658 8.98416 15 0.5 15 0.5C15 0.5 15.4754 8.47535 18.75 11.75C22.0246 15.0246 30 15.5 30 15.5Z' />
                     </svg>
-                    <span className='lg:text-[40px] text-[20px] font-semibold text-gray-50 capitalize font-serif'>
+                    <span className='lg:text-[32px] text-[20px] font-semibold text-gray-50 capitalize font-serif'>
                       {name}
                     </span>
                   </CardContent>

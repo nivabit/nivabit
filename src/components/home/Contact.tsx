@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import { sendContactForm } from "@/lib/mail_sender";
+import BrandButton from "../BrandButton";
 
 const ContactSchema = z.object({
   firstName: z.string().min(2, {
@@ -157,7 +158,7 @@ export function ContactForm({ services }: { services?: string[] }) {
                 <Textarea
                   {...field}
                   placeholder='Type your message here.'
-                  className='min-h-[87px] rounded-[8px]'
+                  className='min-h-[120px] rounded-[8px]'
                 />
               </FormControl>
               <FormMessage />
@@ -165,30 +166,7 @@ export function ContactForm({ services }: { services?: string[] }) {
           )}
         />
 
-        <button
-          className={`group flex items-center p-[10px] bg-primary  text-white rounded-[14px] transition duration-300 ${
-            isSubmitting ? "cursor-wait opacity-50 " : "bg-primary"
-          }`}
-        >
-          {isSubmitting ? (
-            <span className='mr-5 capitalize ml-8'>Sending...</span>
-          ) : (
-            <>
-              <span className='mr-5 capitalize ml-8'>Send</span>
-              <div className='bg-gray-50  px-4 py-3 rounded-[8px]'>
-                <svg
-                  width='18'
-                  height='19'
-                  viewBox='0 0 18 19'
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='w-6 h-6 transform transition-transform duration-300 ease-in-out group-hover:rotate-45 fill-secondary'
-                >
-                  <path d='M17.5822 13.9009V2.11089C17.5822 1.39518 17.1301 0.917856 16.3892 0.917856L4.59917 0.943035C3.90864 0.943035 3.44417 1.45786 3.44417 2.04821C3.44417 2.63804 3.97131 3.14054 4.54881 3.14054H8.29078L14.2672 2.91446L11.9819 4.92339L0.76935 16.1611C0.543814 16.3871 0.418457 16.663 0.418457 16.9271C0.418457 17.5164 0.9456 18.0821 1.5606 18.0821C1.84989 18.0821 2.11346 17.9691 2.33899 17.743L13.5767 6.50536L15.5856 4.23286L15.3595 9.94571V13.9512C15.3595 14.5287 15.862 15.0559 16.4647 15.0559C17.0545 15.0559 17.5822 14.5663 17.5822 13.9009Z' />
-                </svg>
-              </div>
-            </>
-          )}
-        </button>
+        <BrandButton isLoading={isSubmitting} label='Send' type='submit' />
       </form>
     </Form>
   );
@@ -217,14 +195,14 @@ export default function Contact() {
   return (
     <Container>
       <div
-        className='grid grid-cols-1 lg:grid-cols-2 items-start justify-stretch gap-20 mb-28 bg-[#FAFAFC]'
+        className='grid grid-cols-1 lg:grid-cols-2 items-start justify-stretch md:gap-20 gap-12 mb-28 my-[10rem] md:my-48 bg-[#FAFAFC]'
         id='contact-us'
       >
         <div className='h-full'>
-          <h2 className='text-gray-gray-900 text-[56px] font-extrabold leading-tight capitalize text-left mb-5 font-grotesk text-primary'>
+          <h2 className='text-gray-gray-900 lg:text-[56px] md:text-[45px]  text-[30px] font-extrabold leading-tight capitalize text-left mb-1 font-grotesk text-primary'>
             get in touch
           </h2>
-          <p className='text-gray-700 text-left first-letter:uppercase mb-8'>
+          <p className='text-gray-700 text-left first-letter:uppercase md:mb-10 mb-6'>
             Ready to take the next step? Have questions about our services?
             We&apos;re here to help. Let&apos;s start building something
             incredible together.
@@ -232,7 +210,7 @@ export default function Contact() {
           <Image
             src={ContactImage}
             alt='two people discussing'
-            className='w-full auto object-cover rounded-[14px]'
+            className='w-full md:h-[30rem] object-cover rounded-[14px]'
           />
         </div>
         <div className='text-left space-y-10'>
@@ -242,7 +220,7 @@ export default function Contact() {
             </p>
             <div className='flex flex-wrap gap-x-2 lg:gap-x-4 gap-y-8'>
               {serviceList.map((service) => (
-                <div key={service.index}>
+                <div key={service.index} className='pb-2'>
                   <label
                     htmlFor={String(service.index)}
                     className={`py-3 px-3 rounded-[8px] cursor-pointer capitalize ${

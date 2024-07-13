@@ -12,10 +12,11 @@ export default function Home() {
   return (
     <main>
       <BannerSection />
+      <ClientCarouselSpacing />
       <MeetUs />
       <Client />
       <Services />
-      <ClientCarouselSpacing />
+
       <Portfolio />
       <Testimonials />
       <Contact />

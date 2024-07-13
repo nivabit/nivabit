@@ -22,7 +22,7 @@ const services: {
   {
     title: "Brand Design",
     description:
-      "our brand is the face of your business. Our brand design services help you create a strong, memorable identity that resonates with your target audience. From logo design to complete brand overhauls, we ensure your brand stands out in a crowded marketplace.",
+      "Our brand is the face of your business. Our brand design services help you create a strong, memorable identity that resonates with your target audience. From logo design to complete brand overhauls, we ensure your brand stands out in a crowded marketplace.",
 
     size: "normal",
     icon: (className) => (
@@ -63,7 +63,7 @@ const services: {
   {
     title: "Web Development",
     description:
-      "In the digital age, a robust online presence is essential. Our web development team builds responsive, high-performance websites tailored to your business goals. From e-commerce platforms to corporate websites, we deliver web solutions that drive growth and engagement.",
+      "A strong online presence is crucial today. We create custom, responsive websites optimized for performance and aligned with your business objectives. Our solutions, ranging from e-commerce to corporate sites, boost growth and user engagement.",
     size: "normal",
     icon: (className) => (
       <svg
@@ -128,7 +128,7 @@ export default function Services() {
   return (
     <Container>
       <div
-        className='flex flex-col items-start md:items-center justify-center md:gap-28 gap-x-[30px] gap-y-[60px] bg-[#FAFAFC] '
+        className='flex flex-col items-start md:items-center justify-center md:gap-y-20 gap-x-[30px] gap-y-[60px] bg-[#FAFAFC]  lg:mt-48 mt-20'
         id='services'
       >
         <div className=' text-left md:text-center space-y-4 lg:w-3/5'>
@@ -141,13 +141,13 @@ export default function Services() {
             needs.
           </p>
         </div>
-        <div className='flex flex-wrap gap-x-3 gap-y-6 items-center justify-center w-full mt-5'>
+        <div className='flex flex-wrap gap-x-3 gap-y-6 items-center justify-center w-full'>
           {services.map((service, index) => (
             <div
               className={`group  ${
                 service.size === "full"
-                  ? " basis-full mg:basis-[50%] lg:basis-[48.5%]"
-                  : " basis-full mg:basis-[50%] lg:basis-[31.7%]"
+                  ? " basis-full md:basis-[40%] lg:basis-[48.5%]"
+                  : " basis-full md:basis-[40%] lg:basis-[31.7%] "
               } `}
               key={index}
             >
@@ -185,7 +185,7 @@ export default function Services() {
                     {service.description}
                   </p>
                 </CardContent>
-                <CardFooter className='flex justify-between items-center'>
+                <CardFooter className='flex justify-between items-center pb-0 pt-4'>
                   <Link
                     href='/#contact-us'
                     className='text-gray-900 group-hover:text-gray-50 capitalize'

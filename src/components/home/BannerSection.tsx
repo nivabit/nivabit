@@ -6,14 +6,15 @@ import BannerImage from "../../../public/banner-img.png";
 import Link from "next/link";
 import HoverCard from "../HoverCard";
 import Container from "../ui/container";
+import LinkButton from "../LinkButton";
 
 export default function BannerSection() {
   return (
-    <div className='bg-transparent'>
+    <div className='bg-transparent mb-32 lg:mb-48 md:mb-60'>
       <Container>
-        <div className='min-h-screen max-h-[60vh]  lg:min-h-0 lg:mt-48 mt-28'>
+        <div className='min-h-[75vh] max-h-[60vh]  lg:min-h-0 lg:mt-48 mt-28'>
           <div>
-            <div className='flex   flex-col-reverse lg:flex-row items-center justify-between sm:gap-20 md:gap-6'>
+            <div className='flex   flex-col-reverse lg:flex-row items-center justify-between gap-8 md:gap-6'>
               <div className='flex  flex-col items-start md:block  space-y-5 w-full lg:w-1/2  text-start mt-0 md:mb-20'>
                 <h2 className=' text-[35px] md:text-[50px] lg:text-[80px]   font-[1000] text-primary capitalize  leading-[1]  font-grotesk'>
                   Transforming <br />
@@ -28,28 +29,7 @@ export default function BannerSection() {
                   bespoke digital solutions that elevate your brand and drive
                   success.
                 </p>
-                <Link
-                  href='/#contact-us'
-                  className='group inline-flex items-center p-[10px] bg-primary text-white rounded-[14px] transition duration-300'
-                >
-                  <span
-                    className='mr-5 capitalize ml-8 
-                '
-                  >
-                    let&apos;s talk
-                  </span>
-                  <div className='bg-gray-50  p-3 rounded-[8px]  justify-self-end'>
-                    <svg
-                      width='18'
-                      height='19'
-                      viewBox='0 0 18 19'
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='w-6 h-6 transform transition-transform duration-300 ease-in-out group-hover:rotate-45 fill-secondary'
-                    >
-                      <path d='M17.5822 13.9009V2.11089C17.5822 1.39518 17.1301 0.917856 16.3892 0.917856L4.59917 0.943035C3.90864 0.943035 3.44417 1.45786 3.44417 2.04821C3.44417 2.63804 3.97131 3.14054 4.54881 3.14054H8.29078L14.2672 2.91446L11.9819 4.92339L0.76935 16.1611C0.543814 16.3871 0.418457 16.663 0.418457 16.9271C0.418457 17.5164 0.9456 18.0821 1.5606 18.0821C1.84989 18.0821 2.11346 17.9691 2.33899 17.743L13.5767 6.50536L15.5856 4.23286L15.3595 9.94571V13.9512C15.3595 14.5287 15.862 15.0559 16.4647 15.0559C17.0545 15.0559 17.5822 14.5663 17.5822 13.9009Z' />
-                    </svg>
-                  </div>
-                </Link>
+                <LinkButton href="'/#contact-us'" label=" let's talk" />
               </div>
               <div className='relative py-12 lg:py-20'>
                 <div
@@ -60,11 +40,11 @@ export default function BannerSection() {
                   <Image
                     src={BannerImage}
                     alt='man with computer'
-                    className='relative dark:drop-shadow-[0_0_0.3rem_#ffffff70]  '
+                    className='relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] lg:w-[30rem] md:w-[35rem]  w-[16rem]'
                   />
                 </div>
                 <HoverCard
-                  className='absolute top-[12rem] -left-[-0.5rem] md:-left-10  md:top-72'
+                  className='absolute top-[7rem] -left-[3rem] lg:-left-8  lg:top-72 md:top-[16rem]'
                   icon={
                     <svg
                       className='group-hover:mt-1 size-6 '
@@ -77,7 +57,7 @@ export default function BannerSection() {
                   content='Great service without compromising your budget.'
                 />
                 <HoverCard
-                  className='absolute top-[6.5rem] md:top-[7.5rem] -right-[-0.16rem]  md:-right-[0.16rem] '
+                  className='absolute top-[3.8rem] md:top-[8rem] lg:top-[7.5rem] -right-[3.2rem]  lg:right-[2rem] '
                   icon={
                     <svg
                       className='group-hover:mt-1 size-6  '
@@ -90,7 +70,7 @@ export default function BannerSection() {
                   content='Prompt service delivery for quick, efficient solutions.'
                 />
                 <HoverCard
-                  className='absolute  -right-[0.16rem] md:right-[2.84rem]  top-[19rem] md:top-[30rem]'
+                  className='absolute  -right-[3rem] lg:right-[2rem]  top-[16rem] lg:top-[20rem] md:top-[28rem]'
                   icon={
                     <svg
                       className='size-6 stroke-secondary fill-none group-hover:mt-1 group-hover:stroke-primary'

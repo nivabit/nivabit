@@ -79,7 +79,7 @@ export default function Testimonials() {
   const [nextActive, setNextActive] = useState(true);
   return (
     <Container>
-      <div className='mb-48 flex flex-col gap-16 bg-[#FAFAFC]'>
+      <div className='flex flex-col lg:gap-y-16  gap-y-12 mt-20 lg:mt-48 bg-[#FAFAFC]'>
         <div className=''>
           <div className='flex flex-col lg:flex-row lg:gap-0 gap-3  items-center justify-start text-start'>
             <h2 className='lg:text-[56px] md:text-[45px]  text-[30px] font-extrabold leading-snug text-left font-grotesk text-primary'>
@@ -88,7 +88,7 @@ export default function Testimonials() {
             </h2>
 
             <div className='p-1'>
-              <p className='text-start text-gray-500 mb-[7.25rem]'>
+              <p className='text-start text-gray-500 lg:mb-[7.25rem]'>
                 Explore a curated selection of our past projects. From
                 innovative mobile apps to stunning websites, our portfolio
                 showcases the diverse range of industries we&apos;ve worked with
@@ -155,7 +155,7 @@ export default function Testimonials() {
             )}
           </CarouselContent>
           <CarouselPrevious
-            className={`absolute transition-colors border border-primary duration-300 left-[55%] md:left-[38rem] top-[120%] lg:left-[80rem]  lg:top-[-90px] rounded-[8px] h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 left-[55%] md:left-[22rem] top-[120%] lg:left-[86rem]  lg:top-[-90px] rounded-[8px] h-12 w-12 ${
               preActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {
@@ -173,7 +173,7 @@ export default function Testimonials() {
             </svg>
           </CarouselPrevious>
           <CarouselNext
-            className={`absolute transition-colors border border-primary duration-300 lg:right-[12%] md:right-[0%] lg:-top-[28%]  top-[120%] right-[55%] rounded-[8px]  h-12 w-12 ${
+            className={`absolute transition-colors border border-primary duration-300 lg:right-[6%] md:right-[21rem] lg:-top-[28%]  top-[120%] right-[55%] rounded-[8px]  h-12 w-12 ${
               nextActive && "!bg-primary !text-gray-50 border-transparent"
             }`}
             onClick={() => {

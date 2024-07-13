@@ -49,10 +49,10 @@ export default function SideBar() {
           aria-label='Sidebar'
         >
           <NavigationMenu className='h-screen absolute top-0 bottom-0 left-0 px-3 py-4 overflow-y-auto  bg-primary items-start'>
-            <NavigationMenuList className='space-y-2 font-medium flex-col w-64'>
+            <NavigationMenuList className='space-y-2 font-medium flex-col w-64 items-start pl-10 justify-center'>
               <NavigationMenuItem className='flex items-center p-2 text-gray-50 rounded-lg hover:bg-primary/80'>
                 <NavigationMenuLink
-                  className='capitalize cursor-pointer flex-1 ms-3 text-xl font-semibold whitespace-nowrap '
+                  className='capitalize cursor-pointer flex-1 ml-4 text-xl font-semibold whitespace-nowrap '
                   href='/#services'
                   onClick={hideSidebar}
                 >
