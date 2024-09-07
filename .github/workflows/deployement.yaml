@@ -28,4 +28,4 @@ jobs:
             git pull
             npm install 
             npm run build
-            /usr/bin/pm2 reload ${{ secrets.SERVICE_NAME }}
+            pm2 reload ${{ secrets.SERVICE_NAME }}
