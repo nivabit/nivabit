@@ -28,5 +28,5 @@ jobs:
             git pull
             npm install 
             npm run build
-            cd ..
-            ~/.nvm/versions/node/v20.17.0/bin/pm2  reload ${{ secrets.SERVICE_NAME }}
+            cd ~/.nvm/versions/node/v20.17.0/bin/
+            pm2  reload ${{ secrets.SERVICE_NAME }}
