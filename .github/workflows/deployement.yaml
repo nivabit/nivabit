@@ -29,4 +29,4 @@ jobs:
             npm install 
             npm run build
             cd ..
-            /home/nivabit/.nvm/versions/node/v20.17.0/bin/pm2 reload ${{ secrets.SERVICE_NAME }}
+            ~/.nvm/versions/node/v20.17.0/bin/pm2  reload ${{ secrets.SERVICE_NAME }}
