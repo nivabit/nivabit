@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
 
           script: |
-            cd homes/nivabit/
+            cd nivabit/
             git pull
             npm install 
             npm run build
