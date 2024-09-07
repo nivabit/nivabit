@@ -28,5 +28,5 @@ jobs:
             git pull
             npm install 
             npm run build
-            pm2 list
-            ~/.pm2 reload ${{ secrets.SERVICE_NAME }}
+            echo ${pm2 list}
+            # ~/.pm2 reload ${{ secrets.SERVICE_NAME }}
