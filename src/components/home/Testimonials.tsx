@@ -98,7 +98,7 @@ export default function Testimonials() {
           </div>
         </div>
         <div>
-          <h1>Coming Soon...</h1>
+          <h1>Coming Soon... 😎</h1>
         </div>
         {/* <Carousel className='w-full'>
           <CarouselContent className='flex items-center gap-x-[20px]'>
