@@ -27,6 +27,6 @@ jobs:
             cd nivabit/
             git pull
             npm install 
-            # npm run build
-            echo $(pm2 list)
-            # ~/.pm2 reload ${{ secrets.SERVICE_NAME }}
+            npm run build
+            cd ..
+            pm2 reload ${{ secrets.SERVICE_NAME }}
