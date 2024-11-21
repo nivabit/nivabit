@@ -20,4 +20,6 @@ export const mailOptions = {
   to: email,
 };
 
+
+
 export type contactType = { name: string; services?: string[]; email: string; subject: string; message?: string; company?: string };
