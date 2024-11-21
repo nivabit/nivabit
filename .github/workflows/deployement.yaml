@@ -25,7 +25,7 @@ jobs:
 
           script: |
             cd public_html
-            git pull
+            git pull origin main
             npm install 
             npm run build
             pm2 reload ${{ secrets.SERVICE_NAME }}
