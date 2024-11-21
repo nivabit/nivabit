@@ -19,16 +19,16 @@ jobs:
       - name: Execute remote SSH commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 38.242.149.11
-          username: nivabit
-          password: "@bigAnimalFarm24."
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
 
           script: |
-            cd nivabit/public_html
+            cd public_html
             git pull
             npm install 
             npm run build
-            pm2 reload nivabit
+            pm2 reload ${{ secrets.SERVICE_NAME }}
 
           # script: |
           #   cd nivabit/
