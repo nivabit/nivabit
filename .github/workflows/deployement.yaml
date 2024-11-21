@@ -24,10 +24,7 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
 
           script: |
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-            nvm use 20.17.0
-            cd nivabit/
+            cd nivabit/public_html
             git pull
             npm install 
             npm run build
