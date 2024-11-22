@@ -9,7 +9,6 @@ const port = process.env.SMTP_PORT;
 export const transporter = nodemailer.createTransport({
   host: host,
   port: port,
-  secure: true,
   auth: {
     user: email,
     pass: pass,

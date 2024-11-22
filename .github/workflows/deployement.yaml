@@ -29,10 +29,3 @@ jobs:
             npm install 
             npm run build
             pm2 reload ${{ secrets.SERVICE_NAME }}
-
-          # script: |
-          #   cd nivabit/
-          #   git pull
-          #   npm install
-          #   npm run build
-          #   /home/nivabit/.nvm/versions/node/v20.17.0/bin/pm2  reload ${{ secrets.SERVICE_NAME }}
