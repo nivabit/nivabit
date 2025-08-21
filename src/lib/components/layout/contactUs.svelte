@@ -2,6 +2,11 @@
 	import { reveal } from "$lib/actions/reveal";
 	import { revealWords } from "$lib/actions/revealWords";
 	import Button from "../ui/button/button.svelte";
+	import Input from "../ui/input/input.svelte";
+	import Textarea from "../ui/textarea/textarea.svelte";
+  import { z } from "zod";
+  import { toast } from "svelte-sonner";
+	import { sendContactForm } from "$lib/mail_sender";
 
   let selectedService = $state('Design');
   const services = ['Design', 'Development', 'Research', 'Others'];
@@ -10,10 +15,68 @@
     selectedService = service;
   }
 
-  function handleSubmit(event: Event) {
-    event.preventDefault();
-    // Handle form submission here (e.g., send to backend or use SvelteKit form actions)
-  }
+  const ContactSchema = z.object({
+    name: z.string().min(2, {
+      message: "First name must be at least 2 characters.",
+    }),
+    email: z.string({ message: "Company email is required" }).email(),
+    message: z.string().min(5, "Message must be at least 5 characters.")
+  });
+
+  let name = $state("");
+	let email = $state("");
+	let message = $state("");
+
+  let errors: Record<string, string> = $state({});
+	let isSubmitting = $state(false);
+
+  async function handleSubmit(e: Event) {
+		e.preventDefault();
+		errors = {}; // reset
+
+		const result = ContactSchema.safeParse({
+			name,
+			email,
+			message
+		});
+
+		if (!result.success) {
+			// collect zod errors
+			for (const err of result.error.issues) {
+				errors[err.path[0] as string] = err.message;
+			}
+			return;
+		}
+
+		isSubmitting = true;
+
+    try {      
+		  // simulate sending form (replace with your API call e.g. sendContactForm)
+      const res = await sendContactForm({
+        services: selectedService,
+        ...result.data,
+        subject: "Lead from contact"
+      });
+
+      if (res.ok) {
+        toast.success("Message was sent successfully", {
+          description: "Thanks for contacting us, our team will reach out soon."
+        });
+
+        // reset form
+        name = "";
+        email = "";
+        message = "";
+        selectedService = "Design";
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    }catch (err) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      isSubmitting = false;
+    }
+	}
 </script>
 
   <section id="contact" class="bg-brand-blue-900 px-4 md:px-16 py-16 md:py-24">
@@ -28,7 +91,7 @@
             Tell us about your project
           </h2>
   
-          <form class="space-y-10" >
+          <form class="space-y-10" onsubmit={handleSubmit} >
             <!-- Service Selection -->
             <div use:reveal class="reveal">
               <label for="" class="text-white text-lg  block mb-3">Choose service</label>
@@ -53,39 +116,58 @@
             </div>
   
             <!-- Name and Email -->
-            <div use:reveal>
-              <label for="" class="reveal text-white text-lg  block mb-3">Name</label>
+            <div use:reveal class="reveal">
+              <label for="name" class="text-white text-lg  block mb-3">Name</label>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <input
+                <Input
                   type="text"
                   placeholder="John Doe"
-                  class="bg-transparent border border-bg-blue rounded-full px-5 py-3 text-brand-grey-200  placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
+                  bind:value={name}
+                  name="name"
+                  id="name"
+                  class="bg-transparent border border-bg-blue rounded-full px-5 py-7 text-brand-grey-200  placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
                 />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  class="bg-transparent border border-bg-blue rounded-full px-5 py-3 text-brand-grey-200  placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
-                />
+                {#if errors.name}<p class="text-red-500 text-sm block md:hidden">{errors.name}</p>{/if}
+                <div>
+                  <label for="name" class="text-white text-lg mb-3 md:hidden block">Email</label>
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    bind:value={email}
+                    name="email"
+                    id="email"
+                    class="bg-transparent border border-bg-blue rounded-full px-5 py-7 text-brand-grey-200  placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
+                  />
+                </div>
+                {#if errors.name}<p class="text-red-500 text-sm md:block hidden">{errors.name}</p>{/if}
+                {#if errors.email}<p class="text-red-500 text-sm">{errors.email}</p>{/if}
               </div>
             </div>
-  
+
             <!-- Message -->
             <div use:reveal class="reveal">
-              <label for="" class="text-white text-lg  block mb-3">Message</label>
-              <textarea
+              <label for="message" class="text-white text-lg  block mb-3">Message</label>
+              <Textarea
                 rows={6}
                 placeholder="Your Message"
+                bind:value={message}
+                name="message"
+                id="message"
                 class="w-full bg-transparent border border-bg-blue rounded-2xl px-5 py-5 text-brand-grey-200  placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 resize-none"
-              ></textarea>
+              ></Textarea>
+              {#if errors.message}<p class="text-red-500 text-sm mt-5">{errors.message}</p>{/if}
+
             </div>
   
             <!-- Submit Button -->
             <div use:reveal class="reveal">
               <Button
+                disabled={isSubmitting}
                 type="submit"
                 class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors"
               >
-                Submit
+                
+                {isSubmitting ? "Submitting..." : "Submit"}
                 <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
                   <path
                     d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"

@@ -140,11 +140,11 @@
         <div class="flex animate-scroll space-x-3 md:space-x-5">
             {#each Array(10) as _, i}
             <div class="flex-shrink-0">
-                <img
-                src={`${imageIds}`}
+              <img
+                src={imageIds[i % imageIds.length]}
                 alt={`Project ${i + 1}`}
                 class="w-64 md:w-80 h-64 md:h-80 object-cover rounded-2xl"
-                />
+              />
             </div>
             {/each}
         </div>
