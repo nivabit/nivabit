@@ -5,13 +5,13 @@
   import { get } from 'svelte/store';
 	import { goto } from "$app/navigation";
 	import Button from "../ui/button/button.svelte";
-	import IconButton from "../ui/button/iconButton.svelte";
+	import IconButton from "$lib/components/customUI/button/iconButton.svelte";
 	import Twitter from "../icon/twitter.svelte";
 	import Facebook from "../icon/facebook.svelte";
 	import Linkedin from "../icon/linkedin.svelte";
 	import Message from "../icon/message.svelte";
 	import Call from "../icon/call.svelte";
-	import CustomButton from "../ui/button/customButton.svelte";
+	import CustomButton from "$lib/components/customUI/button/customButton.svelte";
 
   let iconFills: Record<string, string> = $state({
     twitter: "#ffffff",
@@ -119,7 +119,9 @@
         <h4 class="text-white text-lg  font-medium">Quick Links</h4>
         <nav class="space-y-3">
           {#each quickLinks as link}
-            <CustomButton title={link} className="" href="/" />
+            <CustomButton className="" href="/">
+              {link}
+            </CustomButton>
           {/each}
         </nav>
       </div>
@@ -159,8 +161,8 @@
       </p>
 
       <div class="flex gap-8">
-        <CustomButton title="Privacy Policy" className="" />
-        <CustomButton title="Terms of Service" className="" />
+        <CustomButton className="">Privacy Policy</CustomButton>
+        <CustomButton className="">Terms of Service</CustomButton>
       </div>
     </div>
   </div>

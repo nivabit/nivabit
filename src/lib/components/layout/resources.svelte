@@ -2,7 +2,7 @@
 	import { goto } from "$app/navigation";
 	import { reveal } from "$lib/actions/reveal";
 	import { revealWords } from "$lib/actions/revealWords";
-	import Button from "../ui/button/button.svelte";
+	import MainButton from "../customUI/button/MainButton.svelte";
 
   const articles = [
     {
@@ -97,7 +97,7 @@
 
     <!-- View All Button -->
     <div use:reveal class="reveal text-center">
-      <Button class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors mx-auto">
+      <MainButton class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors mx-auto">
         View all articles
         <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
           <path
@@ -105,7 +105,7 @@
             fill="white"
           />
         </svg>
-      </Button>
+      </MainButton>
     </div>
   </div>
 </section>

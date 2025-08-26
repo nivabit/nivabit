@@ -2,7 +2,7 @@
 	import { cn } from "$lib/utils";
 
 
-    let {title, className, href=undefined, ...restProps} = $props()
+    let {children, className, href=undefined, ...restProps} = $props()
 
 </script>
 
@@ -14,8 +14,8 @@
         {...restProps}
     >
         <span class="slide-text">
-            <span class="text-top">{title}</span>
-            <span class="text-bottom text-brand-orange-500">{title}</span>
+            <span class="text-top">{@render children?.()}</span>
+            <span class="text-bottom text-brand-orange-500">{@render children?.()}</span>
         </span>
     </a>
 {:else}
@@ -24,8 +24,8 @@
         class={cn("flip-button text-white text-sm hover:underline hover:bg-transparent transition-colors duration-300", className)}
     >
         <span class="slide-text">
-        <span class="text-top">{title}</span>
-        <span class="text-bottom text-brand-orange-500">{title}</span>
+        <span class="text-top">{@render children?.()}</span>
+        <span class="text-bottom text-brand-orange-500">{@render children?.()}</span>
         </span>
     </button>
 {/if}

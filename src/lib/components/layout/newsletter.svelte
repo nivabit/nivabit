@@ -2,7 +2,7 @@
 	import { reveal } from "$lib/actions/reveal";
 	import { revealWords } from "$lib/actions/revealWords";
 	import { cn } from "$lib/utils";
-	import Button from "../ui/button/button.svelte";
+	import MainButton from "../customUI/button/MainButton.svelte";
 	import Input from "../ui/input/input.svelte";
 
     let { class: customClass = '' } = $props();
@@ -33,12 +33,12 @@
                     placeholder="Your Email"
                     class="flex-1 bg-white border-none rounded-full px-5 py-3 text-brand-grey-500  placeholder:text-text-grey focus:outline-none focus:ring-none focus:ring-brand-orange-500 shadow-none focus-visible:outline-none focus:border-none"
                 />
-                <Button class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors flex-shrink-0">
+                <MainButton class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors flex-shrink-0">
                     Subscribe
                     <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
                     <path d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z" fill="white"/>
                     </svg>
-                </Button>
+                </MainButton>
             </div>
         </div>
         </div>

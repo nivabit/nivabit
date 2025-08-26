@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { reveal } from "$lib/actions/reveal";
 	import { revealWords } from "$lib/actions/revealWords";
+	import MainButton from "$lib/components/customUI/button/MainButton.svelte";
 	import ContactUs from "$lib/components/layout/contactUs.svelte";
 	import Hero from "$lib/components/layout/Hero.svelte";
 	import Newsletter from "$lib/components/layout/newsletter.svelte";
 	import Process from "$lib/components/layout/process.svelte";
 	import Resources from "$lib/components/layout/resources.svelte";
-	import Button from "$lib/components/ui/button/button.svelte";
   import Motion from 'motion-svelte';
   import { onMount } from 'svelte';
 
@@ -162,9 +162,9 @@
         <div use:reveal class="reveal flex justify-between items-center opacity-50 space-x-8 md:space-x-16">
           {#each Array(6) as _, i}
             <img
-              src="/images/logo.png"
+              src={`/images/clients/${i + 1}.png`}
               alt={`Logo ${i + 1}`}
-              class="h-6 w-auto opacity-75 hover:opacity-100 transition-opacity"
+              class="h-8 w-auto opacity-75 hover:opacity-100 transition-opacity"
             />
           {/each}
         </div>
@@ -186,12 +186,12 @@
                 </h2>
                 
                 <div use:reveal class="reveal text-center">
-                  <Button class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm hover:bg-brand-orange-500/90 transition-colors">
+                  <MainButton class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm hover:bg-brand-orange-500/90 transition-colors">
                     Get Started
                     <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
                       <path d="M2.66602 8.03777V9.3711H10.666L6.99935 13.0378L7.94602 13.9844L13.226 8.70444L7.94602 3.42444L6.99935 4.37111L10.666 8.03777H2.66602Z" fill="white"/>
                     </svg>
-                  </Button>
+                  </MainButton>
                 </div>
                 
               </div>
@@ -240,12 +240,12 @@
 
                   <div class="hidden group-hover:block transition-display ease-in-out">
                     <p class="md:text-2xl text-lg font-normal text-brand-grey-500 mb-8">{service.desc}</p>
-                    <Button variant="outline" class="flex items-center gap-2 px-5 py-3 rounded-full text-sm transition-colors bg-transparent border border-brand-blue-700">
+                    <MainButton variant="outline" class="flex items-center gap-2 px-5 py-3 rounded-full text-sm transition-colors bg-transparent border border-brand-blue-700">
                       Get Started
                       <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
                         <path d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z" fill="#00042B"/>
                       </svg>
-                    </Button>
+                    </MainButton>
                   </div>
                 </div>
               </div>
@@ -302,12 +302,12 @@
       
               <!-- CTA Button -->
               <div use:reveal class="reveal text-center">
-                <Button class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors">
+                <MainButton class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors">
                   Get Started
                   <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
                     <path d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z" fill="white"/>
                   </svg>
-                </Button>
+                </MainButton>
               </div>
             </div>
           </div>

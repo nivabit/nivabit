@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
 	import { fly} from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 
@@ -17,13 +16,13 @@
 <ProgressSpinner />
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" href="/favicon.ico" />
 </svelte:head>
 
 {#key data.pathname}
-	<Header />
+	<!-- <Header /> -->
 	<main in:fly={{ easing: cubicOut, y: 10, duration: 100, delay: 100 }}>
 		{@render children()}
 	</main>
-	<Footer />
+	<!-- <Footer /> -->
 {/key}

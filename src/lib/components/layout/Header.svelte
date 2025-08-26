@@ -5,8 +5,8 @@
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
-	import Button from '../ui/button/button.svelte';
-	import CustomButton from '../ui/button/customButton.svelte';
+	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
+	import MainButton from '../customUI/button/MainButton.svelte';
   
   let isMenuOpen = false;
 
@@ -60,21 +60,21 @@
   
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center space-x-8">
-        <CustomButton title="Home" className="" href="/" onclick={() => handleNavClick('home')} />
-        <CustomButton title="Services" className="" href="#services" onclick={() => handleNavClick('services')} />
-        <CustomButton title="About us" className="" href="#about" onclick={() => handleNavClick('about')} />
-        <CustomButton title="Article" className="" href="/articles"/>
-        <CustomButton title="Contact us" className="" href="#contact" onclick={() => handleNavClick('contact')} />
+        <CustomButton  className="" href="/" onclick={() => handleNavClick('home')} > Home </CustomButton>
+        <CustomButton  className="" href="#services" onclick={() => handleNavClick('services')} > Services </CustomButton>
+        <CustomButton  className="" href="#about" onclick={() => handleNavClick('about')} > About us </CustomButton>
+        <CustomButton  className="" href="/articles" > Article</CustomButton>
+        <CustomButton  className="" href="#contact" onclick={() => handleNavClick('contact')} >Contact us </CustomButton>
       </nav>
   
       <!-- CTA Button & Mobile Menu Toggle -->
       <div class="flex items-center gap-4">
-        <Button class="hidden lg:flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm font-synonym hover:bg-brand-orange-500/90 transition-colors">
+        <MainButton class="hidden lg:flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm font-synonym hover:bg-brand-orange-500/90 transition-colors">
           Book a Call
           <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
             <path d="M2.66602 7.83333V9.16667H10.666L6.99935 12.8333L7.94602 13.78L13.226 8.5L7.94602 3.22L6.99935 4.16667L10.666 7.83333H2.66602Z" fill="white"/>
           </svg>
-        </Button>
+        </MainButton>
   
         <!-- Mobile Menu Button -->
         <button class="lg:hidden text-white p-2" onclick={() => (isMenuOpen = !isMenuOpen)}>
@@ -91,18 +91,18 @@
     {#if isMenuOpen}
       <div class="lg:hidden absolute top-full left-0 w-full bg-brand-blue-900 border-t border-brand-blue-400">
         <nav class="flex flex-col p-4 space-y-4">
-          <CustomButton title="Home" className="" href="/" onclick={() => {closeMenu(); handleNavClick('home');}} />
-          <CustomButton title="Services" className="" href="#services" onclick={() => {closeMenu(); handleNavClick('services')}} />
-          <CustomButton title="About us" className="" href="#about" onclick={() => {closeMenu(); handleNavClick('about')}} />
-          <CustomButton title="Article" className="" href="/articles"/>
-          <CustomButton title="Contact us" className="" href="#contact" onclick={() => {closeMenu(); handleNavClick('contact')}} />
+          <CustomButton  className="" href="/" onclick={() => {closeMenu(); handleNavClick('home');}} >Home</CustomButton>
+          <CustomButton  className="" href="#services" onclick={() => {closeMenu(); handleNavClick('services')}} > Services</CustomButton>
+          <CustomButton  className="" href="#about" onclick={() => {closeMenu(); handleNavClick('about')}} > About us</CustomButton>
+          <CustomButton  className="" href="/articles"> Article</CustomButton>
+          <CustomButton  className="" href="#contact" onclick={() => {closeMenu(); handleNavClick('contact')}} >Contact us </CustomButton>
           
-          <Button class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm font-synonym hover:bg-brand-orange-500/90 transition-colors w-full">
+          <MainButton class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm font-synonym hover:bg-brand-orange-500/90 transition-colors w-full">
             Book a Call
             <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
               <path d="M2.66602 7.83333V9.16667H10.666L6.99935 12.8333L7.94602 13.78L13.226 8.5L7.94602 3.22L6.99935 4.16667L10.666 7.83333H2.66602Z" fill="white"/>
             </svg>
-          </Button>
+          </MainButton>
         </nav>
       </div>
     {/if}

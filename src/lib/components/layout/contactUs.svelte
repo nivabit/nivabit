@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { reveal } from "$lib/actions/reveal";
 	import { revealWords } from "$lib/actions/revealWords";
-	import Button from "../ui/button/button.svelte";
 	import Input from "../ui/input/input.svelte";
 	import Textarea from "../ui/textarea/textarea.svelte";
   import { z } from "zod";
   import { toast } from "svelte-sonner";
 	import { sendContactForm } from "$lib/mail_sender";
+	import MainButton from "../customUI/button/MainButton.svelte";
 
   let selectedService = $state('Design');
   const services = ['Design', 'Development', 'Research', 'Others'];
@@ -161,7 +161,7 @@
   
             <!-- Submit Button -->
             <div use:reveal class="reveal">
-              <Button
+              <MainButton
                 disabled={isSubmitting}
                 type="submit"
                 class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors"
@@ -174,7 +174,7 @@
                     fill="white"
                   />
                 </svg>
-              </Button>
+              </MainButton>
             </div>
           </form>
         </div>
