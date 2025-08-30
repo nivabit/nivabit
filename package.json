@@ -36,6 +36,7 @@
 		"@tanstack/table-core": "^8.21.3",
 		"@types/d3-scale": "^4.0.9",
 		"@types/d3-shape": "^3.1.7",
+		"@types/jsonwebtoken": "^9.0.10",
 		"@types/nodemailer": "^7.0.1",
 		"@vitest/browser": "^3.2.3",
 		"bits-ui": "^2.9.2",
@@ -70,12 +71,18 @@
 		"vitest-browser-svelte": "^0.1.0"
 	},
 	"dependencies": {
+		"@prisma/client": "^6.15.0",
+		"argon2": "^0.44.0",
+		"bcryptjs": "^3.0.2",
+		"jsonwebtoken": "^9.0.2",
 		"lucide-svelte": "^0.539.0",
 		"motion-svelte": "^0.0.1",
 		"nodemailer": "^7.0.5",
+		"prisma": "^6.15.0",
 		"svelte-inview": "^4.0.4",
 		"svelte-sonner": "^1.0.5",
 		"three": "^0.179.1",
+		"uuid": "^11.1.0",
 		"zod": "^3.25.76"
 	}
 }

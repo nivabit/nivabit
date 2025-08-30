@@ -12,11 +12,11 @@
 
   // Image IDs for scrolling section
   const imageIds = [
-      '/images/Project-1.png',
-      '/images/Project-2.png',
-      '/images/Project-3.png',
-      '/images/Project-4.png',
-      '/images/Project-5.png',
+    '/images/Project-1.png',
+    '/images/Project-2.png',
+    '/images/Project-3.png',
+    '/images/Project-4.png',
+    '/images/Project-5.png',
   ];
 
   const services = [
@@ -53,34 +53,27 @@
   ];
 
   const projects = [
-      {
+    {
       title: "Fermerce",
       duration: "6 weeks",
       type: "Website",
       category: "Ecommerce",
-      image: "/images/portfolio1.png"
-      },
-      {
+      image: "/images/portfolio2.png"
+    },
+    {
       title: "Padetunes",
       duration: "8 weeks",
       type: "WebApp",
       category: "Music",
-      image: "/images/portfolio2.png"
-      },
-      {
+      image: "/images/portfolio1.png"
+    },
+    {
       title: "Mr. Olusola's Website",
       duration: "4 weeks",
       type: "Website",
       category: "Personal",
-      image: "/images/portfolio3.png"
-      },
-      {
-      title: "Fermerce",
-      duration: "6 weeks",
-      type: "Website",
-      category: "Ecommerce",
       image: "/images/portfolio4.png"
-      }
+    },
   ];
 
   let testimonials = [
@@ -107,6 +100,11 @@
   let current = $state(0);
   let direction = $state(1);
   let mounted = $state(false);
+  let activeServiceIndex: number | null = $state(null);
+
+  function toggleService(index: number) {
+    activeServiceIndex = activeServiceIndex === index ? null : index;
+  }
 
   function next() {
     direction = 1;
@@ -219,12 +217,12 @@
           <!-- Services List -->
           <div class="space-y-0">
             {#each services as service, index}
-              <div use:reveal class="reveal flex flex-col lg:flex-row gap-8 lg:gap-24 py-12 md:py-16 border-b border-brand-blue-100">
+              <button type="button" use:reveal class="reveal flex flex-col lg:flex-row gap-8 lg:gap-24 py-12 md:py-16 border-b border-brand-blue-100 w-full text-start" onclick={() => toggleService(index)}>
                 <div class="w-full lg:w-96 flex-shrink-0">
                   <p class="text-brand-grey-500 text-lg ">{service.number}</p>
                 </div>
       
-                <div class="flex-1 space-y-10 group">
+                <div class="flex-1 space-y-10">
                   <h3 class="text-2xl md:text-3xl  font-bold text-brand-grey-500">
                     {service.title}
                   </h3>
@@ -238,17 +236,19 @@
                     {/each}
                   </div>
 
-                  <div class="hidden group-hover:block transition-display ease-in-out">
-                    <p class="md:text-2xl text-lg font-normal text-brand-grey-500 mb-8">{service.desc}</p>
-                    <MainButton variant="outline" class="flex items-center gap-2 px-5 py-3 rounded-full text-sm transition-colors bg-transparent border border-brand-blue-700">
-                      Get Started
-                      <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
-                        <path d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z" fill="#00042B"/>
-                      </svg>
-                    </MainButton>
-                  </div>
+                  {#if activeServiceIndex === index}
+                    <div class="transition-display ease-in-out">
+                      <p class="md:text-2xl text-lg font-normal text-brand-grey-500 mb-8">{service.desc}</p>
+                      <MainButton variant="outline" class="flex items-center gap-2 px-5 py-3 rounded-full text-sm transition-colors bg-transparent border border-brand-blue-700">
+                        Get Started
+                        <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
+                          <path d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z" fill="#00042B"/>
+                        </svg>
+                      </MainButton>
+                    </div>
+                  {/if}
                 </div>
-              </div>
+              </button>
             {/each}
           </div>
         </div>
@@ -273,7 +273,7 @@
                         {project.title}
                       </h3>
       
-                      <div class="flex justify-center items-center gap-3 flex-wrap">
+                      <div class="flex justify-center items-center gap-2 flex-wrap">
                         <span class="bg-bg-blue text-brand-blue-500 px-5 py-2 rounded-full text-sm transition-colors duration-300 ease-in-out group-hover:bg-brand-blue-700 group-hover:text-white">
                           {project.duration}
                         </span>

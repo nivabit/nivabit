@@ -8,7 +8,7 @@
 	import { sendContactForm } from "$lib/mail_sender";
 	import MainButton from "../customUI/button/MainButton.svelte";
 
-  let selectedService = $state('Design');
+  let selectedService = $state('');
   const services = ['Design', 'Development', 'Research', 'Others'];
 
   function selectService(service: string) {

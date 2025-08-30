@@ -12,6 +12,8 @@
 	import Message from "../icon/message.svelte";
 	import Call from "../icon/call.svelte";
 	import CustomButton from "$lib/components/customUI/button/customButton.svelte";
+	import { Instagram, InstagramIcon } from "lucide-svelte";
+	import { IconBrandTiktok } from "@tabler/icons-svelte";
 
   let iconFills: Record<string, string> = $state({
     twitter: "#ffffff",
@@ -24,29 +26,44 @@
   const contactDetails = [
     {
       name: "message",
-      title:'Nivabit@gmail.com',
-      icon: Message
+      title:'contact@nivabit.com',
+      icon: Message,
+      url: ""
     },
     {
       name: "call",
-      title:'facebook',
-      icon: Call
+      title:'+2349071133025',
+      icon: Call,
+      url: "https://www.facebook.com/search/top?q=nivabit"
     },
   ];
 
   const socialLinks = [
     {
       name:'twitter',
-      icon: Twitter
+      icon: Twitter,
+      url: "@groupnivabit"
     },
     {
       name:'facebook',
-      icon: Facebook
+      icon: Facebook,
+      url: "https://www.facebook.com/search/top?q=nivabit"
     },
     {
       name:'linkedin',
-      icon: Linkedin
-    }
+      icon: Linkedin,
+      url: "https://www.linkedin.com/company/104662763/admin/dashboard/"
+    },
+    // {
+    //   name:'instagram',
+    //   icon: InstagramIcon,
+    //   url: "https://www.instagram.com/groupnivabit/"
+    // },
+    // {
+    //   name:'Tiktok',
+    //   icon: IconBrandTiktok,
+    //   url: "https://www.tiktok.com/@nivabit"
+    // }
   ];
   const quickLinks = ['Home', 'Services', 'About us', 'Contact us'];
 

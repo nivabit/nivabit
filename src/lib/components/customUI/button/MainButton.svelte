@@ -16,34 +16,6 @@
 	}: any = $props();
 </script>
 
-<!-- {#if href}
-	<a
-		bind:this={ref}
-		data-slot="button"
-		class={cn(buttonVariants({ variant, size }), className)}
-		href={disabled ? undefined : href}
-		aria-disabled={disabled}
-		role={disabled ? "link" : undefined}
-		tabindex={disabled ? -1 : undefined}
-		{...restProps}
-	>
-		{@render children?.()}
-	</a>
-{:else} -->
-	<!-- Inside the <button> tag in your existing code -->
-	<!-- <button
-		bind:this={ref}
-		data-slot="button"
-		class={cn(buttonVariants({ variant, size }), "relative overflow-hidden w-48 h-12", className)}
-		{type}
-		{disabled}
-		{...restProps}
-	>
-		<span class="text-slide-wrapper">
-		  <span class="text-top">{@render children?.()}</span>
-		  <span class="text-bottom bg-brand-blue-700 w-full">{@render children?.()}</span>
-		</span>
-	</button>	   -->
 
 <Button
   bind:this={ref}
