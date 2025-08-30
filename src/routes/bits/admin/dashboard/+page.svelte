@@ -1,7 +1,13 @@
 <script lang="ts">
-  // import DashboardLayout from '$lib/components/DashboardLayout.svelte';
+
   import MainButton from '$lib/components/customUI/button/MainButton.svelte';
-import { FileText, Users, Eye, MessageCircle, TrendingUp, Plus } from 'lucide-svelte';
+  import { FileText, Users, Eye, MessageCircle, TrendingUp, Plus } from 'lucide-svelte';
+
+  let { data } = $props()
+
+  let user = $state(data?.user)
+  console.log(user);
+  
 
   // Sample data - in a real app, this would come from an API
   const stats = [
@@ -78,7 +84,7 @@ import { FileText, Users, Eye, MessageCircle, TrendingUp, Plus } from 'lucide-sv
     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
       <div>
         <h1 class="text-2xl lg:text-3xl font-cabinet font-medium mb-2">
-          Welcome back, Admin!
+          Welcome back, {user?.name}!
         </h1>
         <p class="text-brand-blue-100 font-synonym">
           Here's what's happening with your content today.

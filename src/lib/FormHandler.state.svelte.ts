@@ -1,9 +1,11 @@
+// src/lib/FormHandler.ts
 import { z, ZodSchema } from "zod";
 
 export class FormHandler<T> {
   schema: ZodSchema<T>;
   values: Record<string, any>;
   errors: Record<string, string> = $state({});
+  touched: Record<string, boolean> = $state({});
   loading = $state(false);
 
   constructor(schema: ZodSchema<T>, initial: Partial<T> = {}) {
@@ -13,6 +15,23 @@ export class FormHandler<T> {
 
   setValue(field: string, value: any) {
     this.values[field] = value;
+    this.touched[field] = true; // user interacted
+    this.validateField(field);
+  }
+
+  validateField(field: string) {
+    const result = this.schema.safeParse(this.values);
+    if (!result.success) {
+      // check if field has an error
+      const err = result.error.errors.find(e => e.path.join(".") === field);
+      if (err) {
+        this.errors[field] = err.message;
+      } else {
+        delete this.errors[field];
+      }
+    } else {
+      delete this.errors[field];
+    }
   }
 
   validate(): boolean {
@@ -29,7 +48,7 @@ export class FormHandler<T> {
     return true;
   }
 
-  async submit(endpoint: string, options: RequestInit = {}) {
+  async submit(requestFn: (data: any) => Promise<any>) {
     if (!this.validate()) {
       return { success: false, errors: this.errors };
     }
@@ -37,26 +56,12 @@ export class FormHandler<T> {
     this.errors = {}; // clear old errors
 
     try {
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(this.values),
-        ...options,
-      });
-
-      const data = await res.json();
+      const data = await requestFn(this.values);
       this.loading = false;
-
-      if (!res.ok) {
-        // ✅ put error in root for UI
-        this.errors.root = data.message || data?.error || "Login failed";
-        return { success: false, errors: this.errors };
-      }
-
       return { success: true, ...data };
-    } catch (err) {
+    } catch (err: any) {
       this.loading = false;
-      this.errors.root = "Network error. Please try again.";
+      this.errors.root = err.message || "Request failed";
       return { success: false, errors: this.errors };
     }
   }

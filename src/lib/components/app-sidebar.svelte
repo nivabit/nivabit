@@ -54,11 +54,6 @@
 				url: "/bits/admin/dashboard/team",
 				icon: UsersIcon,
 			},
-			{
-				title: "Users",
-				url: "/bits/admin/dashboard/users",
-				icon: Users,
-			},
 		],
 		navClouds: [
 			{
@@ -114,11 +109,6 @@
 				url: "#",
 				icon: SettingsIcon,
 			},
-			{
-				title: "Get Help",
-				url: "#",
-				icon: HelpIcon,
-			},
 		],
 	};
 
@@ -144,6 +134,6 @@
 		<NavSecondary items={data.navSecondary} class="mt-auto" />
 	</Sidebar.Content>
 	<Sidebar.Footer class="bg-brand-blue-900 text-white">
-		<NavUser user={data.user} />
+		<NavUser />
 	</Sidebar.Footer>
 </Sidebar.Root>

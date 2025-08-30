@@ -2,28 +2,17 @@
 	import CustomButton from "$lib/components/customUI/button/customButton.svelte";
 	import MainButton from "$lib/components/customUI/button/MainButton.svelte";
 	import { ArrowLeft, Eye, EyeOff, Lock, Mail } from "lucide-svelte";
-    import { FormHandler } from "$lib/FormHandler.state.svelte";
     import { loginSchema } from "$lib/validation/validation";
     import { accessToken, adminUser } from "../../../../../hooks.client";
 	import Label from "$lib/components/ui/label/label.svelte";
 	import Input from "$lib/components/ui/input/input.svelte";
+	import { enhance } from "$app/forms";
 
-    // 🔐 use reusable form handler
-    let form = new FormHandler(loginSchema, { email: "", password: "" });
     let showPassword = $state(false);
-
-    async function handleSubmit() {
-        const result = await form.submit("/api/login");
-        console.log(result, form);
-        
-
-        if (result.success) {
-            accessToken.set(result.accessToken);
-            adminUser.set(result.admin);
-            sessionStorage.setItem("accessToken", result.accessToken);
-            window.location.href = "/admin/dashboard";
-        }
-    }
+    let email = $state("");
+    let password = $state("");
+    let loading = $state(false);
+	let formError: Record<string, string[]> | undefined = $state({}) 
 
 </script>
 
@@ -53,28 +42,48 @@
 
             <!-- {/* Login Form */} -->
             <div class="bg-white rounded-2xl p-8 shadow-2xl">
-                <form onsubmit={handleSubmit} class="space-y-6">
+                <form method="post" action="?/login" class="space-y-6"
+                    use:enhance={() => {
+                        loading = true;
+                        formError = {};
+                        return async ({ result }) => {
+                            loading = false;
+                            console.log(result);
+
+                            if (result.type === "failure" && result.data) {
+                                formError = result.data?.errors as any;
+                                
+                            } else if (result.type === "error") {
+                                formError = { errors: result.error.message || result.error };
+                            } else if (result.type === "success") {
+                                // redirect or do whatever
+                                window.location.href = "/bits/admin/dashboard";
+                            }
+                        };
+                    }}
+                >
                     <!-- {/* Email Field */} -->
                     <div>
                         <Label for="email" class="block text-brand-grey-500 text-sm font-synonym font-medium mb-2">
                         Email Address
                         </Label>
-                        <div class="relative">
+                        <div class="relative mb-2">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <Mail class="h-5 w-5 text-brand-grey-200" />
                             </div>
                             <Input
                                 id="email"
                                 type="email"
+                                name="email"
                                 required
-                                bind:value={form.values.email}
+                                bind:value={email}
                                 class="w-full pl-10 pr-4 py-6 border border-brand-grey-50 rounded-lg font-synonym placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent transition-colors block"
                                 placeholder="admin@nivabit.com"
                             />
                         </div>
 
-                        {#if form.errors.email}
-                            <p class="text-red-500 text-sm">{form.errors.email}</p>
+                        {#if formError?.email}
+                            <p class="text-red-500 text-sm">{formError?.email}</p>
                         {/if}
                     </div>
 
@@ -83,15 +92,16 @@
                         <Label for="password" class="block text-brand-grey-500 text-sm font-synonym font-medium mb-2">
                         Password
                         </Label>
-                        <div class="relative">
+                        <div class="relative mb-2">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <Lock class="h-5 w-5 text-brand-grey-200" />
                             </div>
                             <Input
                                 id="password"
+                                name="password"
                                 type={showPassword ? 'text' : 'password'}
                                 required
-                                bind:value={form.values.password}
+                                bind:value={password}
                                 class="w-full pl-10 pr-12 py-6 border border-brand-grey-50 rounded-lg font-synonym placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent transition-colors"
                                 placeholder="Enter your password"
                             />
@@ -108,15 +118,15 @@
                             </button>
                         </div>
 
-                        {#if form.errors.password}
-                            <p class="text-red-500 text-sm">{form.errors.password}</p>
+                        {#if formError?.password}
+                            <p class="text-red-500 text-sm">{formError?.password}</p>
                         {/if}
                     </div>
 
                     <!-- API Error -->
-                    {#if form.errors.root}
+                    {#if formError?.errors}
                     <div class="bg-red-50 border border-red-200 rounded-lg p-3">
-                        <p class="text-red-600 text-sm font-synonym">{form.errors.root}</p>
+                        <p class="text-red-600 text-sm font-synonym">{formError?.errors}</p>
                     </div>
                     {/if}
 
@@ -133,10 +143,10 @@
                         <!-- {/* Submit Button */} -->
                     <MainButton
                         type="submit"
-                        disabled={form.loading}
+                        disabled={loading}
                         class="w-full bg-brand-orange-500 text-white py-3 px-4 rounded-lg font-synonym font-medium hover:bg-brand-orange-500/90 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                        {#if form.loading}
+                        {#if loading}
                             <div class="flex items-center justify-center">
                                 <div class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
                                 Signing in...

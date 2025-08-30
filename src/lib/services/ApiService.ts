@@ -1,9 +1,10 @@
-
 export class ApiService {
-    baseUrl: string;
-    token?: string;
+    private baseUrl: string;
+    private token?: string;
+    private fetchFn: typeof fetch; // <-- injected fetch
   
-    constructor(baseUrl: string, token?: string) {
+    constructor(fetchFn: typeof fetch, baseUrl = "/api", token?: string) {
+      this.fetchFn = fetchFn;
       this.baseUrl = baseUrl;
       this.token = token;
     }
@@ -42,7 +43,7 @@ export class ApiService {
   
     private async request(endpoint: string, options: RequestInit, auth: boolean) {
       try {
-        const res = await fetch(`${this.baseUrl}${endpoint}`, {
+        const res = await this.fetchFn(`${this.baseUrl}${endpoint}`, {
           ...options,
           headers: this.headers(auth),
         });
@@ -58,5 +59,5 @@ export class ApiService {
         throw new Error(err.message || "Network error");
       }
     }
-  }
+}
   

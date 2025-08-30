@@ -1,11 +1,17 @@
+import { getAuthCookie, getUserCookie } from "$lib/utils/auth";
 import { redirect, type Handle } from "@sveltejs/kit";
 
 export const handle: Handle = ({ event, resolve }) =>{
+  let user = getUserCookie(event.cookies) || null;
+
   if (event.url.pathname.startsWith("/bits/admin/dashboard")) {
-    const token = event.cookies.get("refresh_token");
-    if (!token) {
+    const token = getAuthCookie(event.cookies);
+    if (!token && !user) {
       throw redirect(303, "/");
     }
   }
+
+  event.locals.user = user
+
   return resolve(event);
 }
