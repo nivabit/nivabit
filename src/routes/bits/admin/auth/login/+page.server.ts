@@ -31,8 +31,15 @@ export const actions: Actions = {
   
       try {
         // ✅ Call backend API
-        const api = new ApiService(fetch, "/api");
-        const res = await api.post("/login", parsed.data);
+        const api = new ApiService(fetch, cookies, "/api");
+      
+        // ✅ Call login with body
+        const res : any = await api.post("/login", {
+          body: parsed.data
+        });
+
+        console.log(res);
+        
   
         if (!res?.accessToken) {
           return fail(401, {
@@ -46,8 +53,7 @@ export const actions: Actions = {
         setAuthCookie(cookies, res.accessToken);
 
         // ✅ Fetch user data with token
-        const userApi = new ApiService(fetch, "/api", res.accessToken);
-        const user = await userApi.get("/me", true);
+        const user = await api.get("/me", { auth: true });
 
         // ✅ Save user in cookie (stringify for storage)
         setUserCookie(cookies, user);
