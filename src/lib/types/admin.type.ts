@@ -1,6 +1,6 @@
 
 export interface AdminPayload {
-    id: number;
+    id: string;
     email: string;
     passwordHash: string;
     name: string;

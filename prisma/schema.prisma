@@ -55,5 +55,7 @@ model Contact {
   email     String
   subject   String
   message   String?
+  isread    Boolean  @default(false)
+  isreadAt  DateTime?
   createdAt DateTime @default(now())
 }

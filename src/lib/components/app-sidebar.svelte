@@ -1,26 +1,18 @@
 <script lang="ts">
 	import CameraIcon from "@tabler/icons-svelte/icons/camera";
 	import ChartBarIcon from "@tabler/icons-svelte/icons/chart-bar";
-	import DashboardIcon from "@tabler/icons-svelte/icons/dashboard";
-	import DatabaseIcon from "@tabler/icons-svelte/icons/database";
 	import FileAiIcon from "@tabler/icons-svelte/icons/file-ai";
 	import FileDescriptionIcon from "@tabler/icons-svelte/icons/file-description";
-	import FileWordIcon from "@tabler/icons-svelte/icons/file-word";
 	import FolderIcon from "@tabler/icons-svelte/icons/folder";
-	import HelpIcon from "@tabler/icons-svelte/icons/help";
-	import InnerShadowTopIcon from "@tabler/icons-svelte/icons/inner-shadow-top";
-	import ListDetailsIcon from "@tabler/icons-svelte/icons/list-details";
-	import ReportIcon from "@tabler/icons-svelte/icons/report";
-	import SearchIcon from "@tabler/icons-svelte/icons/search";
 	import SettingsIcon from "@tabler/icons-svelte/icons/settings";
 	import UsersIcon from "@tabler/icons-svelte/icons/users";
-	import NavDocuments from "./nav-documents.svelte";
 	import NavMain from "./nav-main.svelte";
 	import NavSecondary from "./nav-secondary.svelte";
 	import NavUser from "./nav-user.svelte";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import type { ComponentProps } from "svelte";
-	import { FileText, LayoutDashboard, Users } from "lucide-svelte";
+	import { FileText, LayoutDashboard, Mail } from "lucide-svelte";
+	import { page } from "$app/state";
 
 	const data : any = {
 		user: {
@@ -33,26 +25,37 @@
 				title: "Dashboard",
 				url: "/bits/admin/dashboard",
 				icon: LayoutDashboard,
+				current: page.url.pathname.startsWith('/bits/admin/dashboard'),
 			},
 			{
 				title: "Articles",
 				url: "/bits/admin/dashboard/articles",
 				icon: FileText,
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/articles'),
 			},
 			{
 				title: "Analytics",
 				url: "/bits/admin/dashboard/analytics",
 				icon: ChartBarIcon,
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/analytics'),
 			},
 			{
 				title: "Projects",
 				url: "/bits/admin/dashboard/projects",
 				icon: FolderIcon,
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/projects'),
 			},
 			{
 				title: "Team",
 				url: "/bits/admin/dashboard/team",
 				icon: UsersIcon,
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/team'),
+			},
+			{
+				title: "Messages",
+				url: "/bits/admin/dashboard/messages",
+				icon: Mail,
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/messages'),
 			},
 		],
 		navClouds: [
