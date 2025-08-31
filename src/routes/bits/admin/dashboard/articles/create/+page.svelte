@@ -4,12 +4,14 @@
     import { Save, Eye, ArrowLeft, Upload, X, Calendar, Globe } from 'lucide-svelte';
     import { page } from '$app/stores';
     import { get } from 'svelte/store';
+	import RichTextEditor from '$lib/components/layout/RichTextEditor.svelte';
+
   
     interface ArticleData {
       title: string;
       excerpt: string;
       content: string;
-      category: string;
+      categories: string[];
       status: 'Draft' | 'Published' | 'Scheduled';
       publishDate: string;
       tags: string[];
@@ -18,55 +20,74 @@
       seoDescription: string;
     }
   
-    let isLoading = false;
-    let isSaving = false;
-    let tagInput = '';
+    let isLoading = $state(false);
+    let isSaving = $state(false);
+    let tagInput = $state('');
   
     const params = get(page).params;
     const id = params.id;
     const isEditing = Boolean(id);
   
-    let article: ArticleData = {
+    let article: ArticleData = $state({
       title: '',
       excerpt: '',
       content: '',
-      category: 'Development',
+      categories: ['Development'],
       status: 'Draft',
       publishDate: new Date().toISOString().split('T')[0],
       tags: [],
       featuredImage: '',
       seoTitle: '',
       seoDescription: ''
-    };
-  
-    onMount(() => {
-      if (isEditing && id) {
-        // Sample data for editing
-        article = {
-          title: 'Getting Started with React Development',
-          excerpt: 'Learn the fundamentals of React development including components...',
-          content: `# Getting Started with React Development\n\nReact is a powerful JavaScript library...`,
-          category: 'Development',
-          status: 'Published',
-          publishDate: '2024-01-15',
-          tags: ['React', 'JavaScript', 'Web Development', 'Frontend'],
-          featuredImage: 'https://api.builder.io/api/v1/image/assets/TEMP/1d2f0f807704c4679e4542643fb50522e067e921?width=773',
-          seoTitle: 'Getting Started with React Development - Complete Guide',
-          seoDescription: 'Learn React fundamentals including components, state management...'
-        };
-      }
     });
+
+
+  
+    // onMount(() => {
+    //   if (isEditing && id) {
+    //     // Sample data for editing
+    //     article = {
+    //       title: 'Getting Started with React Development',
+    //       excerpt: 'Learn the fundamentals of React development including components...',
+    //       content: `# Getting Started with React Development\n\nReact is a powerful JavaScript library...`,
+    //       category: 'Development',
+    //       status: 'Published',
+    //       publishDate: '2024-01-15',
+    //       tags: ['React', 'JavaScript', 'Web Development', 'Frontend'],
+    //       featuredImage: 'https://api.builder.io/api/v1/image/assets/TEMP/1d2f0f807704c4679e4542643fb50522e067e921?width=773',
+    //       seoTitle: 'Getting Started with React Development - Complete Guide',
+    //       seoDescription: 'Learn React fundamentals including components, state management...'
+    //     };
+    //   }
+    // });
   
     function handleInputChange(field: keyof ArticleData, value: string) {
       article = { ...article, [field]: value };
     }
   
     function handleAddTag() {
+        console.log(tagInput);
+        
       if (tagInput.trim() && !article.tags.includes(tagInput.trim())) {
         article = { ...article, tags: [...article.tags, tagInput.trim()] };
         tagInput = '';
       }
     }
+
+    function toggleCategory(cat: string) {
+        if (article.categories.includes(cat)) {
+            article = {
+            ...article,
+            categories: article.categories.filter((c) => c !== cat)
+            };
+        } else {
+            article = {
+            ...article,
+            categories: [...article.categories, cat]
+            };
+        }
+    }
+
   
     function handleRemoveTag(tagToRemove: string) {
       article = { ...article, tags: article.tags.filter((t) => t !== tagToRemove) };
@@ -102,28 +123,28 @@
         <ArrowLeft size={20} />
         </a>
         <div>
-        <h1 class="text-2xl font-cabinet font-medium text-brand-grey-500">
-            {isEditing ? 'Edit Article' : 'Create New Article'}
-        </h1>
-        <p class="text-brand-grey-400 font-synonym text-sm">
-            {isEditing ? 'Update your article content and settings' : 'Write and publish a new article'}
-        </p>
+            <h1 class="text-2xl font-cabinet font-medium text-brand-grey-500">
+                {isEditing ? 'Edit Article' : 'Create New Article'}
+            </h1>
+            <p class="text-brand-grey-400 font-synonym text-sm">
+                {isEditing ? 'Update your article content and settings' : 'Write and publish a new article'}
+            </p>
         </div>
     </div>
 
     <div class="flex items-center gap-3">
         <button
-        onclick={() => handleSave('Draft')}
-        disabled={isSaving}
-        class="flex items-center gap-2 px-4 py-2 border border-brand-grey-200 text-brand-grey-500 rounded-lg hover:bg-brand-grey-50 transition-colors disabled:opacity-50"
+            onclick={() => handleSave('Draft')}
+            disabled={isSaving}
+            class="flex items-center gap-2 px-4 py-2 border border-brand-grey-200 text-brand-grey-500 rounded-lg hover:bg-brand-grey-50 transition-colors disabled:opacity-50"
         >
         <Save size={16} />
         Save Draft
         </button>
         <button
-        onclick={() => handleSave('Published')}
-        disabled={isSaving}
-        class="flex items-center gap-2 bg-brand-orange-500 text-white px-6 py-2 rounded-lg hover:bg-brand-orange-500/90 transition-colors disabled:opacity-50"
+            onclick={() => handleSave('Published')}
+            disabled={isSaving}
+            class="flex items-center gap-2 bg-brand-orange-500 text-white px-6 py-2 rounded-lg hover:bg-brand-orange-500/90 transition-colors disabled:opacity-50"
         >
         {#if isSaving}
             <div class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
@@ -208,19 +229,10 @@
 
             <!-- {/* Content Editor */} -->
             <div class="bg-white rounded-xl p-6 border border-brand-grey-50">
-            <label for="" class="block text-sm font-synonym font-medium text-brand-grey-500 mb-4">
-                Article Content
-            </label>
-            <textarea
-                value={article.content}
-                onchange={(e: any) => handleInputChange('content', e.target.value)}
-                placeholder="Write your article content here... (Markdown supported)"
-                rows={20}
-                class="w-full px-4 py-3 border border-brand-grey-50 rounded-lg font-mono text-sm placeholder:text-brand-grey-400 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent resize-none"
-            ></textarea>
-            <p class="text-xs text-brand-grey-400 font-synonym mt-2">
-                Tip: You can use Markdown syntax for formatting your content.
-            </p>
+                <label for="" class="block text-sm font-synonym font-medium text-brand-grey-500 mb-4">
+                    Article Content
+                </label>
+                <RichTextEditor value={article.content} />
             </div>
         </div>
 
@@ -261,55 +273,58 @@
                 <label for="" class="block text-sm font-synonym font-medium text-brand-grey-500 mb-2">
                 Category
                 </label>
-                <select
-                value={article.category}
-                onchange={(e: any) => handleInputChange('category', e?.target?.value)}
-                class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg font-synonym focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
-                >
-                <option value="Development">Development</option>
-                <option value="Design">Design</option>
-                <option value="Research">Research</option>
-                <option value="Technology">Technology</option>
-                <option value="Business">Business</option>
-                </select>
+
+                <div class="grid grid-cols-2 gap-2">
+                    {#each ['Development', 'Design', 'Research', 'Technology', 'Business'] as cat}
+                      <label class="flex items-center gap-2 text-sm text-brand-grey-500 font-synonym">
+                        <input
+                          type="checkbox"
+                          checked={article.categories.includes(cat)}
+                          onchange={() => toggleCategory(cat)}
+                          class="accent-brand-orange-500"
+                        />
+                        {cat}
+                      </label>
+                    {/each}
+                </div>
             </div>
             </div>
 
             <!-- {/* Tags */} -->
             <div class="bg-white rounded-xl p-6 border border-brand-grey-50 space-y-4">
-            <h3 class="font-cabinet font-medium text-brand-grey-500">Tags</h3>
-            
-            <div class="flex gap-2">
-                <input
-                type="text"
-                value={tagInput}
-                onkeypress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
-                placeholder="Add a tag..."
-                class="flex-1 px-3 py-2 border border-brand-grey-50 rounded-lg font-synonym text-sm placeholder:text-brand-grey-400 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
-                />
-                <button
-                onclick={handleAddTag}
-                class="px-3 py-2 bg-brand-orange-500 text-white rounded-lg hover:bg-brand-orange-500/90 transition-colors"
-                >
-                Add
-                </button>
-            </div>
-
-            <div class="flex flex-wrap gap-2">
-                {#each article.tags as tag}
-                <span 
-                    class="inline-flex items-center gap-1 px-3 py-1 bg-brand-blue-50 text-brand-blue-500 rounded-full text-sm font-synonym"
-                >
-                    {tag}
+                <h3 class="font-cabinet font-medium text-brand-grey-500">Tags</h3>
+                
+                <div class="flex gap-2">
+                    <input
+                        type="text"
+                        bind:value={tagInput}
+                        onkeypress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+                        placeholder="Add a tag..."
+                        class="flex-1 px-3 py-2 border border-brand-grey-50 rounded-lg font-synonym text-sm placeholder:text-brand-grey-400 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
+                    />
                     <button
-                    onclick={() => handleRemoveTag(tag)}
-                    class="hover:text-brand-blue-700 transition-colors"
+                        onclick={handleAddTag}
+                        class="px-3 py-2 bg-brand-orange-500 text-white rounded-lg hover:bg-brand-orange-500/90 transition-colors"
                     >
-                    <X size={14} />
+                    Add
                     </button>
-                </span>
-                {/each }
-            </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    {#each article.tags as tag}
+                    <span 
+                        class="inline-flex items-center gap-1 px-3 py-1 bg-brand-blue-50 text-brand-blue-500 rounded-full text-sm font-synonym"
+                    >
+                        {tag}
+                        <button
+                        onclick={() => handleRemoveTag(tag)}
+                        class="hover:text-brand-blue-700 transition-colors"
+                        >
+                        <X size={14} />
+                        </button>
+                    </span>
+                    {/each }
+                </div>
             </div>
 
             <!-- {/* SEO Settings */} -->

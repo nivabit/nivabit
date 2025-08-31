@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Admin {
-  id             Int      @id @default(autoincrement())
+  id             String      @id @default(uuid())
   email          String   @unique
   passwordHash   String
   name           String
@@ -24,4 +24,36 @@ model Admin {
   resetTokenExp  DateTime?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+}
+
+model Article {
+  id             String   @id @default(uuid())
+  title          String
+  excerpt        String
+  content        String
+  categories     String[] // Postgres supports arrays
+  status         ArticleStatus @default(DRAFT)   // "Draft" | "Published" | "Scheduled"
+  publishDate    DateTime
+  tags           String[]
+  featuredImage  String?
+  seoTitle       String
+  seoDescription String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+}
+
+model Contact {
+  id        String      @id @default(uuid())
+  name      String
+  services  String?
+  email     String
+  subject   String
+  message   String?
+  createdAt DateTime @default(now())
 }

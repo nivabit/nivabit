@@ -3,6 +3,7 @@ import { json } from '@sveltejs/kit';
 import { transporter, mailOptions, type contactType } from '$lib/server/email';
 import { generateEmailContent } from '$lib/server/emailContent'; // or wherever you put it
 import type { RequestHandler } from './$types';
+import { prisma } from '$lib/server/prisma';
 
 export const POST: RequestHandler = async ({ request }) => {
   const data = (await request.json()) as contactType;
@@ -13,6 +14,18 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 
   try {
+
+    await prisma.contact.create({
+      data: {
+        name: data.name,
+        services: data.services,
+        email: data.email,
+        subject: data.subject,
+        message: data.message
+      }
+    });
+
+
     // 1. Send to admin
     await transporter.sendMail({
       ...mailOptions,
@@ -47,4 +60,12 @@ export const POST: RequestHandler = async ({ request }) => {
     console.error('Email send error:', err);
     return json({ message: err.message }, { status: 400 });
   }
+};
+
+
+export const GET: RequestHandler = async () => {
+  const contacts = await prisma.contact.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
+  return json(contacts);
 };

@@ -79,6 +79,7 @@
 		"motion-svelte": "^0.0.1",
 		"nodemailer": "^7.0.5",
 		"prisma": "^6.15.0",
+		"quill": "^2.0.3",
 		"svelte-inview": "^4.0.4",
 		"svelte-sonner": "^1.0.5",
 		"three": "^0.179.1",
