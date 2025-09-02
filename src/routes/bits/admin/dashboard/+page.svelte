@@ -6,8 +6,6 @@
   let { data } = $props()
 
   let user = $state(data?.user)
-  console.log(user);
-  
 
   // Sample data - in a real app, this would come from an API
   const stats = [
@@ -91,7 +89,7 @@
         </p>
       </div>
       <MainButton
-        href="/dashboard/articles/create"
+        href="/bits/admin/dashboard/articles/create"
         class="flex items-center gap-2 bg-brand-orange-500 text-white px-6 py-3 rounded-lg font-synonym font-medium hover:bg-brand-orange-500/90 transition-colors"
       >
         <Plus size={18} />
@@ -103,10 +101,12 @@
   <!-- Stats Grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     {#each stats as stat}
+    {@const Component = stat.icon}
+
       <div class="bg-white rounded-xl p-6 border border-brand-grey-50">
         <div class="flex items-center justify-between mb-4">
           <div class="p-2 bg-brand-blue-50 rounded-lg">
-            <svelte:component this={stat.icon} class="h-5 w-5 text-brand-blue-500" />
+	          <Component />
           </div>
           <span
             class="text-sm font-synonym {stat.changeType === 'increase' ? 'text-green-600' : 'text-red-600'}"

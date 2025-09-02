@@ -26,70 +26,41 @@
 
   type StatusFilter = 'All' | 'Unread' | 'Read' | 'Replied';
 
+  let { data } = $props()
   let searchTerm = '';
   let statusFilter: StatusFilter = 'All';
   let expanded: Record<string, boolean> = {};
   let draftReplies: Record<string, string> = {};
 
-  let messages: ContactMessage[] = [
-    {
-      id: 'm1',
-      name: 'Jane Doe',
-      services: 'Web Development',
-      email: 'jane@example.com',
-      subject: 'Inquiry about building a modern responsive website with blog and admin dashboard features',
-      message:
-        'Hello, I would like to inquire about your web development services. I need a modern responsive website for my small business with a blog, portfolio section, and an admin dashboard to manage content. What would the timeline and cost look like? Thank you!',
-      receivedAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
-      read: false,
-      replied: false,
-      replyHistory: [],
-    },
-    {
-      id: 'm2',
-      name: 'Michael Smith',
-      services: 'UI/UX Design',
-      email: 'michael@example.com',
-      subject: 'Design system and component library for internal tools',
-      message:
-        'We are looking to establish a consistent design system and component library for our internal tools. Can you help with auditing our current UI and proposing a scalable design system? Also interested in documentation and theming support.',
-      receivedAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(),
-      read: true,
-      replied: true,
-      replyHistory: [
-        {
-          date: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
-          content: 'Thanks Michael! Happy to help. Could you share access to screenshots of your current tools so we can assess scope? We can then propose a phased plan.',
-        },
-      ],
-    },
-    {
-      id: 'm3',
-      name: 'Aisha Bello',
-      services: 'Consultation',
-      email: 'aisha@example.com',
-      subject:
-        'General consultation regarding performance optimization and best practices for a large React codebase with many contributors',
-      message:
-        'Hi team, we need guidance on optimizing a large React app suffering from slow renders and bundle bloat. Could we schedule a consultation to review architecture, state management, and performance profiling strategies?',
-      receivedAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
-      read: true,
-      replied: false,
-      replyHistory: [],
-    },
-  ];
+  let messages: ContactMessage[] = $derived(
+    (data?.contact ?? []).map((m) => ({
+      id: m.id,
+      name: m.name,
+      services: m.services,
+      email: m.email,
+      subject: m.subject,
+      message: m.message,
+      receivedAt: m.createdAt,   // map createdAt → receivedAt
+      read: m.isread,            // map isread → read
+      replied: false,            // default until replies are stored
+      replyHistory: [],          // empty until replies exist
+    }))
+  )
 
-  // derived
-  $: filteredMessages = messages.filter((m) => {
-    const haystack = `${m.name} ${m.email} ${m.subject} ${m.message ?? ''} ${m.services ?? ''}`.toLowerCase();
-    const matchesSearch = haystack.includes(searchTerm.toLowerCase());
-    const matchesStatus =
-      statusFilter === 'All' ||
-      (statusFilter === 'Unread' && !m.read) ||
-      (statusFilter === 'Read' && m.read) ||
-      (statusFilter === 'Replied' && m.replied === true);
-    return matchesSearch && matchesStatus;
-  });
+  // derived filtered messages
+  let filteredMessages = $derived(
+    messages.filter((m) => {
+      const haystack = `${m.name} ${m.email} ${m.subject} ${m.message ?? ''} ${m.services ?? ''}`.toLowerCase()
+      const matchesSearch = haystack.includes(searchTerm.toLowerCase())
+      const matchesStatus =
+        statusFilter === 'All' ||
+        (statusFilter === 'Unread' && !m.read) ||
+        (statusFilter === 'Read' && m.read) ||
+        (statusFilter === 'Replied' && m.replied === true)
+      return matchesSearch && matchesStatus
+    })
+  )
+
 
   function toggleExpand(id: string) {
     expanded = { ...expanded, [id]: !expanded[id] };

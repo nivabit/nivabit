@@ -24,6 +24,9 @@ model Admin {
   resetTokenExp  DateTime?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  // 🔗 opposite side of the relation
+  articles       Article[]   @relation("AdminArticles")
 }
 
 model Article {
@@ -40,6 +43,10 @@ model Article {
   seoDescription String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  // 🔗 relation: article belongs to an admin
+  authorId       String
+  author         Admin    @relation("AdminArticles", fields: [authorId], references: [id])
 }
 
 enum ArticleStatus {

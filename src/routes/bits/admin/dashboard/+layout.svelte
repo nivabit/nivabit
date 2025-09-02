@@ -23,16 +23,16 @@
 	<!-- <Header /> -->
 
 	<Sidebar.Provider
-    style="--sidebar-width: calc(var(--spacing) * 72); --header-height: calc(var(--spacing) * 12);"
+    style="--sidebar-width: calc(var(--spacing) * 62); --header-height: calc(var(--spacing) * 12);"
   >
     <AppSidebar variant="inset" />  
     <Sidebar.Inset>
       <SiteHeader />
       <div class="flex flex-1 flex-col">
         <div class="@container/main flex flex-1 flex-col gap-2">
-          	<main in:fly={{ easing: cubicOut, y: 10, duration: 100, delay: 100 }} class="flex flex-col gap-4 py-4 md:gap-6 md:py-6 md:px-6 px-4">
-				{@render children()}
-          	</main>
+          <main in:fly={{ easing: cubicOut, y: 10, duration: 100, delay: 100 }} class="flex flex-col gap-4 py-4 md:gap-6 md:py-6 md:px-6 px-4">
+            {@render children()}
+          </main>
         </div>
       </div>
     </Sidebar.Inset>

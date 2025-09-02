@@ -1,6 +1,7 @@
 
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
+import { authorize } from '$lib/server/auth';
 
 export const GET: RequestHandler = async({ params }) => {
   const article = await prisma.article.findUnique({ where: { id: params.id } });
@@ -8,7 +9,19 @@ export const GET: RequestHandler = async({ params }) => {
   return json(article);
 }
 
-export const PUT: RequestHandler = async({ params, request }) => {
+export const PUT: RequestHandler = async({ params, request, cookies }) => {
+
+  const user = await authorize({ cookies } as any);
+  if (!user) {
+    return json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Check if article exists
+  const existingArticle = await prisma.article.findUnique({ where: { id: params.id } });
+  if (!existingArticle) {
+    return json({ error: 'Not found' }, { status: 404 });
+  }
+
   const data = await request.json();
 
   const article = await prisma.article.update({
@@ -30,7 +43,18 @@ export const PUT: RequestHandler = async({ params, request }) => {
   return json(article);
 }
 
-export const DELETE: RequestHandler = async({ params }) => {
+export const DELETE: RequestHandler = async({ params, cookies }) => {
+  const user = await authorize({ cookies } as any);
+  if (!user) {
+    return json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Check if article exists
+  const existingArticle = await prisma.article.findUnique({ where: { id: params.id } });
+  if (!existingArticle) {
+    return json({ error: 'Not found' }, { status: 404 });
+  }
+
   await prisma.article.delete({ where: { id: params.id } });
   return json({ success: true });
 }

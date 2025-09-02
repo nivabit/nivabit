@@ -110,6 +110,8 @@ export class ApiService {
 
 	async post<T>(url: string, options: RequestOptions = {}): Promise<T> {
 		const req = await this.prepareRequest({ ...options, method: 'POST' });
+		console.log(req);
+
 		const res = await this.fetch(this.buildUrl(url, options.queryParams), {
 			method: 'POST',
 			headers: req.headers,
@@ -119,7 +121,7 @@ export class ApiService {
 	}
 
 	async put<T>(url: string, options: RequestOptions = {}): Promise<T> {
-		const req = await this.prepareRequest({ ...options, method: 'PUT' });
+		const req = await this.prepareRequest({ ...options, method: 'PUT' });		
 		const res = await this.fetch(this.buildUrl(url, options.queryParams), {
 			method: 'PUT',
 			headers: req.headers,

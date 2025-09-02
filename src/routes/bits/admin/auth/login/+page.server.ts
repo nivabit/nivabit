@@ -37,9 +37,6 @@ export const actions: Actions = {
         const res : any = await api.post("/login", {
           body: parsed.data
         });
-
-        console.log(res);
-        
   
         if (!res?.accessToken) {
           return fail(401, {
