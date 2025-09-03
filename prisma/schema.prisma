@@ -43,6 +43,7 @@ model Article {
   seoDescription String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  views          Int      @default(0)
 
   // 🔗 relation: article belongs to an admin
   authorId       String

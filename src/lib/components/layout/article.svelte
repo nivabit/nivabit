@@ -1,55 +1,13 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { page } from "$app/state";
 	import { reveal } from "$lib/actions/reveal";
 	import { revealWords } from "$lib/actions/revealWords";
+	import MainButton from "../customUI/button/MainButton.svelte";
 	import Button from "../ui/button/button.svelte";
 
   let { showHeader = false, limit = 10 } = $props();
-
-  const articles = [
-    {
-      imageId: '1',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    },
-    {
-      imageId: '2',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    },
-    {
-      imageId: '3',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    },
-    {
-      imageId: '1d2f0f807704c4679e4542643fb50522e067e921',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    },
-    {
-      imageId: 'b4421f0060262f137668b2c5963fe8ad107e907e',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    },
-    {
-      imageId: '50a4600f5b61ccf555acb851114d87f842faf285',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    }
-  ];
+  let articles = $derived(page?.data?.articles)
 
 </script>
   
@@ -64,6 +22,16 @@
       </div>
     {/if}
 
+    {#if articles?.length <= 0}
+      <div class="text-center md:py-16 py-10 flex flex-col items-center ">
+        <img src="/icons/EmptyState.svg" alt="No articles" class="mx-auto md:w-72 w-36 h-36 md:h-72 sm:h-48 sm:w-48 opacity-70" />
+        <h3 class="text-2xl font-medium text-brand-grey-500 mb-2">No articles found</h3>
+        <p class="text-brand-grey-400 mb-6">Check back later for more content and updates.</p>
+        <MainButton href="/" class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors flex-shrink-0 text-center">
+          Go Home
+        </MainButton>
+      </div>
+    {:else}
     <!-- Article Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
       {#each articles.slice(0, limit) as article}
@@ -74,7 +42,7 @@
       <!-- Image with hover scale -->
       <div class="h-60 w-full overflow-hidden rounded-lg relative">
         <img
-          src={`/images/article${article.imageId}.png`}
+          src={`${article.featuredImage}`}
           alt="Blog Post"
           class="w-full h-full object-cover rounded-lg transform transition-transform duration-500 ease-in-out group-hover:scale-105"
         />
@@ -99,14 +67,14 @@
     
         <!-- Description -->
         <p class="text-brand-grey-400 text-sm leading-relaxed line-clamp-2 group-hover:text-brand-grey-500 transition-colors duration-300">
-          {article.description}
+          {article.excerpt}
         </p>
     
         <!-- Button -->
         <button
           type="button"
           class="flip-button text-brand-blue-500 text-sm hover:underline hover:bg-transparent hover:text-brand-blue-700 transition-colors duration-300"
-          onclick={() => goto("/articles/" + article.title)}
+          onclick={() => goto("/articles/" + article.id)}
         >
           <span class="slide-text">
             <span class="text-top">Read Blog</span>
@@ -118,6 +86,7 @@
     
       {/each}
     </div>
+    {/if}
   </div>
 </section>
   

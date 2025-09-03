@@ -10,25 +10,42 @@
     MoreHorizontal,
     Calendar,
     User,
-    FileText
+    FileText,
+
+	Loader
+
   } from 'lucide-svelte';
+  import * as Dialog from "$lib/components/ui/dialog/index.js";
+	import Button from '$lib/components/ui/button/button.svelte';
+	import { enhance } from '$app/forms';
+  import { toast } from "svelte-sonner";
+	import { invalidateAll } from '$app/navigation';
 
   
   let { data } = $props();
   let articles: GetarticleData[] = $derived(data?.articles) as any
+  let loading = $state(false)
   
   let searchTerm = $state('');
   let statusFilter = $state('All');
-  let selectedArticles: number[] = $state([]);
+  let selectedArticles: string[] = $state([]);
+  let articleToDelete: string | null = $state(null);
 
-  // $: filteredArticles = articles.filter(article => {
-  //   const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //                         article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-  //   const matchesStatus = statusFilter === 'All' || article.status === statusFilter;
-  //   return matchesSearch && matchesStatus;
-  // });
+  // ✅ derived (instead of $:)
+  const filteredArticles = $derived(
+    articles.filter(article => {
+      const matchesSearch = 
+        article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
 
-  const filteredArticles = $state([])
+      const statusNormalized = article.status.toLowerCase();
+      const matchesStatus = 
+        statusFilter === 'All' || 
+        statusNormalized === statusFilter.toLowerCase();
+
+      return matchesSearch && matchesStatus;
+    })
+  );
   
   function handleSelectArticle(id: string) {
     if (selectedArticles.includes(id)) {
@@ -43,13 +60,6 @@
       selectedArticles = [];
     } else {
       selectedArticles = filteredArticles.map(article => article?.id);
-    }
-  }
-
-  function handleDeleteArticle(id: string) {
-    if (confirm('Are you sure you want to delete this article?')) {
-      articles = articles.filter(article => article.id !== id);
-      selectedArticles = selectedArticles.filter(articleId => articleId !== id);
     }
   }
   
@@ -166,7 +176,7 @@
               </p>
               {#if !searchTerm && statusFilter === 'All'}
               <a
-                  href="/dashboard/articles/create"
+                  href="/bits/admin/dashboard/articles/create"
                   class="inline-flex items-center gap-2 bg-brand-orange-500 text-white px-6 py-3 rounded-lg font-synonym font-medium hover:bg-brand-orange-500/90 transition-colors"
               >
                   <Plus size={18} />
@@ -216,7 +226,7 @@
                           </span>
                           <span class="flex items-center gap-1">
                           <Eye size={12} />
-                            <!-- {article.views.toLocaleString()} views -->
+                            {article.views} views
                           </span>
                           <span class="bg-brand-grey-50 text-brand-grey-500 px-2 py-1 rounded-full">
                             {article.categories}
@@ -233,22 +243,81 @@
                       <!-- Actions -->
                       <div class="flex items-center gap-1">
                           <a
-                            href={`/bits/admin/dashboard/articles/${article.id}/edit`}
-                            class="p-2 text-brand-grey-400 hover:text-brand-blue-500 hover:bg-brand-blue-50 rounded-lg transition-colors"
-                            title="Edit article"
-                            >
-                          <Edit size={16} />
-                          </a>
-                          <button
-                          onclick={() => handleDeleteArticle(article.id)}
-                          class="p-2 text-brand-grey-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                          title="Delete article"
+                          href={`/bits/admin/dashboard/articles/${article.id}/edit`}
+                          class="p-2 text-brand-grey-400 hover:text-brand-blue-500 hover:bg-brand-blue-50 rounded-lg transition-colors"
+                          title="Edit article"
                           >
-                          <Trash2 size={16} />
-                          </button>
-                          <button class="p-2 text-brand-grey-400 hover:text-brand-grey-500 hover:bg-brand-grey-50 rounded-lg transition-colors">
-                          <MoreHorizontal size={16} />
-                          </button>
+                          <Edit size={16} />
+                        </a>
+
+                        <!-- Delete Article Modal -->
+                        <Dialog.Root>
+                          <Dialog.Trigger >
+                            <button
+                              onclick={() => articleToDelete = article.id}
+                              class="p-2 text-brand-grey-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                              title="Delete article"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </Dialog.Trigger>
+
+                          <Dialog.Content class="sm:max-w-md">
+                            <Dialog.Header>
+                              <Dialog.Title>Delete Article</Dialog.Title>
+                              <Dialog.Description>
+                                Are you sure you want to delete this article? This action cannot be undone.
+                              </Dialog.Description>
+                            </Dialog.Header>
+
+                            <Dialog.Footer class="flex gap-2 justify-end">
+                              <Dialog.Close >
+                                <Button type="button" variant="outline">
+                                  Cancel
+                                </Button>
+                              </Dialog.Close>
+
+                              <!-- Form to submit deletion -->
+                              <form method="POST" action="?/delete" class="inline"
+                              use:enhance={() => {
+                                loading = true;
+                                return async ({ result }) => {
+                                  loading = false;
+                                  console.log(result);
+      
+                                  if (result.type === "failure" && result.data) {
+                                    toast.info("Deleted Fail", {
+                                      description: result.data?.error as string || "Unable to delete the article."
+                                    });
+                                  } else if (result.type === "error") {
+                                    toast.info("Deleted Fail", {
+                                      description: result?.error as string || "Unable to delete the article."
+                                    });
+                                  } else if (result.type === "success") {
+                                    toast.success("Article deleted", {
+                                      description: "The article has been removed successfully."
+                                    });
+                                    invalidateAll()
+                                  }
+                                };
+                            }}
+                              >
+                                <input type="hidden" name="id" value={articleToDelete} />
+                                <Button type="submit" class="bg-red-500 hover:bg-red-600 text-white" disabled={loading}>
+                                  {#if loading}
+                                    <Loader /> 
+                                  {:else}
+                                    Yes, Delete
+                                  {/if}
+                                </Button>
+                              </form>
+                            </Dialog.Footer>
+                          </Dialog.Content>
+                        </Dialog.Root>
+
+                        <button class="p-2 text-brand-grey-400 hover:text-brand-grey-500 hover:bg-brand-grey-50 rounded-lg transition-colors">
+                        <MoreHorizontal size={16} />
+                        </button>
                       </div>
                       </div>
                   </div>

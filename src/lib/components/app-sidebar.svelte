@@ -40,18 +40,6 @@
 				current: page.url.pathname.startsWith('/bits/admin/dashboard/analytics'),
 			},
 			{
-				title: "Projects",
-				url: "/bits/admin/dashboard/projects",
-				icon: FolderIcon,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/projects'),
-			},
-			{
-				title: "Team",
-				url: "/bits/admin/dashboard/team",
-				icon: UsersIcon,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/team'),
-			},
-			{
 				title: "Messages",
 				url: "/bits/admin/dashboard/messages",
 				icon: Mail,

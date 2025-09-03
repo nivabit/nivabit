@@ -91,32 +91,27 @@
             isSaving = true;
             formError = {};
             return async ({ result }) => {
-            isSaving = false;
-            console.log(result);
-            
-            if (result.type === "failure" && result.data) {
-                formError = result.data.errors as any;
-            } else if (result.type === "error") {
-                formError = { root: result.error.message || "Unexpected error" };
-            } else if (result.type === "success") {
-                // Clear form fields
-                article = {
-                    title: '',
-                    excerpt: '',
-                    content: '',
-                    categories: [],
-                    status: 'PUBLISHED',
-                    tags: [],
-                    featuredImage: null,
-                    seoTitle: '',
-                    seoDescription: '',
-                    featuredImageURL: ""
-                };
+                isSaving = false;
+                
+                if (result.type === "failure" && result.data) {
+                    formError = result.data.errors as any;
+                } else if (result.type === "error") {
+                    formError = { root: result.error.message || "Unexpected error" };
+                } else if (result.type === "success") {
+                    if (article.status === "DRAFT") {
+                        toast.success("Draft saved successfully", {
+                            description: "You can continue editing this article anytime.",
+                        });
+                    } else {
+                        toast.success("Article published successfully!", {
+                            description: "Your article is now live and visible on the site.",
+                        });
+                    }
 
-                toast.success("Message was sent successfully", {
-                    description: "Thanks for contacting us, our team will reach out soon."
-                });
-            }
+                    setTimeout(() => {
+                        goto('/bits/admin/dashboard/articles');
+                    }, 2000);
+                }
             };
         }}
     >
@@ -129,7 +124,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <a
-                href="/dashboard/articles"
+                href="/bits/admin/dashboard/articles"
                 class="p-2 text-brand-grey-400 hover:text-brand-grey-500 hover:bg-brand-grey-50 rounded-lg transition-colors"
                 >
                 <ArrowLeft size={20} />

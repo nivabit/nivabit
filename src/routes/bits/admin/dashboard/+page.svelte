@@ -1,78 +1,47 @@
 <script lang="ts">
 
   import MainButton from '$lib/components/customUI/button/MainButton.svelte';
+	import type { DashboardStats } from '$lib/types/article.type.js';
   import { FileText, Users, Eye, MessageCircle, TrendingUp, Plus } from 'lucide-svelte';
 
   let { data } = $props()
 
   let user = $state(data?.user)
+  let statsData = $state(data?.stats) as DashboardStats
+  let recentArticles: any = $state(data?.articles)
 
   // Sample data - in a real app, this would come from an API
   const stats = [
     {
       name: 'Total Articles',
-      value: '24',
+      value: statsData?.data?.totalArticles,
       change: '+12%',
       changeType: 'increase',
       icon: FileText
     },
     {
       name: 'Total Views',
-      value: '12,459',
+      value: statsData?.data?.totalViews,
       change: '+18%',
       changeType: 'increase',
       icon: Eye
     },
     {
-      name: 'Comments',
-      value: '157',
+      name: 'Total Admins',
+      value: statsData?.data?.totalAdmins,
       change: '+23%',
       changeType: 'increase',
-      icon: MessageCircle
+      icon: Users
     },
     {
-      name: 'Active Users',
-      value: '89',
+      name: 'Unread Contacts',
+      value: statsData?.data?.unreadContacts,
       change: '+5%',
       changeType: 'increase',
-      icon: Users
+      icon: MessageCircle
     }
   ];
 
-  const recentArticles = [
-    {
-      id: 1,
-      title: 'Getting Started with React Development',
-      status: 'Published',
-      views: 1234,
-      date: '2024-01-15',
-      category: 'Development'
-    },
-    {
-      id: 2,
-      title: 'Design Systems Best Practices',
-      status: 'Draft',
-      views: 0,
-      date: '2024-01-14',
-      category: 'Design'
-    },
-    {
-      id: 3,
-      title: 'Building Scalable Web Applications',
-      status: 'Published',
-      views: 856,
-      date: '2024-01-13',
-      category: 'Development'
-    },
-    {
-      id: 4,
-      title: 'User Experience Research Methods',
-      status: 'Published',
-      views: 642,
-      date: '2024-01-12',
-      category: 'Research'
-    }
-  ];
 </script>
 
 
@@ -135,7 +104,7 @@
               Recent Articles
             </h2>
             <a
-              href="/dashboard/articles"
+              href="/bits/admin/dashboard/articles"
               class="text-brand-orange-500 hover:text-brand-orange-500/80 font-synonym text-sm transition-colors"
             >
               View All
@@ -151,13 +120,13 @@
                     {article.title}
                   </h3>
                   <div class="flex items-center gap-4 text-sm text-brand-grey-400 font-synonym">
-                    <span>{article.category}</span>
+                    <span>{article.categories?.[0]}</span>
                     <span>•</span>
-                    <span>{new Date(article.date).toLocaleDateString()}</span>
+                    <span>{new Date(article.publishDate || article.createdAt).toLocaleDateString()}</span>
                     <span>•</span>
                     <span class="flex items-center gap-1">
                       <Eye size={14} />
-                      {article.views.toLocaleString()}
+                      {article.views}
                     </span>
                   </div>
                 </div>

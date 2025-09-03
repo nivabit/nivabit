@@ -1,7 +1,6 @@
 // import { getAuthCookie, removeAuthCookie, removeRefreshCookie, removeUserCookie } from '';
-import { isTokenExpired } from '$lib/server/token';
+import { isTokenExpired, refreshToken } from '$lib/server/token';
 import { clearAuthCookie, clearRefreshCookie, clearUserCookie, getAuthCookie,  } from '$lib/utils/auth';
-// import { isTokenExpired, refreshToken } from './token';
 import { redirect, type Cookies } from '@sveltejs/kit';
 
 interface RequestOptions {
@@ -23,15 +22,15 @@ export class ApiService {
 		this.fetch = fetchFn;
 	}
 
-	private async getValidToken(): Promise<string | null> {
+	private async getValidToken(): Promise<string | undefined | null > {
 		if (!this.cookies) return null;
 
 		let token = getAuthCookie(this.cookies);
 		if (!token) return null;
 
 		if (isTokenExpired(token)) {
-			// await refreshToken(this.cookies, this.baseUrl);
-			// token = getAuthCookie(this.cookies);
+			await refreshToken(this.cookies, this.baseUrl);
+			token = getAuthCookie(this.cookies);
 		}
 
 		return token;
@@ -45,7 +44,7 @@ export class ApiService {
 			clearAuthCookie(this.cookies!);
 			clearRefreshCookie(this.cookies!);
 			clearUserCookie(this.cookies!);
-			redirect(303, '/auth/sign-in');
+			redirect(303, '/bits/admin/auth/login');
 		}
 
 		return { Authorization: `Bearer ${token}` };

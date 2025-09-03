@@ -50,6 +50,12 @@ export function clearRefreshCookie(cookies: Cookies) {
   cookies.delete(REFRESH_COOKIE_NAME, { path: "/" });
 }
 
+export function clearAllAuthCookies(cookies: Cookies) {
+  clearRefreshCookie(cookies)
+  clearAuthCookie(cookies)
+  clearUserCookie(cookies)
+}
+
 export function getUserCookie(cookies: Cookies): App.Locals['user'] | undefined {
   const user = cookies.get(USER_COOKIE_NAME);
   return user ? JSON.parse(user) : undefined;

@@ -1,32 +1,11 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { page } from "$app/state";
 	import { reveal } from "$lib/actions/reveal";
 	import { revealWords } from "$lib/actions/revealWords";
 	import MainButton from "../customUI/button/MainButton.svelte";
 
-  const articles = [
-    {
-      imageId: '1',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    },
-    {
-      imageId: '2',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    },
-    {
-      imageId: '3',
-      categories: ['Design', 'Branding'],
-      title: 'Blog Post Title Goes Here',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sapien non nunc fringilla varius. Cras euismod, nunc nec fermentum gravida, nunc ligula fermentum odio, a dignissim mauris metus sit amet purus.'
-    }
-  ];
+  let articles = $derived(page?.data?.articles)
 </script>
   
 <section id="articles" class="bg-bg-blue px-4 md:px-16 py-16 md:py-24">
@@ -49,7 +28,7 @@
       <!-- Image with hover scale -->
       <div class="h-60 w-full overflow-hidden rounded-lg relative">
         <img
-          src={`/images/article${article.imageId}.png`}
+          src={article.featuredImage}
           alt="Blog Post"
           class="w-full h-full object-cover rounded-lg transform transition-transform duration-500 ease-in-out group-hover:scale-105"
         />
@@ -74,21 +53,20 @@
     
         <!-- Description -->
         <p class="text-brand-grey-400 text-sm leading-relaxed line-clamp-2 group-hover:text-brand-grey-500 transition-colors duration-300">
-          {article.description}
+          {article.excerpt}
         </p>
     
         <!-- Button -->
         <button
           type="button"
           class="flip-button text-brand-blue-500 text-sm hover:underline hover:bg-transparent hover:text-brand-blue-700 transition-colors duration-300"
-          onclick={() => goto("/articles/" + article.title)}
+          onclick={() => goto("/articles/" + article.id)}
         >
           <span class="slide-text">
             <span class="text-top">Read Blog</span>
             <span class="text-bottom">Read Blog</span>
           </span>
         </button>
-
       </div>
     </div>
     
@@ -97,7 +75,7 @@
 
     <!-- View All Button -->
     <div use:reveal class="reveal text-center">
-      <MainButton class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors mx-auto">
+      <MainButton href="/articles" class="flex items-center gap-2 bg-brand-orange-500 text-white px-5 py-3 rounded-full text-sm  hover:bg-brand-orange-500/90 transition-colors mx-auto">
         View all articles
         <svg width="16" height="16" viewBox="0 0 16 17" fill="none">
           <path

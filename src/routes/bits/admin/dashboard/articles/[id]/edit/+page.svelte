@@ -9,44 +9,30 @@
 	import type { ArticleData, GetarticleData } from '$lib/types/article.type';
     import { toast } from "svelte-sonner";
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 
 
     let { data } = $props()
     let articles: GetarticleData = $derived(data?.article) as any
-    console.log(articles);
     
     let isSaving = $state(false);
     let tagInput = $state('');
     let formError: Record<string, any> | undefined = $state({});
     let imageInput: HTMLInputElement;
   
-    let article: ArticleData = $state({
-      title: '',
-      excerpt: '',
-      content: '',
-      categories: [],
-      status: 'PUBLISHED',
-      tags: [],
-      featuredImage: null,
-      seoTitle: '',
-      seoDescription: '',
-      featuredImageURL: ""
+    // Initialize with existing article data
+    let article: ArticleData = $derived({
+        title: articles?.title ?? '',
+        excerpt: articles?.excerpt ?? '',
+        content: articles?.content ?? '',
+        categories: articles?.categories ?? [],
+        status: articles?.status ?? 'PUBLISHED',
+        tags: articles?.tags ?? [],
+        featuredImage: null,
+        seoTitle: articles?.seoTitle ?? '',
+        seoDescription: articles?.seoDescription ?? '',
+        featuredImageURL: articles?.featuredImage ?? ''
     });
-
-    onMount(() => {
-        article = {
-            title: articles.title || '',
-            excerpt: articles.excerpt || '',
-            content: articles.content || '',
-            categories: articles.categories || [],
-            status: articles.status || 'PUBLISHED',
-            tags: articles.tags || [],
-            featuredImage: articles.featuredImage || null,
-            seoTitle: articles.seoTitle || '',
-            seoDescription: articles.seoDescription || '',
-            featuredImageURL: articles.featuredImageURL || ''
-        };
-    })
   
     function handleInputChange(field: keyof ArticleData, value: string) {
       article = { ...article, [field]: value };
@@ -105,7 +91,7 @@
   
 
 <div class="mx-auto">
-    <form action="?/create" method="post" class="space-y-6" enctype="multipart/form-data"
+    <form action="?/edit" method="post" class="space-y-6" enctype="multipart/form-data"
         use:enhance={() => {
             isSaving = true;
             formError = {};
@@ -118,23 +104,13 @@
             } else if (result.type === "error") {
                 formError = { root: result.error.message || "Unexpected error" };
             } else if (result.type === "success") {
-                // Clear form fields
-                article = {
-                    title: '',
-                    excerpt: '',
-                    content: '',
-                    categories: [],
-                    status: 'PUBLISHED',
-                    tags: [],
-                    featuredImage: null,
-                    seoTitle: '',
-                    seoDescription: '',
-                    featuredImageURL: ""
-                };
-
-                toast.success("Message was sent successfully", {
-                    description: "Thanks for contacting us, our team will reach out soon."
+                toast.success("Article updated successfully", {
+                    description: "Your changes have been saved."
                 });
+
+                setTimeout(() => {
+                    goto('/bits/admin/dashboard/articles');
+                }, 2000);
             }
             };
         }}
@@ -155,10 +131,10 @@
                 </a>
                 <div>
                     <h1 class="text-2xl font-cabinet font-medium text-brand-grey-500">
-                        Create New Article
+                        Edit Article
                     </h1>
                     <p class="text-brand-grey-400 font-synonym text-sm">
-                        Write and publish a new article
+                        Update your article content and settings
                     </p>
                 </div>
             </div>
@@ -299,6 +275,7 @@
             {#each article.categories as cat}
                 <input type="hidden" name="categories" value={cat} />
             {/each}
+            <input type="hidden" name="id" value={articles.id} />
 
             <!-- {/* Sidebar */} -->
             <div class="space-y-6">

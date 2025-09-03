@@ -26,5 +26,15 @@ export interface GetarticleData {
     seoDescription: string;
     featuredImageURL?: string;
     createdAt: string;
+    views?: number
 }
 
+export type DashboardStats = {
+    data: {
+        totalArticles: number;
+        totalViews: number;
+        totalAdmins: number;
+        totalContacts: number;
+        unreadContacts: number;
+    }
+};

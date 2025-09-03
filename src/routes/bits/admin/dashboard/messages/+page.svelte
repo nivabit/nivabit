@@ -27,13 +27,14 @@
   type StatusFilter = 'All' | 'Unread' | 'Read' | 'Replied';
 
   let { data } = $props()
-  let searchTerm = '';
-  let statusFilter: StatusFilter = 'All';
-  let expanded: Record<string, boolean> = {};
-  let draftReplies: Record<string, string> = {};
+  let searchTerm = $state('');
+  let statusFilter: StatusFilter = $state('All');
+  let expanded: Record<string, boolean> = $state({});
+  let draftReplies: Record<string, string> = $state({});
+    let selectedMessage: ContactMessage | null = $state(null)
 
   let messages: ContactMessage[] = $derived(
-    (data?.contact ?? []).map((m) => ({
+    (data?.contact ?? []).map((m: any) => ({
       id: m.id,
       name: m.name,
       services: m.services,
@@ -66,8 +67,16 @@
     expanded = { ...expanded, [id]: !expanded[id] };
   }
 
-  function toggleRead(id: string) {
-    messages = messages.map((m) => (m.id === id ? { ...m, read: !m.read } : m));
+  function openMessageModal(m: ContactMessage) {
+    selectedMessage = m
+    // mark as read when opened
+    messages = messages.map((msg) =>
+      msg.id === m.id ? { ...msg, read: true } : msg
+    )
+  }
+
+  function closeMessageModal() {
+    selectedMessage = null
   }
 
   function handleDelete(id: string) {
@@ -203,14 +212,10 @@
                     <div class="flex items-center gap-2">
                       {@html messageStatusBadge(m)}
                       <button
-                        onclick={() => toggleRead(m.id)}
+                        onclick={() => openMessageModal(m)}
                         class="p-2 text-brand-grey-400 hover:text-brand-blue-500 hover:bg-brand-blue-50 rounded-lg transition-colors"
                       >
-                        {#if m.read}
-                          <MailOpen size={16} />
-                        {:else}
-                          <Mail size={16} />
-                        {/if}
+                        <MailOpen size={16} />
                       </button>
                       <button
                         onclick={() => toggleExpand(m.id)}

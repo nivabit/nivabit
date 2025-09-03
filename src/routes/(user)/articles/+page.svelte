@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from "$app/state";
 	import { reveal } from "$lib/actions/reveal";
 	import { revealWords } from "$lib/actions/revealWords";
 	import Article from "$lib/components/layout/article.svelte";
@@ -6,7 +7,6 @@
 	import ContactUs from "$lib/components/layout/contactUs.svelte";
 	import Hero from "$lib/components/layout/Hero.svelte";
 	import Newsletter from "$lib/components/layout/newsletter.svelte";
-
 
 </script>
 

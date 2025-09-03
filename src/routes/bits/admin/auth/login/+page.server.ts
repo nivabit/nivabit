@@ -34,7 +34,7 @@ export const actions: Actions = {
         const api = new ApiService(fetch, cookies, "/api");
       
         // ✅ Call login with body
-        const res : any = await api.post("/login", {
+        const res : any = await api.post("/auth/login", {
           body: parsed.data
         });
   
