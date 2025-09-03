@@ -28,7 +28,6 @@ export const actions: Actions = {
 		const api = new ApiService(fetch, cookies);
 
 		try {
-			// ✅ Call your backend API using ApiService
 			await api.delete(`/articles/${id}`, { auth: true, method: "DELETE" });
 			
 			return { success: true };

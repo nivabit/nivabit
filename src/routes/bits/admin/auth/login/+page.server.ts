@@ -5,7 +5,7 @@ import { loginSchema } from "$lib/validation/validation";
 import { ApiService } from "$lib/services/ApiService"; // we'll create this reusable class
 import { clearAuthCookie, clearRefreshCookie, clearUserCookie, setAuthCookie, setUserCookie } from "$lib/utils/auth"; // helper for cookies
 
-// optional: preload anything if needed
+
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user) {
 		// already logged in

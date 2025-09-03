@@ -31,7 +31,6 @@
   let selectedArticles: string[] = $state([]);
   let articleToDelete: string | null = $state(null);
 
-  // ✅ derived (instead of $:)
   const filteredArticles = $derived(
     articles.filter(article => {
       const matchesSearch = 

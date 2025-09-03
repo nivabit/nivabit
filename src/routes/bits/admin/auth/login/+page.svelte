@@ -56,7 +56,7 @@
                             } else if (result.type === "error") {
                                 formError = { errors: result.error.message || result.error };
                             } else if (result.type === "success") {
-                                // redirect or do whatever
+                                
                                 window.location.href = "/bits/admin/dashboard";
                             }
                         };

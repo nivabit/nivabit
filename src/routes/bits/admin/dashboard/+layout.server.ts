@@ -5,7 +5,6 @@ import { redirect } from "@sveltejs/kit";
 export const load: LayoutServerLoad = async ({ cookies, locals }) => {
 
 	// if (token) {
-	// 	// ✅ already signed in → send to dashboard
 	// 	throw redirect(302, "/admin/dashboard");
 	// }
 

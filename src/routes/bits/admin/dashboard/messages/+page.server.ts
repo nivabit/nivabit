@@ -1,11 +1,9 @@
 import type { PageServerLoad } from './$types';
-import { ApiService } from '$lib/services/ApiService'; // Adjust the import path to your actual ApiService file
+import { ApiService } from '$lib/services/ApiService';
 
 export const load: PageServerLoad = async ({fetch, cookies}) => {
-	// ✅ Initialize ApiService with event.fetch and event.cookies
 	const api = new ApiService(fetch);
 
-	// 🔐 Example: authenticated GET request
 	try {
 		const contact = await api.get('/contact');
         

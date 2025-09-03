@@ -77,7 +77,6 @@ export const actions: Actions = {
 			});
 		  }
 		} else {
-		  // ❌ remove empty file field so it doesn't overwrite existing
 		  rawFormData.delete("featuredImage");
 		}
 	

@@ -18,7 +18,6 @@
   let formError: Record<string, string> | undefined = $state({});
 
 
-  // --- Token validation from URL ---
   onMount(() => {
     const url = get(page).url;
     const tokenParam = url.searchParams.get('token');

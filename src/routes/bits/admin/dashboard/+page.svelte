@@ -10,7 +10,6 @@
   let statsData = $state(data?.stats) as DashboardStats
   let recentArticles: any = $state(data?.articles)
 
-  // Sample data - in a real app, this would come from an API
   const stats = [
     {
       name: 'Total Articles',
