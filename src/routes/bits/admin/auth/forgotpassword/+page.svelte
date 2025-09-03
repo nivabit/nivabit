@@ -134,15 +134,6 @@
             <p class="text-xs text-brand-grey-400 font-synonym mb-2">
               Didn't receive the email? Check your spam folder or try again.
             </p>
-            <p class="text-xs text-brand-grey-400 font-synonym">
-              <strong>For Demo:</strong>{' '}
-              <a
-                href="/reset-password?token=demo-reset-token-12345"
-                class="text-brand-orange-500 hover:underline"
-              >
-                Click here to test reset password
-              </a>
-            </p>
           </div>
 
           <!-- <MainButton

@@ -7,10 +7,17 @@ const prisma = new PrismaClient();
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
-    const { email, token, newPassword } = await request.json();
+    const { token, newPassword } = await request.json();
 
-    const admin = await prisma.admin.findUnique({ where: { email } });
-    if (!admin || admin.resetToken !== token || !admin.resetTokenExp) {
+    if (!token || !newPassword) {
+      return errorResponse("Missing token or password", 400);
+    }
+
+    const admin = await prisma.admin.findFirst({
+      where: { resetToken: token }
+    });
+
+    if (!admin || !admin.resetTokenExp) {
       return errorResponse("Invalid or expired token", 400);
     }
 
@@ -22,7 +29,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const passwordHash = await argon2.hash(newPassword);
 
     await prisma.admin.update({
-      where: { email },
+      where: { id: admin.id },
       data: {
         passwordHash,
         resetToken: null,

@@ -4,16 +4,19 @@
   import { onMount } from 'svelte';
   import { Lock, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-svelte';
   import { get } from 'svelte/store';
+	import { enhance } from '$app/forms';
 
-  let password = '';
-  let confirmPassword = '';
-  let showPassword = false;
-  let showConfirmPassword = false;
-  let isLoading = false;
-  let isSuccess = false;
-  let error = '';
-  let token = '';
-  let isValidToken = true;
+  let password = $state('');
+  let confirmPassword = $state('');
+  let showPassword = $state(false);
+  let showConfirmPassword = $state(false);
+  let isLoading = $state(false);
+  let isSuccess = $state(false);
+  let error = $state('');
+  let token = $state('');
+  let isValidToken = $state(true);
+  let formError: Record<string, string> | undefined = $state({});
+
 
   // --- Token validation from URL ---
   onMount(() => {
@@ -50,43 +53,10 @@
     };
   };
 
-  $: passwordValidation = validatePassword(password);
-  $: passwordsMatch = password === confirmPassword && confirmPassword !== '';
+  const passwordValidation = $derived(validatePassword(password));
+  const passwordsMatch = $derived(password === confirmPassword && confirmPassword !== '');
 
-  // --- Submit Handler ---
-  async function handleSubmit(event: Event) {
-    event.preventDefault();
-    isLoading = true;
-    error = '';
 
-    if (!passwordValidation.isValid) {
-      error = 'Password does not meet security requirements';
-      isLoading = false;
-      return;
-    }
-
-    if (!passwordsMatch) {
-      error = 'Passwords do not match';
-      isLoading = false;
-      return;
-    }
-
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      isSuccess = true;
-
-      // Redirect to login after 3s
-      setTimeout(() => {
-        goto('/login');
-      }, 3000);
-    } catch (err) {
-      error = 'Failed to reset password. Please try again.';
-    } finally {
-      isLoading = false;
-    }
-  }
 </script>
 
 {#if !isValidToken}
@@ -149,7 +119,7 @@
       <div class="text-center mb-8">
         <a href="/" class="inline-block">
           <img
-            src="https://api.builder.io/api/v1/image/assets/TEMP/de45764ef9b670fa160f05f92667ce66908c2a21?width=240"
+            src="/images/logo.png"
             alt="Nivabit Logo"
             class="h-8 w-auto mx-auto mb-4"
           />
@@ -167,7 +137,25 @@
       <div class="bg-white rounded-2xl p-8 shadow-2xl">
         {#if !isSuccess}
           <!-- Reset form -->
-          <form on:submit|preventDefault={handleSubmit} class="space-y-6">
+          <form 
+            method="post"
+            action="?/resetPassword"
+            use:enhance={() => {
+              isLoading = true;
+              formError = {};
+              return async ({ result }) => {
+                isLoading = false;
+                if (result.type === "failure") {
+                  formError = result.data?.errors || {error: "Failed to reset password"} as any;
+                } else if (result.type === "success") {
+                  isSuccess = true;
+                  setTimeout(() => {
+                    window.location.href = "/login";
+                  }, 3000);
+                }
+              };
+            }}
+          >
             <!-- New Password -->
             <div>
               <label for="password" class="block text-brand-grey-500 text-sm font-synonym font-medium mb-2">
@@ -179,6 +167,7 @@
                 </div>
                 <input
                   id="password"
+                  name="password"
                   type={showPassword ? 'text' : 'password'}
                   bind:value={password}
                   required
@@ -187,7 +176,7 @@
                 />
                 <button
                   type="button"
-                  on:click={() => (showPassword = !showPassword)}
+                  onclick={() => (showPassword = !showPassword)}
                   class="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
                   {#if showPassword}
@@ -239,6 +228,7 @@
                 </div>
                 <input
                   id="confirmPassword"
+                  name="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
                   bind:value={confirmPassword}
                   required
@@ -247,7 +237,7 @@
                 />
                 <button
                   type="button"
-                  on:click={() => (showConfirmPassword = !showConfirmPassword)}
+                  onclick={() => (showConfirmPassword = !showConfirmPassword)}
                   class="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
                   {#if showConfirmPassword}
@@ -307,7 +297,7 @@
               </p>
             </div>
             <a
-              href="/login"
+              href="/bits/admin/auth/login"
               class="w-full inline-block bg-brand-orange-500 text-white py-3 px-4 rounded-lg font-synonym font-medium hover:bg-brand-orange-500/90 transition-colors text-center"
             >
               Go to Login
@@ -320,7 +310,7 @@
       {#if !isSuccess}
         <div class="text-center mt-6">
           <a
-            href="/login"
+            href="/bits/admin/auth/login"
             class="inline-flex items-center gap-2 text-brand-blue-100 hover:text-white font-synonym text-sm transition-colors"
           >
             Back to login

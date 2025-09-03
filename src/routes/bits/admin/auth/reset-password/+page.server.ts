@@ -3,39 +3,48 @@ import { fail } from "@sveltejs/kit";
 import { z } from "zod";
 import { ApiService } from "$lib/services/ApiService";
 
-const forgotSchema = z.object({
-  email: z.string().email("Invalid email address"),
-});
+const resetSchema = z
+  .object({
+    token: z.string().min(10, "Invalid token"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    confirmPassword: z.string().min(8, "Confirm password must be at least 8 characters"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export const load: PageServerLoad = async () => {
   return {};
 };
 
 export const actions: Actions = {
-  forgotPassword: async ({ request, fetch, cookies }) => {
+  resetPassword: async ({ request, fetch, cookies }) => {
     const formData = Object.fromEntries(await request.formData());
-    const parsed = forgotSchema.safeParse(formData);
+    const parsed = resetSchema.safeParse(formData);
 
     if (!parsed.success) {
       const errors: Record<string, string> = {};
       parsed.error.errors.forEach((err) => {
         errors[err.path.join(".")] = err.message;
       });
-      return fail(400, { success: false, errors, values: formData });
+      return fail(400, { success: false, errors });
     }
 
     try {
       const api = new ApiService(fetch, cookies, "/api");
 
-      // Call backend API to send reset email
-      const res: any = await api.post("/auth/forgot-password", {
-        body: parsed.data,
+      const res: any = await api.post("/auth/reset-password", {
+        body: {
+          token: parsed.data.token,
+          newPassword: parsed.data.password,
+        },
       });
 
       if (!res?.success) {
         return fail(400, {
           success: false,
-          errors: { errors: res?.message || "Failed to send reset email" },
+          errors: res?.message || "Failed to reset password",
         });
       }
 
@@ -43,7 +52,7 @@ export const actions: Actions = {
     } catch (err: any) {
       return fail(500, {
         success: false,
-        errors: { errors: err.message || "Server error. Please try again." },
+        errors: err.message || "Server error",
       });
     }
   },
