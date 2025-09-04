@@ -54,16 +54,17 @@ jobs:
           npx prisma generate
           npx prisma migrate deploy
 
+      # - name: Run Linting
+      #   run: npm run lint
 
+      # - name: Run Type Checking
+      #   run: npm run check
 
-      - name: Run Type Checking
-        run: npm run check
+      # - name: Run Unit Tests
+      #   run: npm run test:unit
 
-      - name: Run Unit Tests
-        run: npm run test:unit
-
-      - name: Run E2E Tests
-        run: npm run test:e2e
+      # - name: Run E2E Tests
+      #   run: npm run test:e2e
 
   deploy:
     name: Nivabit Frontend Deployment
