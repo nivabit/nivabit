@@ -158,7 +158,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           source: 'nivabit-frontend.tar.gz'
-          target: '~/domains/nivabit.com/public_html'
+          target: '~/nivabit/public_html'
 
       - name: Set Permissions and Restart Application
         uses: appleboy/ssh-action@v1.0.3
@@ -167,7 +167,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            cd ~/nivabit.com/public_html
+            cd ~/nivabit/public_html
 
             # Extract the deployment package
             tar -xzf nivabit-frontend.tar.gz
