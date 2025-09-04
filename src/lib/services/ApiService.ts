@@ -1,6 +1,11 @@
 // import { getAuthCookie, removeAuthCookie, removeRefreshCookie, removeUserCookie } from '';
 import { isTokenExpired, refreshToken } from '$lib/server/token';
-import { clearAuthCookie, clearRefreshCookie, clearUserCookie, getAuthCookie,  } from '$lib/utils/auth';
+import {
+	clearAuthCookie,
+	clearRefreshCookie,
+	clearUserCookie,
+	getAuthCookie
+} from '$lib/utils/auth';
 import { redirect, type Cookies } from '@sveltejs/kit';
 
 interface RequestOptions {
@@ -16,13 +21,17 @@ export class ApiService {
 	private cookies?: Cookies;
 	private fetch: typeof globalThis.fetch;
 
-	constructor(fetchFn: typeof globalThis.fetch = fetch, cookies?: Cookies, baseUrl: string = '/api') {
+	constructor(
+		fetchFn: typeof globalThis.fetch = fetch,
+		cookies?: Cookies,
+		baseUrl: string = '/api'
+	) {
 		this.baseUrl = baseUrl;
 		this.cookies = cookies;
 		this.fetch = fetchFn;
 	}
 
-	private async getValidToken(): Promise<string | undefined | null > {
+	private async getValidToken(): Promise<string | undefined | null> {
 		if (!this.cookies) return null;
 
 		let token = getAuthCookie(this.cookies);
@@ -98,12 +107,15 @@ export class ApiService {
 		const ct = res.headers.get('content-type');
 		if (ct && ct.includes('application/json')) return (await res.json()) as T;
 
-		return ({ message: await res.text(), success: true } as unknown) as T;
+		return { message: await res.text(), success: true } as unknown as T;
 	}
 
 	async get<T>(url: string, options: RequestOptions = {}): Promise<T> {
 		const req = await this.prepareRequest({ ...options, method: 'GET' });
-		const res = await this.fetch(this.buildUrl(url, options.queryParams), { method: 'GET', headers: req.headers });
+		const res = await this.fetch(this.buildUrl(url, options.queryParams), {
+			method: 'GET',
+			headers: req.headers
+		});
 		return this.handleResponse<T>(res);
 	}
 
@@ -120,7 +132,7 @@ export class ApiService {
 	}
 
 	async put<T>(url: string, options: RequestOptions = {}): Promise<T> {
-		const req = await this.prepareRequest({ ...options, method: 'PUT' });		
+		const req = await this.prepareRequest({ ...options, method: 'PUT' });
 		const res = await this.fetch(this.buildUrl(url, options.queryParams), {
 			method: 'PUT',
 			headers: req.headers,

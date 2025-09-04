@@ -1,16 +1,18 @@
 import { jwtDecode } from 'jwt-decode';
 import { redirect, type Cookies } from '@sveltejs/kit';
-import { AUTH_COOKIE_NAME, clearAllAuthCookies, REFRESH_COOKIE_NAME, setAuthCookie } from '$lib/utils/auth';
-
+import {
+	AUTH_COOKIE_NAME,
+	clearAllAuthCookies,
+	REFRESH_COOKIE_NAME,
+	setAuthCookie
+} from '$lib/utils/auth';
 
 interface TokenPayload {
 	exp: number;
 	[key: string]: unknown;
 }
 
-
 export async function refreshToken(cookies: Cookies, apiUrl: string): Promise<string | null> {
-
 	const accessToken = cookies.get(AUTH_COOKIE_NAME);
 	const refreshTokenValue = cookies.get(REFRESH_COOKIE_NAME);
 
@@ -41,20 +43,19 @@ export async function refreshToken(cookies: Cookies, apiUrl: string): Promise<st
 		}
 
 		const response = (await res.json()) as any;
-console.log(response);
+		console.log(response);
 
 		const newAccessToken = response?.data?.accessToken;
 		const newRefreshToken = response?.data?.refreshToken;
 
 		if (newAccessToken && newRefreshToken) {
 			// Update cookies
-			setAuthCookie(cookies, newAccessToken );
+			setAuthCookie(cookies, newAccessToken);
 			return newAccessToken;
 		} else {
 			clearAllAuthCookies(cookies);
 			redirect(303, '/bits/admin/auth/login');
 		}
-	
 	} catch (err) {
 		clearAllAuthCookies(cookies);
 		redirect(303, '/bits/admin/auth/login');

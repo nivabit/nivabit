@@ -1,9 +1,8 @@
 // src/routes/bits/admin/auth/+layout.server.ts
-import type { LayoutServerLoad } from "./$types";
-import { redirect } from "@sveltejs/kit";
+import type { LayoutServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
 
 export const load: LayoutServerLoad = async ({ cookies, locals }) => {
-
 	// if (token) {
 	// 	throw redirect(302, "/admin/dashboard");
 	// }

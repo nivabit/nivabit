@@ -1,4 +1,3 @@
-
 import { json } from '@sveltejs/kit';
 import { transporter, mailOptions, type contactType } from '$lib/server/email';
 import { generateEmailContent } from '$lib/server/emailContent'; // or wherever you put it
@@ -6,40 +5,38 @@ import type { RequestHandler } from './$types';
 import { prisma } from '$lib/server/prisma';
 
 export const POST: RequestHandler = async ({ request }) => {
-  const data = (await request.json()) as contactType;
+	const data = (await request.json()) as contactType;
 
-  // Basic validation
-  if (!data || !data.name || !data.email || !data.subject || !data.message) {
-    return json({ message: 'Bad request' }, { status: 400 });
-  }
+	// Basic validation
+	if (!data || !data.name || !data.email || !data.subject || !data.message) {
+		return json({ message: 'Bad request' }, { status: 400 });
+	}
 
-  try {
+	try {
+		await prisma.contact.create({
+			data: {
+				name: data.name,
+				services: data.services,
+				email: data.email,
+				subject: data.subject,
+				message: data.message
+			}
+		});
 
-    await prisma.contact.create({
-      data: {
-        name: data.name,
-        services: data.services,
-        email: data.email,
-        subject: data.subject,
-        message: data.message
-      }
-    });
+		// 1. Send to admin
+		await transporter.sendMail({
+			...mailOptions,
+			...generateEmailContent(data),
+			subject: data.subject
+		});
 
-
-    // 1. Send to admin
-    await transporter.sendMail({
-      ...mailOptions,
-      ...generateEmailContent(data),
-      subject: data.subject,
-    });
-
-    // 2. Send confirmation to user
-    await transporter.sendMail({
-      from: mailOptions.from,
-      to: data.email, // send to user
-      subject: "We've received your message",
-      text: `Hello ${data.name},\n\nThank you for reaching out to us. Your message has been received and our team will get back to you as soon as possible.\n\nBest regards,\nThe Nivabit Team`,
-      html: `
+		// 2. Send confirmation to user
+		await transporter.sendMail({
+			from: mailOptions.from,
+			to: data.email, // send to user
+			subject: "We've received your message",
+			text: `Hello ${data.name},\n\nThank you for reaching out to us. Your message has been received and our team will get back to you as soon as possible.\n\nBest regards,\nThe Nivabit Team`,
+			html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6;">
           <h2 style="color:#333;">Hello ${data.name},</h2>
           <p>Thank you for contacting <strong>Nivabit</strong>. We’ve received your message and our team will review it shortly.</p>
@@ -52,20 +49,19 @@ export const POST: RequestHandler = async ({ request }) => {
           <br/>
           <p>Best regards,<br/>The Nivabit Team</p>
         </div>
-      `,
-    });
+      `
+		});
 
-    return json({ success: true }, { status: 200 });
-  } catch (err: any) {
-    console.error('Email send error:', err);
-    return json({ message: err.message }, { status: 400 });
-  }
+		return json({ success: true }, { status: 200 });
+	} catch (err: any) {
+		console.error('Email send error:', err);
+		return json({ message: err.message }, { status: 400 });
+	}
 };
 
-
 export const GET: RequestHandler = async () => {
-  const contacts = await prisma.contact.findMany({
-    orderBy: { createdAt: 'desc' }
-  });
-  return json(contacts);
+	const contacts = await prisma.contact.findMany({
+		orderBy: { createdAt: 'desc' }
+	});
+	return json(contacts);
 };

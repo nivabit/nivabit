@@ -1,18 +1,15 @@
-import { ZodError } from "zod";
+import { ZodError } from 'zod';
 
 export function formatZodError(error: ZodError) {
-  return error.errors.map(e => ({
-    field: e.path.join("."),
-    message: e.message
-  }));
+	return error.errors.map((e) => ({
+		field: e.path.join('.'),
+		message: e.message
+	}));
 }
 
 export function errorResponse(message: string, status = 400, details: any[] = []) {
-  return new Response(
-    JSON.stringify({ success: false, error: message, details }),
-    {
-      status,
-      headers: { "Content-Type": "application/json" }
-    }
-  );
+	return new Response(JSON.stringify({ success: false, error: message, details }), {
+		status,
+		headers: { 'Content-Type': 'application/json' }
+	});
 }

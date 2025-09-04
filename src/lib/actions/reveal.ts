@@ -3,14 +3,14 @@ export function reveal(node: HTMLElement, options?: { threshold?: number; rootMa
 		(entries) => {
 			for (const entry of entries) {
 				if (entry.isIntersecting) {
-					node.classList.add("reveal-visible");
+					node.classList.add('reveal-visible');
 					observer.unobserve(node); // animate once
 				}
 			}
 		},
 		{
 			threshold: options?.threshold ?? 0.1,
-			rootMargin: options?.rootMargin ?? "0px"
+			rootMargin: options?.rootMargin ?? '0px'
 		}
 	);
 

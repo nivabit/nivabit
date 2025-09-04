@@ -7,13 +7,12 @@ import facebook from './facebook.svelte';
 import linkedin from './linkedin.svelte';
 import twitter from './twitter.svelte';
 
-
 export default {
 	code,
 	kickoff,
 	discovery,
 	launch,
-    design,
+	design,
 	facebook,
 	linkedin,
 	twitter

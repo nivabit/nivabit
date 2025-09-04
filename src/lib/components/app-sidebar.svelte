@@ -1,106 +1,104 @@
 <script lang="ts">
-	import CameraIcon from "@tabler/icons-svelte/icons/camera";
-	import ChartBarIcon from "@tabler/icons-svelte/icons/chart-bar";
-	import FileAiIcon from "@tabler/icons-svelte/icons/file-ai";
-	import FileDescriptionIcon from "@tabler/icons-svelte/icons/file-description";
-	import FolderIcon from "@tabler/icons-svelte/icons/folder";
-	import SettingsIcon from "@tabler/icons-svelte/icons/settings";
-	import UsersIcon from "@tabler/icons-svelte/icons/users";
-	import NavMain from "./nav-main.svelte";
-	import NavSecondary from "./nav-secondary.svelte";
-	import NavUser from "./nav-user.svelte";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import type { ComponentProps } from "svelte";
-	import { FileText, LayoutDashboard, Mail } from "lucide-svelte";
-	import { page } from "$app/state";
+	import CameraIcon from '@tabler/icons-svelte/icons/camera';
+	import ChartBarIcon from '@tabler/icons-svelte/icons/chart-bar';
+	import FileAiIcon from '@tabler/icons-svelte/icons/file-ai';
+	import FileDescriptionIcon from '@tabler/icons-svelte/icons/file-description';
+	import SettingsIcon from '@tabler/icons-svelte/icons/settings';
+	import NavMain from './nav-main.svelte';
+	import NavSecondary from './nav-secondary.svelte';
+	import NavUser from './nav-user.svelte';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import type { ComponentProps } from 'svelte';
+	import { FileText, LayoutDashboard, Mail } from 'lucide-svelte';
+	import { page } from '$app/state';
 
-	const data : any = {
+	const data: any = {
 		user: {
-			name: "shadcn",
-			email: "m@example.com",
-			avatar: "/avatars/shadcn.jpg",
+			name: 'shadcn',
+			email: 'm@example.com',
+			avatar: '/avatars/shadcn.jpg'
 		},
 		navMain: [
 			{
-				title: "Dashboard",
-				url: "/bits/admin/dashboard",
+				title: 'Dashboard',
+				url: '/bits/admin/dashboard',
 				icon: LayoutDashboard,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard'),
+				current: page.url.pathname.startsWith('/bits/admin/dashboard')
 			},
 			{
-				title: "Articles",
-				url: "/bits/admin/dashboard/articles",
+				title: 'Articles',
+				url: '/bits/admin/dashboard/articles',
 				icon: FileText,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/articles'),
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/articles')
 			},
 			{
-				title: "Analytics",
-				url: "/bits/admin/dashboard/analytics",
+				title: 'Analytics',
+				url: '/bits/admin/dashboard/analytics',
 				icon: ChartBarIcon,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/analytics'),
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/analytics')
 			},
 			{
-				title: "Messages",
-				url: "/bits/admin/dashboard/messages",
+				title: 'Messages',
+				url: '/bits/admin/dashboard/messages',
 				icon: Mail,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/messages'),
-			},
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/messages')
+			}
 		],
 		navClouds: [
 			{
-				title: "Capture",
+				title: 'Capture',
 				icon: CameraIcon,
 				isActive: true,
-				url: "#",
+				url: '#',
 				items: [
 					{
-						title: "Active Proposals",
-						url: "#",
+						title: 'Active Proposals',
+						url: '#'
 					},
 					{
-						title: "Archived",
-						url: "#",
-					},
-				],
+						title: 'Archived',
+						url: '#'
+					}
+				]
 			},
 			{
-				title: "Proposal",
+				title: 'Proposal',
 				icon: FileDescriptionIcon,
-				url: "#",
+				url: '#',
 				items: [
 					{
-						title: "Active Proposals",
-						url: "#",
+						title: 'Active Proposals',
+						url: '#'
 					},
 					{
-						title: "Archived",
-						url: "#",
-					},
-				],
+						title: 'Archived',
+						url: '#'
+					}
+				]
 			},
 			{
-				title: "Prompts",
+				title: 'Prompts',
 				icon: FileAiIcon,
-				url: "#",
+				url: '#',
 				items: [
 					{
-						title: "Active Proposals",
-						url: "#",
+						title: 'Active Proposals',
+						url: '#'
 					},
 					{
-						title: "Archived",
-						url: "#",
-					},
-				],
-			},
+						title: 'Archived',
+						url: '#'
+					}
+				]
+			}
 		],
 		navSecondary: [
 			{
-				title: "Settings",
-				url: "#",
-				icon: SettingsIcon,
-			},
-		],
+				title: 'Settings',
+				url: '#',
+				icon: SettingsIcon
+			}
+		]
 	};
 
 	let { ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();

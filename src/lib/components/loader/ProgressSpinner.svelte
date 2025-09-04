@@ -39,21 +39,20 @@
 		purple: 'from-purple-500 to-pink-500',
 		orange: 'from-orange-500 to-red-500',
 		red: 'from-red-500 to-pink-500',
-		primary: 'from-primary to-secondary',
+		primary: 'from-primary to-secondary'
 	};
 
 	// Reactive effect to handle navigation state
 	$effect(() => {
 		async function handleNavigation() {
-			if (navigating.type === "link" || navigating.type === "form" || navigating.type === "goto") {
+			if (navigating.type === 'link' || navigating.type === 'form' || navigating.type === 'goto') {
 				startProgress();
 				await navigating.complete;
-			} 
+			}
 		}
 		handleNavigation();
 		completeProgress();
 	});
-
 
 	$effect(() => {
 		if ($loader) {
@@ -67,7 +66,7 @@
 		isVisible = true;
 		progress = 0;
 		startTime = Date.now();
-		
+
 		progressInterval = setInterval(() => {
 			if (progress < 20) {
 				progress += Math.random() * 15;
@@ -78,7 +77,7 @@
 			} else if (progress < 95) {
 				progress += Math.random() * 1;
 			}
-			
+
 			if (progress > 95) progress = 95;
 		}, speed);
 	}
@@ -87,13 +86,13 @@
 		if (progressInterval) {
 			clearInterval(progressInterval);
 		}
-		
+
 		if (isVisible) {
 			const elapsed = Date.now() - startTime;
 			progress = 100;
-			
+
 			const remainingTime = Math.max(0, minDuration - elapsed);
-			
+
 			setTimeout(() => {
 				isVisible = false;
 				progress = 0;
@@ -112,13 +111,21 @@
 </script>
 
 {#if isVisible}
-	<div class="fixed top-0 left-0 right-0 {heightClasses[height]} bg-gray-200 dark:bg-gray-800 z-50 overflow-hidden">
-		<div 
-			class="h-full bg-gradient-to-r {colorClasses[color]} transition-all duration-200 ease-out relative overflow-hidden shadow-sm"
+	<div
+		class="fixed top-0 right-0 left-0 {heightClasses[
+			height
+		]} z-50 overflow-hidden bg-gray-200 dark:bg-gray-800"
+	>
+		<div
+			class="h-full bg-gradient-to-r {colorClasses[
+				color
+			]} relative overflow-hidden shadow-sm transition-all duration-200 ease-out"
 			style="width: {progress}%"
 		>
 			{#if showShimmer}
-				<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
+				<div
+					class="animate-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+				></div>
 			{/if}
 		</div>
 	</div>
@@ -133,7 +140,7 @@
 			transform: translateX(100%);
 		}
 	}
-	
+
 	.animate-shimmer {
 		animation: shimmer cubic-bezier(0.55, 0.055, 0.675, 0.19) 3s infinite;
 	}

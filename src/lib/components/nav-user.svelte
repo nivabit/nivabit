@@ -1,29 +1,27 @@
 <script lang="ts">
-	import CreditCardIcon from "@tabler/icons-svelte/icons/credit-card";
-	import DotsVerticalIcon from "@tabler/icons-svelte/icons/dots-vertical";
-	import LogoutIcon from "@tabler/icons-svelte/icons/logout";
-	import NotificationIcon from "@tabler/icons-svelte/icons/notification";
-	import UserCircleIcon from "@tabler/icons-svelte/icons/user-circle";
-	import * as Avatar from "$lib/components/ui/avatar/index.js";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import Button from "./ui/button/button.svelte";
-	import { page } from "$app/state";
+	import CreditCardIcon from '@tabler/icons-svelte/icons/credit-card';
+	import DotsVerticalIcon from '@tabler/icons-svelte/icons/dots-vertical';
+	import LogoutIcon from '@tabler/icons-svelte/icons/logout';
+	import NotificationIcon from '@tabler/icons-svelte/icons/notification';
+	import UserCircleIcon from '@tabler/icons-svelte/icons/user-circle';
+	import * as Avatar from '$lib/components/ui/avatar/index.js';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import Button from './ui/button/button.svelte';
+	import { page } from '$app/state';
 
 	const sidebar = Sidebar.useSidebar();
-	let user = page?.data?.user
+	let user = page?.data?.user;
 
 	let getInitials = $derived.by(() => {
-		if (!user?.name) return "??";
-		const parts = user?.name.trim().split(" ");
+		if (!user?.name) return '??';
+		const parts = user?.name.trim().split(' ');
 		if (parts.length === 1) {
 			return parts[0].charAt(0).toUpperCase();
 		}
-		
-		return (
-			parts[0].charAt(0).toUpperCase() + parts[1].charAt(0).toUpperCase()
-		);
-	})
+
+		return parts[0].charAt(0).toUpperCase() + parts[1].charAt(0).toUpperCase();
+	});
 </script>
 
 <Sidebar.Menu>
@@ -42,7 +40,7 @@
 						</Avatar.Root>
 						<div class="grid flex-1 text-left text-sm leading-tight">
 							<span class="truncate font-medium">{user?.name}</span>
-							<span class="text-muted-foreground truncate text-xs">
+							<span class="truncate text-xs text-muted-foreground">
 								{user?.email}
 							</span>
 						</div>
@@ -52,7 +50,7 @@
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Content
 				class="w-(--bits-dropdown-menu-anchor-width) min-w-56 rounded-lg"
-				side={sidebar.isMobile ? "bottom" : "right"}
+				side={sidebar.isMobile ? 'bottom' : 'right'}
 				align="end"
 				sideOffset={4}
 			>
@@ -64,7 +62,7 @@
 						</Avatar.Root>
 						<div class="grid flex-1 text-left text-sm leading-tight">
 							<span class="truncate font-medium">{user?.name}</span>
-							<span class="text-muted-foreground truncate text-xs">
+							<span class="truncate text-xs text-muted-foreground">
 								{user?.email}
 							</span>
 						</div>

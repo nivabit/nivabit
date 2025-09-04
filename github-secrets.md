@@ -5,12 +5,15 @@ This document outlines the required GitHub secrets that need to be configured in
 ## Required Secrets
 
 ### Database Configuration
+
 - `DATABASE_URL` - PostgreSQL connection string (e.g., `postgresql://username:password@host:port/database`)
 
 ### Authentication
+
 - `JWT_SECRET` - Secret key for JWT token generation
 
 ### Email Configuration (SMTP)
+
 - `SMTP_HOST` - SMTP server hostname (e.g., `smtp.gmail.com`)
 - `SMTP_PORT` - SMTP server port (e.g., `587`)
 - `SMTP_USERNAME` - SMTP username/email
@@ -18,11 +21,13 @@ This document outlines the required GitHub secrets that need to be configured in
 - `CONTACT_EMAIL` - Contact email address for the application
 
 ### Deployment Server Configuration
+
 - `SERVER_HOST` - Your server's IP address or hostname
 - `SERVER_USERNAME` - SSH username for server access
 - `SERVER_PASSWORD` - SSH password for server access
 
 ### Application Configuration
+
 - `PUBLIC_SITE_URL` - Public URL of your application (e.g., `https://nivabit.com`)
 
 ## How to Add Secrets to GitHub
@@ -53,12 +58,14 @@ PORT=3000
 ## Workflow Features
 
 ### Integration Job
+
 - Sets up PostgreSQL service for testing
 - Runs database migrations
 - Executes linting, type checking, unit tests, and E2E tests
 - Uses Node.js 20 with npm caching
 
 ### Deployment Job
+
 - Only runs after successful integration tests
 - Builds the SvelteKit application
 - Creates a deployment package with:
@@ -73,6 +80,7 @@ PORT=3000
 ### Server Setup Requirements
 
 Your server should have:
+
 - Node.js 20+ installed
 - PM2 process manager installed (`npm install -g pm2`)
 - PostgreSQL database accessible
@@ -81,12 +89,14 @@ Your server should have:
 ## Triggering Deployments
 
 The workflow triggers on:
+
 - Push to `main` or `version2` branches
 - Pull requests to `main` or `version2` branches
 
 ## Monitoring
 
 After deployment, you can monitor your application using PM2:
+
 ```bash
 pm2 list
 pm2 logs nivabit-app

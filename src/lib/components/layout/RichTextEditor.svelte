@@ -9,24 +9,21 @@
 		readOnly?: boolean;
 	};
 
-	let {
-		value = $bindable(),
-		readOnly = false
-	}: Props = $props();
+	let { value = $bindable(), readOnly = false }: Props = $props();
 
 	let editorContainer: HTMLDivElement;
 	let quill: any;
 
 	const toolbar = [
-		[{ 'font': [] }],
-		[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+		[{ font: [] }],
+		[{ header: [1, 2, 3, 4, 5, 6, false] }],
 		['bold', 'italic', 'underline', 'strike'],
-		[{ 'color': [] }, { 'background': [] }],
-		[{ 'script': 'sub' }, { 'script': 'super' }],
-		[{ 'list': 'ordered' }, { 'list': 'bullet' }],
-		[{ 'indent': '-1' }, { 'indent': '+1' }],
-		[{ 'direction': 'rtl' }],
-		[{ 'align': [] }],
+		[{ color: [] }, { background: [] }],
+		[{ script: 'sub' }, { script: 'super' }],
+		[{ list: 'ordered' }, { list: 'bullet' }],
+		[{ indent: '-1' }, { indent: '+1' }],
+		[{ direction: 'rtl' }],
+		[{ align: [] }],
 		['blockquote', 'code-block'],
 		['link', 'image', 'video'],
 		['clean']
@@ -47,7 +44,7 @@
 			quillInstance = new Quill(editorContainer, {
 				theme: 'snow',
 				modules: { toolbar },
-				placeholder: 'Write your article content here...',
+				placeholder: 'Write your article content here...'
 			});
 
 			if (value) {
@@ -63,7 +60,6 @@
 		};
 	});
 </script>
-
 
 {#if browser}
 	{#if readOnly}

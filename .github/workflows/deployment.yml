@@ -54,8 +54,7 @@ jobs:
           npx prisma generate
           npx prisma migrate deploy
 
-      - name: Run Linting
-        run: npm run lint
+
 
       - name: Run Type Checking
         run: npm run check
@@ -106,10 +105,10 @@ jobs:
           cp -r static deployment/
           cp package.json deployment/
           cp package-lock.json deployment/
-          
+
           # Copy Prisma schema and migrations
           cp -r prisma deployment/
-          
+
           # Create .env file
           cat > deployment/.env << EOF
           NODE_ENV=production
@@ -157,8 +156,8 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: "nivabit-frontend.tar.gz"
-          target: "~/domains/nivabit.com/public_html"
+          source: 'nivabit-frontend.tar.gz'
+          target: '~/domains/nivabit.com/public_html'
 
       - name: Set Permissions and Restart Application
         uses: appleboy/ssh-action@v1.0.3

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import CirclePlusFilledIcon from "@tabler/icons-svelte/icons/circle-plus-filled";
-	import MailIcon from "@tabler/icons-svelte/icons/mail";
-	import { Button } from "$lib/components/ui/button/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import type { Icon } from "@tabler/icons-svelte";
+	import CirclePlusFilledIcon from '@tabler/icons-svelte/icons/circle-plus-filled';
+	import MailIcon from '@tabler/icons-svelte/icons/mail';
+	import { Button } from '$lib/components/ui/button/index.js';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import type { Icon } from '@tabler/icons-svelte';
 
 	let { items }: { items: { title: string; url: string; icon?: Icon }[] } = $props();
 </script>
@@ -36,16 +36,16 @@
 						<a
 							href={item.url}
 							role="button"
-							class="flip-button text-white text-sm hover:underline hover:bg-transparent transition-colors duration-300 !block w-full"
+							class="flip-button !block w-full text-sm text-white transition-colors duration-300 hover:bg-transparent hover:underline"
 						>
 							<span class="slide-text h-20 w-full">
-								<span class="text-top !flex items-center gap-2 w-full">
+								<span class="text-top !flex w-full items-center gap-2">
 									{#if item.icon}
 										<item.icon class="size-4" />
 									{/if}
 									<span>{item.title}</span>
 								</span>
-								<span class="text-bottom text-brand-orange-500 !flex items-center gap-2 w-full">
+								<span class="text-bottom !flex w-full items-center gap-2 text-brand-orange-500">
 									{#if item.icon}
 										<item.icon class="size-4" />
 									{/if}

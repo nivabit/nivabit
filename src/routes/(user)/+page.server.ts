@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { ApiService } from '$lib/services/ApiService';
 
-export const load: PageServerLoad = async ({fetch}) => {
+export const load: PageServerLoad = async ({ fetch }) => {
 	const api = new ApiService(fetch);
 
 	try {

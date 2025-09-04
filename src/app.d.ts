@@ -23,7 +23,7 @@ declare global {
 		}
 
 		interface PageData {
-			user?: Locals["user"];
+			user?: Locals['user'];
 		}
 	}
 }

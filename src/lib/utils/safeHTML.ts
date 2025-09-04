@@ -1,4 +1,3 @@
-
 export function safeHTML(node: HTMLElement, html: string | null | undefined) {
 	if (html) node.innerHTML = html;
 	return {
