@@ -62,97 +62,87 @@
 				toast.success('Message was sent successfully', {
 					description: 'Thanks for contacting us, our team will reach out soon.'
 				});
-
 				// reset form
-				name = '';
-				email = '';
-				message = '';
-				selectedService = 'Design';
+				name = "";
+				email = "";
+				message = "";
+				selectedService = "";
 			} else {
-				toast.error('Something went wrong. Please try again.');
+				toast.error("Something went wrong. Please try again.");
 			}
-		} catch (err) {
-			toast.error('Something went wrong. Please try again.');
+		}catch (err) {
+			toast.error("Something went wrong. Please try again.");
 		} finally {
 			isSubmitting = false;
 		}
 	}
 </script>
 
-<section id="contact" class="bg-brand-blue-900 px-4 py-16 md:px-16 md:py-24">
-	<div class="mx-auto max-w-7xl">
-		<div class="flex flex-col items-end gap-12 lg:flex-row lg:gap-24">
-			<div use:reveal class="reveal w-full flex-shrink-0 self-start lg:w-96">
-				<p class="text-lg text-white">Contact us</p>
+<section id="contact" class="bg-brand-blue-900 px-4 md:px-16 py-16 md:py-24">
+    <div class="max-w-7xl mx-auto">
+      	<div class="flex flex-col lg:flex-row gap-12 lg:gap-24 items-end">
+			<div use:reveal class="reveal w-full lg:w-96 flex-shrink-0 self-start">
+			<p class="text-white text-lg ">Contact us</p>
 			</div>
-
+	
 			<div class="flex-1 space-y-16">
-				<h2
-					use:revealWords
-					class="reveal-words font-cabinet text-2xl font-medium text-white md:text-3xl"
-				>
+				<h2 use:revealWords class="reveal-words text-2xl md:text-3xl font-cabinet font-medium text-white">
 					Tell us about your project
 				</h2>
-
-				<form class="space-y-10" onsubmit={handleSubmit}>
+	
+				<form class="space-y-10" onsubmit={handleSubmit} >
 					<!-- Service Selection -->
 					<div use:reveal class="reveal">
-						<label for="" class="mb-3 block text-lg text-white">Choose service</label>
-						<div class="flex flex-wrap gap-5">
-							{#each services as service}
-								<button
-									type="button"
-									class={`flip-button relative flex flex-col items-center justify-center overflow-hidden rounded-full border px-5 py-3 text-sm transition-colors ${
-										selectedService === service
-											? 'border-bg-blue bg-white text-brand-blue-500'
-											: 'border-brand-blue-50 text-brand-blue-100'
-									}`}
-									onclick={() => selectService(service)}
-								>
-									<span class={`${selectedService === service ? '' : 'slide-text'}`}>
-										<span
-											class={`${selectedService === service ? '' : 'text-top text-brand-blue-100'}`}
-											>{service}</span
-										>
-										<span class="text-bottom text-white">{service}</span>
-									</span>
-								</button>
-							{/each}
-						</div>
+					<label for="" class="text-white text-lg  block mb-3">Choose service</label>
+					<div class="flex flex-wrap gap-5">
+						{#each services as service}
+						<button
+							type="button"
+							class={`flip-button px-5 py-3 rounded-full text-sm flex items-center justify-center flex-col border transition-colors relative overflow-hidden cursor-pointer ${
+							selectedService === service
+								? 'bg-white text-brand-blue-500 border-bg-blue'
+								: 'text-brand-blue-100 border-brand-blue-50'
+							}`}
+							onclick={() => selectService(service)}
+						>
+							<span class={`${selectedService === service ? "" :"slide-text"}`}>
+							<span class={`${selectedService === service ? "" : "text-top text-brand-blue-100"}`}>{service}</span>
+							<span class="text-bottom text-white">{service}</span>
+							</span>
+						</button>
+						{/each}
 					</div>
-
+					</div>
+		
 					<!-- Name and Email -->
 					<div use:reveal class="reveal">
-						<label for="name" class="mb-3 block text-lg text-white">Name</label>
-						<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-							<Input
-								type="text"
-								placeholder="John Doe"
-								bind:value={name}
-								name="name"
-								id="name"
-								class="rounded-full border border-bg-blue bg-transparent px-5 py-7 text-brand-grey-200  placeholder:text-brand-grey-200 focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
-							/>
-							{#if errors.name}<p class="block text-sm text-red-500 md:hidden">
-									{errors.name}
-								</p>{/if}
-							<div>
-								<label for="name" class="mb-3 block text-lg text-white md:hidden">Email</label>
-								<Input
-									type="email"
-									placeholder="Email"
-									bind:value={email}
-									name="email"
-									id="email"
-									class="rounded-full border border-bg-blue bg-transparent px-5 py-7 text-brand-grey-200  placeholder:text-brand-grey-200 focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
-								/>
-							</div>
-							{#if errors.name}<p class="hidden text-sm text-red-500 md:block">
-									{errors.name}
-								</p>{/if}
-							{#if errors.email}<p class="text-sm text-red-500">{errors.email}</p>{/if}
+					<label for="name" class="text-white text-lg  block mb-3">Name</label>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+						<Input
+						type="text"
+						placeholder="John Doe"
+						bind:value={name}
+						name="name"
+						id="name"
+						class="bg-transparent border border-bg-blue rounded-full px-5 py-7 text-brand-grey-200  placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
+						/>
+						{#if errors.name}<p class="text-red-500 text-sm block md:hidden">{errors.name}</p>{/if}
+						<div>
+						<label for="name" class="text-white text-lg mb-3 md:hidden block">Email</label>
+						<Input
+							type="email"
+							placeholder="Email"
+							bind:value={email}
+							name="email"
+							id="email"
+							class="bg-transparent border border-bg-blue rounded-full px-5 py-7 text-brand-grey-200  placeholder:text-brand-grey-200 focus:outline-none focus:ring-2 focus:ring-brand-orange-500"
+						/>
 						</div>
+						{#if errors.name}<p class="text-red-500 text-sm md:block hidden">{errors.name}</p>{/if}
+						{#if errors.email}<p class="text-red-500 text-sm">{errors.email}</p>{/if}
 					</div>
+					</div>
+
 
 					<!-- Message -->
 					<div use:reveal class="reveal">
@@ -173,7 +163,7 @@
 						<MainButton
 							disabled={isSubmitting}
 							type="submit"
-							class="flex items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
+							class="flex items-center gap-2 cursor-pointer rounded-full bg-brand-orange-500 px-5 py-3 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
 						>
 							{isSubmitting ? 'Submitting...' : 'Submit'}
 							<svg width="16" height="16" viewBox="0 0 16 17" fill="none">

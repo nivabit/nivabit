@@ -181,6 +181,7 @@
 
 						<div use:reveal class="reveal text-center">
 							<MainButton
+								href="#contact"
 								class="flex items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-sm text-white transition-colors hover:bg-brand-orange-500/90"
 							>
 								Get Started
@@ -223,7 +224,7 @@
 					<button
 						type="button"
 						use:reveal
-						class="reveal flex w-full flex-col gap-8 border-b border-brand-blue-100 py-12 text-start md:py-16 lg:flex-row lg:gap-24"
+						class="reveal cursor-pointer flex w-full flex-col gap-8 border-b border-brand-blue-100 py-12 text-start md:py-16 lg:flex-row lg:gap-24"
 						onclick={() => toggleService(index)}
 					>
 						<div class="w-full flex-shrink-0 lg:w-96">
@@ -250,6 +251,7 @@
 										{service.desc}
 									</p>
 									<MainButton
+										href="#contact"
 										variant="outline"
 										class="flex items-center gap-2 rounded-full border border-brand-blue-700 bg-transparent px-5 py-3 text-sm transition-colors"
 									>
@@ -327,6 +329,7 @@
 					<!-- CTA Button -->
 					<div use:reveal class="reveal text-center">
 						<MainButton
+							href="#contact"
 							class="flex items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
 						>
 							Get Started

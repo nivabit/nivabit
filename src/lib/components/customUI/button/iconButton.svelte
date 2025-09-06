@@ -54,7 +54,7 @@
 </script>
 
 {#if href}
-	<a
+	<!-- <a
 		bind:this={ref}
 		data-slot="button"
 		class={cn(buttonVariants({ variant, size }), className)}
@@ -65,6 +65,35 @@
 		{...restProps}
 	>
 		{@render children?.()}
+	</a> -->
+
+	<a
+		bind:this={ref}
+		data-slot="button"
+		href={disabled ? undefined : href}
+		aria-disabled={disabled}
+		role={disabled ? "link" : undefined}
+		tabindex={disabled ? -1 : undefined}
+		{...restProps}
+		class={cn(
+			buttonVariants({ variant, size }),
+			"relative overflow-hidden transition-all duration-300 ease-in-out h-12 w-48 rounded-md group",
+			className
+		)}
+		>
+		<!-- Top Layer (default state) -->
+		<div
+			class="absolute inset-0 flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-full text-white z-10 ease-in-out"
+		>
+			{@render children?.()}
+		</div>
+
+		<!-- Bottom Layer (hover state) -->
+		<div
+			class="absolute inset-0 flex items-center justify-center transition-transform duration-300 translate-y-full group-hover:translate-y-0 bg-white text-white z-0 ease-in-out"
+		>
+			{@render children?.()}
+		</div>
 	</a>
 {:else}
 	<button

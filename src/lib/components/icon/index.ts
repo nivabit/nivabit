@@ -6,6 +6,8 @@ import design from './design.svelte';
 import facebook from './facebook.svelte';
 import linkedin from './linkedin.svelte';
 import twitter from './twitter.svelte';
+import tiktok from './tiktok.svelte';
+import instagram from './instagram.svelte';
 
 export default {
 	code,
@@ -15,5 +17,7 @@ export default {
 	design,
 	facebook,
 	linkedin,
-	twitter
+	twitter,
+	instagram,
+	tiktok
 };
