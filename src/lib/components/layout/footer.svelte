@@ -28,13 +28,13 @@
 			name: 'message',
 			title: 'contact@nivabit.com',
 			icon: Message,
-			url: ''
+			url: 'mailto:contact@nivabit.com'
 		},
 		{
 			name: 'call',
 			title: '+2349071133025',
 			icon: Call,
-			url: 'https://www.facebook.com/search/top?q=nivabit'
+			url: 'tel:+2349071133025'
 		}
 	];
 
@@ -154,6 +154,8 @@
 					{#each contactDetails as contact}
 						<div class="flex items-center gap-3">
 							<IconButton
+								href={contact.url}
+								target="_blank"
 								class="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange-500"
 								onmouseenter={() => (iconFills[contact.name] = '#00042B')}
 								onmouseleave={() => (iconFills[contact.name] = '#ffffff')}
