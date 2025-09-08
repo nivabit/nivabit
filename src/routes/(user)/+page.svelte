@@ -253,7 +253,7 @@
 									<MainButton
 										href="#contact"
 										variant="outline"
-										class="flex items-center gap-2 rounded-full border border-brand-blue-700 bg-transparent px-5 py-3 text-sm transition-colors"
+										class="flex items-center gap-2 rounded-full border border-brand-blue-700 bg-transparent px-5 py-3 text-sm transition-colors hover:bg-transparent"
 									>
 										Get Started
 										<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
