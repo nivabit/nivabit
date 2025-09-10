@@ -35,10 +35,10 @@
 					<Input
 						type="email"
 						placeholder="Your Email"
-						class="placeholder:text-text-grey focus:ring-none flex-1 rounded-full border-none bg-white px-5  py-3 text-brand-grey-500 shadow-none focus:border-none focus:ring-brand-orange-500 focus:outline-none focus-visible:outline-none"
+						class="placeholder:text-text-grey focus:ring-none flex-1 rounded-full border-none bg-white px-5  py-3 text-brand-grey-500 shadow-none focus:border-none focus:ring-brand-orange-500 focus:outline-none focus-visible:outline-none outline-0 border-0 focus-visible:ring-0"
 					/>
 					<MainButton
-						class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
+						class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
 					>
 						Subscribe
 						<svg width="16" height="16" viewBox="0 0 16 17" fill="none">

@@ -83,7 +83,7 @@
 		<div use:reveal class="reveal text-center">
 			<MainButton
 				href="/articles"
-				class="mx-auto flex items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
+				class="mx-auto flex items-center gap-2 rounded-full bg-brand-orange-500 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
 			>
 				View all articles
 				<svg width="16" height="16" viewBox="0 0 16 17" fill="none">

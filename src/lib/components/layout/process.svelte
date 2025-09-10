@@ -60,15 +60,12 @@
 				Where Ideas Take Shape
 			</h2>
 		</div>
-
 		<!-- Process Steps -->
-		<div use:reveal class="reveal space-y-5;">
+		<div  class=" space-y-5">
 			{#each processes as process}
 				<div
 					class="mx-auto max-w-[1000px] rounded-3xl bg-brand-blue-900 p-10"
-					style="
-          position: sticky;
-          top: 80px;"
+					style="position: sticky;top: 80px;"
 				>
 					<div class="rounded-2xl border border-dashed border-white p-8 md:p-16">
 						<div class="flex flex-col items-start justify-between gap-8 md:flex-row lg:gap-16">

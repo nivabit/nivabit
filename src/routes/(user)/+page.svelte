@@ -9,14 +9,15 @@
 	import Resources from '$lib/components/layout/resources.svelte';
 	import Motion from 'motion-svelte';
 	import { onMount } from 'svelte';
+	import { slide, fade } from 'svelte/transition';
 
 	// Image IDs for scrolling section
 	const imageIds = [
-		'/images/Project-1.png',
-		'/images/Project-2.png',
-		'/images/Project-3.png',
-		'/images/Project-4.png',
-		'/images/Project-5.png'
+		'/images/project/Project-1.png',
+		'/images/project/Project-3.png',
+		'/images/project/Project-4.png',
+		'/images/project/Project-5.png',
+		'/images/project/Project-2.png',
 	];
 
 	const services = [
@@ -58,21 +59,21 @@
 			duration: '6 weeks',
 			type: 'Website',
 			category: 'Ecommerce',
-			image: '/images/portfolio2.png'
+			image: '/images/project/Project-1.png'
 		},
 		{
 			title: 'Padetunes',
 			duration: '8 weeks',
 			type: 'WebApp',
 			category: 'Music',
-			image: '/images/portfolio1.png'
+			image: '/images/project/Project-4.png'
 		},
 		{
 			title: "Mr. Olusola's Website",
 			duration: '4 weeks',
 			type: 'Website',
 			category: 'Personal',
-			image: '/images/portfolio4.png'
+			image: '/images/project/Project-3.png'
 		}
 	];
 
@@ -125,12 +126,12 @@
 	<Hero />
 	<!-- Horizontal Project Showcase -->
 	<section class="bg-brand-blue-900 py-8 md:py-12">
-		<div use:reveal class="reveal overflow-hidden">
-			<div class="animate-scroll flex space-x-3 md:space-x-5">
-				{#each Array(10) as _, i}
+		<div use:reveal class="reveal relative overflow-hidden">
+			<div class="marquee flex w-max animate-marquee space-x-5">
+				{#each imageIds.concat(imageIds) as img, i}
 					<div class="flex-shrink-0">
 						<img
-							src={imageIds[i % imageIds.length]}
+							src={img}
 							alt={`Project ${i + 1}`}
 							class="h-64 w-64 rounded-2xl object-cover md:h-80 md:w-80"
 						/>
@@ -182,7 +183,7 @@
 						<div use:reveal class="reveal text-center">
 							<MainButton
 								href="#contact"
-								class="flex items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-sm text-white transition-colors hover:bg-brand-orange-500/90"
+								class="flex items-center gap-2 rounded-full bg-brand-orange-500 text-sm text-white transition-colors hover:bg-brand-orange-500/90"
 							>
 								Get Started
 								<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
@@ -203,7 +204,7 @@
 	<section id="services" class="bg-bg-orange px-4 py-16 md:px-16 md:py-24">
 		<div class="mx-auto max-w-7xl">
 			<!-- Services Header -->
-			<div class="mb-16 flex flex-col items-end gap-12 lg:flex-row lg:gap-24">
+			<div class="mb-16 flex flex-col gap-12 lg:flex-row lg:gap-24">
 				<div use:reveal class="reveal w-full flex-shrink-0 lg:w-96">
 					<p class="text-lg text-brand-grey-500">Services</p>
 				</div>
@@ -224,7 +225,7 @@
 					<button
 						type="button"
 						use:reveal
-						class="reveal cursor-pointer flex w-full flex-col gap-8 border-b border-brand-blue-100 py-12 text-start md:py-16 lg:flex-row lg:gap-24"
+						class="reveal group hover:bg-[#FFF3E7] cursor-pointer flex w-full flex-col gap-8 border-b border-brand-blue-100 py-12 text-start md:py-16 lg:flex-row lg:gap-24 transition-opacity duration-300 ease-in-out"
 						onclick={() => toggleService(index)}
 					>
 						<div class="w-full flex-shrink-0 lg:w-96">
@@ -245,26 +246,24 @@
 								{/each}
 							</div>
 
-							{#if activeServiceIndex === index}
-								<div class="transition-display ease-in-out">
-									<p class="mb-8 text-lg font-normal text-brand-grey-500 md:text-2xl">
-										{service.desc}
-									</p>
-									<MainButton
-										href="#contact"
-										variant="outline"
-										class="flex items-center gap-2 rounded-full border border-brand-blue-700 bg-transparent px-5 py-3 text-sm transition-colors hover:bg-transparent"
-									>
-										Get Started
-										<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
-											<path
-												d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"
-												fill="#00042B"
-											/>
-										</svg>
-									</MainButton>
-								</div>
-							{/if}
+							<div class="hidden group-hover:block transition-opacity duration-300 ease-in-out">
+								<p class="mb-8 text-lg font-normal text-brand-grey-500 md:text-2xl">
+									{service.desc}
+								</p>
+								<MainButton
+									href="#contact"
+									variant="outline"
+									class="flex items-center gap-2 rounded-full border border-brand-blue-700 bg-transparent text-sm transition-colors hover:bg-brand-blue-700 hover:text-white"
+								>
+									Get Started
+									<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
+										<path
+											d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"
+											fill="#00042B"
+										/>
+									</svg>
+								</MainButton>
+							</div>
 						</div>
 					</button>
 				{/each}
@@ -330,7 +329,7 @@
 					<div use:reveal class="reveal text-center">
 						<MainButton
 							href="#contact"
-							class="flex items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
+							class="flex items-center gap-2 rounded-full bg-brand-orange-500 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
 						>
 							Get Started
 							<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
@@ -353,7 +352,7 @@
 		<!-- {/* Testimonials Section */} -->
 		<section class="bg-bg-blue px-4 py-16 md:px-16 md:py-24">
 			<div class="mx-auto max-w-7xl">
-				<div class="flex flex-col items-end gap-12 lg:flex-row lg:gap-24">
+				<div class="flex flex-col gap-12 lg:flex-row lg:gap-24">
 					<!-- Label -->
 					<div use:reveal class="reveal w-full flex-shrink-0 lg:w-96">
 						<p class="text-lg text-brand-grey-500">Testimonial</p>
@@ -436,7 +435,7 @@
 
 <style>
 	.next-section {
-		margin-top: -100vh; /* Overlap the last step */
+		margin-top: -0vh; /* Overlap the last step */
 		z-index: 10;
 		position: relative;
 		background: white;

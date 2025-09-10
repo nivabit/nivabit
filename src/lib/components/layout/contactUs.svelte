@@ -8,12 +8,8 @@
 	import { sendContactForm } from '$lib/mail_sender';
 	import MainButton from '../customUI/button/MainButton.svelte';
 
-	let selectedService = $state('');
+	let selectedServices: string[] = $state([]);
 	const services = ['Design', 'Development', 'Research', 'Others'];
-
-	function selectService(service: string) {
-		selectedService = service;
-	}
 
 	const ContactSchema = z.object({
 		name: z.string().min(2, {
@@ -53,7 +49,7 @@
 		try {
 			// simulate sending form (replace with your API call e.g. sendContactForm)
 			const res = await sendContactForm({
-				services: selectedService,
+				services: selectedServices.join(', '),
 				...result.data,
 				subject: 'Lead from contact'
 			});
@@ -66,7 +62,7 @@
 				name = "";
 				email = "";
 				message = "";
-				selectedService = "";
+				selectedServices = [];
 			} else {
 				toast.error("Something went wrong. Please try again.");
 			}
@@ -74,6 +70,14 @@
 			toast.error("Something went wrong. Please try again.");
 		} finally {
 			isSubmitting = false;
+		}
+	}
+
+	function toggleService(service: string) {
+		if (selectedServices.includes(service)) {
+			selectedServices = selectedServices.filter((s) => s !== service);
+		} else {
+			selectedServices = [...selectedServices, service];
 		}
 	}
 </script>
@@ -99,14 +103,14 @@
 						<button
 							type="button"
 							class={`flip-button px-5 py-3 rounded-full text-sm flex items-center justify-center flex-col border transition-colors relative overflow-hidden cursor-pointer ${
-							selectedService === service
+							selectedServices.includes(service)
 								? 'bg-white text-brand-blue-500 border-bg-blue'
 								: 'text-brand-blue-100 border-brand-blue-50'
 							}`}
-							onclick={() => selectService(service)}
+							onclick={() => toggleService(service)}
 						>
-							<span class={`${selectedService === service ? "" :"slide-text"}`}>
-							<span class={`${selectedService === service ? "" : "text-top text-brand-blue-100"}`}>{service}</span>
+							<span class={`${selectedServices.includes(service) ? "" :"slide-text"}`}>
+							<span class={`${selectedServices.includes(service) ? "" : "text-top text-brand-blue-100"}`}>{service}</span>
 							<span class="text-bottom text-white">{service}</span>
 							</span>
 						</button>
@@ -153,7 +157,7 @@
 							bind:value={message}
 							name="message"
 							id="message"
-							class="w-full resize-none rounded-2xl border border-bg-blue bg-transparent px-5 py-5  text-brand-grey-200 placeholder:text-brand-grey-200 focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+							class="w-full h-52 resize-none rounded-2xl border border-bg-blue bg-transparent px-5 py-5  text-brand-grey-200 placeholder:text-brand-grey-200 focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 						></Textarea>
 						{#if errors.message}<p class="mt-5 text-sm text-red-500">{errors.message}</p>{/if}
 					</div>
@@ -163,7 +167,7 @@
 						<MainButton
 							disabled={isSubmitting}
 							type="submit"
-							class="flex items-center gap-2 cursor-pointer rounded-full bg-brand-orange-500 px-5 py-3 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
+							class="flex items-center gap-2 cursor-pointer rounded-full bg-brand-orange-500 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
 						>
 							{isSubmitting ? 'Submitting...' : 'Submit'}
 							<svg width="16" height="16" viewBox="0 0 16 17" fill="none">

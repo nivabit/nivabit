@@ -20,7 +20,7 @@
 	href={disabled ? undefined : href}
 	data-slot="button"
 	class={cn(
-		'group relative h-12 w-48 overflow-hidden rounded-md transition-all duration-300 ease-in-out cursor-pointer',
+		'group relative py-7 h-auto w-48 overflow-hidden rounded-md transition-all duration-300 ease-in-out cursor-pointer',
 		className
 	)}
 	{type}
