@@ -6,7 +6,6 @@
 	import Discovery from '../icon/discovery.svelte';
 	import Kickoff from '../icon/kickoff.svelte';
 	import Launch from '../icon/launch.svelte';
-	import { fly } from 'svelte/transition';
 
 	const processes = [
 		{
@@ -67,7 +66,7 @@
 					class="mx-auto max-w-[1000px] rounded-3xl bg-brand-blue-900 p-10"
 					style="position: sticky;top: 80px;"
 				>
-					<div class="rounded-2xl border border-dashed border-white p-8 md:p-16">
+					<div class="rounded-2xl border-2 border-dashed border-white p-8 md:p-16">
 						<div class="flex flex-col items-start justify-between gap-8 md:flex-row lg:gap-16">
 							<div class="w-full flex-shrink-0 lg:w-32">
 								<p class="font-synonym text-lg text-white">{process.step}</p>

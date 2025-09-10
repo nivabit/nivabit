@@ -45,7 +45,7 @@
 }
 
 @font-face {
-	font-family: 'synonym';
+	font-family: 'Synonym';
 	src: url('/fonts/synonym/synonym.otf') format('opentype');
 	font-weight: 400;
 	font-style: normal;
@@ -53,6 +53,7 @@
 }
 
 :root {
+	--font-synonym: 'Synonym', sans-serif;
 	--radius: 0.625rem;
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.129 0.042 264.695);
@@ -88,6 +89,7 @@
 }
 
 .dark {
+	--font-synonym: 'Synonym', sans-serif;
 	--background: oklch(0.129 0.042 264.695);
 	--foreground: oklch(0.984 0.003 247.858);
 	--card: oklch(0.208 0.042 265.755);
@@ -200,6 +202,7 @@
 	--text-sub-base: 1rem;
 	--text-sub-lg: 1.12rem;
 	--text-sub-xl: 1.5rem;
+	
 }
 
 @theme inline {
@@ -325,7 +328,7 @@ body {
 
 .text-bottom {
 	position: absolute;
-	top: 100%;
+	top: 120%;
 	left: 0;
 	transform: translateY(0%);
 }

@@ -7,9 +7,9 @@
 	import Newsletter from '$lib/components/layout/newsletter.svelte';
 	import Process from '$lib/components/layout/process.svelte';
 	import Resources from '$lib/components/layout/resources.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
 	import Motion from 'motion-svelte';
 	import { onMount } from 'svelte';
-	import { slide, fade } from 'svelte/transition';
 
 	// Image IDs for scrolling section
 	const imageIds = [
@@ -18,6 +18,15 @@
 		'/images/project/Project-4.png',
 		'/images/project/Project-5.png',
 		'/images/project/Project-2.png',
+	];
+
+	const companyLogo = [
+		'/images/clients/1.png',
+		'/images/clients/2.png',
+		'/images/clients/3.png',
+		'/images/clients/4.png',
+		'/images/clients/5.png',
+		'/images/clients/6.png',
 	];
 
 	const services = [
@@ -144,22 +153,26 @@
 	<!-- {/* Trusted By Section */} -->
 	<section class="bg-brand-blue-900 px-4 pb-16 md:px-16 md:pb-24">
 		<div class="mx-auto max-w-7xl overflow-hidden text-center">
-			<p class="mb-10 text-lg">
-				<span use:revealWords class="reveal-words text-white">Trusted by </span>
-				<span use:revealWords class="reveal-words text-brand-orange-500">visionaries</span>
+			<p class="mb-10 text-lg ">
+				<span use:revealWords class="reveal-words text-white font-synonym">Trusted by </span>
+				<span use:revealWords class="reveal-words text-brand-orange-500 font-synonym">visionaries</span>
 			</p>
 
 			<div
 				use:reveal
-				class="reveal flex items-center justify-between space-x-8 opacity-50 md:space-x-16"
+				class="reveal relative overflow-hidden"
 			>
-				{#each Array(6) as _, i}
-					<img
-						src={`/images/clients/${i + 1}.png`}
-						alt={`Logo ${i + 1}`}
-						class="h-8 w-auto opacity-75 transition-opacity hover:opacity-100"
-					/>
-				{/each}
+				<div class="marquee flex w-full animate-marquee space-x-8 opacity-50 md:space-x-16">
+					{#each companyLogo.concat(companyLogo) as img, i}
+						<div class="flex-shrink-0">
+							<img
+								src={img}
+								alt="Company Logo"
+								class="h-10 w-auto opacity-75 transition-opacity hover:opacity-100 object-cover"
+							/>
+						</div>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</section>
@@ -201,10 +214,10 @@
 	</section>
 
 	<!-- {/* Services Section */} -->
-	<section id="services" class="bg-bg-orange px-4 py-16 md:px-16 md:py-24">
-		<div class="mx-auto max-w-7xl">
+	<section id="services" class="bg-bg-orange py-16 md:py-24">
+		<div class="mx-auto">
 			<!-- Services Header -->
-			<div class="mb-16 flex flex-col gap-12 lg:flex-row lg:gap-24">
+			<div class="mb-16 flex flex-col gap-12 lg:flex-row lg:gap-24 px-4 md:px-16">
 				<div use:reveal class="reveal w-full flex-shrink-0 lg:w-96">
 					<p class="text-lg text-brand-grey-500">Services</p>
 				</div>
@@ -228,41 +241,55 @@
 						class="reveal group hover:bg-[#FFF3E7] cursor-pointer flex w-full flex-col gap-8 border-b border-brand-blue-100 py-12 text-start md:py-16 lg:flex-row lg:gap-24 transition-opacity duration-300 ease-in-out"
 						onclick={() => toggleService(index)}
 					>
-						<div class="w-full flex-shrink-0 lg:w-96">
-							<p class="text-lg text-brand-grey-500">{service.number}</p>
-						</div>
-
-						<div class="flex-1 space-y-10">
-							<h3 class="text-2xl font-bold text-brand-grey-500 md:text-3xl">
-								{service.title}
-							</h3>
-
-							<div class="flex flex-wrap items-center gap-3">
-								{#each service.services as item}
-									<div class="flex items-center gap-3">
-										<div class="h-1.5 w-1.5 rounded-full bg-brand-orange-500"></div>
-										<span class="text-lg text-brand-grey-500">{item}</span>
-									</div>
-								{/each}
+						<div class="flex w-full flex-col gap-10 lg:flex-row lg:gap-24 px-4 md:px-16">
+							<div class="w-full flex-shrink-0 lg:w-96">
+								<p class="text-lg text-brand-grey-500">{service.number}</p>
 							</div>
 
-							<div class="hidden group-hover:block transition-opacity duration-300 ease-in-out">
-								<p class="mb-8 text-lg font-normal text-brand-grey-500 md:text-2xl">
-									{service.desc}
-								</p>
-								<MainButton
-									href="#contact"
-									variant="outline"
-									class="flex items-center gap-2 rounded-full border border-brand-blue-700 bg-transparent text-sm transition-colors hover:bg-brand-blue-700 hover:text-white"
-								>
-									Get Started
-									<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
-										<path
-											d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"
-											fill="#00042B"
-										/>
-									</svg>
-								</MainButton>
+							<div class="flex-1 space-y-10">
+								<h3 class="text-2xl font-bold text-brand-grey-500 md:text-3xl">
+									{service.title}
+								</h3>
+
+								<div class="flex flex-wrap items-center gap-3">
+									{#each service.services as item}
+										<div class="flex items-center gap-3">
+											<div class="h-1.5 w-1.5 rounded-full bg-brand-orange-500"></div>
+											<span class="text-lg text-brand-grey-500">{item}</span>
+										</div>
+									{/each}
+								</div>
+
+								
+								<div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-96">
+									<p class="mb-8 text-lg font-normal text-brand-grey-500 md:text-2xl">
+										{service.desc}
+									</p>
+									<Button href="#contact" class="flex items-center gap-2 rounded-full border border-brand-blue-700 bg-transparent text-sm hover:bg-brand-blue-700 hover:text-white group relative py-7 h-auto w-48 overflow-hidden transition-all duration-300 ease-in-out cursor-pointer">
+										<!-- Top Layer (default state) -->
+										<div
+											class='absolute inset-0 z-10 flex items-center justify-center text-brand-blue-700 transition-transform duration-300 ease-in-out group-hover:-translate-y-full'
+										>
+											Get Started
+											<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
+												<path
+													d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"
+													fill="#00042B"
+												/>
+											</svg>
+										</div>
+
+										<!-- Bottom Layer (hover state) -->
+										<div
+											class='absolute inset-0 z-0 flex translate-y-full items-center justify-center bg-brand-blue-900 text-white transition-transform duration-300 ease-in-out group-hover:translate-y-0 gap-4'
+										>
+											Get Started
+											<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M2.66602 7.8333V9.16664H10.666L6.99935 12.8333L7.94602 13.78L13.226 8.49997L7.94602 3.21997L6.99935 4.16664L10.666 7.8333H2.66602Z" fill="white"/>
+											</svg>												
+										</div>
+									</Button>
+								</div>
 							</div>
 						</div>
 					</button>
