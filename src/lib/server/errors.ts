@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import { ZodError } from 'zod';
 
 export function formatZodError(error: ZodError) {
@@ -7,9 +8,7 @@ export function formatZodError(error: ZodError) {
 	}));
 }
 
+
 export function errorResponse(message: string, status = 400, details: any[] = []) {
-	return new Response(JSON.stringify({ success: false, error: message, details }), {
-		status,
-		headers: { 'Content-Type': 'application/json' }
-	});
+	return json({ success: false, error: message, details }, { status });
 }

@@ -1,8 +1,5 @@
 <script lang="ts">
-	import CameraIcon from '@tabler/icons-svelte/icons/camera';
 	import ChartBarIcon from '@tabler/icons-svelte/icons/chart-bar';
-	import FileAiIcon from '@tabler/icons-svelte/icons/file-ai';
-	import FileDescriptionIcon from '@tabler/icons-svelte/icons/file-description';
 	import SettingsIcon from '@tabler/icons-svelte/icons/settings';
 	import NavMain from './nav-main.svelte';
 	import NavSecondary from './nav-secondary.svelte';
@@ -42,54 +39,12 @@
 				url: '/bits/admin/dashboard/messages',
 				icon: Mail,
 				current: page.url.pathname.startsWith('/bits/admin/dashboard/messages')
-			}
-		],
-		navClouds: [
-			{
-				title: 'Capture',
-				icon: CameraIcon,
-				isActive: true,
-				url: '#',
-				items: [
-					{
-						title: 'Active Proposals',
-						url: '#'
-					},
-					{
-						title: 'Archived',
-						url: '#'
-					}
-				]
 			},
 			{
-				title: 'Proposal',
-				icon: FileDescriptionIcon,
-				url: '#',
-				items: [
-					{
-						title: 'Active Proposals',
-						url: '#'
-					},
-					{
-						title: 'Archived',
-						url: '#'
-					}
-				]
-			},
-			{
-				title: 'Prompts',
-				icon: FileAiIcon,
-				url: '#',
-				items: [
-					{
-						title: 'Active Proposals',
-						url: '#'
-					},
-					{
-						title: 'Archived',
-						url: '#'
-					}
-				]
+				title: 'Newsletter',
+				url: '/bits/admin/dashboard/newsletter',
+				icon: Mail,
+				current: page.url.pathname.startsWith('/bits/admin/dashboard/newsletter')
 			}
 		],
 		navSecondary: [

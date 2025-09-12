@@ -13,12 +13,14 @@ export async function sendMail({
 }) {
 	const transporter = nodemailer.createTransport({
 		host: process.env.SMTP_HOST,
-		port: Number(process.env.SMTP_PORT) || 587,
-		secure: false,
+		port: Number(process.env.SMTP_PORT),
+		secure: true,
 		auth: {
 			user: process.env.SMTP_USERNAME,
 			pass: process.env.SMTP_PASSWORD
-		}
+		},
+		logger: true, // log to console
+		debug: true // include SMTP traffic
 	});
 
 	await transporter.sendMail({

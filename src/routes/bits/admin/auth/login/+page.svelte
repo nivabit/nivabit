@@ -147,7 +147,7 @@
 					<MainButton
 						type="submit"
 						disabled={loading}
-						class="font-synonym w-full rounded-lg bg-brand-orange-500 px-4 py-3 font-medium text-white transition-colors hover:bg-brand-orange-500/90 focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+						class="font-synonym w-full rounded-lg bg-brand-orange-500 font-medium text-white transition-colors hover:bg-brand-orange-500/90 focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{#if loading}
 							<div class="flex items-center justify-center">

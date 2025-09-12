@@ -5,7 +5,9 @@ import { ApiService } from '$lib/services/ApiService';
 
 const resetSchema = z
 	.object({
-		token: z.string().min(10, 'Invalid token'),
+		token: z.string()
+		.nonempty({ message: 'Token is required' }) // triggers on empty string
+  		.min(10, { message: 'Invalid token' }), // triggers on short token
 		password: z.string().min(8, 'Password must be at least 8 characters'),
 		confirmPassword: z.string().min(8, 'Confirm password must be at least 8 characters')
 	})

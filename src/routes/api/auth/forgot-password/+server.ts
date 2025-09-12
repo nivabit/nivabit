@@ -10,13 +10,21 @@ export const POST: RequestHandler = async ({ request, url }) => {
 	try {
 		const { email } = await request.json();
 
-		const admin = await prisma.admin.findUnique({ where: { email } });
-		if (!admin) {
-			// 👌 don't reveal if email exists (for security)
-			return json({ success: true, message: 'If this email exists, a reset link has been sent.' });
+		if (!email || typeof email !== 'string') {
+			return errorResponse('A valid email is required', 400);
 		}
 
-		// Generate token
+		const admin = await prisma.admin.findUnique({ where: { email } });
+
+		// ✅ Always return same response, even if admin not found
+		if (!admin) {
+			return json({
+				success: true,
+				message: 'If this email exists, a reset link has been sent.'
+			});
+		}
+
+		// Generate token + expiration
 		const token = crypto.randomBytes(32).toString('hex');
 		const expiration = new Date(Date.now() + 1000 * 60 * 60); // 1 hour
 
@@ -26,20 +34,44 @@ export const POST: RequestHandler = async ({ request, url }) => {
 			data: { resetToken: token, resetTokenExp: expiration }
 		});
 
-		// Send reset email
-		const resetLink = `${url.origin}/reset-password?token=${token}&email=${email}`;
+		// Reset link
+		const resetLink = `${url.origin}/bits/admin/auth/reset-password?token=${token}&email=${encodeURIComponent(
+			email
+		)}`;
+
+		// ✅ Professional mail template
+		const html = `
+			<div style="max-width:600px;margin:auto;font-family:Arial,sans-serif;line-height:1.5;color:#333;">
+				<h2 style="color:#2c3e50;">Password Reset Request</h2>
+				<p>Hello,</p>
+				<p>We received a request to reset your administrator account password. If you made this request, click the button below:</p>
+				<p style="text-align:center;margin:30px 0;">
+					<a href="${resetLink}" target="_blank" style="background:#2563eb;color:#fff;padding:12px 20px;text-decoration:none;border-radius:6px;font-weight:bold;">
+						Reset Password
+					</a>
+				</p>
+				<p>If the button above doesn’t work, copy and paste this link into your browser:</p>
+				<p style="word-break:break-all;color:#2563eb;">${resetLink}</p>
+				<p><strong>Note:</strong> This link will expire in 1 hour for your security.</p>
+				<hr style="margin:30px 0;border:none;border-top:1px solid #ddd;" />
+				<p style="font-size:12px;color:#777;">If you didn’t request a password reset, you can safely ignore this email.</p>
+			</div>
+		`;
+
+		// Send email
 		await sendMail({
 			to: email,
-			subject: 'Password Reset Request',
-			text: `Click the link to reset your password: ${resetLink}`,
-			html: `<p>You requested a password reset.</p>
-             <p><a href="${resetLink}">Click here to reset your password</a></p>
-             <p>This link will expire in 1 hour.</p>`
+			subject: 'Password Reset Instructions',
+			text: `You requested a password reset. Use the link below within 1 hour:\n\n${resetLink}`,
+			html
 		});
 
-		return json({ success: true, message: 'If this email exists, a reset link has been sent.' });
+		return json({
+			success: true,
+			message: 'If this email exists, a reset link has been sent.'
+		});
 	} catch (err) {
-		console.error(err);
+		console.error('Password reset error:', err);
 		return errorResponse('Internal server error', 500);
 	}
 };

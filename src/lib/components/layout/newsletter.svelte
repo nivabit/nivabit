@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { reveal } from '$lib/actions/reveal';
 	import { revealWords } from '$lib/actions/revealWords';
 	import { cn } from '$lib/utils';
@@ -31,24 +32,29 @@
 					</p>
 				</div>
 
-				<div use:reveal class="reveal flex max-w-lg items-center gap-3 rounded-full bg-white p-1">
-					<Input
-						type="email"
-						placeholder="Your Email"
-						class="placeholder:text-text-grey focus:ring-none flex-1 rounded-full border-none bg-white px-5  py-3 text-brand-grey-500 shadow-none focus:border-none focus:ring-brand-orange-500 focus:outline-none focus-visible:outline-none outline-0 border-0 focus-visible:ring-0"
-					/>
-					<MainButton
-						class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
-					>
-						Subscribe
-						<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
-							<path
-								d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"
-								fill="white"
-							/>
-						</svg>
-					</MainButton>
-				</div>
+				<form use:reveal class="reveal" method="POST" use:enhance>
+					<div class="flex max-w-lg items-center gap-3 rounded-full bg-white p-1">
+						<Input
+							required
+							name="email"
+							type="email"
+							placeholder="Your Email"
+							class="placeholder:text-text-grey focus:ring-none flex-1 rounded-full border-none bg-white px-5  py-3 text-brand-grey-500 shadow-none focus:border-none focus:ring-brand-orange-500 focus:outline-none focus-visible:outline-none outline-0 border-0 focus-visible:ring-0"
+						/>
+						<MainButton
+							type="submit"
+							class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
+						>
+							Subscribe
+							<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
+								<path
+									d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"
+									fill="white"
+								/>
+							</svg>
+						</MainButton>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

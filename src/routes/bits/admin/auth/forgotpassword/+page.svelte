@@ -3,6 +3,7 @@
 	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
 	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
 	import { Mail, ArrowLeft, CheckCircle } from 'lucide-svelte';
+	import { toast } from 'svelte-sonner';
 
 	let email = $state('');
 	let isLoading = $state(false);
@@ -56,8 +57,14 @@
 							isLoading = false;
 							if (result.type === 'failure') {
 								formError = result.data?.errors as any;
-							} else if (result.type === 'success') {
+							} 
+							if (result.type === 'error') {
+								formError = result.error as any;
+								toast.error(result.error || 'An unexpected error occurred. Please try again.');
+							}
+							else if (result.type === 'success') {
 								isEmailSent = true;
+								toast.success('Password reset link sent to your email.');
 							}
 						};
 					}}
@@ -100,7 +107,7 @@
 					<MainButton
 						type="submit"
 						disabled={isLoading}
-						class="font-synonym w-full rounded-lg bg-brand-orange-500 px-4 py-3 font-medium text-white transition-colors hover:bg-brand-orange-500/90 focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+						class="font-synonym w-full rounded-lg bg-brand-orange-500 font-medium text-white transition-colors hover:bg-brand-orange-500/90 focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 					>
 						{#if isLoading}
 							<div class="flex items-center justify-center">
@@ -135,21 +142,6 @@
 							Didn't receive the email? Check your spam folder or try again.
 						</p>
 					</div>
-
-					<!-- <MainButton
-            onclick={handleResendEmail}
-            disabled={isLoading}
-            class="w-full bg-brand-orange-500 text-white py-3 px-4 rounded-lg font-synonym font-medium hover:bg-brand-orange-500/90 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {#if isLoading}
-              <div class="flex items-center justify-center">
-                <div class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
-                Resending...
-              </div>
-            {:else}
-              Resend Email
-            {/if}
-          </MainButton> -->
 				</div>
 			{/if}
 		</div>

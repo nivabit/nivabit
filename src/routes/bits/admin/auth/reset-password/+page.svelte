@@ -5,6 +5,10 @@
 	import { Lock, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-svelte';
 	import { get } from 'svelte/store';
 	import { enhance } from '$app/forms';
+	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
+	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
+	import { ArrowLeft } from '@lucide/svelte';
+	import { toast } from 'svelte-sonner';
 
 	let password = $state('');
 	let confirmPassword = $state('');
@@ -12,7 +16,6 @@
 	let showConfirmPassword = $state(false);
 	let isLoading = $state(false);
 	let isSuccess = $state(false);
-	let error = $state('');
 	let token = $state('');
 	let isValidToken = $state(true);
 	let formError: Record<string, string> | undefined = $state({});
@@ -22,7 +25,7 @@
 		const tokenParam = url.searchParams.get('token');
 		if (tokenParam) {
 			token = tokenParam;
-			isValidToken = tokenParam.length >= 10;
+			// isValidToken = tokenParam.length >= 10;
 		} else {
 			isValidToken = false;
 		}
@@ -127,17 +130,22 @@
 					<form
 						method="post"
 						action="?/resetPassword"
+						class="space-y-6"
 						use:enhance={() => {
 							isLoading = true;
 							formError = {};
 							return async ({ result }) => {
 								isLoading = false;
 								if (result.type === 'failure') {
-									formError = result.data?.errors || ({ error: 'Failed to reset password' } as any);
+									formError = result.data?.errors as any;
+								}else if (result.type === 'error') {
+									formError = result.error || {errors: 'An unexpected error occurred. Please try again.'} as any;
+									toast.error(result.error || 'An unexpected error occurred. Please try again.');
 								} else if (result.type === 'success') {
 									isSuccess = true;
+									toast.success('Password updated successfully. Redirecting to login...');
 									setTimeout(() => {
-										window.location.href = '/login';
+										window.location.href = '/bits/admin/auth/login';
 									}, 3000);
 								}
 							};
@@ -181,6 +189,15 @@
 								</button>
 							</div>
 						</div>
+
+						<input
+							id="token"
+							name="token"
+							type="text"
+							bind:value={token}
+							required
+							class="hidden"
+						/>
 
 						<!-- Password requirements -->
 						{#if password}
@@ -277,18 +294,35 @@
 							{/if}
 						</div>
 
-						<!-- Error -->
-						{#if error}
+						{#if formError?.token}
 							<div class="rounded-lg border border-red-200 bg-red-50 p-3">
-								<p class="font-synonym text-sm text-red-600">{error}</p>
+								<p class="text-sm text-red-600">{formError.token}</p>
+							</div>
+						{/if}
+
+						{#if formError?.password}
+							<div class="rounded-lg border border-red-200 bg-red-50 p-3">
+								<p class="text-sm text-red-600">{formError.password}</p>
+							</div>
+						{/if}
+
+						{#if formError?.confirmPassword}
+							<div class="rounded-lg border border-red-200 bg-red-50 p-3">
+								<p class="text-sm text-red-600">{formError.confirmPassword}</p>
+							</div>
+						{/if}
+
+						{#if formError?.errors}
+							<div class="rounded-lg border border-red-200 bg-red-50 p-3">
+								<p class="text-sm text-red-600">{formError.errors}</p>
 							</div>
 						{/if}
 
 						<!-- Submit -->
-						<button
+						<MainButton
 							type="submit"
 							disabled={isLoading || !passwordValidation.isValid || !passwordsMatch}
-							class="font-synonym w-full rounded-lg bg-brand-orange-500 px-4 py-3 font-medium text-white transition-colors hover:bg-brand-orange-500/90 focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+							class="font-synonym w-full rounded-lg bg-brand-orange-500 font-medium text-white transition-colors hover:bg-brand-orange-500/90 focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 						>
 							{#if isLoading}
 								<div class="flex items-center justify-center">
@@ -300,7 +334,7 @@
 							{:else}
 								Update Password
 							{/if}
-						</button>
+						</MainButton>
 					</form>
 				{:else}
 					<!-- Success -->
@@ -323,12 +357,15 @@
 								Redirecting to login page in 3 seconds...
 							</p>
 						</div>
-						<a
+						<CustomButton
 							href="/bits/admin/auth/login"
-							class="font-synonym inline-block w-full rounded-lg bg-brand-orange-500 px-4 py-3 text-center font-medium text-white transition-colors hover:bg-brand-orange-500/90"
+							className="inline-flex items-center gap-2 text-brand-blue-100 font-synonym text-sm transition-colors"
 						>
-							Go to Login
-						</a>
+							<div class="inline-flex items-center gap-2 text-brand-blue-100">
+								<ArrowLeft class="h-4 w-4" />
+								Back to login
+							</div>
+						</CustomButton>
 					</div>
 				{/if}
 			</div>
@@ -336,12 +373,15 @@
 			<!-- Back to login -->
 			{#if !isSuccess}
 				<div class="mt-6 text-center">
-					<a
+					<CustomButton
 						href="/bits/admin/auth/login"
-						class="font-synonym inline-flex items-center gap-2 text-sm text-brand-blue-100 transition-colors hover:text-white"
+						className="inline-flex items-center gap-2 text-brand-blue-100 font-synonym text-sm transition-colors"
 					>
-						Back to login
-					</a>
+						<div class="inline-flex items-center gap-2 text-brand-blue-100">
+							<ArrowLeft class="h-4 w-4" />
+							Back to login
+						</div>
+					</CustomButton>
 				</div>
 			{/if}
 		</div>
