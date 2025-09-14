@@ -1,6 +1,6 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
-import { authorize } from '$lib/server/auth';
+import { authorize, requireUser } from '$lib/server/auth';
 import fs from 'fs';
 import path from 'path';
 
@@ -12,13 +12,13 @@ export const GET: RequestHandler = async (event) => {
 	return json(articles);
 };
 
-export const POST: RequestHandler = async ({ request, cookies }) => {
-	const user = await authorize({ cookies } as any);
-	if (!user) {
+export const POST: RequestHandler = async (event) => {
+	const admin = await requireUser(event);
+	if (!admin) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
-	const form = await request.formData();
+	const form = await event.request.formData();
 
 	// Get text values
 	const title = form.get('title') as string;
@@ -62,7 +62,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 			featuredImage,
 			seoTitle,
 			seoDescription,
-			authorId: user.id
+			authorId: admin.id
 		}
 	});
 

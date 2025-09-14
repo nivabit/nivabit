@@ -1,6 +1,6 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
-import { authorize } from '$lib/server/auth';
+import { authorize, requireUser } from '$lib/server/auth';
 import fs from 'fs';
 import path from 'path';
 
@@ -10,20 +10,20 @@ export const GET: RequestHandler = async ({ params }) => {
 	return json(article);
 };
 
-export const PUT: RequestHandler = async ({ params, request, cookies }) => {
-	const user = await authorize({ cookies } as any);
-	if (!user) {
+export const PUT: RequestHandler = async (event) => {
+	const admin = await requireUser(event);
+	if (!admin) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
 	// ✅ Check if article exists
-	const existingArticle = await prisma.article.findUnique({ where: { id: params.id } });
+	const existingArticle = await prisma.article.findUnique({ where: { id: event.params.id } });
 	if (!existingArticle) {
 		return json({ error: 'Not found' }, { status: 404 });
 	}
 
 	// 2️⃣ Handle full update (formData with optional file)
-	const form = await request.formData();
+	const form = await event.request.formData();
 
 	const title = form.get('title') as string;
 	const excerpt = form.get('excerpt') as string;
@@ -64,7 +64,7 @@ export const PUT: RequestHandler = async ({ params, request, cookies }) => {
 
 	// ✅ Update article
 	const article = await prisma.article.update({
-		where: { id: params.id },
+		where: { id: event.params.id },
 		data: {
 			title,
 			excerpt,
@@ -82,19 +82,19 @@ export const PUT: RequestHandler = async ({ params, request, cookies }) => {
 	return json(article);
 };
 
-export const DELETE: RequestHandler = async ({ params, cookies }) => {
-	const user = await authorize({ cookies } as any);
-	if (!user) {
+export const DELETE: RequestHandler = async (event) => {
+	const admin = await requireUser(event);
+	if (!admin) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
 	// Check if article exists
-	const existingArticle = await prisma.article.findUnique({ where: { id: params.id } });
+	const existingArticle = await prisma.article.findUnique({ where: { id: event.params.id } });
 	if (!existingArticle) {
 		return json({ error: 'Not found' }, { status: 404 });
 	}
 
-	await prisma.article.delete({ where: { id: params.id } });
+	await prisma.article.delete({ where: { id: event.params.id } });
 	return json({ success: true });
 };
 

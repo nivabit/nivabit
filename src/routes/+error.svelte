@@ -36,7 +36,7 @@
 			<div use:reveal class="reveal">
 				<MainButton
 					href="/"
-					class="font-synonym inline-flex items-center gap-2 rounded-full bg-brand-orange-500 px-6 py-4 text-lg text-white transition-colors hover:bg-brand-orange-500/90"
+					class="font-synonym inline-flex items-center gap-2 rounded-full bg-brand-orange-500 text-lg text-white transition-colors hover:bg-brand-orange-500/90"
 				>
 					Back to Home
 					<ArrowRight />
