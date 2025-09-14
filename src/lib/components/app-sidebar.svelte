@@ -50,7 +50,7 @@
 		navSecondary: [
 			{
 				title: 'Settings',
-				url: '#',
+				url: '/bits/admin/dashboard/settings',
 				icon: SettingsIcon
 			}
 		]

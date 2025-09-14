@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect, type Redirect } from '@sveltejs/kit';
 import { loginSchema } from '$lib/validation/validation';
-import { ApiService } from '$lib/services/ApiService'; // we'll create this reusable class
+import { ApiService } from '$lib/services/ApiService';
 import {
 	clearAuthCookie,
 	clearRefreshCookie,
@@ -53,13 +53,10 @@ export const actions: Actions = {
 			setAuthCookie(cookies, res.accessToken);
 
 			// ✅ Fetch user data with token
-			const user = await api.get('/me', { auth: true });
+			const user = await api.get('/auth/me', { auth: true });
 
 			// ✅ Save user in cookie (stringify for storage)
 			setUserCookie(cookies, user);
-
-			// ✅ Redirect to dashboard
-			// throw redirect(302, "");
 		} catch (err: any) {
 			return fail(500, {
 				success: false,

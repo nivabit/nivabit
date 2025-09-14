@@ -3,10 +3,15 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { revealWords } from '$lib/actions/revealWords';
 	import { cn } from '$lib/utils';
+	import { toast } from 'svelte-sonner';
 	import MainButton from '../customUI/button/MainButton.svelte';
 	import Input from '../ui/input/input.svelte';
+	import { ArrowRight } from 'lucide-svelte';
 
 	let { class: customClass = '' } = $props();
+	let isLoading = $state(false)
+	let formError: Record<string, string> | undefined = $state({});
+
 </script>
 
 <!-- {/* Newsletter Section */} -->
@@ -32,7 +37,32 @@
 					</p>
 				</div>
 
-				<form use:reveal class="reveal" method="POST" use:enhance>
+				<form use:reveal class="reveal" method="POST" 
+					action="/"
+					use:enhance={() => {
+						isLoading = true;
+						formError = {};
+						return async ({ result }) => {
+							isLoading = false;
+							if (result.type === 'failure') {
+								formError = result.data?.errors || result.data?.error  as any;
+							} 
+							if (result.type === 'error') {
+								formError = result.error as any;
+								toast.error(result.error || 'An unexpected error occurred. Please try again.');
+							}
+							else if (result.type === 'success') {
+								toast.success('Password reset link sent to your email.');
+							}
+						};
+					}}
+				>
+
+					{#if formError?.email}
+						<div class="rounded-lg border border-red-200 bg-red-50 p-3 mb-3">
+							<p class="text-sm text-red-600">{formError.email}</p>
+						</div>
+					{/if}
 					<div class="flex max-w-lg items-center gap-3 rounded-full bg-white p-1">
 						<Input
 							required
@@ -42,16 +72,22 @@
 							class="placeholder:text-text-grey focus:ring-none flex-1 rounded-full border-none bg-white px-5  py-3 text-brand-grey-500 shadow-none focus:border-none focus:ring-brand-orange-500 focus:outline-none focus-visible:outline-none outline-0 border-0 focus-visible:ring-0"
 						/>
 						<MainButton
+							disabled={isLoading}
 							type="submit"
 							class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
 						>
-							Subscribe
-							<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
-								<path
-									d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"
-									fill="white"
-								/>
-							</svg>
+							{#if isLoading}
+								<div class="flex items-center justify-center">
+									<div
+										class="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"
+									></div>
+									Subscribing...
+								</div>
+							{:else}
+								Subscribe
+							{/if}
+							
+							<ArrowRight />
 						</MainButton>
 					</div>
 				</form>

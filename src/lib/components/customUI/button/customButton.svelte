@@ -26,6 +26,7 @@
 			'flip-button text-sm text-white transition-colors duration-300 hover:bg-transparent hover:underline',
 			className
 		)}
+		{...restProps}
 	>
 		<span class="slide-text">
 			<span class="text-top">{@render children?.()}</span>

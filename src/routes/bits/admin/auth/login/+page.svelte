@@ -43,7 +43,6 @@
 						formError = {};
 						return async ({ result }) => {
 							loading = false;
-							console.log(result);
 
 							if (result.type === 'failure' && result.data) {
 								formError = result.data?.errors as any;

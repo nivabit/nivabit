@@ -5,13 +5,14 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	const api = new ApiService(fetch, cookies);
 
 	try {
-		const articles = await api.get('/articles');
-		const stats = await api.get('/stats', { auth: true });
-		const quickStats = await api.get('/stats/quick-stats', { auth: true });
-
-		return { articles, stats, quickStats };
+		const subscribers: any = await api.get('/newsletter/admin/list', { auth: true });
+		
+		return {
+			subscribers: subscribers?.subscribers
+		};
 	} catch (error) {
 		console.error('Failed to fetch user data:', error);
 		return { userData: null, error: 'Failed to fetch user data' };
 	}
 };
+

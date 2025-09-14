@@ -38,6 +38,7 @@ export class ApiService {
 		if (!token) return null;
 
 		if (isTokenExpired(token)) {
+			
 			await refreshToken(this.cookies, this.baseUrl);
 			token = getAuthCookie(this.cookies);
 		}
@@ -94,6 +95,8 @@ export class ApiService {
 
 	private async handleResponse<T>(res: Response): Promise<T> {
 		if (!res.ok) {
+			console.log(res);
+			
 			const text = await res.text();
 			let error;
 			try {
@@ -112,6 +115,7 @@ export class ApiService {
 
 	async get<T>(url: string, options: RequestOptions = {}): Promise<T> {
 		const req = await this.prepareRequest({ ...options, method: 'GET' });
+		console.log(req);
 		const res = await this.fetch(this.buildUrl(url, options.queryParams), {
 			method: 'GET',
 			headers: req.headers
@@ -121,8 +125,6 @@ export class ApiService {
 
 	async post<T>(url: string, options: RequestOptions = {}): Promise<T> {
 		const req = await this.prepareRequest({ ...options, method: 'POST' });
-		console.log(req);
-
 		const res = await this.fetch(this.buildUrl(url, options.queryParams), {
 			method: 'POST',
 			headers: req.headers,

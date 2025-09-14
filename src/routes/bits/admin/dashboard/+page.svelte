@@ -1,13 +1,15 @@
 <script lang="ts">
 	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
 	import type { DashboardStats } from '$lib/types/article.type.js';
+	import { formatNumberWithCommas } from '$lib/utils/formatNumber.js';
 	import { FileText, Users, Eye, MessageCircle, TrendingUp, Plus } from 'lucide-svelte';
 
 	let { data } = $props();
 
 	let user = $state(data?.user);
 	let statsData = $state(data?.stats) as DashboardStats;
-	let recentArticles: any = $state(data?.articles);
+	let quickStats: any = $state(data?.quickStats);
+	let recentArticles: any = $state(data?.articles || []);
 
 	const stats = [
 		{
@@ -55,7 +57,7 @@
 			</div>
 			<MainButton
 				href="/bits/admin/dashboard/articles/create"
-				class="font-synonym flex items-center gap-2 rounded-lg bg-brand-orange-500 px-6 py-3 font-medium text-white transition-colors hover:bg-brand-orange-500/90"
+				class="font-synonym flex items-center gap-2 rounded-lg bg-brand-orange-500 font-medium text-white transition-colors hover:bg-brand-orange-500/90"
 			>
 				<Plus size={18} />
 				Create Article
@@ -108,38 +110,45 @@
 					</div>
 				</div>
 				<div class="divide-y divide-brand-grey-50">
-					{#each recentArticles as article}
-						<div class="p-6 transition-colors hover:bg-bg-blue">
-							<div class="flex items-start justify-between gap-4">
-								<div class="flex-1">
-									<h3 class="font-cabinet mb-2 font-medium text-brand-grey-500">
-										{article.title}
-									</h3>
-									<div class="font-synonym flex items-center gap-4 text-sm text-brand-grey-400">
-										<span>{article.categories?.[0]}</span>
-										<span>•</span>
-										<span
-											>{new Date(
-												article.publishDate || article.createdAt
-											).toLocaleDateString()}</span
-										>
-										<span>•</span>
-										<span class="flex items-center gap-1">
-											<Eye size={14} />
-											{article.views}
-										</span>
-									</div>
-								</div>
-								<span
-									class="font-synonym rounded-full px-3 py-1 text-xs {article.status === 'Published'
-										? 'bg-green-100 text-green-700'
-										: 'bg-yellow-100 text-yellow-700'}"
-								>
-									{article.status}
-								</span>
-							</div>
+					{#if recentArticles.length === 0}
+						<div class="p-12 text-center">
+							<h3 class="text-lg font-medium text-gray-500 mb-2">No articles found</h3>
+							<p class="text-gray-400">Create your first article to get started.</p>
 						</div>
-					{/each}
+					{:else}
+						{#each recentArticles as article}
+							<div class="p-6 transition-colors hover:bg-bg-blue">
+								<div class="flex items-start justify-between gap-4">
+									<div class="flex-1">
+										<h3 class="font-cabinet mb-2 font-medium text-brand-grey-500">
+											{article.title}
+										</h3>
+										<div class="font-synonym flex items-center gap-4 text-sm text-brand-grey-400">
+											<span>{article.categories?.[0]}</span>
+											<span>•</span>
+											<span
+												>{new Date(
+													article.publishDate || article.createdAt
+												).toLocaleDateString()}</span
+											>
+											<span>•</span>
+											<span class="flex items-center gap-1">
+												<Eye size={14} />
+												{article.views}
+											</span>
+										</div>
+									</div>
+									<span
+										class="font-synonym rounded-full px-3 py-1 text-xs {article.status === 'Published'
+											? 'bg-green-100 text-green-700'
+											: 'bg-yellow-100 text-yellow-700'}"
+									>
+										{article.status}
+									</span>
+								</div>
+							</div>
+						{/each}
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -152,15 +161,15 @@
 				<div class="space-y-4">
 					<div class="flex items-center justify-between">
 						<span class="font-synonym text-sm text-brand-grey-400">This Week</span>
-						<span class="font-cabinet font-medium text-brand-grey-500">5 articles</span>
+						<span class="font-cabinet font-medium text-brand-grey-500">{quickStats?.articlesThisWeek} articles</span>
 					</div>
 					<div class="flex items-center justify-between">
 						<span class="font-synonym text-sm text-brand-grey-400">This Month</span>
-						<span class="font-cabinet font-medium text-brand-grey-500">18 articles</span>
+						<span class="font-cabinet font-medium text-brand-grey-500">{quickStats?.articlesThisMonth} articles</span>
 					</div>
 					<div class="flex items-center justify-between">
 						<span class="font-synonym text-sm text-brand-grey-400">Total Views</span>
-						<span class="font-cabinet font-medium text-brand-grey-500">12,459</span>
+						<span class="font-cabinet font-medium text-brand-grey-500">{formatNumberWithCommas(quickStats?.totalViewsThisMonth)}</span>
 					</div>
 				</div>
 			</div>
@@ -180,7 +189,7 @@
 					</a>
 
 					<a
-						href="/dashboard/articles"
+						href="/bits/admin/dashboard/articles"
 						class="flex items-center gap-3 rounded-lg border border-brand-grey-50 p-3 transition-colors hover:bg-bg-blue"
 					>
 						<div class="rounded-lg bg-brand-blue-500/10 p-2">
@@ -190,7 +199,7 @@
 					</a>
 
 					<a
-						href="/dashboard/settings"
+						href="/bits/admin/dashboard/analytics"
 						class="flex items-center gap-3 rounded-lg border border-brand-grey-50 p-3 transition-colors hover:bg-bg-blue"
 					>
 						<div class="rounded-lg bg-brand-grey-400/10 p-2">
