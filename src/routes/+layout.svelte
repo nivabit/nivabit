@@ -15,7 +15,7 @@
 <ProgressSpinner />
 
 <svelte:head>
-	<link rel="icon" href="/favicon.ico" />
+	<link rel="icon" href="/favicon.svg" />
 </svelte:head>
 
 {#key data.pathname}
