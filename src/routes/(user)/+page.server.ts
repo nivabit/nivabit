@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 	const api = new ApiService(fetch);
 
 	try {
-		const articles = await api.get('/articles');
+		const articles = await api.get('/articles/list');
 		return { articles };
 	} catch (error) {
 		console.error('Failed to fetch user data:', error);

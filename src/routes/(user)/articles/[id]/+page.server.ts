@@ -8,7 +8,8 @@ export const load: PageServerLoad = async ({ fetch, params }) => {
 
 	try {
 		const singleArticles = await api.get(`/articles/${id}`);
-		const articles = await api.get('/articles');
+		const articles = await api.get('/articles/list');
+		await api.patch(`/articles/${id}`);
 
 		return { articles, singleArticles };
 	} catch (error) {

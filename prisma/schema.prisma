@@ -36,7 +36,7 @@ model Article {
   content        String
   categories     String[] // Postgres supports arrays
   status         ArticleStatus @default(DRAFT)   // "Draft" | "Published" | "Scheduled"
-  publishDate    DateTime
+  publishDate    DateTime?
   tags           String[]
   featuredImage  String?
   seoTitle       String

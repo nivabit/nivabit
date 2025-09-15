@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import { ApiService } from '$lib/services/ApiService';
-import { articleSchema } from '$lib/validation/articleSchema'; // optional if you add Zod validation
+import { articleSchema } from '$lib/validation/articleSchema';
 import type { Cookies } from '@sveltejs/kit';
 import {
 	ACCEPTED_IMAGE_TYPES,
@@ -19,8 +19,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 export const actions: Actions = {
 	create: async ({ request, cookies, fetch }) => {
 		const rawFormData = await request.formData();
-
-		console.log(rawFormData);
 
 		// Get fields from formData
 		const title = rawFormData.get('title')?.toString() || '';
@@ -58,33 +56,39 @@ export const actions: Actions = {
 			return fail(400, { success: false, errors, values: formData });
 		}
 
-		// ✅ Validate image manually
-		if (!featuredImage || featuredImage.size === 0) {
-			return fail(400, {
-				success: false,
-				errors: { featuredImage: 'Featured image is required' },
-				values: formData
-			});
+		// ✅ Conditionally validate image
+		if (status === 'PUBLISHED') {
+			// Image is required
+			if (!featuredImage || featuredImage.size === 0) {
+				return fail(400, {
+					success: false,
+					errors: { featuredImage: 'Featured image is required' },
+					values: formData
+				});
+			}
 		}
 
-		if (!ACCEPTED_IMAGE_TYPES.includes(featuredImage.type)) {
-			return fail(400, {
-				success: false,
-				errors: {
-					featuredImage: `Unsupported image type. Accepted formats: ${ACCEPTED_IMAGE_TYPES.join(', ')}.`
-				},
-				values: formData
-			});
-		}
+		// ✅ If image is present (whether draft or published), validate it
+		if (featuredImage && featuredImage.size > 0) {
+			if (!ACCEPTED_IMAGE_TYPES.includes(featuredImage.type)) {
+				return fail(400, {
+					success: false,
+					errors: {
+						featuredImage: `Unsupported image type. Accepted formats: ${ACCEPTED_IMAGE_TYPES.join(', ')}.`
+					},
+					values: formData
+				});
+			}
 
-		if (featuredImage.size > IMAGE_MAX_FILE_SIZE_BYTES) {
-			return fail(400, {
-				success: false,
-				errors: {
-					featuredImage: `Image too big. Max size allowed is ${IMAGE_MAX_FILE_SIZE_MB}MB.`
-				},
-				values: formData
-			});
+			if (featuredImage.size > IMAGE_MAX_FILE_SIZE_BYTES) {
+				return fail(400, {
+					success: false,
+					errors: {
+						featuredImage: `Image too big. Max size allowed is ${IMAGE_MAX_FILE_SIZE_MB}MB.`
+					},
+					values: formData
+				});
+			}
 		}
 
 		try {
@@ -96,8 +100,6 @@ export const actions: Actions = {
 				auth: true
 			});
 
-			console.log(res);
-
 			if (!res?.id) {
 				return fail(400, {
 					success: false,
@@ -108,9 +110,7 @@ export const actions: Actions = {
 
 			return { success: true, url: '/bits/admin/dashboard/articles' };
 		} catch (err: any) {
-			console.log(err);
-
-			return fail(500, {
+			return fail(400, {
 				success: false,
 				errors: { root: err.message || 'Server error. Please try again.' },
 				values: formData

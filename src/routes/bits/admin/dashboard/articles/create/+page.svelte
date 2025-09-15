@@ -8,6 +8,7 @@
 	import { IMAGE_MAX_FILE_SIZE_BYTES, IMAGE_MAX_FILE_SIZE_MB } from '$lib/constants/imageLimit';
 	import type { ArticleData } from '$lib/types/article.type';
 	import { toast } from 'svelte-sonner';
+	import { X } from '@lucide/svelte';
 
 	let isSaving = $state(false);
 	let tagInput = $state('');

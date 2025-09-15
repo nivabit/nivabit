@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ArticleData, GetarticleData } from '$lib/types/article.type';
+	import type { GetarticleData } from '$lib/types/article.type';
 	import {
 		Plus,
 		Search,
@@ -7,7 +7,6 @@
 		Eye,
 		Edit,
 		Trash2,
-		MoreHorizontal,
 		Calendar,
 		User,
 		FileText,
@@ -21,8 +20,8 @@
 
 	let { data } = $props();
 	let articles: GetarticleData[] = $derived(data?.articles) as any;
+	
 	let loading = $state(false);
-
 	let searchTerm = $state('');
 	let statusFilter = $state('All');
 	let selectedArticles: string[] = $state([]);
@@ -71,8 +70,6 @@
 				return 'bg-green-100 text-green-700';
 			case 'Draft':
 				return 'bg-yellow-100 text-yellow-700';
-			case 'Scheduled':
-				return 'bg-blue-100 text-blue-700';
 			default:
 				return 'bg-gray-100 text-gray-700';
 		}
@@ -193,7 +190,7 @@
 							<!-- Article Image -->
 							<div class="flex-shrink-0">
 								<img
-									src={article.featuredImage}
+									src={article.featuredImage || "/images/placeholder.jpeg"}
 									alt={article.title}
 									class="h-20 w-20 rounded-lg object-cover"
 								/>
@@ -212,11 +209,11 @@
 										<div class="font-synonym flex items-center gap-4 text-xs text-brand-grey-400">
 											<span class="flex items-center gap-1">
 												<User size={12} />
-												<!-- {article.author} -->
+												{article.author?.name}
 											</span>
 											<span class="flex items-center gap-1">
 												<Calendar size={12} />
-												{new Date(article.createdAt).toLocaleDateString()}
+												{article.publishDate ? new Date(article.publishDate).toLocaleDateString(): "null"}
 											</span>
 											<span class="flex items-center gap-1">
 												<Eye size={12} />
@@ -281,8 +278,6 @@
 																loading = true;
 																return async ({ result }) => {
 																	loading = false;
-																	console.log(result);
-
 																	if (result.type === 'failure' && result.data) {
 																		toast.info('Deleted Fail', {
 																			description:
@@ -319,12 +314,6 @@
 													</Dialog.Footer>
 												</Dialog.Content>
 											</Dialog.Root>
-
-											<button
-												class="rounded-lg p-2 text-brand-grey-400 transition-colors hover:bg-brand-grey-50 hover:text-brand-grey-500"
-											>
-												<MoreHorizontal size={16} />
-											</button>
 										</div>
 									</div>
 								</div>

@@ -7,7 +7,7 @@
 	import Button from '../ui/button/button.svelte';
 
 	let { showHeader = false, limit = 10 } = $props();
-	let articles = $derived(page?.data?.articles);
+	let articles = $derived(page?.data?.articles || []);
 </script>
 
 <section id="articles" class="bg-bg-blue px-4 py-16 md:px-16 md:py-24">
@@ -35,7 +35,7 @@
 				<p class="mb-6 text-brand-grey-400">Check back later for more content and updates.</p>
 				<MainButton
 					href="/"
-					class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-center  text-sm text-white transition-colors hover:bg-brand-orange-500/90"
+					class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-center  text-sm text-white transition-colors hover:bg-brand-orange-500/90"
 				>
 					Go Home
 				</MainButton>
@@ -43,7 +43,7 @@
 		{:else}
 			<!-- Article Cards -->
 			<div class="mb-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-				{#each articles.slice(0, limit) as article}
+				{#each articles?.slice(0, limit) as article}
 					<div
 						use:reveal
 						class="group reveal space-y-5 rounded-2xl border border-brand-blue-100 bg-brand-blue-50 p-5 transition-colors duration-300 ease-in-out hover:border-brand-blue-500"
@@ -86,7 +86,7 @@
 							<!-- Button -->
 							<button
 								type="button"
-								class="flip-button text-sm text-brand-blue-500 transition-colors duration-300 hover:bg-transparent hover:text-brand-blue-700 hover:underline"
+								class="flip-button text-sm text-brand-blue-500 transition-colors duration-300 hover:bg-transparent hover:text-brand-blue-700 hover:underline cursor-pointer"
 								onclick={() => goto('/articles/' + article.id)}
 							>
 								<span class="slide-text">

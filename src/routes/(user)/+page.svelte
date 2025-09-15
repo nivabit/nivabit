@@ -374,7 +374,8 @@
 
 	<!-- {/* Process Section */} -->
 	<Process />
-
+	<!-- {/* Resources Section */} -->
+	<Resources />
 	<Newsletter />
 	<ContactUs />
 </main>

@@ -1,12 +1,31 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
-import { authorize, requireUser } from '$lib/server/auth';
+import { requireUser } from '$lib/server/auth';
+import { articleSchema } from '$lib/validation/articleSchema';
 import fs from 'fs';
 import path from 'path';
+import {
+	ACCEPTED_IMAGE_TYPES,
+	IMAGE_MAX_FILE_SIZE_BYTES,
+	IMAGE_MAX_FILE_SIZE_MB
+} from '$lib/constants/imageLimit';
 
 export const GET: RequestHandler = async (event) => {
+	const admin = await requireUser(event);
+	if (!admin) {
+		return json({ error: 'Unauthorized' }, { status: 401 });
+	}
+
 	const articles = await prisma.article.findMany({
-		orderBy: { createdAt: 'desc' }
+		orderBy: { createdAt: 'desc' },
+		include: {
+			author: {
+				select: {
+					id: true,
+					name: true,
+				}
+			}
+		}
 	});
 
 	return json(articles);
@@ -20,21 +39,78 @@ export const POST: RequestHandler = async (event) => {
 
 	const form = await event.request.formData();
 
-	// Get text values
-	const title = form.get('title') as string;
-	const excerpt = form.get('excerpt') as string;
-	const content = form.get('content') as string;
-	const categories = form.getAll('categories').map(String);
+	// Extract form fields
+	const title = form.get('title')?.toString() || '';
+	const excerpt = form.get('excerpt')?.toString() || '';
+	const content = form.get('content')?.toString() || '';
+	const status = (form.get('status')?.toString() || 'DRAFT').toUpperCase();
+	const seoTitle = form.get('seoTitle')?.toString() || '';
+	const seoDescription = form.get('seoDescription')?.toString() || '';
+	const publishDateStr = form.get('publishDate')?.toString();
 	const tags = form.getAll('tags').map(String);
-	const status = form.get('status') as string;
-	const publishDate = new Date(form.get('publishDate') as string);
-	const seoTitle = form.get('seoTitle') as string;
-	const seoDescription = form.get('seoDescription') as string;
+	const categories = form.getAll('categories').map(String);
+	const file = form.get('featuredImage') as File | null;
 
-	// Handle featuredImage upload
+	// Prepare data for validation
+	const formData = {
+		title,
+		excerpt,
+		content,
+		status,
+		seoTitle,
+		seoDescription,
+		tags,
+		categories
+	};
+
+	// Validate using articleSchema
+	const parsed = articleSchema.safeParse(formData);
+
+	if (!parsed.success) {
+		const errors = parsed.error.flatten().fieldErrors;
+		return json({ success: false, errors }, { status: 400 });
+	}
+
+	// Validate image only if status is PUBLISHED
 	let featuredImage: string | null = null;
-	const file = form.get('featuredImage') as File;
+
+	if (status === 'PUBLISHED') {
+		if (!file || file.size === 0) {
+			return json(
+				{
+					success: false,
+					errors: { featuredImage: ['Featured image is required for published articles.'] }
+				},
+				{ status: 400 }
+			);
+		}
+	}
+
+	// If image is uploaded, validate type & size
 	if (file && file.size > 0) {
+		if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+			return json(
+				{
+					success: false,
+					errors: {
+						featuredImage: [`Invalid file type. Allowed: ${ACCEPTED_IMAGE_TYPES.join(', ')}`]
+					}
+				},
+				{ status: 400 }
+			);
+		}
+
+		if (file.size > IMAGE_MAX_FILE_SIZE_BYTES) {
+			return json(
+				{
+					success: false,
+					errors: { featuredImage: [`File too large. Max size is ${IMAGE_MAX_FILE_SIZE_MB}MB.`] }
+				},
+				{ status: 400 }
+			);
+		}
+
+		// Save file to /static/uploads
 		const buffer = Buffer.from(await file.arrayBuffer());
 		const fileName = `${Date.now()}-${file.name}`;
 		const uploadDir = path.join('static', 'uploads');
@@ -49,7 +125,16 @@ export const POST: RequestHandler = async (event) => {
 		featuredImage = `/uploads/${fileName}`;
 	}
 
-	// Save article
+	// Parse publishDate (fallback to now)
+	// Determine publishDate
+	const publishDate =
+	status === 'PUBLISHED'
+		? publishDateStr
+			? new Date(publishDateStr)
+			: new Date()
+		: null;
+
+	// Save to database
 	const article = await prisma.article.create({
 		data: {
 			title,

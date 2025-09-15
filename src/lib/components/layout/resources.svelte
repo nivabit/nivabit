@@ -8,6 +8,7 @@
 	let articles = $derived(page?.data?.articles);
 </script>
 
+{#if articles?.length > 0}
 <section id="articles" class="bg-bg-blue px-4 py-16 md:px-16 md:py-24">
 	<div class="mx-auto max-w-7xl">
 		<!-- Header -->
@@ -66,7 +67,7 @@
 						<!-- Button -->
 						<button
 							type="button"
-							class="flip-button text-sm text-brand-blue-500 transition-colors duration-300 hover:bg-transparent hover:text-brand-blue-700 hover:underline"
+							class="flip-button text-sm text-brand-blue-500 transition-colors duration-300 hover:bg-transparent hover:text-brand-blue-700 hover:underline cursor-pointer"
 							onclick={() => goto('/articles/' + article.id)}
 						>
 							<span class="slide-text">
@@ -96,3 +97,6 @@
 		</div>
 	</div>
 </section>
+{/if}
+
+

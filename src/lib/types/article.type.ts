@@ -19,12 +19,17 @@ export interface GetarticleData {
 	categories: string[];
 	status: 'DRAFT' | 'PUBLISHED';
 	tags: string[];
+	publishDate?: string | null;
 	featuredImage?: string | null;
 	seoTitle: string;
 	seoDescription: string;
 	featuredImageURL?: string;
 	createdAt: string;
 	views?: number;
+	author?: {
+		id: string;
+		name: string;
+	} | null;
 }
 
 export type DashboardStats = {
