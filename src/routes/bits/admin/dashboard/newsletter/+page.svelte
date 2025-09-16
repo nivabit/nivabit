@@ -1,4 +1,9 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
+	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
+	import EmailEditor from '$lib/components/layout/EmailEditor.svelte';
+	import * as Dialog from "$lib/components/ui/dialog/index.js";
 	import {
 	  Search,
 	  Filter,
@@ -6,20 +11,28 @@
 	  Send,
 	  Download,
 	  Trash2,
-	  UserPlus
+	  UserPlus,
+	  Loader
 	} from 'lucide-svelte';
+	import { toast } from 'svelte-sonner';
+	import Button from '$lib/components/ui/button/button.svelte';
+	import { invalidateAll } from '$app/navigation';
   
 	// state (runes)
 	let { data } = $props();
 	let subscribers = $state(data?.subscribers || []);
-	
+
+	let confirmOpen = $state(false);
+	let pendingDeleteId: string | null = $state(null);
 	let query = $state('');
   
 	let selected = $state<Record<string, boolean>>({});
 	let subject = $state('');
 	let message = $state('');
 	let sending = $state(false);
-	let statusMessage = $state('');
+	let deleting = $state(false);
+	let formError: Record<string, any> | undefined = $state({});
+
   
 	// derived values
 	let filtered = $derived(
@@ -30,64 +43,27 @@
 	  })
 	);
   
-	let selectedList = $derived(Object.keys(selected).filter((id) => selected[id]));
-  
 	function toggleSelect(id: string) {
 	  selected = { ...selected, [id]: !selected[id] };
 	}
   
 	function selectAll() {
-	  const allSelected = filtered.every((s) => selected[s.id]);
+	  const allSelected = filtered.every((s: any) => selected[s.id]);
 	  if (allSelected) {
 		const next = { ...selected };
-		filtered.forEach((s) => delete next[s.id]);
+		filtered.forEach((s: any) => delete next[s.id]);
 		selected = next;
 	  } else {
 		const next = { ...selected };
-		filtered.forEach((s) => (next[s.id] = true));
+		filtered.forEach((s: any) => (next[s.id] = true));
 		selected = next;
 	  }
 	}
   
-	function handleUnsubscribe(ids: string[]) {
-	  if (!confirm(`Unsubscribe ${ids.length} user(s)?`)) return;
-	  subscribers = subscribers.map((s) =>
-		ids.includes(s.id) ? { ...s, subscribed: false } : s
-	  );
-	  const next = { ...selected };
-	  ids.forEach((id) => delete next[id]);
-	  selected = next;
-	  statusMessage = `${ids.length} subscriber(s) unsubscribed`;
-	  setTimeout(() => (statusMessage = ''), 3000);
-	}
-  
-	async function handleSend(toAll = false) {
-	  const targets = toAll
-		? subscribers.filter((s) => s.subscribed)
-		: subscribers.filter((s) => selected[s.id]);
-  
-	  if (targets.length === 0) {
-		statusMessage = 'No recipients selected';
-		setTimeout(() => (statusMessage = ''), 2000);
-		return;
-	  }
-	  if (!subject.trim() || !message.trim()) {
-		statusMessage = 'Please provide subject and message';
-		setTimeout(() => (statusMessage = ''), 2000);
-		return;
-	  }
-	  sending = true;
-	  statusMessage = 'Sending...';
-	  await new Promise((r) => setTimeout(r, 1200));
-	  const now = new Date().toISOString();
-	  subscribers = subscribers.map((s) =>
-		targets.some((t) => t.id === s.id) ? { ...s, lastSentAt: now } : s
-	  );
-	  sending = false;
-	  statusMessage = `Sent to ${targets.length} subscriber(s)`;
-	  setTimeout(() => (statusMessage = ''), 3000);
-	}
 
+	function handleEditorChange(val: string) {
+		message = val;
+	}
 </script>
 
 <div class="space-y-6">
@@ -116,42 +92,11 @@
 				<div class="flex items-center gap-4">
 				<input
 					type="checkbox"
-					checked={filtered.length > 0 && filtered.every((s) => selected[s.id])}
+					checked={filtered.length > 0 && filtered.every((s: any) => selected[s.id])}
 					onchange={selectAll}
 					class="rounded border-brand-grey-200 text-brand-orange-500 focus:ring-brand-orange-500 focus:ring-offset-0"
 				/>
 				<span class="text-sm font-synonym font-medium text-brand-grey-500">{filtered.length} Subscribers</span>
-				</div>
-
-				<div class="flex items-center gap-2">
-				<button
-					onclick={() => handleSend(true)}
-					class="flex items-center gap-2 bg-brand-orange-500 text-white px-3 py-2 rounded-lg text-sm font-synonym hover:bg-brand-orange-500/90 transition-colors"
-					title="Send to all subscribed"
-				>
-					<Send size={14} />
-					Send to All
-				</button>
-
-				{#if selectedList.length > 0 }
-					<button
-						onclick={() => handleSend(false)}
-						class="flex items-center gap-2 bg-brand-blue-500 text-white px-3 py-2 rounded-lg text-sm font-synonym hover:bg-brand-blue-500/90 transition-colors"
-						title="Send to selected"
-					>
-						<Send size={14} />
-						Send to Selected ({selectedList.length})
-					</button>
-
-					<button
-						onclick={() => handleUnsubscribe(selectedList)}
-						class="flex items-center gap-2 bg-white border border-red-200 text-red-600 px-3 py-2 rounded-lg text-sm font-synonym hover:bg-red-50 transition-colors"
-						title="Unsubscribe selected"
-					>
-						<Trash2 size={14} />
-						Unsubscribe
-					</button>
-				{/if}
 				</div>
 			</div>
 		</div>
@@ -183,28 +128,81 @@
 								<span class="text-xs text-brand-grey-400 font-synonym">{s.email}</span>
 							</div>
 							<div class="flex items-center gap-2 text-xs text-brand-grey-400 font-synonym">
-								<span>Joined: {new Date(s.joinedAt).toLocaleDateString()}</span>
+								<span>Joined: {new Date(s.createdAt).toLocaleDateString()}</span>
 								<span>•</span>
-								<!-- <span class={`px-2 py-0.5 rounded-full text-xs ${s.subscribed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{s.subscribed ? 'Subscribed' : 'Unsubscribed'}</span>
-								{s.lastSentAt && <><span>•</span><span class="text-xs">Last sent: {new Date(s.lastSentAt).toLocaleString()}</span></>} -->
 							</div>
 							</div>
 
 							<div class="flex items-center gap-2">
-							<button
-								onclick={() => handleUnsubscribe([s.id])}
-								class="p-2 text-brand-grey-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-								title="Unsubscribe user"
-							>
-								<Trash2 size={16} />
-							</button>
-							<button
-								onclick={() => { }}
-								class="p-2 text-brand-grey-400 hover:text-brand-blue-500 hover:bg-brand-blue-50 rounded-lg transition-colors"
-								title="Send to this user"
-							>
-								<Send size={16} />
-							</button>
+							<Dialog.Root open={confirmOpen} onOpenChange={(v: any) => (confirmOpen = v)}>
+								<Dialog.Trigger>
+									<button
+										onclick={() => {
+											pendingDeleteId = s.id;
+											confirmOpen = true;
+										}}
+										class="p-2 text-brand-grey-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+										title="Delete subscriber"
+									>
+										<Trash2 size={16} />
+									</button>
+								</Dialog.Trigger>
+								<Dialog.Content class="sm:max-w-md">
+									<Dialog.Header>
+										<Dialog.Title>Remove subscriber?</Dialog.Title>
+										<Dialog.Description>
+											Are you sure you want to unsubscribe or delete this email from your newsletter list? 
+											This action cannot be undone.
+										</Dialog.Description>
+									</Dialog.Header>
+									<Dialog.Footer class="flex gap-4">
+										<Dialog.Close>
+											<CustomButton variant="outline" className="text-black">Cancel</CustomButton>
+										</Dialog.Close>
+										<form method="post"
+											action="?/deleteSubscriber" 
+											use:enhance={() => {
+												deleting = true;
+												formError = {};
+												return async ({ result }: { result: any }) => {
+													deleting = false;
+													if (result.type === 'failure' && result.data) {
+														toast.success('Failure to remove', {
+															description: result.data.errors?.email || "Unable to delete subscriber"
+														});
+													} else if (result.type === 'error') {
+														toast.success('Failure to remove', {
+															description: result.error?.email || "Unable to delete subscriber"
+														});
+													} else if (result.type === 'success') {
+														toast.success('Subscriber removed successfully', {
+															description: 'Subscriber removed successfully'
+														});
+														confirmOpen = false;
+														pendingDeleteId = '';
+														invalidateAll();
+													}
+												};
+											}}
+										>
+											<input type="hidden" name="id" value={pendingDeleteId} />
+											<MainButton
+												disabled={deleting}
+												variant="destructive"
+												type="submit"
+												class="px-3 py-5 bg-red-600"
+											>
+												{#if deleting}
+													<Loader size={16} />
+													<span>removing</span>
+												{:else}
+													Yes, remove
+												{/if}
+											</MainButton>
+										</form>
+									</Dialog.Footer>
+								</Dialog.Content>
+							</Dialog.Root>
 							</div>
 						</div>
 						</div>
@@ -215,54 +213,74 @@
 	</div>
 
 	<!-- {/* Composer */} -->
-	<div class="bg-white rounded-xl p-6 border border-brand-grey-50">
+	<form method="post" action="?/send" 
+		class="bg-white rounded-xl p-6 border border-brand-grey-50"
+		use:enhance={() => {
+			sending = true;
+			formError = {};
+			return async ({ result }) => {
+				sending = false;
+				if (result.type === 'failure' && result.data) {
+					formError = result.data.errors as any;
+				} else if (result.type === 'error') {
+					formError = { root: result.error.message || 'Unexpected error' };
+				} else if (result.type === 'success') {
+					toast.success('Draft saved successfully', {
+						description: 'You can have send newsletter to all subscribers from the list above.'
+					});
+					message = '';
+					subject = '';
+					formError = {}
+				}
+			};
+		}}	
+	>
 		<h3 class="font-cabinet font-medium text-brand-grey-500 mb-3">Compose Newsletter</h3>
 		<div class="space-y-3">
-		<input
-			type="text"
-			placeholder="Subject"
-			value={subject}
-			onchange={(e) => {}}
-			class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg font-synonym placeholder:text-brand-grey-400 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
-		/>
-		<textarea
-			placeholder="Write your message here..."
-			value={message}
-			onchange={(e) => {}}
-			class="w-full min-h-[140px] p-3 border border-brand-grey-50 rounded-lg font-synonym placeholder:text-brand-grey-400 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
-		></textarea>
+			<input
+				type="text"
+				placeholder="Subject"
+				name="subject"
+				required
+				value={subject}
+				class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg font-synonym placeholder:text-brand-grey-400 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
+			/>
 
-		<div class="flex items-center gap-2">
-			<button
-			onclick={() => handleSend(true)}
-			disabled={sending}
-			class="flex items-center gap-2 bg-brand-orange-500 text-white px-4 py-2 rounded-lg text-sm font-synonym hover:bg-brand-orange-500/90 transition-colors disabled:opacity-50"
-			>
-			<Send size={16} />
-			Send to All Subscribed
-			</button>
+			<!-- GrapesJS Email Builder -->
+			<EmailEditor value={message} onChange={handleEditorChange} />
 
-			<button
-			onclick={() => handleSend(false)}
-			disabled={sending || selectedList.length === 0}
-			class="flex items-center gap-2 bg-brand-blue-500 text-white px-4 py-2 rounded-lg text-sm font-synonym hover:bg-brand-blue-500/90 transition-colors disabled:opacity-50"
-			>
-			<Send size={16} />
-			Send to Selected ({selectedList.length})
-			</button>
+			<input type="hidden" name="message" value={message} />
 
-			<button
-			onclick={() => {}}
-			class="flex items-center gap-2 bg-white border border-brand-grey-50 px-4 py-2 rounded-lg text-sm font-synonym hover:bg-bg-blue transition-colors"
-			>
-			Clear
-			</button>
+			{#if formError?.message}
+				<p class="mt-1 text-sm text-red-500">{formError.message}</p>
+			{/if}
+
+			<div class="flex items-center gap-2">
+				<MainButton
+					type="submit"
+					disabled={sending}
+					class="flex items-center gap-3 bg-brand-orange-500 text-white py-6 rounded-lg text-sm font-synonym hover:bg-brand-orange-500/90 transition-colors disabled:opacity-50"
+				>
+					{#if sending}
+						<Loader size={16} />
+						<span>Sending</span>
+					{:else}
+						<Send size={16} />
+						Send to All Subscribed
+					{/if}
+				</MainButton>
+
+				<CustomButton
+					onclick={() => {
+						message = '';
+						subject = '';
+					}}
+					className="flex items-center px-4 py-2 rounded-lg text-sm font-synonym text-black transition-colors"
+				>
+					Clear
+				</CustomButton>
+			</div>
 		</div>
-
-		{#if statusMessage}
-			<div class="text-sm text-brand-grey-500 mt-2">{statusMessage}</div>
-		{/if}
-		</div>
-	</div>
+	</form>
 </div>
 

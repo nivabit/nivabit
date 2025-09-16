@@ -11,6 +11,7 @@
 	let { class: customClass = '' } = $props();
 	let isLoading = $state(false)
 	let formError: Record<string, string> | undefined = $state({});
+	let email = $state('');
 
 </script>
 
@@ -53,6 +54,8 @@
 							}
 							else if (result.type === 'success') {
 								toast.success('Password reset link sent to your email.');
+								email = '';
+								formError = {}
 							}
 						};
 					}}
@@ -68,6 +71,7 @@
 							required
 							name="email"
 							type="email"
+							bind:value={email}
 							placeholder="Your Email"
 							class="placeholder:text-text-grey focus:ring-none flex-1 rounded-full border-none bg-white px-5  py-3 text-brand-grey-500 shadow-none focus:border-none focus:ring-brand-orange-500 focus:outline-none focus-visible:outline-none outline-0 border-0 focus-visible:ring-0"
 						/>
