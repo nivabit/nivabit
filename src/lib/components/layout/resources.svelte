@@ -6,8 +6,6 @@
 	import MainButton from '../customUI/button/MainButton.svelte';
 
 	let articles = $derived(page?.data?.articles);
-	console.log(articles);
-	
 </script>
 
 {#if articles?.length > 0}

@@ -120,7 +120,8 @@ export const PUT: RequestHandler = async (event) => {
 		const buffer = Buffer.from(await file.arrayBuffer());
 		const sanitizedFileName = file.name.replace(/[^\w.-]/g, '');
 		const fileName = `${Date.now()}-${sanitizedFileName}`;
-		const uploadDir = path.join('static', 'uploads');
+		const uploadDir = path.join(process.cwd(), 'uploads');
+
 
 		if (!fs.existsSync(uploadDir)) {
 			fs.mkdirSync(uploadDir, { recursive: true });

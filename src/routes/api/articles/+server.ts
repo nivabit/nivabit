@@ -113,7 +113,7 @@ export const POST: RequestHandler = async (event) => {
 		// Save file to /static/uploads
 		const buffer = Buffer.from(await file.arrayBuffer());
 		const fileName = `${Date.now()}-${file.name}`;
-		const uploadDir = path.join('static', 'uploads');
+		const uploadDir = path.join(process.cwd(), 'uploads');
 
 		if (!fs.existsSync(uploadDir)) {
 			fs.mkdirSync(uploadDir, { recursive: true });
