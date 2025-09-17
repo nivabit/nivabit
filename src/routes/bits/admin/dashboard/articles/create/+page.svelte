@@ -337,6 +337,7 @@
 							class="font-synonym flex-1 rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 						/>
 						<button
+							type="button"
 							onclick={handleAddTag}
 							class="rounded-lg bg-brand-orange-500 px-3 py-2 text-white transition-colors hover:bg-brand-orange-500/90"
 						>
