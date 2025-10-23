@@ -22,14 +22,14 @@
 					>
 						Our Articles
 					</h1>
-					<p use:reveal class="reveal mb-0 max-w-2xl text-lg leading-relaxed text-white">
+					<p use:reveal class="reveal font-synonym mb-0 max-w-2xl text-lg leading-relaxed text-white">
 						Transform your digital aspirations into reality with Nivabit. We specialize in crafting
 						bespoke digital solutions that elevate your brand and drive success.
 					</p>
 				</div>
 
 				<!-- {/* Circular Text Element */} -->
-				<div use:reveal class="reveal hidden flex-shrink-0 lg:block">
+				<div use:reveal class="reveal hidden shrink-0 lg:block">
 					<CircularText />
 				</div>
 			</div>

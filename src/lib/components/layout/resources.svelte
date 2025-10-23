@@ -27,7 +27,7 @@
 			{#each articles as article}
 				<div
 					use:reveal
-					class="group reveal space-y-5 rounded-2xl border border-brand-blue-100 bg-brand-blue-50 p-5 transition-colors duration-300 ease-in-out hover:border-brand-blue-500"
+					class="group reveal space-y-5 rounded-2xl border border-brand-blue-100 bg-brand-blue-50 p-4 md:p-5 transition-colors duration-300 ease-in-out hover:border-brand-blue-500"
 				>
 					<!-- Image with hover scale -->
 					<div class="relative h-60 w-full overflow-hidden rounded-lg">

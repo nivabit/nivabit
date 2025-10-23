@@ -138,7 +138,7 @@
 		<div use:reveal class="reveal relative overflow-hidden">
 			<div class="marquee flex w-max animate-marquee space-x-5">
 				{#each imageIds.concat(imageIds) as img, i}
-					<div class="flex-shrink-0">
+					<div class="shrink-0">
 						<img
 							src={img}
 							alt={`Project ${i + 1}`}
@@ -151,7 +151,7 @@
 	</section>
 
 	<!-- {/* Trusted By Section */} -->
-	<section class="bg-brand-blue-900 px-4 pb-16 md:px-16 md:pb-24">
+	<section class="bg-brand-blue-900 px-4 pb-16 md:px-16 md:pb-24 pt-16 md:pt-0">
 		<div class="mx-auto max-w-7xl overflow-hidden text-center">
 			<p class="mb-10 text-lg ">
 				<span use:revealWords class="reveal-words text-white font-synonym">Trusted by </span>
@@ -164,7 +164,7 @@
 			>
 				<div class="marquee flex w-full animate-marquee space-x-8 opacity-50 md:space-x-16">
 					{#each companyLogo.concat(companyLogo) as img, i}
-						<div class="flex-shrink-0">
+						<div class="shrink-0">
 							<img
 								src={img}
 								alt="Company Logo"
@@ -180,8 +180,8 @@
 	<!-- {/* About Us Section */} -->
 	<section id="about" class="bg-bg-orange px-4 py-16 md:px-16 md:py-24">
 		<div class="mx-auto max-w-7xl">
-			<div class="flex flex-col items-end gap-12 lg:flex-row lg:gap-24">
-				<div use:reveal class="reveal w-full flex-shrink-0 self-start lg:w-96">
+			<div class="flex flex-col items-end gap-[10px] sm:gap-12 lg:flex-row lg:gap-24">
+				<div use:reveal class="reveal w-full shrink-0 self-start lg:w-96">
 					<p class="text-lg text-brand-grey-500">About us</p>
 				</div>
 
@@ -218,7 +218,7 @@
 		<div class="mx-auto">
 			<!-- Services Header -->
 			<div class="mb-16 flex flex-col gap-12 lg:flex-row lg:gap-24 px-4 md:px-16">
-				<div use:reveal class="reveal w-full flex-shrink-0 lg:w-96">
+				<div use:reveal class="reveal w-full shrink-0 lg:w-96">
 					<p class="text-lg text-brand-grey-500">Services</p>
 				</div>
 
@@ -242,7 +242,7 @@
 						onclick={() => toggleService(index)}
 					>
 						<div class="flex w-full flex-col gap-10 lg:flex-row lg:gap-24 px-4 md:px-16">
-							<div class="w-full flex-shrink-0 lg:w-96">
+							<div class="w-full shrink-0 lg:w-96">
 								<p class="text-lg text-brand-grey-500">{service.number}</p>
 							</div>
 
@@ -261,7 +261,7 @@
 								</div>
 
 								
-								<div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-96">
+								<div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-96" class:max-h-96={activeServiceIndex === index}>
 									<p class="mb-8 text-lg font-normal text-brand-grey-500 md:text-2xl">
 										{service.desc}
 									</p>
@@ -303,7 +303,7 @@
 		<div class="mx-auto max-w-7xl">
 			<!-- Portfolio Header -->
 			<div class="mb-16 flex flex-col items-end gap-12 lg:flex-row lg:gap-24">
-				<div use:reveal class="reveal w-full flex-shrink-0 self-start lg:w-96">
+				<div use:reveal class="reveal w-full shrink-0 self-start lg:w-96">
 					<p class="text-lg text-brand-grey-500">Portfolio</p>
 				</div>
 

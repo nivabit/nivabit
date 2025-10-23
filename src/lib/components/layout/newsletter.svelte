@@ -18,8 +18,8 @@
 <!-- {/* Newsletter Section */} -->
 <section class={cn(`bg-bg-blue px-4 py-16 md:px-16 md:py-24`, customClass)}>
 	<div class="mx-auto max-w-7xl">
-		<div class="flex flex-col items-start gap-12 lg:flex-row lg:gap-24">
-			<div use:reveal class="reveal w-full flex-shrink-0 lg:w-96">
+		<div class="flex flex-col items-start sm:gap-12 gap-10 lg:flex-row lg:gap-24">
+			<div use:reveal class="reveal w-full shrink-0 lg:w-96">
 				<p class="text-lg text-brand-grey-500">Newsletter</p>
 			</div>
 
@@ -53,7 +53,7 @@
 								toast.error(result.error || 'An unexpected error occurred. Please try again.');
 							}
 							else if (result.type === 'success') {
-								toast.success('Password reset link sent to your email.');
+								toast.success('🎉 Subscription successful! Check your inbox for a warm welcome.');
 								email = '';
 								formError = {}
 							}
@@ -78,7 +78,7 @@
 						<MainButton
 							disabled={isLoading}
 							type="submit"
-							class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
+							class="flex md:w-48 w-[150px] shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-sm  text-white transition-colors hover:bg-brand-orange-500/90"
 						>
 							{#if isLoading}
 								<div class="flex items-center justify-center">

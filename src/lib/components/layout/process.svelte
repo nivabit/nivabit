@@ -63,25 +63,25 @@
 		<div  class=" space-y-5">
 			{#each processes as process}
 				<div
-					class="mx-auto max-w-[1000px] rounded-3xl bg-brand-blue-900 p-10"
+					class="mx-auto max-w-[1000px] rounded-3xl bg-brand-blue-900 md:p-10 p-4"
 					style="position: sticky;top: 80px;"
 				>
-					<div class="rounded-2xl border-2 border-dashed border-white p-8 md:p-16">
+					<div class="box-border rounded-2xl border-white py-10 px-5 md:px-16 md:py-16">
 						<div class="flex flex-col items-start justify-between gap-8 md:flex-row lg:gap-16">
-							<div class="w-full flex-shrink-0 lg:w-32">
-								<p class="font-synonym text-lg text-white">{process.step}</p>
+							<div class="w-full shrink-0 lg:w-32">
+								<p class="font-synonym text-lg text-white text-start">{process.step}</p>
 							</div>
 
-							<div class="w-full flex-1 space-y-16 md:max-w-[400px]">
+							<div class="w-full flex-1 md:space-y-16 space-y-10 md:max-w-[400px]">
 								<div class="">
 									<svelte:component this={process.icon} />
 								</div>
 
 								<div class="space-y-5 text-center lg:text-left">
-									<h3 class="font-cabinet text-2xl font-medium text-white md:text-3xl">
+									<h3 class="font-cabinet text-2xl font-medium text-white md:text-3xl text-start">
 										{process.title}
 									</h3>
-									<p class="font-synonym text-lg leading-relaxed text-white">
+									<p class="font-synonym text-start text-base md:text-lg leading-relaxed text-white">
 										{process.description}
 									</p>
 								</div>
@@ -93,3 +93,41 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	/* .box-border {
+  border: 4px solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Crect x='1' y='1' width='18' height='18' fill='none'stroke='white' stroke-width='2'stroke-dasharray='3 6' stroke-linecap='round'/%3E%3C/svg%3E") 10 round;
+} */
+
+.box-border {
+  position: relative;
+  border: none;
+  border-radius: 0.5rem; /* adjust for your design */
+  overflow: hidden; /* important! clips child pseudo-element */
+}
+
+.box-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px; /* adjust for border thickness */
+  background:
+    repeating-linear-gradient(to right, white 0 10px, transparent 10px 20px) top / 100% 1px no-repeat,
+    repeating-linear-gradient(to right, white 0 10px, transparent 10px 20px) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(to bottom, white 0 10px, transparent 10px 20px) left / 1px 100% no-repeat,
+    repeating-linear-gradient(to bottom, white 0 10px, transparent 10px 20px) right / 1px 100% no-repeat;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+
+</style>

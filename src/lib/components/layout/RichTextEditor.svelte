@@ -11,7 +11,7 @@
 
 	let { value = $bindable(), readOnly = false }: Props = $props();
 
-	let editorContainer: HTMLDivElement;
+	let editorContainer: HTMLDivElement | string =  $state("");
 	let quill: any;
 
 	const toolbar = [
@@ -33,7 +33,7 @@
 		value = quill.root.innerHTML;
 	}
 
-	onMount(() => {
+	$effect(() => {
 		if (!browser) return;
 
 		let quillInstance: any;

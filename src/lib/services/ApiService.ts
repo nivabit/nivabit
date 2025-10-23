@@ -95,7 +95,6 @@ export class ApiService {
 
 	private async handleResponse<T>(res: Response): Promise<T> {
 		if (!res.ok) {
-			console.log("hhhhhhhhhhhhhhhhhhhhhhh", res);
 			
 			const text = await res.text();
 			let error;

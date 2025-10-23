@@ -1,8 +1,10 @@
 import type { PageServerLoad } from './$types';
 import { ApiService } from '$lib/services/ApiService';
 
-export const load: PageServerLoad = async ({ fetch, params }) => {
+export const load: PageServerLoad = async ({ fetch, params, depends }) => {
 	const { id } = params;
+
+	depends(`data:articles:${id}`); // 👈 this tells SvelteKit to re-run when `id` changes
 
 	const api = new ApiService(fetch);
 

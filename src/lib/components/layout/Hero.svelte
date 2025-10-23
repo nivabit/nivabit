@@ -5,7 +5,7 @@
 </script>
 
 <!-- {/* Hero Section */} -->
-<section class="relative bg-brand-blue-900 px-4 pt-24 pb-12 md:px-16 md:pt-32 md:pb-16">
+<section class="relative bg-brand-blue-900 px-4 pt-16 pb-12 md:px-16 md:pt-32 md:pb-16">
 	<div class="mx-auto max-w-7xl">
 		<div class="flex flex-col items-end justify-between gap-12 lg:flex-row lg:gap-24">
 			<!-- {/* Hero Content */} -->
@@ -25,7 +25,7 @@
 			</div>
 
 			<!-- {/* Circular Text Element */} -->
-			<div use:reveal class="reveal hidden flex-shrink-0 lg:block">
+			<div use:reveal class="reveal hidden shrink-0 lg:block">
 				<CircularText />
 			</div>
 		</div>

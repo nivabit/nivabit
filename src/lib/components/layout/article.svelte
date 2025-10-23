@@ -35,7 +35,7 @@
 				<p class="mb-6 text-brand-grey-400">Check back later for more content and updates.</p>
 				<MainButton
 					href="/"
-					class="flex flex-shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-center  text-sm text-white transition-colors hover:bg-brand-orange-500/90"
+					class="flex shrink-0 items-center gap-2 rounded-full bg-brand-orange-500 text-center  text-sm text-white transition-colors hover:bg-brand-orange-500/90"
 				>
 					Go Home
 				</MainButton>
@@ -46,7 +46,7 @@
 				{#each articles?.slice(0, limit) as article}
 					<div
 						use:reveal
-						class="group reveal space-y-5 rounded-2xl border border-brand-blue-100 bg-brand-blue-50 p-5 transition-colors duration-300 ease-in-out hover:border-brand-blue-500"
+						class="group reveal space-y-5 rounded-2xl border border-brand-blue-100 bg-brand-blue-50 p-4 md:p-5 transition-colors duration-300 ease-in-out hover:border-brand-blue-500"
 					>
 						<!-- Image with hover scale -->
 						<div class="relative h-60 w-full overflow-hidden rounded-lg">
@@ -87,7 +87,7 @@
 							<button
 								type="button"
 								class="flip-button text-sm text-brand-blue-500 transition-colors duration-300 hover:bg-transparent hover:text-brand-blue-700 hover:underline cursor-pointer"
-								onclick={() => goto('/articles/' + article.id)}
+								onclick={() => goto(`/articles/${article.id}`)}
 							>
 								<span class="slide-text">
 									<span class="text-top">Read Blog</span>
