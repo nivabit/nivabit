@@ -17,6 +17,30 @@
 	});
 </script>
 
+<svelte:head>
+	<title>{singleArticles.seoTitle}</title>
+	<meta name="description" content={singleArticles.seoDescription} />
+	<meta name="author" content={singleArticles.authorId} />
+	<meta property="og:title" content={singleArticles.seoTitle || singleArticles.title} />
+	<meta property="og:description" content={singleArticles.seoDescription || singleArticles.excerpt} />
+	<meta property="og:image" content={singleArticles.featuredImage} />
+	<meta property="og:type" content="article" />
+	<meta name="keywords" content={singleArticles.tags?.join(', ')} />
+
+	<script type="application/ld+json">
+		{JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Article",
+		"headline": singleArticles.title,
+		"image": singleArticles.featuredImage,
+		"author": { "@type": "Person", "name": singleArticles.authorId },
+		"datePublished": singleArticles.publishDate,
+		"dateModified": singleArticles.updatedAt,
+		"description": singleArticles.seoDescription || singleArticles.excerpt
+		})}
+	</script>
+</svelte:head>
+
 {#key singleArticles?.id}
 	<main>
 		<!-- {/* Hero Section */} -->
@@ -54,7 +78,7 @@
 				<img
 					use:reveal
 					src={singleArticles?.featuredImage}
-					alt="Hero"
+					alt={singleArticles.title}
 					class="reveal mb-10 h-[475px] w-full rounded-[40px] object-cover"
 				/>
 

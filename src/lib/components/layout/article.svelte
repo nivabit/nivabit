@@ -71,7 +71,7 @@
 
 							<!-- Title -->
 							<h3
-								class="text-xl font-medium text-brand-grey-500 transition-colors duration-300 group-hover:text-brand-orange-500"
+								class="text-xl font-medium text-brand-grey-500 transition-colors duration-300 group-hover:text-brand-orange-500 truncate"
 							>
 								{article.title}
 							</h3>

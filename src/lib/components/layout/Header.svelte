@@ -143,7 +143,10 @@
 				</CustomButton>
 
 				<MainButton
-					class="font-synonym flex w-full items-center gap-2 rounded-full bg-brand-orange-500 px-5 py-3 text-sm text-white transition-colors hover:bg-brand-orange-500/90"
+					href="https://calendly.com/groupnivabit/30min"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="font-synonym w-full items-center gap-2 rounded-full bg-brand-orange-500 text-sm text-white transition-colors hover:bg-brand-orange-500/90 lg:flex"
 				>
 					Book a Call
 					<svg width="16" height="16" viewBox="0 0 16 17" fill="none">

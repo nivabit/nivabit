@@ -26,6 +26,7 @@
 	let statusFilter = $state('All');
 	let selectedArticles: string[] = $state([]);
 	let articleToDelete: string | null = $state(null);
+	let deleteArticleState = $state(false);
 
 	const filteredArticles = $derived(
 		articles.filter((article) => {
@@ -188,7 +189,7 @@
 							/>
 
 							<!-- Article Image -->
-							<div class="flex-shrink-0">
+							<div class="shrink-0">
 								<img
 									src={article.featuredImage || "/images/placeholder.jpeg"}
 									alt={article.title}
@@ -244,7 +245,7 @@
 											</a>
 
 											<!-- Delete Article Modal -->
-											<Dialog.Root>
+											<Dialog.Root bind:open={deleteArticleState}>
 												<Dialog.Trigger>
 													<button
 														onclick={() => (articleToDelete = article.id)}
@@ -294,6 +295,7 @@
 																			description: 'The article has been removed successfully.'
 																		});
 																		invalidateAll();
+																		deleteArticleState = false
 																	}
 																};
 															}}
