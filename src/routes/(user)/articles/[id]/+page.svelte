@@ -11,7 +11,6 @@
 	const { data } = $props(); // Svelte 5 syntax
 
 	let singleArticles : any = $state(data.singleArticles); // reactive local copy
-	$inspect(singleArticles)
 	$effect(() => {
 		singleArticles = data.singleArticles;
 	});

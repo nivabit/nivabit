@@ -43,7 +43,6 @@ export async function refreshToken(cookies: Cookies, apiUrl: string): Promise<st
 		}
 
 		const response = (await res.json()) as any;
-		console.log(response);
 
 		const newAccessToken = response?.data?.accessToken;
 		const newRefreshToken = response?.data?.refreshToken;

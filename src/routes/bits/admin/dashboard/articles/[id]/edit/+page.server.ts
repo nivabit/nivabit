@@ -95,7 +95,6 @@ export const actions: Actions = {
 		try {
 			const api = new ApiService(fetch, cookies, '/api');
 			const res: any = await api.put(`/articles/${id}`, { body: rawFormData, auth: true });
-			console.log(res);
 
 			if (!res?.id) {
 				return fail(400, {
@@ -107,8 +106,6 @@ export const actions: Actions = {
 
 			return { success: true, url: '/bits/admin/dashboard/articles' };
 		} catch (err: any) {
-			console.log(err);
-
 			return fail(500, {
 				success: false,
 				errors: { root: err.message || 'Server error. Please try again.' },

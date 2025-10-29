@@ -99,7 +99,6 @@
 			formError = {};
 			return async ({ result }) => {
 				isSaving = false;
-				console.log(result);
 
 				if (result.type === 'failure' && result.data) {
 					formError = result.data.errors as any;
