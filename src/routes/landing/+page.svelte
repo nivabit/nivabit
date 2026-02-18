@@ -77,17 +77,8 @@
 		name="description"
 		content="Get a high-converting website that turns visitors into revenue. Mobile-friendly, fast, and professional web design services for high-growth businesses."
 	/>
-	<!-- Meta Pixel Code -->
-	<noscript
-		><img
-			height="1"
-			width="1"
-			alt="pixel"
-			style="display:none"
-			src="https://www.facebook.com/tr?id=1952710342260113&ev=PageView&noscript=1"
-		/></noscript
-	>
-	<!-- End Meta Pixel Code -->
+
+	<!-- Facebook Pixel Code -->
 	<script>
 		!(function (f, b, e, v, n, t, s) {
 			if (f.fbq) return;
@@ -108,6 +99,16 @@
 		fbq('init', '1952710342260113');
 		fbq('track', 'PageView');
 	</script>
+	<noscript>
+		<img
+			height="1"
+			width="1"
+			src="https://www.facebook.com/tr?id=1952710342260113&ev=PageView
+&noscript=1"
+			alt="pixel"
+		/>
+	</noscript>
+	<!-- End Facebook Pixel Code -->
 </svelte:head>
 
 <main class="min-h-screen bg-brand-blue-900 text-white">
