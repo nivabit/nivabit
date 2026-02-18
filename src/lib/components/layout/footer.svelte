@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { reveal } from "$lib/actions/reveal";
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
-	import { goto } from "$app/navigation";
-	import Button from "../ui/button/button.svelte";
-	import IconButton from "$lib/components/customUI/button/iconButton.svelte";
-	import Twitter from "../icon/twitter.svelte";
-	import Facebook from "../icon/facebook.svelte";
-	import Linkedin from "../icon/linkedin.svelte";
-	import Message from "../icon/message.svelte";
-	import Call from "../icon/call.svelte";
-	import Instagram from "../icon/instagram.svelte";
-	import Tiktok from "../icon/tiktok.svelte";
-	import CustomButton from "$lib/components/customUI/button/customButton.svelte";
+	import { reveal } from '$lib/actions/reveal';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
+	import { goto } from '$app/navigation';
+	import Button from '../ui/button/button.svelte';
+	import IconButton from '$lib/components/customUI/button/iconButton.svelte';
+	import Twitter from '../icon/twitter.svelte';
+	import Facebook from '../icon/facebook.svelte';
+	import Linkedin from '../icon/linkedin.svelte';
+	import Message from '../icon/message.svelte';
+	import Call from '../icon/call.svelte';
+	import Instagram from '../icon/instagram.svelte';
+	import Tiktok from '../icon/tiktok.svelte';
+	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
 
 	let iconFills: Record<string, string> = $state({
 		twitter: '#ffffff',
@@ -32,40 +32,40 @@
 		},
 		{
 			name: 'call',
-			title: '+2349071133025',
+			title: '+2349066809821',
 			icon: Call,
-			url: 'tel:+2349071133025'
+			url: 'tel:+2349066809821'
 		}
 	];
 
-  const socialLinks = [
-    {
-      name:'twitter',
-      icon: Twitter,
-      url: "https://x.com/@groupnivabit"
-    },
-    {
-      name:'facebook',
-      icon: Facebook,
-      url: "https://www.facebook.com/search/top?q=nivabit"
-    },
-    {
-      name:'linkedin',
-      icon: Linkedin,
-      url: "https://www.linkedin.com/company/104662763/admin/dashboard/"
-    },
-    {
-      name:'instagram',
-      icon: Instagram,
-      url: "https://www.instagram.com/groupnivabit/"
-    },
-    {
-      name:'Tiktok',
-      icon: Tiktok,
-      url: "https://www.tiktok.com/@nivabit"
-    }
-  ];
-  const quickLinks = ['Home', 'Services', 'About us', 'Contact us'];
+	const socialLinks = [
+		{
+			name: 'twitter',
+			icon: Twitter,
+			url: 'https://x.com/@groupnivabit'
+		},
+		{
+			name: 'facebook',
+			icon: Facebook,
+			url: 'https://www.facebook.com/search/top?q=nivabit'
+		},
+		{
+			name: 'linkedin',
+			icon: Linkedin,
+			url: 'https://www.linkedin.com/company/104662763/admin/dashboard/'
+		},
+		{
+			name: 'instagram',
+			icon: Instagram,
+			url: 'https://www.instagram.com/groupnivabit/'
+		},
+		{
+			name: 'Tiktok',
+			icon: Tiktok,
+			url: 'https://www.tiktok.com/@nivabit'
+		}
+	];
+	const quickLinks = ['Home', 'Services', 'About us', 'Contact us'];
 
 	// Smooth scroll to section
 	const scrollToSection = (id: string) => {
@@ -114,18 +114,18 @@
 
 				<!-- Social Links -->
 				<div class="flex gap-5">
-				{#each socialLinks as social}
-					<IconButton
-					href={social.url}
-					target="_blank"
-					class="w-12 h-12 bg-brand-orange-500 rounded-full flex items-center justify-center"
-					onmouseenter={() => iconFills[social.name] = "#00042B"}
-					onmouseleave={() => iconFills[social.name] = "#ffffff"}
-					>
-					{@const Component = social.icon}
-					<Component fill={iconFills[social.name]} />
-					</IconButton>
-				{/each}
+					{#each socialLinks as social}
+						<IconButton
+							href={social.url}
+							target="_blank"
+							class="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange-500"
+							onmouseenter={() => (iconFills[social.name] = '#00042B')}
+							onmouseleave={() => (iconFills[social.name] = '#ffffff')}
+						>
+							{@const Component = social.icon}
+							<Component fill={iconFills[social.name]} />
+						</IconButton>
+					{/each}
 				</div>
 			</div>
 
@@ -174,11 +174,11 @@
 	<!-- Footer Bottom -->
 	<div use:reveal class="reveal border-t border-brand-blue-400 px-4 py-8 md:px-16">
 		<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
-			<p class="text-sm text-white">© Nivabit 2025. All rights reserved</p>
+			<p class="text-sm text-white">© Nivabit {new Date().getFullYear()}. All rights reserved</p>
 
 			<div class="flex gap-8">
-				<CustomButton className="">Privacy Policy</CustomButton>
-				<CustomButton className="">Terms of Service</CustomButton>
+				<CustomButton className="" href="/privacy">Privacy Policy</CustomButton>
+				<CustomButton className="" href="/terms">Terms of Service</CustomButton>
 			</div>
 		</div>
 	</div>

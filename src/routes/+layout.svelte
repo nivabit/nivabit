@@ -19,9 +19,7 @@
 </svelte:head>
 
 {#key data.pathname}
-	<!-- <Header /> -->
 	<main in:fly={{ easing: cubicOut, y: 10, duration: 100, delay: 100 }}>
 		{@render children()}
 	</main>
-	<!-- <Footer /> -->
 {/key}
