@@ -18,6 +18,9 @@
 		'/images/project/Project-4.png',
 		'/images/project/Project-5.png',
 		'/images/project/Project-2.png',
+		'/images/project/Project-6.png',
+		'/images/project/Project-7.png',
+		'/images/project/Project-8.png'
 	];
 
 	const companyLogo = [
@@ -27,6 +30,9 @@
 		'/images/clients/4.png',
 		'/images/clients/5.png',
 		'/images/clients/6.png',
+		'/images/clients/7.png',
+		'/images/clients/8.png',
+		'/images/clients/9.png'
 	];
 
 	const services = [
@@ -64,18 +70,25 @@
 
 	const projects = [
 		{
-			title: 'Fermerce',
-			duration: '6 weeks',
-			type: 'Website',
-			category: 'Ecommerce',
-			image: '/images/project/Project-1.png'
+			title: 'Facity',
+			duration: '12 weeks',
+			type: 'Web/Mobile App',
+			category: 'Fintech',
+			image: '/images/project/Project-7.png'
 		},
 		{
-			title: 'Padetunes',
-			duration: '8 weeks',
+			title: 'Tichly',
+			duration: '12 weeks',
 			type: 'WebApp',
-			category: 'Music',
-			image: '/images/project/Project-4.png'
+			category: 'E-learning',
+			image: '/images/project/Project-6.png'
+		},
+		{
+			title: 'Broglux',
+			duration: '4 weeks',
+			type: 'Website',
+			category: 'Ecommerce',
+			image: '/images/project/Project-8.png'
 		},
 		{
 			title: "Mr. Olusola's Website",
@@ -136,7 +149,7 @@
 	<!-- Horizontal Project Showcase -->
 	<section class="bg-brand-blue-900 py-8 md:py-12">
 		<div use:reveal class="reveal relative overflow-hidden">
-			<div class="marquee flex w-max animate-marquee space-x-5">
+			<div class="marquee animate-marquee flex w-max space-x-5">
 				{#each imageIds.concat(imageIds) as img, i}
 					<div class="shrink-0">
 						<img
@@ -151,24 +164,23 @@
 	</section>
 
 	<!-- {/* Trusted By Section */} -->
-	<section class="bg-brand-blue-900 px-4 pb-16 md:px-16 md:pb-24 pt-16 md:pt-0">
+	<section class="bg-brand-blue-900 px-4 pt-16 pb-16 md:px-16 md:pt-0 md:pb-24">
 		<div class="mx-auto max-w-7xl overflow-hidden text-center">
-			<p class="mb-10 text-lg ">
-				<span use:revealWords class="reveal-words text-white font-synonym">Trusted by </span>
-				<span use:revealWords class="reveal-words text-brand-orange-500 font-synonym">visionaries</span>
+			<p class="mb-10 text-lg">
+				<span use:revealWords class="reveal-words font-synonym text-white">Trusted by </span>
+				<span use:revealWords class="reveal-words font-synonym text-brand-orange-500"
+					>visionaries</span
+				>
 			</p>
 
-			<div
-				use:reveal
-				class="reveal relative overflow-hidden"
-			>
-				<div class="marquee flex w-full animate-marquee space-x-8 opacity-50 md:space-x-16">
+			<div use:reveal class="reveal relative overflow-hidden">
+				<div class="marquee animate-marquee flex w-full space-x-8 opacity-50 md:space-x-16">
 					{#each companyLogo.concat(companyLogo) as img, i}
 						<div class="shrink-0">
 							<img
 								src={img}
 								alt="Company Logo"
-								class="h-10 w-auto opacity-75 transition-opacity hover:opacity-100 object-cover"
+								class="h-10 w-auto object-cover opacity-75 transition-opacity hover:opacity-100"
 							/>
 						</div>
 					{/each}
@@ -195,7 +207,7 @@
 
 						<div use:reveal class="reveal text-center">
 							<MainButton
-								href="#contact"
+								href="/contact"
 								class="flex items-center gap-2 rounded-full bg-brand-orange-500 text-sm text-white transition-colors hover:bg-brand-orange-500/90"
 							>
 								Get Started
@@ -217,7 +229,7 @@
 	<section id="services" class="bg-bg-orange py-16 md:py-24">
 		<div class="mx-auto">
 			<!-- Services Header -->
-			<div class="mb-16 flex flex-col gap-12 lg:flex-row lg:gap-24 px-4 md:px-16">
+			<div class="mb-16 flex flex-col gap-12 px-4 md:px-16 lg:flex-row lg:gap-24">
 				<div use:reveal class="reveal w-full shrink-0 lg:w-96">
 					<p class="text-lg text-brand-grey-500">Services</p>
 				</div>
@@ -238,10 +250,10 @@
 					<button
 						type="button"
 						use:reveal
-						class="reveal group hover:bg-[#FFF3E7] cursor-pointer flex w-full flex-col gap-8 border-b border-brand-blue-100 py-12 text-start md:py-16 lg:flex-row lg:gap-24 transition-opacity duration-300 ease-in-out"
+						class="reveal group flex w-full cursor-pointer flex-col gap-8 border-b border-brand-blue-100 py-12 text-start transition-opacity duration-300 ease-in-out hover:bg-[#FFF3E7] md:py-16 lg:flex-row lg:gap-24"
 						onclick={() => toggleService(index)}
 					>
-						<div class="flex w-full flex-col gap-10 lg:flex-row lg:gap-24 px-4 md:px-16">
+						<div class="flex w-full flex-col gap-10 px-4 md:px-16 lg:flex-row lg:gap-24">
 							<div class="w-full shrink-0 lg:w-96">
 								<p class="text-lg text-brand-grey-500">{service.number}</p>
 							</div>
@@ -260,15 +272,20 @@
 									{/each}
 								</div>
 
-								
-								<div class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-96" class:max-h-96={activeServiceIndex === index}>
+								<div
+									class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-96"
+									class:max-h-96={activeServiceIndex === index}
+								>
 									<p class="mb-8 text-lg font-normal text-brand-grey-500 md:text-2xl">
 										{service.desc}
 									</p>
-									<Button href="#contact" class="flex items-center gap-2 rounded-full border border-brand-blue-700 bg-transparent text-sm hover:bg-brand-blue-700 hover:text-white group relative py-7 h-auto w-48 overflow-hidden transition-all duration-300 ease-in-out cursor-pointer">
+									<Button
+										href="#contact"
+										class="group relative flex h-auto w-48 cursor-pointer items-center gap-2 overflow-hidden rounded-full border border-brand-blue-700 bg-transparent py-7 text-sm transition-all duration-300 ease-in-out hover:bg-brand-blue-700 hover:text-white"
+									>
 										<!-- Top Layer (default state) -->
 										<div
-											class='absolute inset-0 z-10 flex items-center justify-center text-brand-blue-700 transition-transform duration-300 ease-in-out group-hover:-translate-y-full'
+											class="absolute inset-0 z-10 flex items-center justify-center text-brand-blue-700 transition-transform duration-300 ease-in-out group-hover:-translate-y-full"
 										>
 											Get Started
 											<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
@@ -281,12 +298,21 @@
 
 										<!-- Bottom Layer (hover state) -->
 										<div
-											class='absolute inset-0 z-0 flex translate-y-full items-center justify-center bg-brand-blue-900 text-white transition-transform duration-300 ease-in-out group-hover:translate-y-0 gap-4'
+											class="absolute inset-0 z-0 flex translate-y-full items-center justify-center gap-4 bg-brand-blue-900 text-white transition-transform duration-300 ease-in-out group-hover:translate-y-0"
 										>
 											Get Started
-											<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path d="M2.66602 7.8333V9.16664H10.666L6.99935 12.8333L7.94602 13.78L13.226 8.49997L7.94602 3.21997L6.99935 4.16664L10.666 7.8333H2.66602Z" fill="white"/>
-											</svg>												
+											<svg
+												width="16"
+												height="17"
+												viewBox="0 0 16 17"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													d="M2.66602 7.8333V9.16664H10.666L6.99935 12.8333L7.94602 13.78L13.226 8.49997L7.94602 3.21997L6.99935 4.16664L10.666 7.8333H2.66602Z"
+													fill="white"
+												/>
+											</svg>
 										</div>
 									</Button>
 								</div>
@@ -355,7 +381,7 @@
 					<!-- CTA Button -->
 					<div use:reveal class="reveal text-center">
 						<MainButton
-							href="#contact"
+							href="/#contact"
 							class="flex items-center gap-2 rounded-full bg-brand-orange-500 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
 						>
 							Get Started
@@ -379,12 +405,3 @@
 	<Newsletter />
 	<ContactUs />
 </main>
-
-<style>
-	.next-section {
-		margin-top: -0vh; /* Overlap the last step */
-		z-index: 10;
-		position: relative;
-		background: white;
-	}
-</style>

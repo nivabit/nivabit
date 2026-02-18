@@ -26,7 +26,9 @@
 
 			<!-- {/* Circular Text Element */} -->
 			<div use:reveal class="reveal hidden shrink-0 lg:block">
-				<CircularText />
+				<a href="/#contact">
+					<CircularText />
+				</a>
 			</div>
 		</div>
 	</div>
