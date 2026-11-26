@@ -1,7 +1,7 @@
 <!-- EnhancedProgressSpinner.svelte -->
 <script lang="ts">
 	import { navigating } from '$app/state';
-	import { loader } from '$lib/stores/loader';
+	import { loader } from '#lib/stores/loader.ts';
 
 	interface Props {
 		height?: 'thin' | 'normal' | 'thick';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { GetarticleData } from '$lib/types/article.type';
+	import type { GetarticleData } from '#lib/types/article.type.ts';
 	import {
 		Plus,
 		Search,
@@ -12,14 +12,12 @@
 		FileText,
 		Loader
 	} from 'lucide-svelte';
-	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { enhance } from '$app/forms';
+	import * as Dialog from '#lib/components/ui/dialog/index.js';
+	import Button from '#lib/components/ui/button/button.svelte';
 	import { toast } from 'svelte-sonner';
-	import { invalidateAll } from '$app/navigation';
+	import { deleteArticle, getAdminArticles } from '#lib/remote/articles.remote.ts';
 
-	let { data } = $props();
-	let articles: GetarticleData[] = $derived(data?.articles) as any;
+	let articles: GetarticleData[] = $derived((await getAdminArticles()) as any);
 	
 	let loading = $state(false);
 	let searchTerm = $state('');
@@ -270,49 +268,35 @@
 															<Button type="button" variant="outline">Cancel</Button>
 														</Dialog.Close>
 
-														<!-- Form to submit deletion -->
-														<form
-															method="POST"
-															action="?/delete"
-															class="inline"
-															use:enhance={() => {
+														<!-- Remote command deletion -->
+														<Button
+															type="button"
+															class="bg-red-500 text-white hover:bg-red-600"
+															disabled={loading}
+															onclick={async () => {
+																if (!articleToDelete) return;
 																loading = true;
-																return async ({ result }) => {
+																try {
+																	await deleteArticle({ id: articleToDelete });
+																	toast.success('Article deleted', {
+																		description: 'The article has been removed successfully.'
+																	});
+																	deleteArticleState = false;
+																} catch (err: any) {
+																	toast.error('Delete failed', {
+																		description: err?.message || 'Unable to delete the article.'
+																	});
+																} finally {
 																	loading = false;
-																	if (result.type === 'failure' && result.data) {
-																		toast.info('Deleted Fail', {
-																			description:
-																				(result.data?.error as string) ||
-																				'Unable to delete the article.'
-																		});
-																	} else if (result.type === 'error') {
-																		toast.info('Deleted Fail', {
-																			description:
-																				(result?.error as string) || 'Unable to delete the article.'
-																		});
-																	} else if (result.type === 'success') {
-																		toast.success('Article deleted', {
-																			description: 'The article has been removed successfully.'
-																		});
-																		invalidateAll();
-																		deleteArticleState = false
-																	}
-																};
+																}
 															}}
 														>
-															<input type="hidden" name="id" value={articleToDelete} />
-															<Button
-																type="submit"
-																class="bg-red-500 text-white hover:bg-red-600"
-																disabled={loading}
-															>
-																{#if loading}
-																	<Loader />
-																{:else}
-																	Yes, Delete
-																{/if}
-															</Button>
-														</form>
+															{#if loading}
+																<Loader />
+															{:else}
+																Yes, Delete
+															{/if}
+														</Button>
 													</Dialog.Footer>
 												</Dialog.Content>
 											</Dialog.Root>

@@ -1,20 +1,25 @@
 <script lang="ts">
-	import { Menu, X } from 'lucide-svelte';
+	import { Menu, X, ArrowUpRight } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
-	import { reveal } from '$lib/actions/reveal';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
-	import { get } from 'svelte/store';
-	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
-	import MainButton from '../customUI/button/MainButton.svelte';
 
-	let isMenuOpen = false;
+	let isMenuOpen = $state(false);
+	let scrolled = $state(false);
+
+	const navLinks = [
+		{ label: 'System', id: 'system', href: '/#system' },
+		{ label: 'Programs', id: 'services', href: '/#services' },
+		{ label: 'Results', id: 'results', href: '/#results' },
+		{ label: 'The Memo', id: 'newsletter', href: '/#newsletter' },
+		{ label: 'Research', id: null, href: '/articles' },
+		{ label: 'Contact', id: 'contact', href: '/#contact' }
+	];
 
 	const closeMenu = () => {
 		isMenuOpen = false;
 	};
 
-	// Smooth scroll to section
 	const scrollToSection = (id: string) => {
 		const el = document.getElementById(id);
 		if (el) {
@@ -22,140 +27,121 @@
 		}
 	};
 
-	const handleNavClick = async (sectionId: string) => {
-		const currentPath = get(page).url.pathname;
-
+	const handleNavClick = async (e: MouseEvent, link: (typeof navLinks)[number]) => {
+		closeMenu();
+		if (!link.id) return;
+		const currentPath = page.url.pathname;
 		if (currentPath === '/') {
-			scrollToSection(sectionId);
+			e.preventDefault();
+			scrollToSection(link.id);
 		} else {
-			// Navigate to home with query param
-			goto(`/#${sectionId}`);
+			e.preventDefault();
+			await goto(`/#${link.id}`);
 		}
 	};
 
-	// Run scroll if redirected to home with ?section=xyz
 	onMount(() => {
+		const onScroll = () => {
+			scrolled = window.scrollY > 16;
+		};
+		window.addEventListener('scroll', onScroll, { passive: true });
+
 		const urlParams = new URLSearchParams(window.location.search);
 		const sectionId = urlParams.get('section');
-
 		if (sectionId) {
-			// Wait a little for layout to be ready
-			setTimeout(() => {
-				scrollToSection(sectionId);
-			}, 200);
+			setTimeout(() => scrollToSection(sectionId), 200);
 		}
+
+		return () => window.removeEventListener('scroll', onScroll);
 	});
 </script>
 
-<header class="relative z-50 w-full bg-brand-blue-900 px-4 py-5 md:px-16">
-	<div use:reveal class="reveal flex items-center justify-between">
-		<!-- Logo -->
-		<a href="/" class="flex items-center">
-			<img src="/images/nivabit.png" alt="Nivabit Logo" class="h-6 w-auto" />
+<header class="sticky top-0 z-50 w-full px-4 pt-4 pb-2 transition-all">
+	<div
+		class={`mx-auto flex max-w-5xl items-center justify-between rounded-full border px-3 py-2 transition-all duration-300 md:px-4 ${
+			scrolled
+				? 'border-black/10 bg-white/95 shadow-lg shadow-black/[0.04] backdrop-blur-md'
+				: 'border-black/8 bg-white/90 shadow-sm backdrop-blur-md'
+		}`}
+	>
+		<!-- Brand Mark -->
+		<a href="/" class="flex items-center gap-2.5 pl-1.5" aria-label="Nivabit Home">
+			<span
+				class="flex h-7 w-7 items-center justify-center rounded-full bg-lime-accent text-xs font-black text-ink-primary shadow-xs"
+			>
+				N
+			</span>
+			<span class="font-cabinet text-lg font-extrabold tracking-tight text-ink-primary">
+				Nivabit
+			</span>
 		</a>
 
 		<!-- Desktop Navigation -->
-		<nav class="hidden items-center space-x-8 lg:flex">
-			<CustomButton className="" href="/" onclick={() => handleNavClick('home')}>Home</CustomButton>
-			<CustomButton className="" href="#services" onclick={() => handleNavClick('services')}>
-				Services
-			</CustomButton>
-			<CustomButton className="" href="#about" onclick={() => handleNavClick('about')}>
-				About us
-			</CustomButton>
-			<CustomButton className="" href="/articles">Article</CustomButton>
-			<CustomButton className="" href="#contact" onclick={() => handleNavClick('contact')}
-				>Contact us
-			</CustomButton>
+		<nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+			{#each navLinks as link}
+				<a
+					href={link.href}
+					onclick={(e) => handleNavClick(e, link)}
+					class="rounded-full px-3.5 py-1.5 text-xs font-medium text-ink-secondary transition-colors hover:bg-black/[0.04] hover:text-ink-primary"
+				>
+					{link.label}
+				</a>
+			{/each}
 		</nav>
 
-		<!-- CTA Button & Mobile Menu Toggle -->
-		<div class="flex items-center gap-4">
-			<MainButton
+		<!-- CTA & Mobile Toggle -->
+		<div class="flex items-center gap-2">
+			<a
 				href="https://calendly.com/groupnivabit/30min"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="font-synonym hidden items-center gap-2 rounded-full bg-brand-orange-500 text-sm text-white transition-colors hover:bg-brand-orange-500/90 lg:flex"
+				class="hidden items-center gap-1.5 rounded-full bg-lime-accent px-4 py-2 text-xs font-bold text-ink-primary transition-all hover:bg-lime-accent-hover hover:shadow-sm lg:inline-flex"
 			>
 				Book a Call
-				<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
-					<path
-						d="M2.66602 7.83333V9.16667H10.666L6.99935 12.8333L7.94602 13.78L13.226 8.5L7.94602 3.22L6.99935 4.16667L10.666 7.83333H2.66602Z"
-						fill="white"
-					/>
-				</svg>
-			</MainButton>
+				<ArrowUpRight size={14} strokeWidth={2.5} />
+			</a>
 
-			<!-- Mobile Menu Button -->
-			<button class="p-2 text-white lg:hidden" onclick={() => (isMenuOpen = !isMenuOpen)}>
+			<button
+				type="button"
+				class="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-ink-primary transition-colors hover:bg-black/5 lg:hidden"
+				onclick={() => (isMenuOpen = !isMenuOpen)}
+				aria-label="Toggle Menu"
+				aria-expanded={isMenuOpen}
+			>
 				{#if isMenuOpen}
-					<X size={24} />
+					<X size={18} />
 				{:else}
-					<Menu size={24} />
+					<Menu size={18} />
 				{/if}
 			</button>
 		</div>
 	</div>
 
-	<!-- Mobile Navigation -->
+	<!-- Mobile Menu Dropdown -->
 	{#if isMenuOpen}
 		<div
-			class="absolute top-full left-0 w-full border-t border-brand-blue-400 bg-brand-blue-900 lg:hidden"
+			class="mx-auto mt-2 max-w-5xl overflow-hidden rounded-3xl border border-black/10 bg-white p-4 shadow-xl lg:hidden"
 		>
-			<nav class="flex flex-col space-y-4 p-4">
-				<CustomButton
-					className=""
-					href="/"
-					onclick={() => {
-						closeMenu();
-						handleNavClick('home');
-					}}>Home</CustomButton
-				>
-				<CustomButton
-					className=""
-					href="#services"
-					onclick={() => {
-						closeMenu();
-						handleNavClick('services');
-					}}
-				>
-					Services</CustomButton
-				>
-				<CustomButton
-					className=""
-					href="#about"
-					onclick={() => {
-						closeMenu();
-						handleNavClick('about');
-					}}
-				>
-					About us</CustomButton
-				>
-				<CustomButton className="" href="/articles">Article</CustomButton>
-				<CustomButton
-					className=""
-					href="#contact"
-					onclick={() => {
-						closeMenu();
-						handleNavClick('contact');
-					}}
-					>Contact us
-				</CustomButton>
-
-				<MainButton
+			<nav class="flex flex-col gap-1">
+				{#each navLinks as link}
+					<a
+						href={link.href}
+						onclick={(e) => handleNavClick(e, link)}
+						class="rounded-2xl px-4 py-3 text-sm font-medium text-ink-primary transition-colors hover:bg-surface-light"
+					>
+						{link.label}
+					</a>
+				{/each}
+				<a
 					href="https://calendly.com/groupnivabit/30min"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="font-synonym w-full items-center gap-2 rounded-full bg-brand-orange-500 text-sm text-white transition-colors hover:bg-brand-orange-500/90 lg:flex"
+					onclick={closeMenu}
+					class="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-lime-accent px-5 py-3 text-sm font-bold text-ink-primary transition-colors hover:bg-lime-accent-hover"
 				>
-					Book a Call
-					<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
-						<path
-							d="M2.66602 7.83333V9.16667H10.666L6.99935 12.8333L7.94602 13.78L13.226 8.5L7.94602 3.22L6.99935 4.16667L10.666 7.83333H2.66602Z"
-							fill="white"
-						/>
-					</svg>
-				</MainButton>
+					Book a Discovery Call
+					<ArrowUpRight size={16} strokeWidth={2.5} />
+				</a>
 			</nav>
 		</div>
 	{/if}

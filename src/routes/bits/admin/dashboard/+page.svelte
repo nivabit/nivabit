@@ -1,17 +1,20 @@
 <script lang="ts">
-	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
-	import type { DashboardStats } from '$lib/types/article.type.js';
-	import { formatNumberWithCommas } from '$lib/utils/formatNumber.js';
+	import MainButton from '#lib/components/customUI/button/MainButton.svelte';
+	import { formatNumberWithCommas } from '#lib/utils/formatNumber.js';
 	import { FileText, Users, Eye, MessageCircle, TrendingUp, Plus } from 'lucide-svelte';
+	import { getAdminArticles } from '#lib/remote/articles.remote.ts';
+	import { getAdminProfile, getDashboardStats } from '#lib/remote/admin.remote.ts';
 
-	let { data } = $props();
+	const [user, dashboardStats, recentArticles] = await Promise.all([
+		getAdminProfile(),
+		getDashboardStats(),
+		getAdminArticles()
+	]);
 
-	let user = $state(data?.user);
-	let statsData = $state(data?.stats) as DashboardStats;
-	let quickStats: any = $state(data?.quickStats);
-	let recentArticles: any = $state(data?.articles || []);
+	let statsData = $derived({ data: dashboardStats.stats });
+	let quickStats: any = $derived(dashboardStats.quickStats);
 
-	const stats = [
+	const stats = $derived([
 		{
 			name: 'Total Articles',
 			value: statsData?.data?.totalArticles,
@@ -40,7 +43,7 @@
 			changeType: 'increase',
 			icon: MessageCircle
 		}
-	];
+	]);
 </script>
 
 <section class="space-y-8">

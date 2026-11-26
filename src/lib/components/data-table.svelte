@@ -106,20 +106,20 @@
 		verticalListSortingStrategy
 	} from '@dnd-kit-svelte/sortable';
 	import { restrictToVerticalAxis } from '@dnd-kit-svelte/modifiers';
-	import { createSvelteTable } from '$lib/components/ui/data-table/data-table.svelte.js';
-	import * as Tabs from '$lib/components/ui/tabs/index.js';
-	import * as Table from '$lib/components/ui/table/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as Select from '$lib/components/ui/select/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
-	import { Badge } from '$lib/components/ui/badge/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
+	import { createSvelteTable } from '#lib/components/ui/data-table/data-table.svelte.js';
+	import * as Tabs from '#lib/components/ui/tabs/index.js';
+	import * as Table from '#lib/components/ui/table/index.js';
+	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import * as Select from '#lib/components/ui/select/index.js';
+	import { Label } from '#lib/components/ui/label/index.js';
+	import { Badge } from '#lib/components/ui/badge/index.js';
+	import { Input } from '#lib/components/ui/input/index.js';
 	import {
 		FlexRender,
 		renderComponent,
 		renderSnippet
-	} from '$lib/components/ui/data-table/index.js';
+	} from '#lib/components/ui/data-table/index.js';
 	import LayoutColumnsIcon from '@tabler/icons-svelte/icons/layout-columns';
 	import GripVerticalIcon from '@tabler/icons-svelte/icons/grip-vertical';
 	import ChevronDownIcon from '@tabler/icons-svelte/icons/chevron-down';

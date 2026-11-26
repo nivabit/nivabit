@@ -1,8 +1,8 @@
 
 import jwt from 'jsonwebtoken';
-import { prisma } from '$lib/server/prisma';
+import { prisma } from '#lib/server/prisma.ts';
 import type { RequestEvent } from '@sveltejs/kit';
-import { AUTH_COOKIE_NAME } from '$lib/utils/auth';
+import { AUTH_COOKIE_NAME } from '#lib/utils/auth.ts';
 import { error } from '@sveltejs/kit';
 
 const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET || 'supersecret';

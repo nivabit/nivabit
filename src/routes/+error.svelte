@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { reveal } from '$lib/actions/reveal';
-	import { revealWords } from '$lib/actions/revealWords';
-	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
-	import Header from '$lib/components/layout/Header.svelte';
+	import { reveal } from '#lib/actions/reveal.ts';
+	import { revealWords } from '#lib/actions/revealWords.ts';
+	import MainButton from '#lib/components/customUI/button/MainButton.svelte';
+	import Header from '#lib/components/layout/Header.svelte';
 	import { ArrowRight } from 'lucide-svelte';
 </script>
 

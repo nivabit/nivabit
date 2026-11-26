@@ -1,37 +1,34 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import { Lock, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-svelte';
-	import { get } from 'svelte/store';
-	import { enhance } from '$app/forms';
-	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
-	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
+	import MainButton from '#lib/components/customUI/button/MainButton.svelte';
+	import CustomButton from '#lib/components/customUI/button/customButton.svelte';
 	import { ArrowLeft } from '@lucide/svelte';
 	import { toast } from 'svelte-sonner';
+	import { resetPassword } from '#lib/remote/auth.remote.ts';
+	import { resetPasswordSchema } from '#lib/validation/validation.ts';
 
-	let password = $state('');
-	let confirmPassword = $state('');
 	let showPassword = $state(false);
 	let showConfirmPassword = $state(false);
-	let isLoading = $state(false);
+	let isLoading = $derived(Boolean(resetPassword.pending));
 	let isSuccess = $state(false);
 	let token = $state('');
 	let isValidToken = $state(true);
-	let formError: Record<string, string> | undefined = $state({});
 
 	onMount(() => {
-		const url = get(page).url;
-		const tokenParam = url.searchParams.get('token');
+		const tokenParam = page.url.searchParams.get('token');
 		if (tokenParam) {
 			token = tokenParam;
-			// isValidToken = tokenParam.length >= 10;
+			resetPassword.fields.token.set(tokenParam);
 		} else {
 			isValidToken = false;
 		}
 	});
 
-	// --- Password Validation ---
+	let passwordValue = $derived(resetPassword.fields._password.value() ?? '');
+	let confirmValue = $derived(resetPassword.fields._confirmPassword.value() ?? '');
+
 	const validatePassword = (pwd: string) => {
 		const minLength = pwd.length >= 8;
 		const hasUpperCase = /[A-Z]/.test(pwd);
@@ -49,12 +46,14 @@
 		};
 	};
 
-	const passwordValidation = $derived(validatePassword(password));
-	const passwordsMatch = $derived(password === confirmPassword && confirmPassword !== '');
+	const passwordValidation = $derived(validatePassword(passwordValue));
+	const passwordsMatch = $derived(passwordValue === confirmValue && confirmValue !== '');
+	const rootIssues = $derived(
+		(resetPassword.fields.allIssues() ?? []).filter((i) => !i.path?.length)
+	);
 </script>
 
 {#if !isValidToken}
-	<!-- Invalid token UI -->
 	<div class="flex min-h-screen items-center justify-center bg-brand-blue-900 px-4">
 		<div class="relative w-full max-w-md">
 			<div class="mb-8 text-center">
@@ -68,9 +67,7 @@
 			</div>
 
 			<div class="rounded-2xl bg-white p-8 text-center shadow-2xl">
-				<div
-					class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100"
-				>
+				<div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
 					<AlertCircle class="h-8 w-8 text-red-600" />
 				</div>
 
@@ -82,7 +79,7 @@
 				</p>
 
 				<a
-					href="/forgot-password"
+					href="/bits/admin/auth/forgotpassword"
 					class="font-synonym inline-block w-full rounded-lg bg-brand-orange-500 px-4 py-3 text-center font-medium text-white transition-colors hover:bg-brand-orange-500/90"
 				>
 					Request New Link
@@ -91,7 +88,7 @@
 
 			<div class="mt-6 text-center">
 				<a
-					href="/login"
+					href="/bits/admin/auth/login"
 					class="font-synonym inline-flex items-center gap-2 text-sm text-brand-blue-100 transition-colors hover:text-white"
 				>
 					Back to login
@@ -100,12 +97,9 @@
 		</div>
 	</div>
 {:else}
-	<!-- Valid token UI -->
 	<div class="flex min-h-screen items-center justify-center bg-brand-blue-900 px-4">
 		<div class="absolute inset-0 overflow-hidden">
-			<div
-				class="absolute -top-48 -right-48 h-96 w-96 rounded-full bg-brand-orange-500 opacity-5"
-			></div>
+			<div class="absolute -top-48 -right-48 h-96 w-96 rounded-full bg-brand-orange-500 opacity-5"></div>
 			<div class="absolute -bottom-32 -left-32 h-64 w-64 rounded-full bg-white opacity-5"></div>
 		</div>
 
@@ -126,32 +120,21 @@
 
 			<div class="rounded-2xl bg-white p-8 shadow-2xl">
 				{#if !isSuccess}
-					<!-- Reset form -->
 					<form
-						method="post"
-						action="?/resetPassword"
 						class="space-y-6"
-						use:enhance={() => {
-							isLoading = true;
-							formError = {};
-							return async ({ result }) => {
-								isLoading = false;
-								if (result.type === 'failure') {
-									formError = result.data?.errors as any;
-								}else if (result.type === 'error') {
-									formError = result.error || {errors: 'An unexpected error occurred. Please try again.'} as any;
-									toast.error(result.error || 'An unexpected error occurred. Please try again.');
-								} else if (result.type === 'success') {
-									isSuccess = true;
-									toast.success('Password updated successfully. Redirecting to login...');
-									setTimeout(() => {
-										window.location.href = '/bits/admin/auth/login';
-									}, 3000);
-								}
-							};
-						}}
+						{...resetPassword.preflight(resetPasswordSchema).enhance(async ({ submit }) => {
+							const ok = await submit();
+							if (!ok) return;
+							isSuccess = true;
+							toast.success('Password updated successfully. Redirecting to login...');
+							setTimeout(() => {
+								window.location.href = '/bits/admin/auth/login';
+							}, 3000);
+						})}
+						oninput={() => resetPassword.validate()}
 					>
-						<!-- New Password -->
+						<input {...resetPassword.fields.token.as('hidden', token)} />
+
 						<div>
 							<label
 								for="password"
@@ -165,10 +148,7 @@
 								</div>
 								<input
 									id="password"
-									name="password"
-									type={showPassword ? 'text' : 'password'}
-									bind:value={password}
-									required
+									{...resetPassword.fields._password.as(showPassword ? 'text' : 'password')}
 									class="font-synonym w-full rounded-lg border border-brand-grey-50 py-3 pr-12 pl-10 transition-colors placeholder:text-brand-grey-200 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 									placeholder="Enter new password"
 								/>
@@ -178,79 +158,39 @@
 									class="absolute inset-y-0 right-0 flex items-center pr-3"
 								>
 									{#if showPassword}
-										<EyeOff
-											class="h-5 w-5 text-brand-grey-200 transition-colors hover:text-brand-grey-400"
-										/>
+										<EyeOff class="h-5 w-5 text-brand-grey-200 transition-colors hover:text-brand-grey-400" />
 									{:else}
-										<Eye
-											class="h-5 w-5 text-brand-grey-200 transition-colors hover:text-brand-grey-400"
-										/>
+										<Eye class="h-5 w-5 text-brand-grey-200 transition-colors hover:text-brand-grey-400" />
 									{/if}
 								</button>
 							</div>
+							{#each resetPassword.fields._password.issues() as issue}
+								<p class="mt-1 text-sm text-red-600">{issue.message}</p>
+							{/each}
 						</div>
 
-						<input
-							id="token"
-							name="token"
-							type="text"
-							bind:value={token}
-							required
-							class="hidden"
-						/>
-
-						<!-- Password requirements -->
-						{#if password}
+						{#if passwordValue}
 							<div class="rounded-lg border border-brand-blue-100 bg-bg-blue p-4">
 								<h4 class="font-synonym mb-2 text-sm font-medium text-brand-grey-500">
 									Password Requirements:
 								</h4>
 								<div class="font-synonym space-y-1 text-xs">
-									<div
-										class={`flex items-center gap-2 ${passwordValidation.minLength ? 'text-green-600' : 'text-brand-grey-400'}`}
-									>
-										<div
-											class={`h-1.5 w-1.5 rounded-full ${passwordValidation.minLength ? 'bg-green-600' : 'bg-brand-grey-200'}`}
-										></div>
-										At least 8 characters
-									</div>
-									<div
-										class={`flex items-center gap-2 ${passwordValidation.hasUpperCase ? 'text-green-600' : 'text-brand-grey-400'}`}
-									>
-										<div
-											class={`h-1.5 w-1.5 rounded-full ${passwordValidation.hasUpperCase ? 'bg-green-600' : 'bg-brand-grey-200'}`}
-										></div>
-										One uppercase letter
-									</div>
-									<div
-										class={`flex items-center gap-2 ${passwordValidation.hasLowerCase ? 'text-green-600' : 'text-brand-grey-400'}`}
-									>
-										<div
-											class={`h-1.5 w-1.5 rounded-full ${passwordValidation.hasLowerCase ? 'bg-green-600' : 'bg-brand-grey-200'}`}
-										></div>
-										One lowercase letter
-									</div>
-									<div
-										class={`flex items-center gap-2 ${passwordValidation.hasNumbers ? 'text-green-600' : 'text-brand-grey-400'}`}
-									>
-										<div
-											class={`h-1.5 w-1.5 rounded-full ${passwordValidation.hasNumbers ? 'bg-green-600' : 'bg-brand-grey-200'}`}
-										></div>
-										One number
-									</div>
-									<div
-										class={`flex items-center gap-2 ${passwordValidation.hasSpecialChar ? 'text-green-600' : 'text-brand-grey-400'}`}
-									>
-										<div
-											class={`h-1.5 w-1.5 rounded-full ${passwordValidation.hasSpecialChar ? 'bg-green-600' : 'bg-brand-grey-200'}`}
-										></div>
-										One special character
-									</div>
+									{#each [
+										{ label: 'At least 8 characters', ok: passwordValidation.minLength },
+										{ label: 'One uppercase letter', ok: passwordValidation.hasUpperCase },
+										{ label: 'One lowercase letter', ok: passwordValidation.hasLowerCase },
+										{ label: 'One number', ok: passwordValidation.hasNumbers },
+										{ label: 'One special character', ok: passwordValidation.hasSpecialChar }
+									] as req}
+										<div class={`flex items-center gap-2 ${req.ok ? 'text-green-600' : 'text-brand-grey-400'}`}>
+											<div class={`h-1.5 w-1.5 rounded-full ${req.ok ? 'bg-green-600' : 'bg-brand-grey-200'}`}></div>
+											{req.label}
+										</div>
+									{/each}
 								</div>
 							</div>
 						{/if}
 
-						<!-- Confirm Password -->
 						<div>
 							<label
 								for="confirmPassword"
@@ -264,10 +204,9 @@
 								</div>
 								<input
 									id="confirmPassword"
-									name="confirmPassword"
-									type={showConfirmPassword ? 'text' : 'password'}
-									bind:value={confirmPassword}
-									required
+									{...resetPassword.fields._confirmPassword.as(
+										showConfirmPassword ? 'text' : 'password'
+									)}
 									class="font-synonym w-full rounded-lg border border-brand-grey-50 py-3 pr-12 pl-10 transition-colors placeholder:text-brand-grey-200 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 									placeholder="Confirm new password"
 								/>
@@ -277,48 +216,32 @@
 									class="absolute inset-y-0 right-0 flex items-center pr-3"
 								>
 									{#if showConfirmPassword}
-										<EyeOff
-											class="h-5 w-5 text-brand-grey-200 transition-colors hover:text-brand-grey-400"
-										/>
+										<EyeOff class="h-5 w-5 text-brand-grey-200 transition-colors hover:text-brand-grey-400" />
 									{:else}
-										<Eye
-											class="h-5 w-5 text-brand-grey-200 transition-colors hover:text-brand-grey-400"
-										/>
+										<Eye class="h-5 w-5 text-brand-grey-200 transition-colors hover:text-brand-grey-400" />
 									{/if}
 								</button>
 							</div>
-							{#if confirmPassword && !passwordsMatch}
-								<p class="font-synonym mt-1 text-xs text-red-600">Passwords do not match</p>
-							{:else if confirmPassword && passwordsMatch}
+							{#each resetPassword.fields._confirmPassword.issues() as issue}
+								<p class="mt-1 text-sm text-red-600">{issue.message}</p>
+							{/each}
+							{#if confirmValue && passwordsMatch}
 								<p class="font-synonym mt-1 text-xs text-green-600">Passwords match</p>
 							{/if}
 						</div>
 
-						{#if formError?.token}
+						{#each resetPassword.fields.token.issues() as issue}
 							<div class="rounded-lg border border-red-200 bg-red-50 p-3">
-								<p class="text-sm text-red-600">{formError.token}</p>
+								<p class="text-sm text-red-600">{issue.message}</p>
 							</div>
-						{/if}
+						{/each}
 
-						{#if formError?.password}
+						{#each rootIssues as issue}
 							<div class="rounded-lg border border-red-200 bg-red-50 p-3">
-								<p class="text-sm text-red-600">{formError.password}</p>
+								<p class="text-sm text-red-600">{issue.message}</p>
 							</div>
-						{/if}
+						{/each}
 
-						{#if formError?.confirmPassword}
-							<div class="rounded-lg border border-red-200 bg-red-50 p-3">
-								<p class="text-sm text-red-600">{formError.confirmPassword}</p>
-							</div>
-						{/if}
-
-						{#if formError?.errors}
-							<div class="rounded-lg border border-red-200 bg-red-50 p-3">
-								<p class="text-sm text-red-600">{formError.errors}</p>
-							</div>
-						{/if}
-
-						<!-- Submit -->
 						<MainButton
 							type="submit"
 							disabled={isLoading || !passwordValidation.isValid || !passwordsMatch}
@@ -337,11 +260,8 @@
 						</MainButton>
 					</form>
 				{:else}
-					<!-- Success -->
 					<div class="space-y-6 text-center">
-						<div
-							class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100"
-						>
+						<div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
 							<CheckCircle class="h-8 w-8 text-green-600" />
 						</div>
 						<div class="space-y-2">
@@ -370,7 +290,6 @@
 				{/if}
 			</div>
 
-			<!-- Back to login -->
 			{#if !isSuccess}
 				<div class="mt-6 text-center">
 					<CustomButton

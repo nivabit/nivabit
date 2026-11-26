@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { reveal } from '$lib/actions/reveal';
-	import { revealWords } from '$lib/actions/revealWords';
-	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
-	import ContactUs from '$lib/components/layout/contactUs.svelte';
+	import { reveal } from '#lib/actions/reveal.ts';
+	import { revealWords } from '#lib/actions/revealWords.ts';
+	import MainButton from '#lib/components/customUI/button/MainButton.svelte';
+	import ContactUs from '#lib/components/layout/contactUs.svelte';
 	import { onMount } from 'svelte';
-	import CircularText from '$lib/components/layout/circularText.svelte';
+	import CircularText from '#lib/components/layout/circularText.svelte';
 
 	// Reuse existing project data for portfolio
 	const projects = [

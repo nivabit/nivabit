@@ -1,88 +1,18 @@
 <script lang="ts">
-	import { reveal } from '$lib/actions/reveal';
-	import { revealWords } from '$lib/actions/revealWords';
-	import Input from '../ui/input/input.svelte';
-	import Textarea from '../ui/textarea/textarea.svelte';
-	import { z } from 'zod';
 	import { toast } from 'svelte-sonner';
-	import { sendContactForm } from '$lib/mail_sender';
-	import MainButton from '../customUI/button/MainButton.svelte';
+	import { ArrowRight, Check } from 'lucide-svelte';
+	import { submitContact } from '#lib/remote/contact.remote.ts';
+	import { contactSchema } from '#lib/validation/validation.ts';
 
 	let selectedServices: string[] = $state([]);
 	const services = [
-		'Web Design',
-		'Analytics Dashboards',
-		'Mobile Apps',
-		'Others',
-		'Fintech',
-		'AI',
-		'ERPs',
-		'Custom Software',
-		'Web Development',
-		'UI/UX Design'
+		'Idea Validation Sprint',
+		'Customer Discovery Interviews',
+		'Market Sizing & Feasibility',
+		'Competitor Gap Teardown',
+		'Willingness-to-Pay Testing',
+		'Enterprise Research Dossier'
 	];
-
-	const ContactSchema = z.object({
-		name: z.string().min(2, {
-			message: 'First name must be at least 2 characters.'
-		}),
-		email: z.string({ message: 'Company email is required' }).email(),
-		message: z.string().min(5, 'Message must be at least 5 characters.')
-	});
-
-	let name = $state('');
-	let email = $state('');
-	let message = $state('');
-
-	let errors: Record<string, string> = $state({});
-	let isSubmitting = $state(false);
-
-	async function handleSubmit(e: Event) {
-		e.preventDefault();
-		errors = {}; // reset
-
-		const result = ContactSchema.safeParse({
-			name,
-			email,
-			message
-		});
-
-		if (!result.success) {
-			// collect zod errors
-			for (const err of result.error.issues) {
-				errors[err.path[0] as string] = err.message;
-			}
-			return;
-		}
-
-		isSubmitting = true;
-
-		try {
-			// simulate sending form (replace with your API call e.g. sendContactForm)
-			const res = await sendContactForm({
-				services: selectedServices.join(', '),
-				...result.data,
-				subject: 'Lead from contact'
-			});
-
-			if (res.ok) {
-				toast.success('Message was sent successfully', {
-					description: 'Thanks for contacting us, our team will reach out soon.'
-				});
-				// reset form
-				name = '';
-				email = '';
-				message = '';
-				selectedServices = [];
-			} else {
-				toast.error('Something went wrong. Please try again.');
-			}
-		} catch (err) {
-			toast.error('Something went wrong. Please try again.');
-		} finally {
-			isSubmitting = false;
-		}
-	}
 
 	function toggleService(service: string) {
 		if (selectedServices.includes(service)) {
@@ -93,113 +23,149 @@
 	}
 </script>
 
-<section id="contact" class="bg-brand-blue-900 px-4 py-16 md:px-16 md:py-24">
-	<div class="mx-auto max-w-7xl">
-		<div class="flex flex-col items-end gap-12 lg:flex-row lg:gap-24">
-			<div use:reveal class="reveal w-full flex-shrink-0 self-start lg:w-96">
-				<p class="text-lg text-white">Contact us</p>
-			</div>
-
-			<div class="flex-1 space-y-16">
-				<h2
-					use:revealWords
-					class="reveal-words font-cabinet text-2xl font-medium text-white md:text-3xl"
+<section id="contact" class="bg-surface-light px-4 py-20 md:px-8 md:py-28">
+	<div class="mx-auto max-w-4xl">
+		<div class="rounded-3xl border border-black/10 bg-surface-dark p-6 text-white shadow-xl md:p-12">
+			<div class="mb-10 max-w-xl space-y-3">
+				<span
+					class="inline-block rounded-full border border-lime-accent/30 bg-lime-accent/10 px-3.5 py-1 text-[11px] font-bold tracking-wider text-lime-accent uppercase"
 				>
-					Tell us about your project
+					Start a Sprint
+				</span>
+				<h2
+					class="font-cabinet text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-white sm:text-4xl"
+				>
+					Scope your validation sprint.
 				</h2>
-
-				<form class="space-y-10" onsubmit={handleSubmit}>
-					<!-- Service Selection -->
-					<div use:reveal class="reveal">
-						<label for="" class="mb-3 block text-lg text-white">Choose service</label>
-						<div class="flex flex-wrap gap-5">
-							{#each services as service}
-								<button
-									type="button"
-									class={`flip-button relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-full border px-5 py-3 text-sm transition-colors ${
-										selectedServices.includes(service)
-											? 'border-bg-blue bg-white text-brand-blue-500'
-											: 'border-brand-blue-50 text-brand-blue-100'
-									}`}
-									onclick={() => toggleService(service)}
-								>
-									<span class={`${selectedServices.includes(service) ? '' : 'slide-text'}`}>
-										<span
-											class={`${selectedServices.includes(service) ? '' : 'text-top text-brand-blue-100'}`}
-											>{service}</span
-										>
-										<span class="text-bottom text-white">{service}</span>
-									</span>
-								</button>
-							{/each}
-						</div>
-					</div>
-
-					<!-- Name and Email -->
-					<div use:reveal class="reveal">
-						<label for="name" class="mb-3 block text-lg text-white">Name</label>
-						<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-							<Input
-								type="text"
-								placeholder="John Doe"
-								bind:value={name}
-								name="name"
-								id="name"
-								class="rounded-full border border-bg-blue bg-transparent px-5 py-7 text-brand-grey-200  placeholder:text-brand-grey-200 focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
-							/>
-							{#if errors.name}<p class="block text-sm text-red-500 md:hidden">
-									{errors.name}
-								</p>{/if}
-							<div>
-								<label for="name" class="mb-3 block text-lg text-white md:hidden">Email</label>
-								<Input
-									type="email"
-									placeholder="Email"
-									bind:value={email}
-									name="email"
-									id="email"
-									class="rounded-full border border-bg-blue bg-transparent px-5 py-7 text-brand-grey-200  placeholder:text-brand-grey-200 focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
-								/>
-							</div>
-							{#if errors.name}<p class="hidden text-sm text-red-500 md:block">
-									{errors.name}
-								</p>{/if}
-							{#if errors.email}<p class="text-sm text-red-500">{errors.email}</p>{/if}
-						</div>
-					</div>
-
-					<!-- Message -->
-					<div use:reveal class="reveal">
-						<label for="message" class="mb-3 block text-lg text-white">Message</label>
-						<Textarea
-							rows={6}
-							placeholder="Your Message"
-							bind:value={message}
-							name="message"
-							id="message"
-							class="h-52 w-full resize-none rounded-2xl border border-bg-blue bg-transparent px-5 py-5  text-brand-grey-200 placeholder:text-brand-grey-200 focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
-						></Textarea>
-						{#if errors.message}<p class="mt-5 text-sm text-red-500">{errors.message}</p>{/if}
-					</div>
-
-					<!-- Submit Button -->
-					<div use:reveal class="reveal">
-						<MainButton
-							disabled={isSubmitting}
-							type="submit"
-							class="flex cursor-pointer items-center gap-2 rounded-full bg-brand-orange-500 text-sm text-white  transition-colors hover:bg-brand-orange-500/90"
-						>
-							{isSubmitting ? 'Submitting...' : 'Submit'}
-							<svg width="16" height="16" viewBox="0 0 16 17" fill="none">
-								<path
-									d="M2.66602 8.03814V9.37147H10.666L6.99935 13.0381L7.94602 13.9848L13.226 8.7048L7.94602 3.4248L6.99935 4.37147L10.666 8.03814H2.66602Z"
-									fill="white"
-								/>
-							</svg>
-						</MainButton>
-					</div>
-				</form>
+				<p class="text-sm leading-relaxed text-white/65">
+					Select the research modules you need and tell us about your hypothesis. We’ll reply within
+					24 hours with a tailored 14-day scope.
+				</p>
 			</div>
+
+			<form
+				class="space-y-7"
+				{...submitContact.preflight(contactSchema).enhance(async ({ form, submit }) => {
+					const ok = await submit();
+					if (!ok) {
+						const rootIssue = submitContact.fields.allIssues()?.find((i) => !i.path?.length);
+						if (rootIssue) toast.error(rootIssue.message);
+						return;
+					}
+					toast.success('Sprint inquiry sent', {
+						description: 'Thanks for reaching out — our research team will reply within 24 hours.'
+					});
+					form.reset();
+					selectedServices = [];
+				})}
+				oninput={() => submitContact.validate()}
+			>
+				<input {...submitContact.fields.services.as('hidden', selectedServices.join(', '))} />
+				<input {...submitContact.fields.subject.as('hidden', 'Lead from contact')} />
+
+				<!-- Service Selection Pills -->
+				<div>
+					<p class="mb-3 text-xs font-bold tracking-wider text-white/50 uppercase">
+						Select Validation Modules
+					</p>
+					<div class="flex flex-wrap gap-2.5">
+						{#each services as service}
+							{@const active = selectedServices.includes(service)}
+							<button
+								type="button"
+								onclick={() => toggleService(service)}
+								class={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold transition-all ${
+									active
+										? 'border-lime-accent bg-lime-accent text-ink-primary'
+										: 'border-white/15 bg-white/[0.04] text-white/80 hover:border-white/35 hover:bg-white/[0.08]'
+								}`}
+							>
+								{#if active}
+									<Check size={13} strokeWidth={3} />
+								{/if}
+								{service}
+							</button>
+						{/each}
+					</div>
+				</div>
+
+				<!-- Name & Email -->
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+					<div>
+						<label
+							for="contact-name"
+							class="mb-2 block text-xs font-bold tracking-wider text-white/60 uppercase"
+						>
+							Your Name
+						</label>
+						<input
+							id="contact-name"
+							{...submitContact.fields.name.as('text')}
+							placeholder="Alex Morgan"
+							class="w-full rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/35 focus:border-lime-accent focus:outline-none"
+						/>
+						{#each submitContact.fields.name.issues() as issue}
+							<p class="mt-1.5 text-xs text-red-400">{issue.message}</p>
+						{/each}
+					</div>
+
+					<div>
+						<label
+							for="contact-email"
+							class="mb-2 block text-xs font-bold tracking-wider text-white/60 uppercase"
+						>
+							Work Email
+						</label>
+						<input
+							id="contact-email"
+							{...submitContact.fields.email.as('email')}
+							placeholder="alex@company.com"
+							class="w-full rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/35 focus:border-lime-accent focus:outline-none"
+						/>
+						{#each submitContact.fields.email.issues() as issue}
+							<p class="mt-1.5 text-xs text-red-400">{issue.message}</p>
+						{/each}
+					</div>
+				</div>
+
+				<!-- Message -->
+				<div>
+					<label
+						for="contact-message"
+						class="mb-2 block text-xs font-bold tracking-wider text-white/60 uppercase"
+					>
+						Product Hypothesis &amp; Goals
+					</label>
+					<textarea
+						id="contact-message"
+						rows={4}
+						{...submitContact.fields.message.as('text')}
+						placeholder="What are you building, who is the target buyer, and what decision do you need validated?"
+						class="w-full resize-none rounded-2xl border border-white/15 bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/35 focus:border-lime-accent focus:outline-none"
+					></textarea>
+					{#each submitContact.fields.message.issues() as issue}
+						<p class="mt-1.5 text-xs text-red-400">{issue.message}</p>
+					{/each}
+				</div>
+
+				<!-- Submit -->
+				<div class="flex flex-wrap items-center justify-between gap-4 pt-2">
+					<button
+						disabled={Boolean(submitContact.pending)}
+						type="submit"
+						class="inline-flex cursor-pointer items-center gap-2 rounded-full bg-lime-accent px-7 py-3.5 text-sm font-extrabold text-ink-primary transition-all hover:-translate-y-0.5 hover:bg-lime-accent-hover disabled:opacity-60"
+					>
+						{submitContact.pending ? 'Sending...' : 'Request Validation Scope'}
+						<ArrowRight size={15} strokeWidth={2.5} />
+					</button>
+					<p class="text-xs text-white/45">
+						Or email directly at <a
+							href="mailto:contact@nivabit.com"
+							class="text-lime-accent hover:underline">contact@nivabit.com</a
+						>
+					</p>
+				</div>
+			</form>
 		</div>
 	</div>
 </section>

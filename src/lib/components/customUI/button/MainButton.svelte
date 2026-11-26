@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { cn } from '$lib/utils';
+	import Button from '#lib/components/ui/button/button.svelte';
+	import { cn } from '#lib/utils.ts';
 
 	let {
 		class: className,

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { contactType } from '$lib/mail_sender';
+	import type { contactType } from '#lib/types/contact.type.ts';
+	import { getContacts } from '#lib/remote/contact.remote.ts';
 	import {
 		Search,
 		Filter,
@@ -23,7 +24,7 @@
 
 	type StatusFilter = 'All' | 'Unread' | 'Read' | 'Replied';
 
-	let { data } = $props();
+	let rawContacts = $derived(await getContacts());
 	let searchTerm = $state('');
 	let statusFilter: StatusFilter = $state('All');
 	let expanded: Record<string, boolean> = $state({});
@@ -31,7 +32,7 @@
 	let selectedMessage: ContactMessage | null = $state(null);
 
 	let messages: ContactMessage[] = $derived(
-		(data?.contact ?? []).map((m: any) => ({
+		(rawContacts ?? []).map((m: any) => ({
 			id: m.id,
 			name: m.name,
 			services: m.services,

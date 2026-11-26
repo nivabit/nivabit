@@ -1,0 +1,57 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: nivabit-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-nivabit}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nivabit_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-nivabit}
+    ports:
+      - "${DB_PORT:-5434}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-nivabit} -d ${POSTGRES_DB:-nivabit}"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    networks:
+      - nivabit-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nivabit-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      ORIGIN: http://localhost:${APP_PORT:-3001}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-nivabit}:${POSTGRES_PASSWORD:-nivabit_secret}@db:5432/${POSTGRES_DB:-nivabit}?schema=public
+      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET:-nivabit_super_secret_access_token_123456789_abcdef}
+      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-nivabit_super_secret_refresh_token_123456789_abcdef}
+      JWT_SECRET: ${JWT_SECRET:-nivabit_super_secret_access_token_123456789_abcdef}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      CONTACT_EMAIL: ${CONTACT_EMAIL:-contact@nivabit.com}
+    ports:
+      - "127.0.0.1:${APP_PORT:-3001}:3000"
+    volumes:
+      - uploads_data:/app/uploads
+    networks:
+      - nivabit-network
+
+volumes:
+  postgres_data:
+  uploads_data:
+
+networks:
+  nivabit-network:
+    driver: bridge

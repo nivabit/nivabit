@@ -1,184 +1,151 @@
 <script lang="ts">
-	import { reveal } from '$lib/actions/reveal';
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import { get } from 'svelte/store';
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
-	import Button from '../ui/button/button.svelte';
-	import IconButton from '$lib/components/customUI/button/iconButton.svelte';
 	import Twitter from '../icon/twitter.svelte';
 	import Facebook from '../icon/facebook.svelte';
 	import Linkedin from '../icon/linkedin.svelte';
-	import Message from '../icon/message.svelte';
-	import Call from '../icon/call.svelte';
 	import Instagram from '../icon/instagram.svelte';
 	import Tiktok from '../icon/tiktok.svelte';
-	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
-
-	let iconFills: Record<string, string> = $state({
-		twitter: '#ffffff',
-		facebook: '#ffffff',
-		linkedin: '#ffffff',
-		message: '#ffffff',
-		call: '#ffffff'
-	});
-
-	const contactDetails = [
-		{
-			name: 'message',
-			title: 'contact@nivabit.com',
-			icon: Message,
-			url: 'mailto:contact@nivabit.com'
-		},
-		{
-			name: 'call',
-			title: '+2349066809821',
-			icon: Call,
-			url: 'tel:+2349066809821'
-		}
-	];
 
 	const socialLinks = [
+		{ name: 'X / Twitter', icon: Twitter, url: 'https://x.com/@groupnivabit' },
+		{ name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/company/nivabit/' },
+		{ name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/groupnivabit/' },
+		{ name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/nivabit' },
+		{ name: 'TikTok', icon: Tiktok, url: 'https://www.tiktok.com/@nivabit' }
+	];
+
+	const navColumns = [
 		{
-			name: 'twitter',
-			icon: Twitter,
-			url: 'https://x.com/@groupnivabit'
+			title: 'System',
+			links: [
+				{ label: 'Validation OS', id: 'system', href: '/#system' },
+				{ label: 'Programs', id: 'services', href: '/#services' },
+				{ label: 'Methodology', id: 'process', href: '/#process' },
+				{ label: 'Case Studies', id: 'results', href: '/#results' }
+			]
 		},
 		{
-			name: 'facebook',
-			icon: Facebook,
-			url: 'https://www.facebook.com/search/top?q=nivabit'
-		},
-		{
-			name: 'linkedin',
-			icon: Linkedin,
-			url: 'https://www.linkedin.com/company/104662763/admin/dashboard/'
-		},
-		{
-			name: 'instagram',
-			icon: Instagram,
-			url: 'https://www.instagram.com/groupnivabit/'
-		},
-		{
-			name: 'Tiktok',
-			icon: Tiktok,
-			url: 'https://www.tiktok.com/@nivabit'
+			title: 'Company',
+			links: [
+				{ label: 'Our Story', id: 'story', href: '/#story' },
+				{ label: 'The Memo', id: 'newsletter', href: '/#newsletter' },
+				{ label: 'Research', id: null, href: '/articles' },
+				{ label: 'Contact', id: 'contact', href: '/#contact' }
+			]
 		}
 	];
-	const quickLinks = ['Home', 'Services', 'About us', 'Contact us'];
 
-	// Smooth scroll to section
-	const scrollToSection = (id: string) => {
-		const el = document.getElementById(id);
-		if (el) {
-			el.scrollIntoView({ behavior: 'smooth' });
-		}
-	};
-
-	const handleNavClick = async (sectionId: string) => {
-		const currentPath = get(page).url.pathname;
-
+	const handleNavClick = async (e: MouseEvent, id: string | null) => {
+		if (!id) return;
+		const currentPath = page.url.pathname;
 		if (currentPath === '/') {
-			scrollToSection(sectionId);
+			e.preventDefault();
+			const el = document.getElementById(id);
+			if (el) el.scrollIntoView({ behavior: 'smooth' });
 		} else {
-			// Navigate to home with query param
-			goto(`/#${sectionId}`);
+			e.preventDefault();
+			await goto(`/#${id}`);
 		}
 	};
-
-	// Run scroll if redirected to home with ?section=xyz
-	onMount(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const sectionId = urlParams.get('section');
-
-		if (sectionId) {
-			// Wait a little for layout to be ready
-			setTimeout(() => {
-				scrollToSection(sectionId);
-			}, 200);
-		}
-	});
 </script>
 
-<footer class="border-t border-brand-blue-400 bg-brand-blue-900">
-	<!-- Main Footer -->
-	<div class="px-4 py-16 md:px-16 md:py-24">
-		<div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-4">
-			<!-- Logo & Description -->
-			<div use:reveal class="reveal space-y-8 lg:col-span-2">
-				<img src="/images/nivabit.png" alt="Nivabit Logo" class="h-7 w-auto" />
-				<p class="max-w-sm text-sm leading-relaxed text-brand-grey-50">
-					Ready to take the next step? Have questions about our services? We're here to help. Let's
-					start building something incredible together.
+<footer class="bg-surface-dark text-white">
+	<div class="mx-auto max-w-6xl px-4 pt-16 pb-10 md:px-8">
+		<div class="grid grid-cols-1 gap-12 border-b border-white/10 pb-14 md:grid-cols-12">
+			<!-- Brand Column -->
+			<div class="space-y-5 md:col-span-5">
+				<a href="/" class="inline-flex items-center gap-2.5">
+					<span
+						class="flex h-7 w-7 items-center justify-center rounded-full bg-lime-accent text-xs font-black text-ink-primary"
+					>
+						N
+					</span>
+					<span class="font-cabinet text-xl font-extrabold tracking-tight text-white">
+						Nivabit
+					</span>
+				</a>
+				<p class="max-w-sm text-sm leading-relaxed text-white/60">
+					The product idea validation and market research studio. We install evidence-backed
+					validation systems so founders prove demand before writing code.
 				</p>
-
-				<!-- Social Links -->
-				<div class="flex gap-5">
+				<div class="flex items-center gap-2.5 pt-1">
 					{#each socialLinks as social}
-						<IconButton
+						{@const Icon = social.icon}
+						<a
 							href={social.url}
 							target="_blank"
-							class="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange-500"
-							onmouseenter={() => (iconFills[social.name] = '#00042B')}
-							onmouseleave={() => (iconFills[social.name] = '#ffffff')}
+							rel="noopener noreferrer"
+							aria-label={social.name}
+							class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all hover:border-lime-accent hover:bg-lime-accent hover:text-ink-primary"
 						>
-							{@const Component = social.icon}
-							<Component fill={iconFills[social.name]} />
-						</IconButton>
+							<span class="scale-75">
+								<Icon fill="currentColor" />
+							</span>
+						</a>
 					{/each}
 				</div>
 			</div>
 
-			<!-- Quick Links -->
-			<div use:reveal class="reveal space-y-4">
-				<h4 class="text-lg font-medium text-white">Quick Links</h4>
-				<nav class="space-y-3">
-					{#each quickLinks as link}
-						<CustomButton className="" href="/">
-							{link}
-						</CustomButton>
-					{/each}
-				</nav>
-			</div>
+			<!-- Navigation Columns -->
+			{#each navColumns as col}
+				<div class="space-y-4 md:col-span-2">
+					<h4 class="font-cabinet text-xs font-bold tracking-wider text-white/40 uppercase">
+						{col.title}
+					</h4>
+					<ul class="space-y-2.5">
+						{#each col.links as link}
+							<li>
+								<a
+									href={link.href}
+									onclick={(e) => handleNavClick(e, link.id)}
+									class="text-sm text-white/70 transition-colors hover:text-lime-accent"
+								>
+									{link.label}
+								</a>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/each}
 
-			<!-- Contact Info -->
-			<div use:reveal class="reveal space-y-4">
-				<h4 class="text-lg font-medium text-white">Contact us</h4>
-				<p class="text-sm leading-relaxed text-brand-grey-50">
-					Ready to take the next step? Have questions about our services? We're here to help. Let's
-					start building something incredible together.
-				</p>
-
-				<div class="space-y-3">
-					<!-- Email -->
-					{#each contactDetails as contact}
-						<div class="flex items-center gap-3">
-							<IconButton
-								href={contact.url}
-								target="_blank"
-								class="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange-500"
-								onmouseenter={() => (iconFills[contact.name] = '#00042B')}
-								onmouseleave={() => (iconFills[contact.name] = '#ffffff')}
-							>
-								{@const Component = contact.icon}
-								<Component fill={iconFills[contact.name]} />
-							</IconButton>
-							<span class="text-sm text-brand-grey-50">{contact.title}</span>
-						</div>
-					{/each}
+			<!-- Direct Contact -->
+			<div class="space-y-4 md:col-span-3">
+				<h4 class="font-cabinet text-xs font-bold tracking-wider text-white/40 uppercase">
+					Direct Contact
+				</h4>
+				<div class="space-y-2.5 text-sm text-white/70">
+					<a
+						href="mailto:contact@nivabit.com"
+						class="block transition-colors hover:text-lime-accent"
+					>
+						contact@nivabit.com
+					</a>
+					<a href="tel:+2349066809821" class="block transition-colors hover:text-lime-accent">
+						+234 906 680 9821
+					</a>
+					<div class="pt-2">
+						<a
+							href="https://calendly.com/groupnivabit/30min"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center gap-1.5 rounded-full bg-lime-accent px-4 py-2 text-xs font-bold text-ink-primary transition-colors hover:bg-lime-accent-hover"
+						>
+							Book a 30-Min Call
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Footer Bottom -->
-	<div use:reveal class="reveal border-t border-brand-blue-400 px-4 py-8 md:px-16">
-		<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
-			<p class="text-sm text-white">© Nivabit {new Date().getFullYear()}. All rights reserved</p>
-
-			<div class="flex gap-8">
-				<CustomButton className="" href="/privacy">Privacy Policy</CustomButton>
-				<CustomButton className="" href="/terms">Terms of Service</CustomButton>
+		<!-- Bottom Legal Bar -->
+		<div
+			class="flex flex-col items-center justify-between gap-4 pt-8 text-xs text-white/40 sm:flex-row"
+		>
+			<p>© {new Date().getFullYear()} Nivabit. All rights reserved.</p>
+			<div class="flex items-center gap-6">
+				<a href="/privacy" class="transition-colors hover:text-white">Privacy Policy</a>
+				<a href="/terms" class="transition-colors hover:text-white">Terms of Service</a>
 			</div>
 		</div>
 	</div>

@@ -1,31 +1,30 @@
-// src/lib/FormHandler.ts
-import { ZodSchema } from 'zod';
+import * as v from 'valibot';
 
-export class FormHandler<T> {
-	schema: ZodSchema<T>;
+export class FormHandler<TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>> {
+	schema: TSchema;
 	values: Record<string, any>;
 	errors: Record<string, string> = $state({});
 	touched: Record<string, boolean> = $state({});
 	loading = $state(false);
 
-	constructor(schema: ZodSchema<T>, initial: Partial<T> = {}) {
+	constructor(schema: TSchema, initial: Record<string, any> = {}) {
 		this.schema = schema;
 		this.values = { ...initial };
 	}
 
 	setValue(field: string, value: any) {
 		this.values[field] = value;
-		this.touched[field] = true; // user interacted
+		this.touched[field] = true;
 		this.validateField(field);
 	}
 
 	validateField(field: string) {
-		const result = this.schema.safeParse(this.values);
+		const result = v.safeParse(this.schema, this.values);
 		if (!result.success) {
-			// check if field has an error
-			const err = result.error.errors.find((e) => e.path.join('.') === field);
+			const flat = v.flatten(result.issues).nested ?? {};
+			const err = flat[field]?.[0];
 			if (err) {
-				this.errors[field] = err.message;
+				this.errors[field] = err;
 			} else {
 				delete this.errors[field];
 			}
@@ -35,13 +34,13 @@ export class FormHandler<T> {
 	}
 
 	validate(): boolean {
-		const result = this.schema.safeParse(this.values);
+		const result = v.safeParse(this.schema, this.values);
 		if (!result.success) {
+			const flat = v.flatten(result.issues).nested ?? {};
 			this.errors = {};
-			result.error.errors.forEach((err) => {
-				const field = err.path.join('.');
-				this.errors[field] = err.message;
-			});
+			for (const [field, messages] of Object.entries(flat)) {
+				if (messages?.[0]) this.errors[field] = messages[0];
+			}
 			return false;
 		}
 		this.errors = {};
@@ -53,7 +52,7 @@ export class FormHandler<T> {
 			return { success: false, errors: this.errors };
 		}
 		this.loading = true;
-		this.errors = {}; // clear old errors
+		this.errors = {};
 
 		try {
 			const data = await requestFn(this.values);

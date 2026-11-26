@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
-	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
-	import EmailEditor from '$lib/components/layout/EmailEditor.svelte';
-	import * as Dialog from "$lib/components/ui/dialog/index.js";
+	import CustomButton from '#lib/components/customUI/button/customButton.svelte';
+	import MainButton from '#lib/components/customUI/button/MainButton.svelte';
+	import EmailEditor from '#lib/components/layout/EmailEditor.svelte';
+	import * as Dialog from "#lib/components/ui/dialog/index.js";
 	import {
 	  Search,
 	  Filter,
@@ -15,23 +14,23 @@
 	  Loader
 	} from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { invalidateAll } from '$app/navigation';
+	import Button from '#lib/components/ui/button/button.svelte';
+	import { deleteSubscriber, getSubscribers, sendNewsletter } from '#lib/remote/newsletter.remote.ts';
+	import { sendNewsletterSchema } from '#lib/validation/validation.ts';
   
 	// state (runes)
-	let { data } = $props();
-	let subscribers = $state(data?.subscribers || []);
+	let subscribers = $derived(await getSubscribers());
 
 	let confirmOpen = $state(false);
 	let pendingDeleteId: string | null = $state(null);
 	let query = $state('');
   
 	let selected = $state<Record<string, boolean>>({});
-	let subject = $state('');
 	let message = $state('');
-	let sending = $state(false);
 	let deleting = $state(false);
-	let formError: Record<string, any> | undefined = $state({});
+	let rootIssues = $derived(
+		(sendNewsletter.fields.allIssues() ?? []).filter((i) => !i.path?.length)
+	);
 
   
 	// derived values
@@ -159,47 +158,35 @@
 										<Dialog.Close>
 											<CustomButton variant="outline" className="text-black">Cancel</CustomButton>
 										</Dialog.Close>
-										<form method="post"
-											action="?/deleteSubscriber" 
-											use:enhance={() => {
+										<MainButton
+											disabled={deleting}
+											variant="destructive"
+											type="button"
+											class="px-3 py-5 bg-red-600"
+											onclick={async () => {
+												if (!pendingDeleteId) return;
 												deleting = true;
-												formError = {};
-												return async ({ result }: { result: any }) => {
+												try {
+													await deleteSubscriber({ id: pendingDeleteId });
+													toast.success('Subscriber removed successfully');
+													confirmOpen = false;
+													pendingDeleteId = null;
+												} catch (err: any) {
+													toast.error('Failed to remove subscriber', {
+														description: err?.message || 'Unable to delete subscriber'
+													});
+												} finally {
 													deleting = false;
-													if (result.type === 'failure' && result.data) {
-														toast.success('Failure to remove', {
-															description: result.data.errors?.email || "Unable to delete subscriber"
-														});
-													} else if (result.type === 'error') {
-														toast.success('Failure to remove', {
-															description: result.error?.email || "Unable to delete subscriber"
-														});
-													} else if (result.type === 'success') {
-														toast.success('Subscriber removed successfully', {
-															description: 'Subscriber removed successfully'
-														});
-														confirmOpen = false;
-														pendingDeleteId = '';
-														invalidateAll();
-													}
-												};
+												}
 											}}
 										>
-											<input type="hidden" name="id" value={pendingDeleteId} />
-											<MainButton
-												disabled={deleting}
-												variant="destructive"
-												type="submit"
-												class="px-3 py-5 bg-red-600"
-											>
-												{#if deleting}
-													<Loader size={16} />
-													<span>removing</span>
-												{:else}
-													Yes, remove
-												{/if}
-											</MainButton>
-										</form>
+											{#if deleting}
+												<Loader size={16} />
+												<span>removing</span>
+											{:else}
+												Yes, remove
+											{/if}
+										</MainButton>
 									</Dialog.Footer>
 								</Dialog.Content>
 							</Dialog.Root>
@@ -213,55 +200,49 @@
 	</div>
 
 	<!-- {/* Composer */} -->
-	<form method="post" action="?/send" 
+	<form
 		class="bg-white rounded-xl p-6 border border-brand-grey-50"
-		use:enhance={() => {
-			sending = true;
-			formError = {};
-			return async ({ result }) => {
-				sending = false;
-				if (result.type === 'failure' && result.data) {
-					formError = result.data.errors as any;
-				} else if (result.type === 'error') {
-					formError = { root: result.error.message || 'Unexpected error' };
-				} else if (result.type === 'success') {
-					toast.success('Draft saved successfully', {
-						description: 'You can have send newsletter to all subscribers from the list above.'
-					});
-					message = '';
-					subject = '';
-					formError = {}
-				}
-			};
-		}}	
+		{...sendNewsletter.preflight(sendNewsletterSchema).enhance(async ({ form, submit }) => {
+			const ok = await submit();
+			if (!ok) return;
+			toast.success('Newsletter sent successfully', {
+				description: 'Your broadcast has been delivered to all subscribers.'
+			});
+			message = '';
+			form.reset();
+		})}
+		oninput={() => sendNewsletter.validate()}
 	>
 		<h3 class="font-cabinet font-medium text-brand-grey-500 mb-3">Compose Newsletter</h3>
 		<div class="space-y-3">
 			<input
-				type="text"
+				{...sendNewsletter.fields.subject.as('text')}
 				placeholder="Subject"
-				name="subject"
-				required
-				value={subject}
 				class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg font-synonym placeholder:text-brand-grey-400 focus:outline-none focus:ring-2 focus:ring-brand-orange-500 focus:border-transparent"
 			/>
+			{#each sendNewsletter.fields.subject.issues() as issue}
+				<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+			{/each}
 
 			<!-- GrapesJS Email Builder -->
 			<EmailEditor value={message} onChange={handleEditorChange} />
 
-			<input type="hidden" name="message" value={message} />
+			<input {...sendNewsletter.fields.message.as('hidden', message)} />
 
-			{#if formError?.message}
-				<p class="mt-1 text-sm text-red-500">{formError.message}</p>
-			{/if}
+			{#each sendNewsletter.fields.message.issues() as issue}
+				<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+			{/each}
+			{#each rootIssues as issue}
+				<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+			{/each}
 
 			<div class="flex items-center gap-2">
 				<MainButton
 					type="submit"
-					disabled={sending}
+					disabled={Boolean(sendNewsletter.pending)}
 					class="flex items-center gap-3 bg-brand-orange-500 text-white py-6 rounded-lg text-sm font-synonym hover:bg-brand-orange-500/90 transition-colors disabled:opacity-50"
 				>
-					{#if sending}
+					{#if sendNewsletter.pending}
 						<Loader size={16} />
 						<span>Sending</span>
 					{:else}
@@ -271,9 +252,10 @@
 				</MainButton>
 
 				<CustomButton
+					type="button"
 					onclick={() => {
 						message = '';
-						subject = '';
+						sendNewsletter.fields.set({ subject: '', message: '' });
 					}}
 					className="flex items-center px-4 py-2 rounded-lg text-sm font-synonym text-black transition-colors"
 				>

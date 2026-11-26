@@ -1,10 +1,27 @@
+import adapter from '@sveltejs/adapter-node';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit(), devtoolsJson()],
+	plugins: [
+		tailwindcss(),
+		sveltekit({
+			adapter: adapter(),
+			preprocess: vitePreprocess(),
+			compilerOptions: {
+				experimental: {
+					async: true
+				}
+			},
+			experimental: {
+				remoteFunctions: true
+			}
+		}),
+		devtoolsJson()
+	],
 	test: {
 		expect: { requireAssertions: true },
 		projects: [

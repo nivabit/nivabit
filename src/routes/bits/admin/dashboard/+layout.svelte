@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
-	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import AppSidebar from '$lib/components/app-sidebar.svelte';
-	import SiteHeader from '$lib/components/site-header.svelte';
+	import * as Sidebar from '#lib/components/ui/sidebar/index.js';
+	import AppSidebar from '#lib/components/app-sidebar.svelte';
+	import SiteHeader from '#lib/components/site-header.svelte';
 
 	import type { Snippet } from 'svelte';
-	import ProgressSpinner from '$lib/components/loader/ProgressSpinner.svelte';
-	import { Toaster } from '$lib/components/ui/sonner';
+	import ProgressSpinner from '#lib/components/loader/ProgressSpinner.svelte';
+	import { Toaster } from '#lib/components/ui/sonner/index.ts';
 	let { children, data }: { data: { pathname: string }; children: Snippet } = $props();
 </script>
 

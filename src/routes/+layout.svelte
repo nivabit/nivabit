@@ -4,10 +4,10 @@
 	import { cubicIn, cubicOut } from 'svelte/easing';
 
 	import type { Snippet } from 'svelte';
-	import ProgressSpinner from '$lib/components/loader/ProgressSpinner.svelte';
-	import { Toaster } from '$lib/components/ui/sonner';
-	import Footer from '$lib/components/layout/footer.svelte';
-	import Header from '$lib/components/layout/Header.svelte';
+	import ProgressSpinner from '#lib/components/loader/ProgressSpinner.svelte';
+	import { Toaster } from '#lib/components/ui/sonner/index.ts';
+	import Footer from '#lib/components/layout/footer.svelte';
+	import Header from '#lib/components/layout/Header.svelte';
 	let { children, data }: { data: { pathname: string }; children: Snippet } = $props();
 </script>
 

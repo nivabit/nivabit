@@ -1,231 +1,301 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import { goto, invalidateAll } from '$app/navigation';
-	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
-	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
-	import { passwordRequirements } from '$lib/constants/passwordRequirements.js';
+	import { goto } from '$app/navigation';
+	import CustomButton from '#lib/components/customUI/button/customButton.svelte';
+	import MainButton from '#lib/components/customUI/button/MainButton.svelte';
+	import { passwordRequirements } from '#lib/constants/passwordRequirements.js';
 	import { Eye, EyeOff } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
+	import {
+		getAdminProfile,
+		updateAdminProfile,
+		changeAdminPassword
+	} from '#lib/remote/admin.remote.ts';
+	import { profileSchema, changePasswordSchema } from '#lib/validation/validation.ts';
 
-	let { data } = $props();
-	
-	// --- Profile state ---
-	let defaultProfile = $derived(data?.user)
-	let profile = $derived({ ...defaultProfile });
-	
-	let formError: Record<string, string[]> | undefined = $state({});
-	let formPasswordError: Record<string, string[]> | undefined = $state({});
+	const defaultProfile = $derived(await getAdminProfile());
+
 	let editing = $state(false);
-	let saveLoading = $state(false);
-
-	// --- Password state ---
-	let currentPassword = $state('');
-	let newPassword = $state('');
-	let confirmPassword = $state('');
 	let showCurrent = $state(false);
 	let showNew = $state(false);
 	let showConfirm = $state(false);
-	let pwdLoading = $state(false);
 
-	let passwordValidations = $derived(passwordRequirements(newPassword));
+	$effect(() => {
+		if (!editing && defaultProfile) {
+			updateAdminProfile.fields.set({
+				name: defaultProfile.name ?? '',
+				phone: defaultProfile.phone ?? ''
+			});
+		}
+	});
 
-	let isPasswordValid = $derived(
+	const newPasswordValue = $derived(changeAdminPassword.fields._newPassword.value() ?? '');
+	const confirmPasswordValue = $derived(changeAdminPassword.fields._confirmPassword.value() ?? '');
+	const passwordValidations = $derived(passwordRequirements(newPasswordValue));
+	const isPasswordValid = $derived(
 		passwordValidations.minLength &&
-		passwordValidations.hasUpperCase &&
-		passwordValidations.hasLowerCase &&
-		passwordValidations.hasNumbers &&
-		passwordValidations.hasSpecialChar
+			passwordValidations.hasUpperCase &&
+			passwordValidations.hasLowerCase &&
+			passwordValidations.hasNumbers &&
+			passwordValidations.hasSpecialChar
 	);
 
+	const profileRootIssues = $derived(
+		(updateAdminProfile.fields.allIssues() ?? []).filter((i) => !i.path?.length)
+	);
+	const passwordRootIssues = $derived(
+		(changeAdminPassword.fields.allIssues() ?? []).filter((i) => !i.path?.length)
+	);
 </script>
 
-<div class="space-y-6 max-w-3xl">
-	<!-- Header -->
+<div class="max-w-3xl space-y-6">
 	<div>
-		<h1 class="text-2xl font-cabinet font-medium text-brand-grey-500">Settings</h1>
-		<p class="text-brand-grey-400 font-synonym">Update your profile and change password</p>
+		<h1 class="font-cabinet text-2xl font-medium text-brand-grey-500">Settings</h1>
+		<p class="font-synonym text-brand-grey-400">Update your profile and change password</p>
 	</div>
 
 	<!-- Profile Form -->
-	<form class="bg-white rounded-xl border border-brand-grey-50 p-6"
-		method="post"
-		action="?/updateProfile"
-		use:enhance={() => {
-			saveLoading = true;
-			formError = {};
-			return async ({ result }) => {
-				saveLoading = false;
-				if (result.type === 'failure' && result.data) {
-					formError = result.data?.error as any;
-				} else if (result.type === 'error') {
-					formError = { name: result.error.message || result.error };
-				} else if (result.type === 'success') {
-					editing = false;
-					toast.success("Profile updated successfully")
-					invalidateAll();
-				}
-			};
-		}}
+	<form
+		class="rounded-xl border border-brand-grey-50 bg-white p-6"
+		{...updateAdminProfile.preflight(profileSchema).enhance(async ({ submit }) => {
+			const ok = await submit();
+			if (!ok) return;
+			editing = false;
+			toast.success('Profile updated successfully');
+		})}
+		oninput={() => updateAdminProfile.validate()}
 	>
-		<div class="flex items-center justify-between mb-4">
+		<div class="mb-4 flex items-center justify-between">
 			<h3 class="font-cabinet font-medium text-brand-grey-500">Profile</h3>
 			{#if !editing}
-				<CustomButton  onclick={() => (editing = true)} className="text-brand-orange-500 text-sm cursor-pointer">Edit</CustomButton>
+				<CustomButton
+					type="button"
+					onclick={() => (editing = true)}
+					className="text-brand-orange-500 text-sm cursor-pointer"
+				>
+					Edit
+				</CustomButton>
 			{:else}
 				<div class="flex items-center gap-2">
-					<MainButton type="submit" disabled={saveLoading} class="bg-brand-orange-500 text-white py-5 w-24 rounded-lg text-sm">{saveLoading ? 'Saving...' : 'Save'}</MainButton>
+					<MainButton
+						type="submit"
+						disabled={Boolean(updateAdminProfile.pending)}
+						class="w-24 rounded-lg bg-brand-orange-500 py-5 text-sm text-white"
+					>
+						{updateAdminProfile.pending ? 'Saving...' : 'Save'}
+					</MainButton>
 
-					<CustomButton onclick={() => { editing = false; profile = { ...defaultProfile }; }} className="text-sm text-brand-grey-500 cursor-pointer">Cancel</CustomButton>
+					<CustomButton
+						type="button"
+						onclick={() => {
+							editing = false;
+							updateAdminProfile.fields.set({
+								name: defaultProfile.name ?? '',
+								phone: defaultProfile.phone ?? ''
+							});
+						}}
+						className="text-sm text-brand-grey-500 cursor-pointer"
+					>
+						Cancel
+					</CustomButton>
 				</div>
 			{/if}
 		</div>
 
 		<div class="space-y-4">
-			{#if formError?.name}
-				<p class="text-sm text-red-500">{formError?.name}</p>
-			{/if}
+			{#each profileRootIssues as issue}
+				<p class="text-sm text-red-500">{issue.message}</p>
+			{/each}
 
-			{#if formError?.phone}
-				<p class="text-sm text-red-500">{formError?.phone}</p>
-			{/if}
-
-			{#if formError?.error}
-				<p class="text-sm text-red-500">{formError?.error}</p>
-			{/if}
-
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 				<div>
-					<label for="name" class="text-sm text-brand-grey-500 font-synonym mb-2 block">Full Name</label>
-					<input bind:value={profile.name} name="name" id="name" disabled={!editing} class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg" />
+					<label for="name" class="font-synonym mb-2 block text-sm text-brand-grey-500">
+						Full Name
+					</label>
+					<input
+						id="name"
+						{...updateAdminProfile.fields.name.as('text')}
+						disabled={!editing}
+						class="w-full rounded-lg border border-brand-grey-50 px-3 py-2"
+					/>
+					{#each updateAdminProfile.fields.name.issues() as issue}
+						<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+					{/each}
 				</div>
 
 				<div>
-					<label for="phone"  class="text-sm text-brand-grey-500 font-synonym mb-2 block">Phone</label>
-					<input name="phone" id="phone" bind:value={profile.phone} disabled={!editing} class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg" />
+					<label for="phone" class="font-synonym mb-2 block text-sm text-brand-grey-500">
+						Phone
+					</label>
+					<input
+						id="phone"
+						{...updateAdminProfile.fields.phone.as('text')}
+						disabled={!editing}
+						class="w-full rounded-lg border border-brand-grey-50 px-3 py-2"
+					/>
+					{#each updateAdminProfile.fields.phone.issues() as issue}
+						<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+					{/each}
 				</div>
 			</div>
 
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 				<div>
-					<label for="email" class="text-sm text-brand-grey-500 font-synonym mb-2 block">Email</label>
-					<input value={profile.email} disabled class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg" />
+					<label for="email" class="font-synonym mb-2 block text-sm text-brand-grey-500">
+						Email
+					</label>
+					<input
+						id="email"
+						value={defaultProfile?.email ?? ''}
+						disabled
+						class="w-full rounded-lg border border-brand-grey-50 px-3 py-2"
+					/>
 				</div>
 
 				<div>
-					<label for="role" class="text-sm text-brand-grey-500 font-synonym mb-2 block">Role</label>
-					<input value={profile.role} disabled class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg" />
+					<label for="role" class="font-synonym mb-2 block text-sm text-brand-grey-500">
+						Role
+					</label>
+					<input
+						id="role"
+						value={defaultProfile?.role ?? ''}
+						disabled
+						class="w-full rounded-lg border border-brand-grey-50 px-3 py-2"
+					/>
 				</div>
 			</div>
 		</div>
 	</form>
 
 	<!-- Change Password -->
-	<div class="bg-white rounded-xl border border-brand-grey-50 p-6">
-		<h3 class="font-cabinet font-medium text-brand-grey-500 mb-3">Change Password</h3>
+	<div class="rounded-xl border border-brand-grey-50 bg-white p-6">
+		<h3 class="font-cabinet mb-3 font-medium text-brand-grey-500">Change Password</h3>
 
-		<form class="space-y-4"
-		method="post"
-		action="?/changePassword"
-		use:enhance={() => {
-			pwdLoading = true;
-			formPasswordError = {};
-			return async ({ result }) => {
-				pwdLoading = false;
-				if (result.type === 'failure' && result.data) {
-					formPasswordError = result.data?.error as any;
-				} else if (result.type === 'error') {
-					formPasswordError = { name: result.error.message || result.error };
-				} else if (result.type === 'success') {
-					editing = false;
-					toast.success("Password changed successfully. Please login again.")
-					// Invalidate all data
-					invalidateAll();
-					// Redirect to login
-					goto("/bits/admin/auth/login");
-				}
-			};
-		}}
+		<form
+			class="space-y-4"
+			{...changeAdminPassword.preflight(changePasswordSchema).enhance(async ({ form, submit }) => {
+				const ok = await submit();
+				if (!ok) return;
+				editing = false;
+				form.reset();
+				toast.success('Password changed successfully. Please login again.');
+				goto('/bits/admin/auth/login');
+			})}
+			oninput={() => changeAdminPassword.validate()}
 		>
-			<!-- Errors -->
-			<div class="space-y-1">
-				{#if formPasswordError?.oldPassword}
-					<p class="text-sm text-red-500">{formPasswordError?.oldPassword}</p>
-				{/if}
+			{#each passwordRootIssues as issue}
+				<p class="text-sm text-red-500">{issue.message}</p>
+			{/each}
 
-				{#if formPasswordError?.newPassword}
-					<p class="text-sm text-red-500">{formPasswordError?.newPassword}</p>
-				{/if}
-
-				{#if formPasswordError?.confirmPassword}
-					<p class="text-sm text-red-500">{formPasswordError?.confirmPassword}</p>
-				{/if}
-
-				{#if formPasswordError?.error}
-					<p class="text-sm text-red-500">{formPasswordError?.error}</p>
-				{/if}
-
-				{#if confirmPassword && confirmPassword !== newPassword}
-					<p class="text-sm text-red-500 mt-1">Passwords do not match</p>
-				{/if}
-				
-				{#if newPassword && !isPasswordValid}
-					<p class="text-sm text-red-500 mt-1">New password does not meet all requirements</p>
-				{/if}
-			</div>
-
-			<!-- Current -->
 			<div>
-				<label for="oldPassword" class="text-sm text-brand-grey-500 font-synonym mb-2 block">Current Password</label>
+				<label for="oldPassword" class="font-synonym mb-2 block text-sm text-brand-grey-500">
+					Current Password
+				</label>
 				<div class="relative">
-					<input type={showCurrent ? 'text' : 'password'} bind:value={currentPassword} class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg pr-10" name="oldPassword" id="oldPassword" placeholder="Old password" />
-					<button type="button" onclick={() => (showCurrent = !showCurrent)} class="absolute right-2 top-2 text-brand-grey-400">
+					<input
+						id="oldPassword"
+						{...changeAdminPassword.fields._oldPassword.as(showCurrent ? 'text' : 'password')}
+						class="w-full rounded-lg border border-brand-grey-50 px-3 py-2 pr-10"
+						placeholder="Old password"
+					/>
+					<button
+						type="button"
+						onclick={() => (showCurrent = !showCurrent)}
+						class="absolute top-2 right-2 text-brand-grey-400"
+					>
 						{#if showCurrent}<EyeOff />{:else}<Eye />{/if}
 					</button>
 				</div>
+				{#each changeAdminPassword.fields._oldPassword.issues() as issue}
+					<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+				{/each}
 			</div>
 
-			<!-- New -->
 			<div>
-				<label for="newPassword" class="text-sm text-brand-grey-500 font-synonym mb-2 block">New Password</label>
+				<label for="newPassword" class="font-synonym mb-2 block text-sm text-brand-grey-500">
+					New Password
+				</label>
 				<div class="relative">
-					<input type={showNew ? 'text' : 'password'} bind:value={newPassword} class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg pr-10" name="newPassword" id="newPassword" placeholder="New password" />
-					<button type="button" onclick={() => (showNew = !showNew)} class="absolute right-2 top-2 text-brand-grey-400">
+					<input
+						id="newPassword"
+						{...changeAdminPassword.fields._newPassword.as(showNew ? 'text' : 'password')}
+						class="w-full rounded-lg border border-brand-grey-50 px-3 py-2 pr-10"
+						placeholder="New password"
+					/>
+					<button
+						type="button"
+						onclick={() => (showNew = !showNew)}
+						class="absolute top-2 right-2 text-brand-grey-400"
+					>
 						{#if showNew}<EyeOff />{:else}<Eye />{/if}
 					</button>
 				</div>
+				{#each changeAdminPassword.fields._newPassword.issues() as issue}
+					<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+				{/each}
 			</div>
 
-			<!-- Confirm -->
 			<div>
-				<label for="confirmPassword" class="text-sm text-brand-grey-500 font-synonym mb-2 block">Confirm New Password</label>
+				<label for="confirmPassword" class="font-synonym mb-2 block text-sm text-brand-grey-500">
+					Confirm New Password
+				</label>
 				<div class="relative">
-					<input type={showConfirm ? 'text' : 'password'} bind:value={confirmPassword} class="w-full px-3 py-2 border border-brand-grey-50 rounded-lg pr-10" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" />
-					<button type="button" onclick={() => (showConfirm = !showConfirm)} class="absolute right-2 top-2 text-brand-grey-400">
+					<input
+						id="confirmPassword"
+						{...changeAdminPassword.fields._confirmPassword.as(showConfirm ? 'text' : 'password')}
+						class="w-full rounded-lg border border-brand-grey-50 px-3 py-2 pr-10"
+						placeholder="Confirm password"
+					/>
+					<button
+						type="button"
+						onclick={() => (showConfirm = !showConfirm)}
+						class="absolute top-2 right-2 text-brand-grey-400"
+					>
 						{#if showConfirm}<EyeOff />{:else}<Eye />{/if}
 					</button>
 				</div>
+				{#each changeAdminPassword.fields._confirmPassword.issues() as issue}
+					<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+				{/each}
 			</div>
 
-			<!-- Password Requirements -->
-			<div class="bg-bg-blue rounded-lg p-3 border border-brand-blue-100 text-sm">
+			<div class="rounded-lg border border-brand-blue-100 bg-bg-blue p-3 text-sm">
 				{#each [
-					{ label: 'At least 8 characters', ok: passwordRequirements(newPassword).minLength },
-					{ label: 'One uppercase letter', ok: passwordRequirements(newPassword).hasUpperCase },
-					{ label: 'One lowercase letter', ok: passwordRequirements(newPassword).hasLowerCase },
-					{ label: 'One number', ok: passwordRequirements(newPassword).hasNumbers },
-					{ label: 'One special character', ok: passwordRequirements(newPassword).hasSpecialChar }
+					{ label: 'At least 8 characters', ok: passwordValidations.minLength },
+					{ label: 'One uppercase letter', ok: passwordValidations.hasUpperCase },
+					{ label: 'One lowercase letter', ok: passwordValidations.hasLowerCase },
+					{ label: 'One number', ok: passwordValidations.hasNumbers },
+					{ label: 'One special character', ok: passwordValidations.hasSpecialChar }
 				] as req}
 					<div class={`flex items-center gap-2 ${req.ok ? 'text-green-600' : 'text-brand-grey-400'}`}>
-						<div class={`w-1.5 h-1.5 rounded-full ${req.ok ? 'bg-green-600' : 'bg-brand-grey-200'}`}></div>
+						<div class={`h-1.5 w-1.5 rounded-full ${req.ok ? 'bg-green-600' : 'bg-brand-grey-200'}`}></div>
 						{req.label}
 					</div>
 				{/each}
 			</div>
 
 			<div class="flex items-center gap-3">
-				<MainButton type="submit" disabled={pwdLoading || !isPasswordValid} class="bg-brand-orange-500 text-white py-6 rounded-lg cursor-pointer">{pwdLoading ? 'Updating...' : 'Update Password'}</MainButton>
+				<MainButton
+					type="submit"
+					disabled={Boolean(changeAdminPassword.pending) ||
+						!isPasswordValid ||
+						confirmPasswordValue !== newPasswordValue}
+					class="cursor-pointer rounded-lg bg-brand-orange-500 py-6 text-white"
+				>
+					{changeAdminPassword.pending ? 'Updating...' : 'Update Password'}
+				</MainButton>
 
-				<CustomButton type="button" onclick={() => { currentPassword = ''; newPassword = ''; confirmPassword = ''; }} className="text-sm text-brand-grey-500 cursor-pointer">Clear</CustomButton>
+				<CustomButton
+					type="button"
+					onclick={() =>
+						changeAdminPassword.fields.set({
+							_oldPassword: '',
+							_newPassword: '',
+							_confirmPassword: ''
+						})}
+					className="text-sm text-brand-grey-500 cursor-pointer"
+				>
+					Clear
+				</CustomButton>
 			</div>
 		</form>
 	</div>

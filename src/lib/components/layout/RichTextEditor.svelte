@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import 'quill/dist/quill.snow.css';
-	import { safeHTML } from '$lib/utils/safeHTML';
+	import { safeHTML } from '#lib/utils/safeHTML.ts';
 
 	type Props = {
 		value?: string | null;

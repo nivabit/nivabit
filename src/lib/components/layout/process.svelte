@@ -1,133 +1,133 @@
 <script lang="ts">
-	import { reveal } from '$lib/actions/reveal';
-	import { revealWords } from '$lib/actions/revealWords';
-	import Code from '../icon/code.svelte';
-	import Design from '../icon/design.svelte';
-	import Discovery from '../icon/discovery.svelte';
-	import Kickoff from '../icon/kickoff.svelte';
-	import Launch from '../icon/launch.svelte';
+	import {
+		Radar,
+		MessageSquareText,
+		Flame,
+		DollarSign,
+		FileCheck2,
+		Layers,
+		Target
+	} from 'lucide-svelte';
 
-	const processes = [
+	const protocols = [
 		{
-			step: 'Step 1',
-			title: 'Kickoff Meeting',
-			description:
-				'We begin with an in-depth collaborative session where we immerse ourselves in your business objectives, challenges, and aspirations to establish the perfect foundation for our partnership.',
-			icon: Kickoff
+			code: '01',
+			label: 'Whitespace',
+			sub: '15+ competitor teardowns & positioning gaps',
+			icon: Radar
 		},
 		{
-			step: 'Step 2',
-			title: 'Discovery Phase',
-			description:
-				'Through comprehensive market analysis, user research, and technical audits, we uncover critical insights that shape every decision moving forward, ensuring your solution is built on data rather than assumptions.',
-			icon: Discovery
+			code: '02',
+			label: 'Pain Mining',
+			sub: '1,000+ real reviews & community complaints',
+			icon: MessageSquareText
 		},
 		{
-			step: 'Step 3',
-			title: 'Design',
-			description:
-				'Our creative team transforms strategic insights into beautiful, functional designs through iterative prototyping, user testing, and refinement until every pixel aligns with your brand and business goals.',
-			icon: Design
+			code: '03',
+			label: 'Smoke Tests',
+			sub: 'Live zero-code conversion & intent tracking',
+			icon: Flame
 		},
 		{
-			step: 'Step 4',
-			title: 'Develop',
-			description:
-				'Using agile development methodologies, we build robust, scalable solutions with clean code architecture while maintaining transparent communication through every sprint and milestone.',
-			icon: Code
+			code: '04',
+			label: 'Interviews',
+			sub: '20+ verified ICP decision-maker calls',
+			icon: Target
 		},
 		{
-			step: 'Step 5',
-			title: 'Launch',
-			description:
-				"We don't just deploy your project - we implement thorough quality assurance, performance optimization, and knowledge transfer to ensure you're fully equipped for long-term success and growth.",
-			icon: Launch
+			code: '05',
+			label: 'Pricing WTP',
+			sub: 'Elasticity & willingness-to-pay modeling',
+			icon: DollarSign
+		},
+		{
+			code: '06',
+			label: 'MVP Scope',
+			sub: 'Must-have vs. bloat feature priority matrix',
+			icon: Layers
+		},
+		{
+			code: '07',
+			label: 'Go / No-Go',
+			sub: '30+ page investor-ready evidence dossier',
+			icon: FileCheck2
 		}
 	];
 </script>
 
-<section class="bg-bg-orange px-4 py-16 md:px-16 md:py-24">
-	<div class="mx-auto max-w-6xl text-center">
-		<div class="mb-10">
-			<p use:reveal class="reveal font-synonym mb-1 text-lg text-brand-grey-500">
-				The Nivabit Method
-			</p>
-			<h2
-				use:revealWords
-				class="reveal-words font-cabinet text-3xl font-medium text-brand-grey-500 md:text-4xl lg:text-5xl"
+<section id="process" class="bg-white px-4 py-20 md:px-8 md:py-28">
+	<div class="mx-auto max-w-5xl">
+		<!-- Section Header -->
+		<div class="mx-auto max-w-2xl text-center">
+			<span
+				class="inline-block rounded-full border border-black/10 bg-surface-light px-3.5 py-1 text-xs font-bold tracking-wide text-ink-primary uppercase"
 			>
-				Where Ideas Take Shape
+				14-Day Methodology
+			</span>
+			<h2
+				class="font-cabinet mt-4 text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-ink-primary sm:text-4xl md:text-5xl"
+			>
+				Custom research protocols, built for your market.
 			</h2>
+			<p class="mt-4 text-sm leading-relaxed text-ink-secondary md:text-base">
+				Every sprint follows a repeatable 7-stage evidence pipeline tailored to your vertical,
+				ideal buyer persona, and pricing model.
+			</p>
 		</div>
-		<!-- Process Steps -->
-		<div  class=" space-y-5">
-			{#each processes as process}
-				<div
-					class="mx-auto max-w-[1000px] rounded-3xl bg-brand-blue-900 md:p-10 p-4"
-					style="position: sticky;top: 80px;"
+
+		<!-- Root Node + Branching Connector Tree (Matches Reference Section) -->
+		<div class="mt-12 flex flex-col items-center">
+			<!-- Top Dark Pill Hub -->
+			<div
+				class="relative z-10 inline-flex items-center gap-3 rounded-2xl border border-black/15 bg-surface-dark px-6 py-3.5 text-white shadow-md"
+			>
+				<span class="h-2.5 w-2.5 rounded-full bg-lime-accent"></span>
+				<span class="font-cabinet text-sm font-bold tracking-tight md:text-base">
+					Your Product Hypothesis &amp; Target ICP
+				</span>
+				<span
+					class="rounded-full bg-lime-accent px-2.5 py-0.5 text-[10px] font-black text-ink-primary uppercase"
 				>
-					<div class="box-border rounded-2xl border-white py-10 px-5 md:px-16 md:py-16">
-						<div class="flex flex-col items-start justify-between gap-8 md:flex-row lg:gap-16">
-							<div class="w-full shrink-0 lg:w-32">
-								<p class="font-synonym text-lg text-white text-start">{process.step}</p>
-							</div>
+					Day 0
+				</span>
+			</div>
 
-							<div class="w-full flex-1 md:space-y-16 space-y-10 md:max-w-[400px]">
-								<div class="">
-									<svelte:component this={process.icon} />
-								</div>
+			<!-- Vertical Stem -->
+			<div class="h-8 w-px bg-black/15"></div>
 
-								<div class="space-y-5 text-center lg:text-left">
-									<h3 class="font-cabinet text-2xl font-medium text-white md:text-3xl text-start">
-										{process.title}
-									</h3>
-									<p class="font-synonym text-start text-base md:text-lg leading-relaxed text-white">
-										{process.description}
-									</p>
-								</div>
+			<!-- Horizontal Branch Rail (desktop) -->
+			<div class="hidden h-px w-[86%] bg-black/15 lg:block"></div>
+
+			<!-- 7 Branch Nodes -->
+			<div class="mt-4 grid w-full grid-cols-2 gap-3.5 sm:grid-cols-3 md:grid-cols-4 lg:mt-0 lg:grid-cols-7 lg:gap-3">
+				{#each protocols as step}
+					{@const Icon = step.icon}
+					<div class="flex flex-col items-center text-center">
+						<!-- Vertical tick down from rail on desktop -->
+						<div class="hidden h-6 w-px bg-black/15 lg:block"></div>
+
+						<!-- Dark Compact Module Card -->
+						<div
+							class="group flex w-full flex-col items-center rounded-2xl border border-black/10 bg-surface-dark px-3 py-4 text-white shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-lime-accent"
+						>
+							<div
+								class="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white/8 text-lime-accent transition-colors group-hover:bg-lime-accent group-hover:text-ink-primary"
+							>
+								<Icon size={16} strokeWidth={2.2} />
 							</div>
+							<span class="font-cabinet text-xs font-bold text-white">{step.label}</span>
+							<span class="mt-0.5 text-[10px] font-semibold text-lime-accent/90">
+								Step {step.code}
+							</span>
 						</div>
+
+						<!-- Short Description Below -->
+						<p class="mt-2.5 px-1 text-[11px] leading-snug text-ink-secondary">
+							{step.sub}
+						</p>
 					</div>
-				</div>
-			{/each}
+				{/each}
+			</div>
 		</div>
 	</div>
 </section>
-
-<style>
-	/* .box-border {
-  border: 4px solid transparent;
-  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Crect x='1' y='1' width='18' height='18' fill='none'stroke='white' stroke-width='2'stroke-dasharray='3 6' stroke-linecap='round'/%3E%3C/svg%3E") 10 round;
-} */
-
-.box-border {
-  position: relative;
-  border: none;
-  border-radius: 0.5rem; /* adjust for your design */
-  overflow: hidden; /* important! clips child pseudo-element */
-}
-
-.box-border::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2px; /* adjust for border thickness */
-  background:
-    repeating-linear-gradient(to right, white 0 10px, transparent 10px 20px) top / 100% 1px no-repeat,
-    repeating-linear-gradient(to right, white 0 10px, transparent 10px 20px) bottom / 100% 1px no-repeat,
-    repeating-linear-gradient(to bottom, white 0 10px, transparent 10px 20px) left / 1px 100% no-repeat,
-    repeating-linear-gradient(to bottom, white 0 10px, transparent 10px 20px) right / 1px 100% no-repeat;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-
-</style>

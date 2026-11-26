@@ -1,8 +1,12 @@
 {
 	"name": "nivabit",
 	"private": true,
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"type": "module",
+	"imports": {
+		"#lib": "./src/lib/index.ts",
+		"#lib/*": "./src/lib/*"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "node --max-old-space-size=4096 ./node_modules/.bin/vite build",
@@ -17,7 +21,7 @@
 		"test:e2e": "playwright test"
 	},
 	"prisma": {
-		"seed": "ts-node prisma/seed.ts"
+		"seed": "node prisma/seed.js"
 	},
 	"devDependencies": {
 		"@dnd-kit-svelte/core": "^0.0.8",
@@ -29,8 +33,8 @@
 		"@internationalized/date": "^3.8.2",
 		"@lucide/svelte": "^0.515.0",
 		"@playwright/test": "^1.49.1",
-		"@sveltejs/kit": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@sveltejs/kit": "^3.4.1",
+		"@sveltejs/vite-plugin-svelte": "^7.3.2",
 		"@tabler/icons-svelte": "^3.34.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
@@ -58,25 +62,25 @@
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"prisma": "^6.16.1",
-		"svelte": "^5.0.0",
-		"svelte-check": "^4.0.0",
+		"svelte": "^5.59.2",
+		"svelte-check": "^4.3.0",
 		"sveltekit-superforms": "^2.27.1",
 		"tailwind-merge": "^3.3.1",
 		"tailwind-variants": "^1.0.0",
 		"tailwindcss": "^4.0.0",
 		"ts-node": "^10.9.2",
 		"tw-animate-css": "^1.3.6",
-		"typescript": "^5.9.3",
+		"typescript": "^6.0.2",
 		"typescript-eslint": "^8.20.0",
 		"vaul-svelte": "^1.0.0-next.7",
-		"vite": "^6.0.1",
+		"vite": "^8.3.8",
 		"vite-plugin-devtools-json": "^0.2.0",
 		"vitest": "^3.2.3",
 		"vitest-browser-svelte": "^0.1.0"
 	},
 	"dependencies": {
 		"@prisma/client": "^6.16.1",
-		"@sveltejs/adapter-node": "^5.3.1",
+		"@sveltejs/adapter-node": "^6.0.6",
 		"argon2": "^0.44.0",
 		"bcryptjs": "^3.0.2",
 		"dotenv": "^17.2.3",
@@ -93,6 +97,6 @@
 		"svelte-sonner": "^1.0.5",
 		"three": "^0.179.1",
 		"uuid": "^11.1.0",
-		"zod": "^3.25.76"
+		"valibot": "^1.5.0"
 	}
 }

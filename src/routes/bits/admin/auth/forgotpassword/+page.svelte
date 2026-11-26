@@ -1,27 +1,26 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import CustomButton from '$lib/components/customUI/button/customButton.svelte';
-	import MainButton from '$lib/components/customUI/button/MainButton.svelte';
+	import CustomButton from '#lib/components/customUI/button/customButton.svelte';
+	import MainButton from '#lib/components/customUI/button/MainButton.svelte';
 	import { Mail, ArrowLeft, CheckCircle } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
+	import { forgotPassword } from '#lib/remote/auth.remote.ts';
+	import { forgotPasswordSchema } from '#lib/validation/validation.ts';
 
-	let email = $state('');
-	let isLoading = $state(false);
+	let isLoading = $derived(Boolean(forgotPassword.pending));
 	let isEmailSent = $state(false);
-	let formError: Record<string, string> | undefined = $state({});
+	let sentEmail = $state('');
+	let rootIssues = $derived(
+		(forgotPassword.fields.allIssues() ?? []).filter((i) => !i.path?.length)
+	);
 </script>
 
 <div class="flex min-h-screen items-center justify-center bg-brand-blue-900 px-4">
-	<!-- Background decoration -->
 	<div class="absolute inset-0 overflow-hidden">
-		<div
-			class="absolute -top-48 -right-48 h-96 w-96 rounded-full bg-brand-orange-500 opacity-5"
-		></div>
+		<div class="absolute -top-48 -right-48 h-96 w-96 rounded-full bg-brand-orange-500 opacity-5"></div>
 		<div class="absolute -bottom-32 -left-32 h-64 w-64 rounded-full bg-white opacity-5"></div>
 	</div>
 
 	<div class="relative w-full max-w-md">
-		<!-- Logo -->
 		<div class="mb-8 text-center">
 			<a href="/" class="inline-block">
 				<img src="/images/logo.png" alt="Nivabit Logo" class="mx-auto mb-4 h-8 w-auto" />
@@ -42,34 +41,19 @@
 			</p>
 		</div>
 
-		<!-- Main Content -->
 		<div class="rounded-2xl bg-white p-8 shadow-2xl">
 			{#if !isEmailSent}
-				<!-- Forgot Password Form -->
 				<form
-					method="post"
-					action="?/forgotPassword"
 					class="space-y-6"
-					use:enhance={() => {
-						isLoading = true;
-						formError = {};
-						return async ({ result }) => {
-							isLoading = false;
-							if (result.type === 'failure') {
-								formError = result.data?.errors as any;
-							} 
-							if (result.type === 'error') {
-								formError = result.error as any;
-								toast.error(result.error || 'An unexpected error occurred. Please try again.');
-							}
-							else if (result.type === 'success') {
-								isEmailSent = true;
-								toast.success('Password reset link sent to your email.');
-							}
-						};
-					}}
+					{...forgotPassword.preflight(forgotPasswordSchema).enhance(async ({ data, submit }) => {
+						const ok = await submit();
+						if (!ok) return;
+						sentEmail = data.email;
+						isEmailSent = true;
+						toast.success('Password reset link sent to your email.');
+					})}
+					oninput={() => forgotPassword.validate()}
 				>
-					<!-- Email Field -->
 					<div>
 						<label
 							for="email"
@@ -83,27 +67,22 @@
 							</div>
 							<input
 								id="email"
-								type="email"
-								required
-								name="email"
-								bind:value={email}
+								{...forgotPassword.fields.email.as('email')}
 								class="font-synonym w-full rounded-lg border border-brand-grey-50 py-3 pr-4 pl-10 transition-colors placeholder:text-brand-grey-200 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 								placeholder="Enter your email address"
 							/>
 						</div>
-						{#if formError?.email}
-							<p class="text-sm text-red-500">{formError.email}</p>
-						{/if}
+						{#each forgotPassword.fields.email.issues() as issue}
+							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+						{/each}
 					</div>
 
-					<!-- API Error -->
-					{#if formError?.errors}
+					{#each rootIssues as issue}
 						<div class="rounded-lg border border-red-200 bg-red-50 p-3">
-							<p class="text-sm text-red-600">{formError.errors}</p>
+							<p class="text-sm text-red-600">{issue.message}</p>
 						</div>
-					{/if}
+					{/each}
 
-					<!-- Submit Button -->
 					<MainButton
 						type="submit"
 						disabled={isLoading}
@@ -122,7 +101,6 @@
 					</MainButton>
 				</form>
 			{:else}
-				<!-- Email Sent Confirmation -->
 				<div class="space-y-6 text-center">
 					<div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
 						<CheckCircle class="h-8 w-8 text-green-600" />
@@ -133,7 +111,7 @@
 							Email Sent Successfully
 						</h3>
 						<p class="font-synonym text-sm text-brand-grey-400">
-							We've sent a password reset link to <strong>{email}</strong>
+							We've sent a password reset link to <strong>{sentEmail}</strong>
 						</p>
 					</div>
 
@@ -146,7 +124,6 @@
 			{/if}
 		</div>
 
-		<!-- Back to Login -->
 		<div class="mt-6 text-center">
 			<CustomButton
 				href="/bits/admin/auth/login"

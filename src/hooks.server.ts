@@ -1,4 +1,4 @@
-import { getAuthCookie, getUserCookie } from '$lib/utils/auth';
+import { getAuthCookie, getUserCookie } from '#lib/utils/auth.ts';
 import { redirect, type Handle } from '@sveltejs/kit';
 import fs from 'fs';
 import path from 'path';

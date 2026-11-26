@@ -4,11 +4,13 @@
 	import LogoutIcon from '@tabler/icons-svelte/icons/logout';
 	import NotificationIcon from '@tabler/icons-svelte/icons/notification';
 	import UserCircleIcon from '@tabler/icons-svelte/icons/user-circle';
-	import * as Avatar from '$lib/components/ui/avatar/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import * as Avatar from '#lib/components/ui/avatar/index.js';
+	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
+	import * as Sidebar from '#lib/components/ui/sidebar/index.js';
 	import Button from './ui/button/button.svelte';
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
+	import { logoutAdmin } from '#lib/remote/auth.remote.ts';
 
 	const sidebar = Sidebar.useSidebar();
 	let user = page?.data?.user;
@@ -71,9 +73,17 @@
 				<DropdownMenu.Separator />
 				<DropdownMenu.Item>
 					<LogoutIcon />
-					<form method="POST" action="/bits/admin/auth/login?/logout">
-						<Button variant="ghost" type="submit" class="btn">Log out</Button>
-					</form>
+					<Button
+						variant="ghost"
+						type="button"
+						class="btn"
+						onclick={async () => {
+							const res = await logoutAdmin();
+							goto(res.redirectTo);
+						}}
+					>
+						Log out
+					</Button>
 				</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>

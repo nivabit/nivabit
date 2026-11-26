@@ -1,60 +1,41 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Save, ArrowLeft, Upload, Globe } from 'lucide-svelte';
-	import RichTextEditor from '$lib/components/layout/RichTextEditor.svelte';
-	import { enhance } from '$app/forms';
-	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { IMAGE_MAX_FILE_SIZE_BYTES, IMAGE_MAX_FILE_SIZE_MB } from '$lib/constants/imageLimit';
-	import type { ArticleData } from '$lib/types/article.type';
+	import RichTextEditor from '#lib/components/layout/RichTextEditor.svelte';
+	import Button from '#lib/components/ui/button/button.svelte';
+	import { IMAGE_MAX_FILE_SIZE_BYTES, IMAGE_MAX_FILE_SIZE_MB } from '#lib/constants/imageLimit.ts';
 	import { toast } from 'svelte-sonner';
 	import { X } from '@lucide/svelte';
+	import { createArticle } from '#lib/remote/articles.remote.ts';
+	import { articleFormSchema } from '#lib/validation/articleSchema.ts';
 
-	let isSaving = $state(false);
+	const availableCategories = ['Development', 'Design', 'Research', 'Technology', 'Business'];
+
+	let isSaving = $derived(Boolean(createArticle.pending));
 	let tagInput = $state('');
-	let formError: Record<string, any> | undefined = $state({});
 	let imageInput: HTMLInputElement;
+	let featuredImageURL = $state('');
+	let localImageError = $state('');
+	let content = $state('');
+	let tags = $state<string[]>([]);
 
-	let article: ArticleData = $state({
-		title: '',
-		excerpt: '',
-		content: '',
-		categories: [],
-		status: 'PUBLISHED',
-		tags: [],
-		featuredImage: null,
-		seoTitle: '',
-		seoDescription: '',
-		featuredImageURL: ''
-	});
+	createArticle.fields.status.set('PUBLISHED');
 
-	function handleInputChange(field: keyof ArticleData, value: string) {
-		article = { ...article, [field]: value };
-	}
+	let currentStatus = $derived(createArticle.fields.status.value() ?? 'PUBLISHED');
+	let rootIssues = $derived(
+		(createArticle.fields.allIssues() ?? []).filter((i) => !i.path?.length)
+	);
 
 	function handleAddTag() {
-		if (tagInput.trim() && !article.tags.includes(tagInput.trim())) {
-			article = { ...article, tags: [...article.tags, tagInput.trim()] };
+		const trimmed = tagInput.trim();
+		if (trimmed && !tags.includes(trimmed)) {
+			tags = [...tags, trimmed];
 			tagInput = '';
 		}
 	}
 
-	function toggleCategory(cat: string) {
-		if (article.categories.includes(cat)) {
-			article = {
-				...article,
-				categories: article.categories.filter((c) => c !== cat)
-			};
-		} else {
-			article = {
-				...article,
-				categories: [...article.categories, cat]
-			};
-		}
-	}
-
 	function handleRemoveTag(tagToRemove: string) {
-		article = { ...article, tags: article.tags.filter((t) => t !== tagToRemove) };
+		tags = tags.filter((t) => t !== tagToRemove);
 	}
 
 	function handleImageClick() {
@@ -63,65 +44,51 @@
 
 	function handleImageUpload(event: Event) {
 		const file = (event.target as HTMLInputElement).files?.[0];
-		formError = {};
-
+		localImageError = '';
 		if (!file) return;
 
 		if (!file.type.startsWith('image/')) {
-			formError = { featuredImage: ['Please upload a valid image file.'] };
+			localImageError = 'Please upload a valid image file.';
 			return;
 		}
-
 		if (file.size > IMAGE_MAX_FILE_SIZE_BYTES) {
-			formError = { images: [`Each image must be less than ${IMAGE_MAX_FILE_SIZE_MB}MB.`] };
+			localImageError = `Image must be less than ${IMAGE_MAX_FILE_SIZE_MB}MB.`;
 			return;
 		}
 
-		const imageUrl = URL.createObjectURL(file);
-		article = { ...article, featuredImageURL: imageUrl };
-		formError = {};
+		featuredImageURL = URL.createObjectURL(file);
 	}
 </script>
 
 <div class="mx-auto">
 	<form
-		action="?/create"
-		method="post"
 		class="space-y-6"
 		enctype="multipart/form-data"
-		use:enhance={() => {
-			isSaving = true;
-			formError = {};
-			return async ({ result }) => {
-				isSaving = false;
+		{...createArticle.preflight(articleFormSchema).enhance(async ({ submit }) => {
+			const ok = await submit();
+			if (!ok) return;
 
-				if (result.type === 'failure' && result.data) {
-					formError = result.data.errors as any;
-				} else if (result.type === 'error') {
-					formError = { root: result.error.message || 'Unexpected error' };
-				} else if (result.type === 'success') {
-					if (article.status === 'DRAFT') {
-						toast.success('Draft saved successfully', {
-							description: 'You can continue editing this article anytime.'
-						});
-					} else {
-						toast.success('Article published successfully!', {
-							description: 'Your article is now live and visible on the site.'
-						});
-					}
+			if (currentStatus === 'DRAFT') {
+				toast.success('Draft saved successfully', {
+					description: 'You can continue editing this article anytime.'
+				});
+			} else {
+				toast.success('Article published successfully!', {
+					description: 'Your article is now live and visible on the site.'
+				});
+			}
 
-					setTimeout(() => {
-						goto('/bits/admin/dashboard/articles');
-					}, 2000);
-				}
-			};
-		}}
+			setTimeout(() => {
+				goto('/bits/admin/dashboard/articles');
+			}, 1200);
+		})}
 	>
-		{#if formError?.root}
-			<div class="bg-red-100 p-3">
-				<p class="mt-2 text-sm text-red-500">{formError.root}</p>
+		{#each rootIssues as issue}
+			<div class="rounded-lg bg-red-100 p-3">
+				<p class="text-sm text-red-600">{issue.message}</p>
 			</div>
-		{/if}
+		{/each}
+
 		<!-- Header -->
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-4">
@@ -138,16 +105,14 @@
 			</div>
 
 			<div class="flex items-center gap-3">
-				{#if article.status === 'DRAFT'}
+				{#if currentStatus === 'DRAFT'}
 					<button
 						type="submit"
 						disabled={isSaving}
 						class="flex items-center gap-2 rounded-lg border border-brand-grey-200 px-4 py-2 text-brand-grey-500 transition-colors hover:bg-brand-grey-50 disabled:opacity-50"
 					>
 						{#if isSaving}
-							<div
-								class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
-							></div>
+							<div class="h-4 w-4 animate-spin rounded-full border-2 border-brand-grey-400 border-t-transparent"></div>
 						{:else}
 							<Save size={16} />
 						{/if}
@@ -160,9 +125,7 @@
 						class="flex items-center gap-2 rounded-lg bg-brand-orange-500 px-6 py-2 text-white transition-colors hover:bg-brand-orange-500/90 disabled:opacity-50"
 					>
 						{#if isSaving}
-							<div
-								class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
-							></div>
+							<div class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
 						{:else}
 							<Globe size={16} />
 						{/if}
@@ -173,63 +136,56 @@
 		</div>
 
 		<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-			<!-- {/* Main Content */} -->
+			<!-- Main Content -->
 			<div class="space-y-6 lg:col-span-2">
-				<!-- {/* Title and Excerpt */} -->
 				<div class="space-y-4 rounded-xl border border-brand-grey-50 bg-white p-6">
 					<div>
-						<label for="" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
+						<label for="title" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
 							Article Title
 						</label>
 						<input
-							type="text"
-							name="title"
-							value={article.title}
-							onchange={(e: any) => handleInputChange('title', e.target.value)}
+							id="title"
+							{...createArticle.fields.title.as('text')}
 							placeholder="Enter your article title..."
 							class="font-cabinet w-full rounded-lg border border-brand-grey-50 px-4 py-3 text-lg placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 						/>
-						{#if formError?.title}
-							<p class="mt-1 text-sm text-red-500">{formError.title}</p>
-						{/if}
+						{#each createArticle.fields.title.issues() as issue}
+							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+						{/each}
 					</div>
 
 					<div>
-						<label for="" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
+						<label for="excerpt" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
 							Article Excerpt
 						</label>
 						<textarea
-							name="excerpt"
-							value={article.excerpt}
-							onchange={(e: any) => handleInputChange('excerpt', e.target.value)}
+							id="excerpt"
+							{...createArticle.fields.excerpt.as('text')}
 							placeholder="Write a brief description of your article..."
 							rows={3}
 							class="font-synonym w-full resize-none rounded-lg border border-brand-grey-50 px-4 py-3 placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 						></textarea>
-						{#if formError?.excerpt}
-							<p class="mt-1 text-sm text-red-500">{formError.excerpt}</p>
-						{/if}
+						{#each createArticle.fields.excerpt.issues() as issue}
+							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+						{/each}
 					</div>
 				</div>
 
-				<!-- {/* Featured Image */} -->
+				<!-- Featured Image -->
 				<div class="rounded-xl border border-brand-grey-50 bg-white p-6">
-					<label for="" class="font-synonym mb-4 block text-sm font-medium text-brand-grey-500">
+					<label for="featuredImage" class="font-synonym mb-4 block text-sm font-medium text-brand-grey-500">
 						Featured Image
 					</label>
 
 					<Button
+						type="button"
 						variant="ghost"
 						class="flex h-48 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-brand-grey-100 transition-colors hover:bg-brand-grey-50"
 						onclick={handleImageClick}
 					>
-						{#if article.featuredImageURL}
+						{#if featuredImageURL}
 							<div class="relative">
-								<img
-									src={article.featuredImageURL}
-									alt="Featured"
-									class="h-48 w-full rounded-lg object-cover"
-								/>
+								<img src={featuredImageURL} alt="Featured" class="h-48 w-full rounded-lg object-cover" />
 							</div>
 						{:else}
 							<div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -241,57 +197,52 @@
 							</div>
 						{/if}
 						<input
-							type="file"
+							id="featuredImage"
+							{...createArticle.fields.featuredImage.as('file')}
 							accept="image/*"
 							bind:this={imageInput}
 							onchange={handleImageUpload}
 							class="hidden"
-							name="featuredImage"
-							id="featuredImage"
 						/>
 					</Button>
 
-					{#if formError?.featuredImage}
-						<p class="mt-2 text-sm text-red-500">{formError.featuredImage}</p>
+					{#if localImageError}
+						<p class="mt-2 text-sm text-red-500">{localImageError}</p>
 					{/if}
+					{#each createArticle.fields.featuredImage.issues() as issue}
+						<p class="mt-2 text-sm text-red-500">{issue.message}</p>
+					{/each}
 				</div>
 
-				<!-- {/* Content Editor */} -->
+				<!-- Content Editor -->
 				<div class="rounded-xl border border-brand-grey-50 bg-white p-6">
-					<label for="" class="font-synonym mb-4 block text-sm font-medium text-brand-grey-500">
+					<label for="content" class="font-synonym mb-4 block text-sm font-medium text-brand-grey-500">
 						Article Content
 					</label>
-					<RichTextEditor bind:value={article.content} />
-					<Textarea name="content" class="hidden" id="content" bind:value={article.content}
-					></Textarea>
-					{#if formError?.content}
-						<p class="mt-2 text-sm text-red-500">{formError.content}</p>
-					{/if}
+					<RichTextEditor bind:value={content} />
+					<input {...createArticle.fields.content.as('hidden', content)} />
+					{#each createArticle.fields.content.issues() as issue}
+						<p class="mt-2 text-sm text-red-500">{issue.message}</p>
+					{/each}
 				</div>
 			</div>
 
-			{#each article.tags as tag}
-				<input type="hidden" name="tags" value={tag} />
+			{#each tags as tag, i}
+				<input {...createArticle.fields.tags[i].as('hidden', tag)} />
 			{/each}
 
-			{#each article.categories as cat}
-				<input type="hidden" name="categories" value={cat} />
-			{/each}
-
-			<!-- {/* Sidebar */} -->
+			<!-- Sidebar -->
 			<div class="space-y-6">
-				<!-- {/* Publishing Options */} -->
 				<div class="space-y-4 rounded-xl border border-brand-grey-50 bg-white p-6">
 					<h3 class="font-cabinet font-medium text-brand-grey-500">Publishing</h3>
 
 					<div>
-						<label for="" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
+						<label for="status" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
 							Status
 						</label>
 						<select
-							name="status"
-							value={article.status}
-							onchange={(e: any) => handleInputChange('status', e?.target?.value)}
+							id="status"
+							{...createArticle.fields.status.as('select')}
 							class="font-synonym w-full rounded-lg border border-brand-grey-50 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 						>
 							<option value="DRAFT">Draft</option>
@@ -300,17 +251,13 @@
 					</div>
 
 					<div>
-						<label for="" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
-							Category
-						</label>
+						<p class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">Category</p>
 
 						<div class="grid grid-cols-2 gap-2">
-							{#each ['Development', 'Design', 'Research', 'Technology', 'Business'] as cat}
+							{#each availableCategories as cat}
 								<label class="font-synonym flex items-center gap-2 text-sm text-brand-grey-500">
 									<input
-										type="checkbox"
-										checked={article.categories.includes(cat)}
-										onchange={() => toggleCategory(cat)}
+										{...createArticle.fields.categories.as('checkbox', cat)}
 										class="accent-brand-orange-500"
 									/>
 									{cat}
@@ -318,13 +265,13 @@
 							{/each}
 						</div>
 
-						{#if formError?.categories}
-							<p class="mt-1 text-sm text-red-500">{formError.categories}</p>
-						{/if}
+						{#each createArticle.fields.categories.issues() as issue}
+							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+						{/each}
 					</div>
 				</div>
 
-				<!-- {/* Tags */} -->
+				<!-- Tags -->
 				<div class="space-y-4 rounded-xl border border-brand-grey-50 bg-white p-6">
 					<h3 class="font-cabinet font-medium text-brand-grey-500">Tags</h3>
 
@@ -346,12 +293,13 @@
 					</div>
 
 					<div class="flex flex-wrap gap-2">
-						{#each article.tags as tag}
+						{#each tags as tag}
 							<span
 								class="font-synonym inline-flex items-center gap-1 rounded-full bg-brand-blue-50 px-3 py-1 text-sm text-brand-blue-500"
 							>
 								{tag}
 								<button
+									type="button"
 									onclick={() => handleRemoveTag(tag)}
 									class="transition-colors hover:text-brand-blue-700"
 								>
@@ -361,47 +309,47 @@
 						{/each}
 					</div>
 
-					{#if formError?.tags}
-						<p class="mt-1 text-sm text-red-500">{formError.tags}</p>
-					{/if}
+					{#each createArticle.fields.tags.issues() as issue}
+						<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+					{/each}
 				</div>
 
-				<!-- {/* SEO Settings */} -->
+				<!-- SEO Settings -->
 				<div class="space-y-4 rounded-xl border border-brand-grey-50 bg-white p-6">
 					<h3 class="font-cabinet font-medium text-brand-grey-500">SEO Settings</h3>
 
 					<div>
-						<label for="" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
+						<label for="seoTitle" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
 							SEO Title
 						</label>
 						<input
-							type="text"
-							name="seoTitle"
-							value={article.seoTitle}
-							onchange={(e: any) => handleInputChange('seoTitle', e.target.value)}
+							id="seoTitle"
+							{...createArticle.fields.seoTitle.as('text')}
 							placeholder="SEO optimized title..."
 							class="font-synonym w-full rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 						/>
-						{#if formError?.seoTitle}
-							<p class="mt-1 text-sm text-red-500">{formError.seoTitle}</p>
-						{/if}
+						{#each createArticle.fields.seoTitle.issues() as issue}
+							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+						{/each}
 					</div>
 
 					<div>
-						<label for="" class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500">
+						<label
+							for="seoDescription"
+							class="font-synonym mb-2 block text-sm font-medium text-brand-grey-500"
+						>
 							Meta Description
 						</label>
 						<textarea
-							value={article.seoDescription}
-							name="seoDescription"
-							onchange={(e: any) => handleInputChange('seoDescription', e.target.value)}
+							id="seoDescription"
+							{...createArticle.fields.seoDescription.as('text')}
 							placeholder="SEO meta description..."
 							rows={3}
 							class="font-synonym w-full resize-none rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
 						></textarea>
-						{#if formError?.seoDescription}
-							<p class="mt-1 text-sm text-red-500">{formError.seoDescription}</p>
-						{/if}
+						{#each createArticle.fields.seoDescription.issues() as issue}
+							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
+						{/each}
 					</div>
 				</div>
 			</div>

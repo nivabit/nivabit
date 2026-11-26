@@ -5,7 +5,7 @@ import {
 	clearAllAuthCookies,
 	REFRESH_COOKIE_NAME,
 	setAuthCookie
-} from '$lib/utils/auth';
+} from '#lib/utils/auth.ts';
 
 interface TokenPayload {
 	exp: number;
