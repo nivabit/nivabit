@@ -254,29 +254,86 @@
 				</p>
 			</div>
 
-			<!-- Hub & Spoke Visual Layout -->
-			<div class="mt-14 space-y-6">
+			<!-- Hub & Spoke Neural Signal Architecture -->
+			<div class="mt-14">
 				<!-- Top 3 Satellites -->
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-					{#each systemNodesTop as node}
+					{#each systemNodesTop as node, idx}
 						<div
-							class="rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-brand-accent/70"
+							class="neuron-card relative rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-brand-accent/70"
+							style={`--pulse-delay: ${idx * 0.45}s;`}
 						>
-							<div class="mb-2.5 flex items-center gap-2">
-								<CheckCircle2 size={15} class="shrink-0 text-brand-accent-light" />
-								<h3 class="font-cabinet text-sm font-bold text-white">{node.title}</h3>
+							<div class="mb-2.5 flex items-center justify-between gap-2">
+								<div class="flex items-center gap-2.5">
+									<span class="h-2 w-2 shrink-0 rounded-full bg-brand-accent-light shadow-[0_0_8px_#60A5FA]"></span>
+									<h3 class="font-cabinet text-sm font-bold text-white">{node.title}</h3>
+								</div>
+								<span class="font-mono text-[10px] font-semibold text-brand-accent-light/70">
+									0{idx + 1}
+								</span>
 							</div>
 							<p class="text-xs leading-relaxed text-white/60">{node.desc}</p>
 						</div>
 					{/each}
 				</div>
 
-				<!-- Connector Lines + Central Hub -->
-				<div class="relative flex flex-col items-center py-2">
-					<div class="hidden h-6 w-px bg-brand-accent/50 md:block"></div>
+				<!-- Top Neural Signal Traces (Center Hub -> Top 3 Cards) -->
+				<div class="relative hidden h-16 w-full md:block" aria-hidden="true">
+					<svg
+						viewBox="0 0 900 64"
+						fill="none"
+						preserveAspectRatio="none"
+						class="h-full w-full overflow-visible"
+					>
+						<defs>
+							<filter id="neuronGlowTop" x="-40%" y="-40%" width="180%" height="180%">
+								<feGaussianBlur stdDeviation="2.5" result="blur" />
+								<feMerge>
+									<feMergeNode in="blur" />
+									<feMergeNode in="SourceGraphic" />
+								</feMerge>
+							</filter>
+						</defs>
 
+						<!-- Base neural pathways -->
+						<path id="sys-top-0" d="M 450 64 C 450 28, 150 36, 150 0" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
+						<path id="sys-top-1" d="M 450 64 L 450 0" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
+						<path id="sys-top-2" d="M 450 64 C 450 28, 750 36, 750 0" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
+
+						<!-- Animated traveling dash pulses -->
+						<path d="M 450 64 C 450 28, 150 36, 150 0" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0s;" />
+						<path d="M 450 64 L 450 0" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.45s;" />
+						<path d="M 450 64 C 450 28, 750 36, 750 0" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.9s;" />
+
+						<!-- Glowing neuron signal orbs firing from center hub to each card -->
+						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowTop)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0s">
+								<mpath href="#sys-top-0" />
+							</animateMotion>
+						</circle>
+						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowTop)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.45s">
+								<mpath href="#sys-top-1" />
+							</animateMotion>
+						</circle>
+						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowTop)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.9s">
+								<mpath href="#sys-top-2" />
+							</animateMotion>
+						</circle>
+
+						<!-- Synapse terminal nodes -->
+						<circle cx="150" cy="1" r="3" fill="#60A5FA" />
+						<circle cx="450" cy="1" r="3" fill="#60A5FA" />
+						<circle cx="750" cy="1" r="3" fill="#60A5FA" />
+						<circle cx="450" cy="63" r="3.5" fill="#2563EB" stroke="#93C5FD" stroke-width="1.5" />
+					</svg>
+				</div>
+
+				<!-- Central Hub (Neuron Core) -->
+				<div class="relative my-4 flex flex-col items-center md:my-0">
 					<div
-						class="w-full max-w-md rounded-2xl border-2 border-brand-accent bg-[#0F172A] p-6 text-center shadow-[0_0_55px_rgba(37,99,235,0.28)]"
+						class="neuron-hub relative w-full max-w-md rounded-2xl border-2 border-brand-accent bg-[#0F172A] p-6 text-center shadow-[0_0_55px_rgba(37,99,235,0.28)]"
 					>
 						<span
 							class="inline-block rounded-full bg-brand-accent px-3 py-0.5 text-[10px] font-black tracking-wider text-white uppercase"
@@ -291,19 +348,76 @@
 							into a single data-backed verdict in 14 days.
 						</p>
 					</div>
+				</div>
 
-					<div class="hidden h-6 w-px bg-brand-accent/50 md:block"></div>
+				<!-- Bottom Neural Signal Traces (Center Hub -> Bottom 3 Cards) -->
+				<div class="relative hidden h-16 w-full md:block" aria-hidden="true">
+					<svg
+						viewBox="0 0 900 64"
+						fill="none"
+						preserveAspectRatio="none"
+						class="h-full w-full overflow-visible"
+					>
+						<defs>
+							<filter id="neuronGlowBot" x="-40%" y="-40%" width="180%" height="180%">
+								<feGaussianBlur stdDeviation="2.5" result="blur" />
+								<feMerge>
+									<feMergeNode in="blur" />
+									<feMergeNode in="SourceGraphic" />
+								</feMerge>
+							</filter>
+						</defs>
+
+						<!-- Base neural pathways -->
+						<path id="sys-bot-0" d="M 450 0 C 450 36, 150 28, 150 64" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
+						<path id="sys-bot-1" d="M 450 0 L 450 64" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
+						<path id="sys-bot-2" d="M 450 0 C 450 36, 750 28, 750 64" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
+
+						<!-- Animated traveling dash pulses -->
+						<path d="M 450 0 C 450 36, 150 28, 150 64" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.25s;" />
+						<path d="M 450 0 L 450 64" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.7s;" />
+						<path d="M 450 0 C 450 36, 750 28, 750 64" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 1.15s;" />
+
+						<!-- Glowing neuron signal orbs firing from center hub to each card -->
+						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowBot)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.25s">
+								<mpath href="#sys-bot-0" />
+							</animateMotion>
+						</circle>
+						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowBot)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.7s">
+								<mpath href="#sys-bot-1" />
+							</animateMotion>
+						</circle>
+						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowBot)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="1.15s">
+								<mpath href="#sys-bot-2" />
+							</animateMotion>
+						</circle>
+
+						<!-- Synapse terminal nodes -->
+						<circle cx="450" cy="1" r="3.5" fill="#2563EB" stroke="#93C5FD" stroke-width="1.5" />
+						<circle cx="150" cy="63" r="3" fill="#60A5FA" />
+						<circle cx="450" cy="63" r="3" fill="#60A5FA" />
+						<circle cx="750" cy="63" r="3" fill="#60A5FA" />
+					</svg>
 				</div>
 
 				<!-- Bottom 3 Satellites -->
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-					{#each systemNodesBottom as node}
+					{#each systemNodesBottom as node, idx}
 						<div
-							class="rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-brand-accent/70"
+							class="neuron-card relative rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-brand-accent/70"
+							style={`--pulse-delay: ${(idx + 1) * 0.45}s;`}
 						>
-							<div class="mb-2.5 flex items-center gap-2">
-								<CheckCircle2 size={15} class="shrink-0 text-brand-accent-light" />
-								<h3 class="font-cabinet text-sm font-bold text-white">{node.title}</h3>
+							<div class="mb-2.5 flex items-center justify-between gap-2">
+								<div class="flex items-center gap-2.5">
+									<span class="h-2 w-2 shrink-0 rounded-full bg-brand-accent-light shadow-[0_0_8px_#60A5FA]"></span>
+									<h3 class="font-cabinet text-sm font-bold text-white">{node.title}</h3>
+								</div>
+								<span class="font-mono text-[10px] font-semibold text-brand-accent-light/70">
+									0{idx + 4}
+								</span>
 							</div>
 							<p class="text-xs leading-relaxed text-white/60">{node.desc}</p>
 						</div>

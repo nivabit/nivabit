@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowRight, ArrowDown, Check, Sparkles } from 'lucide-svelte';
+	import { ArrowRight, ArrowDown, Check } from 'lucide-svelte';
 
 	const pipelineSteps = [
 		{
@@ -137,9 +137,9 @@
 				>
 					<div class="space-y-3">
 						<span
-							class="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase"
+							class="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase"
 						>
-							<Sparkles size={11} />
+							<span class="h-1.5 w-1.5 rounded-full bg-white"></span>
 							Nivabit OS
 						</span>
 						<h3 class="font-cabinet text-lg font-extrabold text-white">

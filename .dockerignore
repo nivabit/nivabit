@@ -8,3 +8,10 @@ build
 *.log
 npm-debug.log*
 uploads
+e2e
+playwright.config.ts
+vitest-setup-client.ts
+*.spec.ts
+*.test.ts
+README.md
+github-secrets.md

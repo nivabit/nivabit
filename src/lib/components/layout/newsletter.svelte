@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { cn } from '#lib/utils.ts';
 	import { toast } from 'svelte-sonner';
-	import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-svelte';
+	import { ArrowRight, CheckCircle2 } from 'lucide-svelte';
 	import { subscribeNewsletter } from '#lib/remote/newsletter.remote.ts';
 	import { subscribeNewsletterSchema } from '#lib/validation/validation.ts';
 	import NivabitLogo from '#lib/components/icon/NivabitLogo.svelte';
@@ -21,7 +21,7 @@
 				<span
 					class="inline-flex items-center gap-1.5 rounded-full border border-brand-accent/40 bg-brand-accent/15 px-3 py-1 text-[11px] font-bold tracking-wider text-brand-accent-light uppercase"
 				>
-					<Sparkles size={12} />
+					<span class="h-1.5 w-1.5 rounded-full bg-brand-accent-light"></span>
 					The Validation Memo • Weekly
 				</span>
 
