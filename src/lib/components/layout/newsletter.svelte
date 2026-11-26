@@ -19,9 +19,9 @@
 			<!-- Left Copy & Remote Form -->
 			<div class="space-y-6 lg:col-span-7">
 				<span
-					class="inline-flex items-center gap-1.5 rounded-full border border-brand-accent/40 bg-brand-accent/15 px-3 py-1 text-[11px] font-bold tracking-wider text-brand-accent-light uppercase"
+					class="inline-flex items-center gap-1.5 rounded-lg border border-brand-accent/40 bg-brand-accent/15 px-3 py-1 text-[11px] font-bold tracking-wider text-brand-accent-light uppercase"
 				>
-					<span class="h-1.5 w-1.5 rounded-full bg-brand-accent-light"></span>
+					<span class="h-1.5 w-1.5 rounded-[1px] bg-brand-accent-light"></span>
 					The Validation Memo • Weekly
 				</span>
 
@@ -55,24 +55,24 @@
 					{/each}
 
 					<div
-						class="flex max-w-md flex-col gap-2.5 sm:flex-row sm:items-center sm:rounded-full sm:border sm:border-white/15 sm:bg-white/[0.06] sm:p-1.5"
+						class="flex max-w-md flex-col gap-2.5 sm:flex-row sm:items-center sm:rounded-xl sm:border sm:border-white/15 sm:bg-white/[0.06] sm:p-1.5"
 					>
 						<input
 							required
 							{...subscribeNewsletter.fields.email.as('email')}
 							placeholder="founder@company.com"
-							class="w-full flex-1 rounded-full border border-white/15 bg-white/[0.06] px-5 py-3 text-sm text-white placeholder:text-white/40 focus:border-brand-accent focus:outline-none sm:border-0 sm:bg-transparent sm:py-2"
+							class="w-full flex-1 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3 text-base text-white placeholder:text-white/40 focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/25 focus:outline-none sm:border-0 sm:bg-transparent sm:py-2.5 sm:text-sm"
 						/>
 						<button
 							disabled={Boolean(subscribeNewsletter.pending)}
 							type="submit"
-							class="inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-brand-accent px-5 py-3 text-xs font-extrabold text-white transition-colors hover:bg-brand-accent-hover disabled:opacity-60 sm:py-2.5"
+							class="inline-flex min-h-[44px] shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-[#0284C7] px-5 py-3 text-xs font-bold text-white transition-all duration-200 hover:bg-[#0369A1] hover:shadow disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#0284C7] sm:py-2.5"
 						>
 							{#if subscribeNewsletter.pending}
 								Subscribing...
 							{:else}
 								Join The Memo
-								<ArrowRight size={14} strokeWidth={2.5} />
+								<ArrowRight size={14} strokeWidth={2.2} />
 							{/if}
 						</button>
 					</div>

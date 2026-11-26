@@ -7,6 +7,7 @@
 	import Instagram from '../icon/instagram.svelte';
 	import Tiktok from '../icon/tiktok.svelte';
 	import NivabitLogo from '../icon/NivabitLogo.svelte';
+	import { bookingModal } from '#lib/stores/bookingModal.svelte.ts';
 
 	const socialLinks = [
 		{ name: 'X / Twitter', icon: Twitter, url: 'https://x.com/@groupnivabit' },
@@ -119,14 +120,13 @@
 						+234 906 680 9821
 					</a>
 					<div class="pt-2">
-						<a
-							href="https://calendly.com/groupnivabit/30min"
-							target="_blank"
-							rel="noopener noreferrer"
-							class="inline-flex items-center gap-1.5 rounded-full bg-brand-accent px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-accent-hover"
+						<button
+							type="button"
+							onclick={bookingModal.open}
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-brand-accent px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-accent-hover"
 						>
 							Book a 30-Min Call
-						</a>
+						</button>
 					</div>
 				</div>
 			</div>

@@ -46,7 +46,7 @@ export const loginAdmin = form(loginSchema, async ({ email, _password }) => {
 		phone: admin.phone
 	});
 
-	throw redirect(303, '/bits/admin/dashboard');
+	throw redirect(303, '/ceo');
 });
 
 export const logoutAdmin = command(async () => {
@@ -54,7 +54,7 @@ export const logoutAdmin = command(async () => {
 	clearAuthCookie(cookies);
 	clearUserCookie(cookies);
 	clearRefreshCookie(cookies);
-	return { success: true, redirectTo: '/bits/admin/auth/login' };
+	return { success: true, redirectTo: '/ceo/login' };
 });
 
 export const forgotPassword = form(forgotPasswordSchema, async ({ email }) => {

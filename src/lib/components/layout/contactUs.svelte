@@ -94,7 +94,7 @@
 					<div>
 						<label
 							for="contact-name"
-							class="mb-2 block text-xs font-bold tracking-wider text-white/60 uppercase"
+							class="mb-2 block text-xs font-bold tracking-wider text-white/70 uppercase"
 						>
 							Your Name
 						</label>
@@ -102,7 +102,7 @@
 							id="contact-name"
 							{...submitContact.fields.name.as('text')}
 							placeholder="Alex Morgan"
-							class="w-full rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/35 focus:border-lime-accent focus:outline-none"
+							class="w-full rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-base text-white placeholder:text-white/35 focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/25 focus:outline-none sm:text-sm"
 						/>
 						{#each submitContact.fields.name.issues() as issue}
 							<p class="mt-1.5 text-xs text-red-400">{issue.message}</p>
@@ -112,7 +112,7 @@
 					<div>
 						<label
 							for="contact-email"
-							class="mb-2 block text-xs font-bold tracking-wider text-white/60 uppercase"
+							class="mb-2 block text-xs font-bold tracking-wider text-white/70 uppercase"
 						>
 							Work Email
 						</label>
@@ -120,7 +120,7 @@
 							id="contact-email"
 							{...submitContact.fields.email.as('email')}
 							placeholder="alex@company.com"
-							class="w-full rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/35 focus:border-lime-accent focus:outline-none"
+							class="w-full rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-base text-white placeholder:text-white/35 focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/25 focus:outline-none sm:text-sm"
 						/>
 						{#each submitContact.fields.email.issues() as issue}
 							<p class="mt-1.5 text-xs text-red-400">{issue.message}</p>
@@ -132,7 +132,7 @@
 				<div>
 					<label
 						for="contact-message"
-						class="mb-2 block text-xs font-bold tracking-wider text-white/60 uppercase"
+						class="mb-2 block text-xs font-bold tracking-wider text-white/70 uppercase"
 					>
 						Product Hypothesis &amp; Goals
 					</label>
@@ -141,7 +141,7 @@
 						rows={4}
 						{...submitContact.fields.message.as('text')}
 						placeholder="What are you building, who is the target buyer, and what decision do you need validated?"
-						class="w-full resize-none rounded-2xl border border-white/15 bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/35 focus:border-lime-accent focus:outline-none"
+						class="w-full resize-none rounded-xl border border-white/15 bg-white/[0.05] px-4 py-3 text-base text-white placeholder:text-white/35 focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/25 focus:outline-none sm:text-sm"
 					></textarea>
 					{#each submitContact.fields.message.issues() as issue}
 						<p class="mt-1.5 text-xs text-red-400">{issue.message}</p>
@@ -153,15 +153,15 @@
 					<button
 						disabled={Boolean(submitContact.pending)}
 						type="submit"
-						class="inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand-accent px-7 py-3.5 text-sm font-extrabold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-accent-hover disabled:opacity-60"
+						class="inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0284C7] px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#0369A1] hover:shadow hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#0284C7] focus-visible:ring-offset-2"
 					>
 						{submitContact.pending ? 'Sending...' : 'Request Validation Scope'}
-						<ArrowRight size={15} strokeWidth={2.5} />
+						<ArrowRight size={15} strokeWidth={2.2} />
 					</button>
-					<p class="text-xs text-white/45">
+					<p class="text-xs text-white/60">
 						Or email directly at <a
 							href="mailto:contact@nivabit.com"
-							class="text-brand-accent-light hover:underline">contact@nivabit.com</a
+							class="text-sky-400 underline underline-offset-2 hover:text-sky-300">contact@nivabit.com</a
 						>
 					</p>
 				</div>

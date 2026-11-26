@@ -178,7 +178,7 @@
 				editing = false;
 				form.reset();
 				toast.success('Password changed successfully. Please login again.');
-				goto('/bits/admin/auth/login');
+				goto('/ceo/login');
 			})}
 			oninput={() => changeAdminPassword.validate()}
 		>

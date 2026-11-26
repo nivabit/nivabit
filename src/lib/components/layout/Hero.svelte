@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowRight, ArrowDown, Check } from 'lucide-svelte';
+	import { ArrowRight, ArrowDown, Check, Clock, TrendingUp } from 'lucide-svelte';
 
 	const pipelineSteps = [
 		{
@@ -33,214 +33,290 @@
 	];
 
 	const clientLogos = [
-		'/images/clients/1.png',
-		'/images/clients/2.png',
-		'/images/clients/3.png',
-		'/images/clients/4.png',
-		'/images/clients/5.png',
-		'/images/clients/6.png'
+		{ name: 'Facity', src: '/images/clients/7.png' },
+		{ name: 'Tichly', src: '/images/clients/8.png' },
+		{ name: 'EDGD Media', src: '/images/clients/1.png' },
+		{ name: 'Project Enable Africa', src: '/images/clients/2.png' },
+		{ name: 'Stanforte Edge', src: '/images/clients/4.png' },
+		{ name: 'Lofiqmi', src: '/images/clients/5.png' },
+		{ name: 'The ImisiOluwa', src: '/images/clients/6.png' }
 	];
 </script>
 
-<section id="home" class="relative overflow-hidden bg-surface-light px-4 pt-10 pb-14 md:px-8 md:pt-16 md:pb-20">
-	<div class="mx-auto max-w-5xl">
-		<!-- Centered Headline Block -->
+<section
+	id="home"
+	class="relative overflow-hidden bg-slate-50 px-4 pt-12 pb-16 md:px-8 md:pt-20 md:pb-24"
+>
+	<!-- Accent Place 1: Hero ambient anchor light (subtle top-center beacon) -->
+	<div
+		class="pointer-events-none absolute -top-28 left-1/2 h-64 w-[480px] -translate-x-1/2 rounded-full bg-[#0284c7]/12 blur-3xl"
+		aria-hidden="true"
+	></div>
+
+	<div class="relative mx-auto max-w-5xl">
+		<!-- Main Hero Headline Block -->
 		<div class="mx-auto max-w-3xl text-center">
+			<!-- Accent Place 2: One headline word in accent color -->
 			<h1
-				class="font-cabinet text-4xl leading-[1.03] font-extrabold tracking-[-0.03em] text-ink-primary sm:text-5xl md:text-6xl lg:text-[68px]"
+				class="text-3xl leading-[1.1] font-bold tracking-tight text-slate-900 sm:text-5xl md:text-[56px]"
 			>
-				We install your Validation Operating System.
+				We test your software concept with paying customers before you write <span
+					class="text-[#0284c7]">code</span
+				>.
 			</h1>
 
-			<p
-				class="mx-auto mt-5 max-w-xl text-base leading-relaxed text-ink-secondary md:text-lg"
-			>
-				Data-driven customer discovery, competitor whitespace teardowns, and live demand smoke tests
-				in 14 days — so you prove willingness-to-pay before writing a single line of code.
+			<p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+				Most software ideas burn capital building features nobody uses. Nivabit runs 14-day market
+				validation sprints, then engineers production systems once demand is verified.
 			</p>
 
-			<div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+			<!-- Primary & Secondary Actions (Hit target minimum 44x44px, real hover) -->
+			<div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+				<!-- Accent Place 3: Primary CTA button -->
 				<a
 					href="/#contact"
-					class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-accent-hover hover:shadow-md"
+					class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-xl bg-[#0284c7] px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0369a1] hover:shadow-md focus-visible:ring-2 focus-visible:ring-[#0284c7] focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.99]"
 				>
-					Validate Your Idea
-					<ArrowRight size={15} strokeWidth={2.5} />
+					Book a Validation Sprint
+					<ArrowRight size={16} strokeWidth={2.2} />
 				</a>
 				<a
-					href="https://calendly.com/groupnivabit/30min"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-2 rounded-full border border-black/12 bg-white px-5 py-3 text-sm font-semibold text-ink-primary transition-colors hover:border-black/25 hover:bg-black/[0.02]"
+					href="#system"
+					class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-medium text-slate-700 transition-all duration-200 hover:border-slate-400 hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 active:bg-slate-200"
 				>
-					Book a Discovery Call
+					Review Client Deliverables
 				</a>
+			</div>
+
+			<!-- Hero Metric Row: Big numbers, small labels -->
+			<div class="mt-10 grid grid-cols-2 gap-4 border-y border-slate-200/80 py-4 sm:grid-cols-4">
+				<div class="text-center">
+					<p class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">14 Days</p>
+					<p class="mt-0.5 text-xs font-medium text-slate-500 uppercase">Sprint Turnaround</p>
+				</div>
+				<div class="text-center">
+					<p class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">20+</p>
+					<p class="mt-0.5 text-xs font-medium text-slate-500 uppercase">Buyer Interviews</p>
+				</div>
+				<div class="text-center">
+					<p class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">84%</p>
+					<p class="mt-0.5 text-xs font-medium text-slate-500 uppercase">Filtered Assumptions</p>
+				</div>
+				<div class="text-center">
+					<p class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">$0</p>
+					<p class="mt-0.5 text-xs font-medium text-slate-500 uppercase">Wasted Code Spend</p>
+				</div>
 			</div>
 		</div>
 
-		<!-- Visual Architecture Diagram (Reference Top 2 Cards + Bottom Lime Pipeline Box) -->
+		<!-- Asymmetric Modular Overview: Raw Hypothesis vs. Validated Demand -->
 		<div class="mt-12 md:mt-16">
-			<!-- Row 1: Input -> Output Cards -->
 			<div class="grid grid-cols-1 items-stretch gap-4 md:grid-cols-[1fr_auto_1fr] md:gap-5">
-				<!-- Left Card: White (Before / Raw Hypothesis) -->
+				<!-- Left Block: Raw Hypothesis (Before) -->
 				<div
-					class="flex flex-col justify-between gap-5 rounded-2xl border border-black/8 bg-white p-6 shadow-xs sm:flex-row sm:items-center"
+					class="flex flex-col justify-between gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs sm:flex-row sm:items-center"
 				>
 					<div class="space-y-3">
 						<span
-							class="inline-block rounded-full bg-surface-light px-2.5 py-1 text-[11px] font-semibold tracking-wide text-ink-secondary uppercase"
+							class="inline-block rounded-md border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold text-slate-600 uppercase"
 						>
-							Before Nivabit
+							Before Sprint
 						</span>
-						<h3 class="font-cabinet text-lg font-bold text-ink-primary">Raw Hypothesis</h3>
-						<ul class="space-y-1.5 text-xs text-ink-secondary">
+						<h3 class="text-lg font-bold text-slate-900">Unverified Hypothesis</h3>
+						<ul class="space-y-2 text-xs text-slate-600">
 							<li class="flex items-center gap-2">
-								<span class="h-1.5 w-1.5 rounded-full bg-black/25"></span>
-								Unproven market assumptions
+								<span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+								Untested pricing and user willingness-to-pay
 							</li>
 							<li class="flex items-center gap-2">
-								<span class="h-1.5 w-1.5 rounded-full bg-black/25"></span>
-								Polite praise instead of buying intent
+								<span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+								Polite feedback from friends instead of buyers
 							</li>
 							<li class="flex items-center gap-2">
-								<span class="h-1.5 w-1.5 rounded-full bg-black/25"></span>
-								6+ months of engineering runway at risk
+								<span class="h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+								4 to 6 months of engineering runway at risk
 							</li>
 						</ul>
 					</div>
 
-					<!-- Subtle Wireframe Node SVG -->
+					<!-- Wireframe SVG -->
 					<div class="hidden shrink-0 sm:block" aria-hidden="true">
-						<svg width="110" height="84" viewBox="0 0 110 84" fill="none">
-							<rect x="6" y="10" width="38" height="22" rx="6" stroke="#D4D4CE" stroke-width="1.2" stroke-dasharray="3 3" />
-							<rect x="64" y="6" width="40" height="22" rx="6" stroke="#D4D4CE" stroke-width="1.2" stroke-dasharray="3 3" />
-							<rect x="30" y="52" width="48" height="24" rx="6" stroke="#D4D4CE" stroke-width="1.2" stroke-dasharray="3 3" />
-							<path d="M44 21H64M54 21V52" stroke="#D4D4CE" stroke-width="1.2" stroke-dasharray="3 3" />
-							<circle cx="54" cy="36" r="3" fill="#D4D4CE" />
+						<svg width="104" height="80" viewBox="0 0 104 80" fill="none">
+							<rect
+								x="4"
+								y="8"
+								width="36"
+								height="20"
+								rx="4"
+								stroke="#CBD5E1"
+								stroke-width="1.2"
+								stroke-dasharray="3 3"
+							/>
+							<rect
+								x="60"
+								y="8"
+								width="38"
+								height="20"
+								rx="4"
+								stroke="#CBD5E1"
+								stroke-width="1.2"
+								stroke-dasharray="3 3"
+							/>
+							<rect
+								x="28"
+								y="48"
+								width="46"
+								height="22"
+								rx="4"
+								stroke="#CBD5E1"
+								stroke-width="1.2"
+								stroke-dasharray="3 3"
+							/>
+							<path
+								d="M40 18H60M51 18V48"
+								stroke="#CBD5E1"
+								stroke-width="1.2"
+								stroke-dasharray="3 3"
+							/>
+							<circle cx="51" cy="33" r="2.5" fill="#94A3B8" />
 						</svg>
 					</div>
 				</div>
 
-				<!-- Center Arrow -->
+				<!-- Center Indicator -->
 				<div class="flex items-center justify-center py-1 md:py-0">
 					<div
-						class="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white text-ink-primary shadow-xs"
+						class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-xs"
 					>
-						<ArrowRight size={14} class="hidden md:block" />
-						<ArrowDown size={14} class="md:hidden" />
+						<ArrowRight size={15} class="hidden md:block" />
+						<ArrowDown size={15} class="md:hidden" />
 					</div>
 				</div>
 
-				<!-- Right Card: Brand Blue (With Nivabit Validation OS) -->
+				<!-- Right Block: Validated Demand (After) - Clean Dark Card, No Nested Cards -->
 				<div
-					class="flex flex-col justify-between gap-5 rounded-2xl border border-brand-accent bg-brand-accent p-6 text-white shadow-sm sm:flex-row sm:items-center"
+					class="flex flex-col justify-between gap-5 rounded-2xl border border-slate-800 bg-[#090D14] p-6 text-white shadow-xs sm:flex-row sm:items-center"
 				>
 					<div class="space-y-3">
 						<span
-							class="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase"
+							class="inline-flex items-center gap-1.5 rounded-md border border-slate-700 bg-slate-800 px-2.5 py-0.5 text-[11px] font-semibold text-slate-300 uppercase"
 						>
-							<span class="h-1.5 w-1.5 rounded-full bg-white"></span>
-							Nivabit OS
+							<span class="h-1.5 w-1.5 rounded-[1px] bg-emerald-400"></span>
+							Nivabit Output
 						</span>
-						<h3 class="font-cabinet text-lg font-extrabold text-white">
-							Validated Demand Engine
-						</h3>
-						<ul class="space-y-1.5 text-xs font-medium text-white/90">
+						<h3 class="text-lg font-bold text-white">Validated Demand Engine</h3>
+						<ul class="space-y-2 text-xs font-medium text-slate-300">
 							<li class="flex items-center gap-2">
-								<Check size={13} strokeWidth={3} class="shrink-0 text-white" />
-								20+ verified ICP buyer interviews
+								<Check size={14} strokeWidth={2.5} class="shrink-0 text-emerald-400" />
+								20+ recorded buyer discovery interviews
 							</li>
 							<li class="flex items-center gap-2">
-								<Check size={13} strokeWidth={3} class="shrink-0 text-white" />
-								Live smoke-test conversion metrics
+								<Check size={14} strokeWidth={2.5} class="shrink-0 text-emerald-400" />
+								Live smoke-test click and waitlist intent
 							</li>
 							<li class="flex items-center gap-2">
-								<Check size={13} strokeWidth={3} class="shrink-0 text-white" />
-								Investor-grade Go / No-Go scorecard
+								<Check size={14} strokeWidth={2.5} class="shrink-0 text-emerald-400" />
+								Executive Go / No-Go verdict and roadmap
 							</li>
 						</ul>
 					</div>
 
-					<!-- Structured System SVG -->
 					<div class="hidden shrink-0 sm:block" aria-hidden="true">
-						<svg width="110" height="84" viewBox="0 0 110 84" fill="none">
-							<rect x="6" y="10" width="38" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-width="1.3" />
-							<rect x="64" y="10" width="40" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-width="1.3" />
-							<rect x="26" y="52" width="58" height="24" rx="6" fill="#0B0F1A" />
-							<path d="M25 32V42H84V32M55 42V52" stroke="#FFFFFF" stroke-width="1.4" />
-							<circle cx="55" cy="42" r="3" fill="#FFFFFF" />
-							<rect x="38" y="61" width="34" height="5" rx="2.5" fill="#60A5FA" />
+						<svg width="104" height="80" viewBox="0 0 104 80" fill="none">
+							<rect
+								x="4"
+								y="8"
+								width="36"
+								height="20"
+								rx="4"
+								fill="#1E293B"
+								stroke="#334155"
+								stroke-width="1.2"
+							/>
+							<rect
+								x="60"
+								y="8"
+								width="38"
+								height="20"
+								rx="4"
+								fill="#1E293B"
+								stroke="#334155"
+								stroke-width="1.2"
+							/>
+							<rect
+								x="24"
+								y="48"
+								width="54"
+								height="22"
+								rx="4"
+								fill="#0F172A"
+								stroke="#16A34A"
+								stroke-width="1.2"
+							/>
+							<path d="M22 28V38H78V28M50 38V48" stroke="#64748B" stroke-width="1.2" />
+							<circle cx="50" cy="38" r="2.5" fill="#16A34A" />
+							<rect x="36" y="56" width="30" height="5" rx="2.5" fill="#16A34A" />
 						</svg>
 					</div>
 				</div>
 			</div>
 
-			<!-- Connector Down -->
-			<div class="my-3 flex justify-center">
-				<div class="flex h-7 w-7 items-center justify-center rounded-full border border-black/10 bg-white text-ink-primary">
-					<ArrowDown size={13} />
-				</div>
-			</div>
-
-			<!-- Row 2: Wide Brand Blue Pipeline Container with 4 Dark Cards -->
-			<div class="rounded-3xl border border-brand-accent bg-brand-accent p-5 text-white shadow-lg shadow-brand-accent/20 md:p-7">
-				<div class="mb-5 flex flex-col items-center justify-between gap-2 text-center sm:flex-row sm:text-left">
-					<p class="font-cabinet text-sm font-extrabold tracking-tight text-white md:text-base">
-						Your 14-Day Validation Pipeline
-					</p>
-					<span class="rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold text-white">
-						$500k+ Wasted Runway Saved • 40+ Market Teardowns
-					</span>
+			<!-- Modular 4-Step Pipeline (Flat row without card-in-card nesting) -->
+			<div class="mt-8">
+				<div class="mb-4 flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
+					<h3 class="text-sm font-bold tracking-tight text-slate-900 uppercase">
+						14-Day Validation Workflow
+					</h3>
+					<span class="text-xs font-medium text-slate-500"> 40+ market teardowns completed </span>
 				</div>
 
-				<div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 					{#each pipelineSteps as step}
 						<div
-							class="group overflow-hidden rounded-2xl border border-white/10 bg-surface-dark p-3 text-white transition-transform duration-300 hover:-translate-y-1"
+							class="rounded-xl border border-slate-200 bg-white p-4 shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-sm"
 						>
-							<div class="mb-2.5 flex items-center justify-between">
+							<div class="mb-3 flex items-center justify-between">
 								<span
-									class="flex h-5 w-5 items-center justify-center rounded-full bg-brand-accent text-[10px] font-black text-white"
+									class="flex h-6 w-6 items-center justify-center rounded-md bg-slate-900 text-xs font-bold text-white"
 								>
 									{step.num}
 								</span>
-								<span class="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white/80">
+								<span
+									class="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600"
+								>
 									{step.tag}
 								</span>
 							</div>
 
-							<div class="relative mb-3 h-28 overflow-hidden rounded-xl bg-black/50">
+							<div class="relative mb-3 h-28 overflow-hidden rounded-lg bg-slate-100">
 								<img
 									src={step.image}
 									alt={step.title}
-									class="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
+									class="h-full w-full object-cover"
+									loading="lazy"
 								/>
 							</div>
 
-							<p class="font-cabinet text-sm font-bold text-white">{step.title}</p>
-							<p class="mt-0.5 text-[11px] text-white/60">{step.meta}</p>
+							<p class="text-sm font-semibold text-slate-900">{step.title}</p>
+							<p class="mt-1 text-xs text-slate-500">{step.meta}</p>
 						</div>
 					{/each}
 				</div>
-
-				<p class="mt-4 text-center text-xs font-semibold text-white/85">
-					Delivered in 14 days with full interview transcripts, live demand metrics, and an
-					investor-ready Go / No-Go dossier.
-				</p>
 			</div>
 		</div>
 
-		<!-- Trusted Logos Strip -->
-		<div class="mt-12 border-t border-black/8 pt-8 text-center">
-			<p class="text-xs font-semibold tracking-wider text-ink-muted uppercase">
-				Trusted by founders, venture studios & innovation teams
+		<!-- Client & Partner Logos Strip -->
+		<div class="mt-14 border-t border-slate-200 pt-8 text-center">
+			<p class="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+				Trusted by founders, venture studios, and engineering leads
 			</p>
 			<div class="mt-6 flex flex-wrap items-center justify-center gap-8 md:gap-12">
-				{#each clientLogos as logo, i}
+				{#each clientLogos as client}
 					<img
-						src={logo}
-						alt={`Partner ${i + 1}`}
-						class="h-7 w-auto object-contain opacity-60 brightness-0 grayscale transition-opacity hover:opacity-100"
+						src={client.src}
+						alt={`${client.name} logo`}
+						class="h-6 w-auto max-w-[130px] object-contain opacity-55 grayscale transition-all duration-200 hover:opacity-100 hover:grayscale-0"
+						loading="lazy"
 					/>
 				{/each}
 			</div>

@@ -79,7 +79,7 @@
 				</p>
 
 				<a
-					href="/bits/admin/auth/forgotpassword"
+					href="/ceo/forgotpassword"
 					class="font-synonym inline-block w-full rounded-lg bg-brand-orange-500 px-4 py-3 text-center font-medium text-white transition-colors hover:bg-brand-orange-500/90"
 				>
 					Request New Link
@@ -88,7 +88,7 @@
 
 			<div class="mt-6 text-center">
 				<a
-					href="/bits/admin/auth/login"
+					href="/ceo/login"
 					class="font-synonym inline-flex items-center gap-2 text-sm text-brand-blue-100 transition-colors hover:text-white"
 				>
 					Back to login
@@ -128,7 +128,7 @@
 							isSuccess = true;
 							toast.success('Password updated successfully. Redirecting to login...');
 							setTimeout(() => {
-								window.location.href = '/bits/admin/auth/login';
+								window.location.href = '/ceo/login';
 							}, 3000);
 						})}
 						oninput={() => resetPassword.validate()}
@@ -278,7 +278,7 @@
 							</p>
 						</div>
 						<CustomButton
-							href="/bits/admin/auth/login"
+							href="/ceo/login"
 							className="inline-flex items-center gap-2 text-brand-blue-100 font-synonym text-sm transition-colors"
 						>
 							<div class="inline-flex items-center gap-2 text-brand-blue-100">
@@ -293,7 +293,7 @@
 			{#if !isSuccess}
 				<div class="mt-6 text-center">
 					<CustomButton
-						href="/bits/admin/auth/login"
+						href="/ceo/login"
 						className="inline-flex items-center gap-2 text-brand-blue-100 font-synonym text-sm transition-colors"
 					>
 						<div class="inline-flex items-center gap-2 text-brand-blue-100">

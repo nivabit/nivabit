@@ -4,6 +4,7 @@
 	import Resources from '#lib/components/layout/resources.svelte';
 	import Newsletter from '#lib/components/layout/newsletter.svelte';
 	import ContactUs from '#lib/components/layout/contactUs.svelte';
+	import { bookingModal } from '#lib/stores/bookingModal.svelte.ts';
 	import {
 		ArrowRight,
 		ArrowUpRight,
@@ -94,15 +95,15 @@
 			endY: 14
 		},
 		{
-			name: 'Eniola Awotunde',
-			role: 'CEO, Broglux (E-commerce)',
-			badge: '+62% Higher AOV',
-			metric: 'Pricing Model Validated',
+			name: 'Stanley Onyebuchi',
+			role: 'Director, Stanforte Edge',
+			badge: '+62% Workflow Adoption',
+			metric: 'Product Model Validated',
 			avatar: '/images/profile2.jpg',
 			summary:
-				'The customer willingness-to-pay research Nivabit conducted completely reshaped our product pricing strategy and luxury inventory mix — lifting average order value before our full rollout.',
-			calloutTitle: 'WTP Pricing Shift',
-			calloutMetric: '+62% margin expansion',
+				'The user discovery research Nivabit conducted completely reshaped our product strategy and accessibility workflows — validating critical user pathways before full rollout.',
+			calloutTitle: 'Workflow Validated',
+			calloutMetric: '+62% onboarding retention',
 			xLabels: ['Pre-Sprint', 'Day 5', 'Day 10', 'Day 14', 'Month 2', 'Month 3'],
 			pathD: 'M 24 144 C 100 142, 165 138, 240 130 C 310 122, 370 102, 435 72 C 490 46, 540 30, 576 18',
 			areaD:
@@ -134,7 +135,7 @@
 	const trustedTeams = [
 		{ name: 'Facity', sector: 'Fintech • 2 wks', initials: 'FA' },
 		{ name: 'Tichly', sector: 'EdTech • 3 wks', initials: 'TI' },
-		{ name: 'Broglux', sector: 'E-commerce • 2 wks', initials: 'BR' },
+		{ name: 'Stanforte', sector: 'Tech Inclusion • 2 wks', initials: 'SE' },
 		{ name: 'HealthPulse', sector: 'Digital Health • 4 wks', initials: 'HP' },
 		{ name: 'Grace Inc.', sector: 'Consumer • 2 wks', initials: 'GR' },
 		{ name: 'PayStackr', sector: 'B2B Payments', initials: 'PS' },
@@ -159,9 +160,9 @@
 		},
 		{
 			quote:
-				'The customer willingness-to-pay research Nivabit conducted completely reshaped our product pricing strategy and luxury inventory mix. An invaluable partner for any founder.',
-			name: 'Eniola Awotunde',
-			role: 'CEO, Broglux',
+				'The user research Nivabit conducted completely clarified our product roadmap and accessibility workflows. An invaluable validation partner.',
+			name: 'Stanley Onyebuchi',
+			role: 'Director, Stanforte Edge',
 			avatar: '/images/profile2.jpg'
 		},
 		{
@@ -198,12 +199,12 @@
 			image: '/images/project/Project-6.png'
 		},
 		{
-			title: 'Broglux',
+			title: 'Stanforte Edge',
 			duration: '2 weeks',
-			type: 'Willingness-to-Pay Testing',
-			category: 'E-commerce',
-			outcome: '+62% AOV lift from repriced luxury catalog',
-			image: '/images/project/Project-8.png'
+			type: 'Product Model Validation',
+			category: 'Inclusion Tech',
+			outcome: '+62% retention lift on validated onboarding workflow',
+			image: '/images/project/Project-4.png'
 		},
 		{
 			title: 'HealthPulse Platform',
@@ -228,56 +229,55 @@
 	<!-- 1. HERO + 2-CARD FLOW + 4-STAGE LIME PIPELINE + LOGOS -->
 	<Hero />
 
-	<!-- 2. DARK OBSIDIAN ARCHITECTURE BAND: "Inside the System" (Hub & Spoke) -->
-	<section id="system" class="relative overflow-hidden bg-surface-dark px-4 py-20 text-white md:px-8 md:py-28">
-		<!-- Subtle dot grid texture -->
+	<!-- 2. DARK ARCHITECTURE BAND: "Inside the System" -->
+	<section id="system" class="relative overflow-hidden bg-[#090D14] px-4 py-20 text-white md:px-8 md:py-28">
+		<!-- Subtle grid texture -->
 		<div
-			class="pointer-events-none absolute inset-0 opacity-[0.06]"
+			class="pointer-events-none absolute inset-0 opacity-[0.04]"
 			style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"
 		></div>
 
 		<div class="relative mx-auto max-w-5xl">
 			<div class="mx-auto max-w-2xl text-center">
 				<span
-					class="inline-block rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-[11px] font-bold tracking-wider text-brand-accent-light uppercase"
+					class="inline-block rounded-md border border-slate-700 bg-slate-800/80 px-3 py-1 text-xs font-semibold tracking-wider text-slate-300 uppercase"
 				>
 					System Architecture
 				</span>
 				<h2
-					class="font-cabinet mt-4 text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-white sm:text-4xl md:text-5xl"
+					class="mt-4 text-3xl leading-[1.1] font-bold tracking-tight text-white sm:text-4xl md:text-5xl"
 				>
 					Inside the Validation OS.
 				</h2>
-				<p class="mt-3 text-sm leading-relaxed text-white/60 md:text-base">
-					Six interconnected research modules feeding one decisive Go / No-Go engine — built so you
-					never gamble runway on guesswork.
+				<p class="mt-3 text-sm leading-relaxed text-slate-400 md:text-base">
+					Six interconnected research modules feeding one decisive Go / No-Go engine. Built so you never gamble runway on guesswork.
 				</p>
 			</div>
 
-			<!-- Hub & Spoke Neural Signal Architecture -->
+			<!-- Modular Architecture Bento -->
 			<div class="mt-14">
 				<!-- Top 3 Satellites -->
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
 					{#each systemNodesTop as node, idx}
 						<div
-							class="neuron-card relative rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-brand-accent/70"
+							class="neuron-card relative rounded-xl border border-slate-800 bg-[#111827] p-5 transition-colors hover:border-slate-700"
 							style={`--pulse-delay: ${idx * 0.45}s;`}
 						>
 							<div class="mb-2.5 flex items-center justify-between gap-2">
 								<div class="flex items-center gap-2.5">
-									<span class="h-2 w-2 shrink-0 rounded-full bg-brand-accent-light shadow-[0_0_8px_#60A5FA]"></span>
-									<h3 class="font-cabinet text-sm font-bold text-white">{node.title}</h3>
+									<span class="h-2 w-2 shrink-0 rounded-[1.5px] bg-[#38bdf8]"></span>
+									<h3 class="text-sm font-bold text-white">{node.title}</h3>
 								</div>
-								<span class="font-mono text-[10px] font-semibold text-brand-accent-light/70">
+								<span class="font-mono text-[10px] font-semibold text-slate-400">
 									0{idx + 1}
 								</span>
 							</div>
-							<p class="text-xs leading-relaxed text-white/60">{node.desc}</p>
+							<p class="text-xs leading-relaxed text-slate-400">{node.desc}</p>
 						</div>
 					{/each}
 				</div>
 
-				<!-- Top Neural Signal Traces (Center Hub -> Top 3 Cards) -->
+				<!-- Top Traces -->
 				<div class="relative hidden h-16 w-full md:block" aria-hidden="true">
 					<svg
 						viewBox="0 0 900 64"
@@ -285,72 +285,39 @@
 						preserveAspectRatio="none"
 						class="h-full w-full overflow-visible"
 					>
-						<defs>
-							<filter id="neuronGlowTop" x="-40%" y="-40%" width="180%" height="180%">
-								<feGaussianBlur stdDeviation="2.5" result="blur" />
-								<feMerge>
-									<feMergeNode in="blur" />
-									<feMergeNode in="SourceGraphic" />
-								</feMerge>
-							</filter>
-						</defs>
-
 						<!-- Base neural pathways -->
-						<path id="sys-top-0" d="M 450 64 C 450 28, 150 36, 150 0" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
-						<path id="sys-top-1" d="M 450 64 L 450 0" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
-						<path id="sys-top-2" d="M 450 64 C 450 28, 750 36, 750 0" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
-
-						<!-- Animated traveling dash pulses -->
-						<path d="M 450 64 C 450 28, 150 36, 150 0" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0s;" />
-						<path d="M 450 64 L 450 0" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.45s;" />
-						<path d="M 450 64 C 450 28, 750 36, 750 0" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.9s;" />
-
-						<!-- Glowing neuron signal orbs firing from center hub to each card -->
-						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowTop)">
-							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0s">
-								<mpath href="#sys-top-0" />
-							</animateMotion>
-						</circle>
-						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowTop)">
-							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.45s">
-								<mpath href="#sys-top-1" />
-							</animateMotion>
-						</circle>
-						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowTop)">
-							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.9s">
-								<mpath href="#sys-top-2" />
-							</animateMotion>
-						</circle>
+						<path id="sys-top-0" d="M 450 64 C 450 28, 150 36, 150 0" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
+						<path id="sys-top-1" d="M 450 64 L 450 0" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
+						<path id="sys-top-2" d="M 450 64 C 450 28, 750 36, 750 0" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
 
 						<!-- Synapse terminal nodes -->
-						<circle cx="150" cy="1" r="3" fill="#60A5FA" />
-						<circle cx="450" cy="1" r="3" fill="#60A5FA" />
-						<circle cx="750" cy="1" r="3" fill="#60A5FA" />
-						<circle cx="450" cy="63" r="3.5" fill="#2563EB" stroke="#93C5FD" stroke-width="1.5" />
+						<circle cx="150" cy="1" r="3" fill="#38BDF8" />
+						<circle cx="450" cy="1" r="3" fill="#38BDF8" />
+						<circle cx="750" cy="1" r="3" fill="#38BDF8" />
+						<circle cx="450" cy="63" r="3.5" fill="#0284C7" stroke="#38BDF8" stroke-width="1.5" />
 					</svg>
 				</div>
 
-				<!-- Central Hub (Neuron Core) -->
+				<!-- Central Hub -->
 				<div class="relative my-4 flex flex-col items-center md:my-0">
 					<div
-						class="neuron-hub relative w-full max-w-md rounded-2xl border-2 border-brand-accent bg-[#0F172A] p-6 text-center shadow-[0_0_55px_rgba(37,99,235,0.28)]"
+						class="relative w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 text-center shadow-lg"
 					>
 						<span
-							class="inline-block rounded-full bg-brand-accent px-3 py-0.5 text-[10px] font-black tracking-wider text-white uppercase"
+							class="inline-block rounded-md bg-slate-800 px-3 py-0.5 text-[10px] font-bold tracking-wider text-slate-300 uppercase"
 						>
 							Core Engine
 						</span>
-						<h3 class="font-cabinet mt-3 text-xl font-extrabold text-white md:text-2xl">
+						<h3 class="mt-3 text-xl font-bold text-white md:text-2xl">
 							Nivabit Validation OS
 						</h3>
-						<p class="mt-1.5 text-xs leading-relaxed text-white/70">
-							Synthesizes competitor gaps, live smoke-test conversions, and 20+ buyer interviews
-							into a single data-backed verdict in 14 days.
+						<p class="mt-1.5 text-xs leading-relaxed text-slate-300">
+							Synthesizes competitor whitespace, live smoke-test intent, and 20+ buyer discovery calls into a clear Go / No-Go verdict in 14 days.
 						</p>
 					</div>
 				</div>
 
-				<!-- Bottom Neural Signal Traces (Center Hub -> Bottom 3 Cards) -->
+				<!-- Bottom Traces -->
 				<div class="relative hidden h-16 w-full md:block" aria-hidden="true">
 					<svg
 						viewBox="0 0 900 64"
@@ -358,48 +325,16 @@
 						preserveAspectRatio="none"
 						class="h-full w-full overflow-visible"
 					>
-						<defs>
-							<filter id="neuronGlowBot" x="-40%" y="-40%" width="180%" height="180%">
-								<feGaussianBlur stdDeviation="2.5" result="blur" />
-								<feMerge>
-									<feMergeNode in="blur" />
-									<feMergeNode in="SourceGraphic" />
-								</feMerge>
-							</filter>
-						</defs>
-
-						<!-- Base neural pathways -->
-						<path id="sys-bot-0" d="M 450 0 C 450 36, 150 28, 150 64" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
-						<path id="sys-bot-1" d="M 450 0 L 450 64" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
-						<path id="sys-bot-2" d="M 450 0 C 450 36, 750 28, 750 64" stroke="#3B82F6" stroke-opacity="0.22" stroke-width="1.5" />
-
-						<!-- Animated traveling dash pulses -->
-						<path d="M 450 0 C 450 36, 150 28, 150 64" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.25s;" />
-						<path d="M 450 0 L 450 64" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.7s;" />
-						<path d="M 450 0 C 450 36, 750 28, 750 64" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 1.15s;" />
-
-						<!-- Glowing neuron signal orbs firing from center hub to each card -->
-						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowBot)">
-							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.25s">
-								<mpath href="#sys-bot-0" />
-							</animateMotion>
-						</circle>
-						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowBot)">
-							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.7s">
-								<mpath href="#sys-bot-1" />
-							</animateMotion>
-						</circle>
-						<circle r="3.5" fill="#93C5FD" filter="url(#neuronGlowBot)">
-							<animateMotion dur="2.2s" repeatCount="indefinite" begin="1.15s">
-								<mpath href="#sys-bot-2" />
-							</animateMotion>
-						</circle>
+						<!-- Base pathways -->
+						<path id="sys-bot-0" d="M 450 0 C 450 36, 150 28, 150 64" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
+						<path id="sys-bot-1" d="M 450 0 L 450 64" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
+						<path id="sys-bot-2" d="M 450 0 C 450 36, 750 28, 750 64" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
 
 						<!-- Synapse terminal nodes -->
-						<circle cx="450" cy="1" r="3.5" fill="#2563EB" stroke="#93C5FD" stroke-width="1.5" />
-						<circle cx="150" cy="63" r="3" fill="#60A5FA" />
-						<circle cx="450" cy="63" r="3" fill="#60A5FA" />
-						<circle cx="750" cy="63" r="3" fill="#60A5FA" />
+						<circle cx="450" cy="1" r="3.5" fill="#0284C7" stroke="#38BDF8" stroke-width="1.5" />
+						<circle cx="150" cy="63" r="3" fill="#38BDF8" />
+						<circle cx="450" cy="63" r="3" fill="#38BDF8" />
+						<circle cx="750" cy="63" r="3" fill="#38BDF8" />
 					</svg>
 				</div>
 
@@ -407,19 +342,19 @@
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
 					{#each systemNodesBottom as node, idx}
 						<div
-							class="neuron-card relative rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-brand-accent/70"
+							class="neuron-card relative rounded-xl border border-slate-800 bg-[#111827] p-5 transition-colors hover:border-slate-700"
 							style={`--pulse-delay: ${(idx + 1) * 0.45}s;`}
 						>
 							<div class="mb-2.5 flex items-center justify-between gap-2">
 								<div class="flex items-center gap-2.5">
-									<span class="h-2 w-2 shrink-0 rounded-full bg-brand-accent-light shadow-[0_0_8px_#60A5FA]"></span>
-									<h3 class="font-cabinet text-sm font-bold text-white">{node.title}</h3>
+									<span class="h-2 w-2 shrink-0 rounded-[1.5px] bg-[#38bdf8]"></span>
+									<h3 class="text-sm font-bold text-white">{node.title}</h3>
 								</div>
-								<span class="font-mono text-[10px] font-semibold text-brand-accent-light/70">
+								<span class="font-mono text-[10px] font-semibold text-slate-400">
 									0{idx + 4}
 								</span>
 							</div>
-							<p class="text-xs leading-relaxed text-white/60">{node.desc}</p>
+							<p class="text-xs leading-relaxed text-slate-400">{node.desc}</p>
 						</div>
 					{/each}
 				</div>
@@ -428,50 +363,49 @@
 	</section>
 
 	<!-- 3. LIGHT 2x2 BENTO FEATURE GRID: "You get a done-for-you validation team." -->
-	<section id="services" class="bg-surface-light px-4 py-20 md:px-8 md:py-28">
+	<section id="services" class="bg-slate-50 px-4 py-20 md:px-8 md:py-28">
 		<div class="mx-auto max-w-5xl">
 			<div class="mx-auto max-w-2xl text-center">
 				<span
-					class="inline-block rounded-full border border-black/10 bg-white px-3.5 py-1 text-[11px] font-bold tracking-wide text-ink-primary uppercase"
+					class="inline-block rounded-md border border-slate-300 bg-white px-3 py-1 text-xs font-semibold tracking-wider text-slate-700 uppercase"
 				>
 					Validation Programs
 				</span>
 				<h2
-					class="font-cabinet mt-4 text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-ink-primary sm:text-4xl md:text-5xl"
+					class="mt-4 text-3xl leading-[1.1] font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl"
 				>
-					You get a done-for-you validation team.
+					A dedicated validation team before you hire engineers.
 				</h2>
-				<p class="mt-3 text-sm leading-relaxed text-ink-secondary md:text-base">
-					Productized research sprints engineered for founders, venture builders, and enterprise
-					innovation leads.
+				<p class="mt-3 text-sm leading-relaxed text-slate-600 md:text-base">
+					Productized research sprints built for founders, venture builders, and innovation leads.
 				</p>
 			</div>
 
-			<!-- 2x2 Split Horizontal Cards (Matches Reference) -->
+			<!-- 2x2 Split Horizontal Cards -->
 			<div class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
 				{#each bentoPrograms as program}
 					<div
-						class="group flex flex-col justify-between gap-5 rounded-3xl border border-black/8 bg-white p-6 shadow-xs transition-all duration-300 hover:border-black/20 hover:shadow-md sm:flex-row sm:items-center"
+						class="group flex flex-col justify-between gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 hover:border-slate-300 hover:shadow-sm sm:flex-row sm:items-center"
 					>
 						<div class="flex-1 space-y-3">
 							<div class="flex items-center gap-2">
 								<span
-									class="inline-flex items-center gap-1 rounded-full bg-lime-soft px-2.5 py-0.5 text-[11px] font-bold text-ink-primary"
+									class="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-800"
 								>
-									<Clock size={11} />
+									<Clock size={12} />
 									{program.duration}
 								</span>
 							</div>
-							<h3 class="font-cabinet text-xl font-extrabold text-ink-primary">
+							<h3 class="text-xl font-bold text-slate-900">
 								{program.title}
 							</h3>
-							<p class="text-xs leading-relaxed text-ink-secondary">
+							<p class="text-xs leading-relaxed text-slate-600">
 								{program.desc}
 							</p>
 							<div class="flex flex-wrap gap-1.5 pt-1">
 								{#each program.tags as tag}
 									<span
-										class="rounded-full border border-black/8 bg-surface-light px-2.5 py-0.5 text-[10px] font-semibold text-ink-secondary"
+										class="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-600"
 									>
 										{tag}
 									</span>
@@ -481,12 +415,13 @@
 
 						<!-- Right Preview Thumbnail -->
 						<div
-							class="h-36 w-full shrink-0 overflow-hidden rounded-2xl border border-black/8 bg-surface-dark sm:h-40 sm:w-36"
+							class="h-36 w-full shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-900 sm:h-40 sm:w-36"
 						>
 							<img
 								src={program.image}
 								alt={program.title}
-								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+								loading="lazy"
 							/>
 						</div>
 					</div>
@@ -495,22 +430,21 @@
 		</div>
 	</section>
 
-	<!-- 4. FULL-BLEED BRAND BLUE CTA STRIP -->
-	<section class="bg-brand-accent px-4 py-14 text-white md:px-8 md:py-16">
+	<!-- 4. QUIET HIGH-CONTRAST CONVICTION STRIP -->
+	<section class="border-y border-slate-800 bg-[#090D14] px-4 py-14 text-white md:px-8 md:py-16">
 		<div class="mx-auto max-w-3xl text-center">
 			<h2
-				class="font-cabinet text-2xl leading-[1.1] font-extrabold tracking-[-0.025em] text-white sm:text-3xl md:text-4xl"
+				class="text-2xl leading-[1.1] font-bold tracking-tight text-white sm:text-3xl md:text-4xl"
 			>
-				You focus on building what wins. We prove the demand first.
+				You focus on building what wins. We prove customer demand first.
 			</h2>
-			<p class="mx-auto mt-3 max-w-xl text-sm font-medium text-white/85">
-				Stop guessing whether customers will pay. Scope a 14-day sprint and get hard market proof
-				before committing engineering capital.
+			<p class="mx-auto mt-3 max-w-xl text-sm font-medium text-slate-300">
+				Stop guessing whether buyers will pay. Scope a 14-day sprint and get verifiable market proof before spending engineering capital.
 			</p>
-			<div class="mt-6">
+			<div class="mt-7">
 				<a
 					href="/#contact"
-					class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-extrabold text-brand-accent shadow-sm transition-all hover:-translate-y-0.5 hover:bg-surface-light md:text-sm"
+					class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-xl bg-white px-7 py-3 text-sm font-bold text-slate-900 shadow-sm transition-all duration-200 hover:bg-slate-100 hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#090D14]"
 				>
 					Request a Validation Audit
 					<ArrowRight size={15} />
@@ -522,66 +456,67 @@
 	<!-- 5. CUSTOM RESEARCH PROTOCOLS TREE DIAGRAM -->
 	<Process />
 
-	<!-- 6. CASE STUDIES WITH LIME SVG AREA GROWTH CHARTS (Signature Reference Section) -->
-	<section id="results" class="bg-surface-light px-4 py-20 md:px-8 md:py-28">
+	<!-- 6. CASE STUDIES WITH SVG AREA GROWTH CHARTS -->
+	<section id="results" class="bg-slate-50 px-4 py-20 md:px-8 md:py-28">
 		<div class="mx-auto max-w-4xl">
 			<div class="mx-auto max-w-2xl text-center">
 				<span
-					class="inline-block rounded-full border border-black/10 bg-white px-3.5 py-1 text-[11px] font-bold tracking-wide text-ink-primary uppercase"
+					class="inline-block rounded-md border border-slate-300 bg-white px-3 py-1 text-xs font-semibold tracking-wider text-slate-700 uppercase"
 				>
 					Proven Outcomes
 				</span>
 				<h2
-					class="font-cabinet mt-4 text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-ink-primary sm:text-4xl md:text-5xl"
+					class="mt-4 text-3xl leading-[1.1] font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl"
 				>
-					We’ve helped founders prove demand &amp; save months of runway.
+					Evidence that saved months of engineering runway.
 				</h2>
 			</div>
 
 			<div class="mt-12 space-y-6">
 				{#each caseStudyCharts as study, idx}
 					<article
-						class="overflow-hidden rounded-3xl border border-black/8 bg-white p-6 shadow-xs md:p-8"
+						class="overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs md:p-8"
 					>
 						<!-- Top Founder & Metric Header -->
 						<div class="flex flex-col gap-5 sm:flex-row sm:items-start">
 							<img
 								src={study.avatar}
 								alt={study.name}
-								class="h-16 w-16 shrink-0 rounded-2xl border border-black/10 object-cover sm:h-20 sm:w-20"
+								class="h-16 w-16 shrink-0 rounded-xl border border-slate-200 object-cover sm:h-20 sm:w-20"
+								loading="lazy"
 							/>
 							<div class="flex-1 space-y-2">
 								<div class="flex flex-wrap items-center gap-2">
-									<h3 class="font-cabinet text-lg font-extrabold text-ink-primary">
+									<h3 class="text-lg font-bold text-slate-900">
 										{study.name}
 									</h3>
 									<span
-										class="rounded-full bg-brand-accent px-2.5 py-0.5 text-[11px] font-bold text-white"
+										class="rounded-md border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800"
 									>
 										{study.badge}
 									</span>
 									<span
-										class="rounded-full bg-surface-light px-2.5 py-0.5 text-[11px] font-semibold text-ink-secondary"
+										class="rounded-md bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600"
 									>
 										{study.role}
 									</span>
 								</div>
-								<p class="text-sm leading-relaxed text-ink-secondary">
+								<p class="text-sm leading-relaxed text-slate-600">
 									“{study.summary}”
 								</p>
 							</div>
 						</div>
 
-						<!-- Blue Gradient Area Chart -->
-						<div class="relative mt-6 rounded-2xl border border-black/6 bg-[#F8FAFF] p-4 pt-6">
-							<!-- Floating Dark Callout Pill -->
+						<!-- Area Growth Chart (UI UX Pro Max chart rules) -->
+						<div class="relative mt-6 rounded-xl border border-slate-200 bg-slate-50/80 p-4 pt-6">
+							<!-- Dark Callout Pill -->
 							<div
-								class="mb-3 inline-flex items-center gap-2 rounded-xl bg-surface-dark px-3.5 py-2 text-white shadow-sm sm:absolute sm:top-5 sm:left-[44%] sm:mb-0"
+								class="mb-3 inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-3.5 py-1.5 text-white shadow-sm sm:absolute sm:top-5 sm:left-[44%] sm:mb-0"
 							>
-								<TrendingUp size={13} class="text-brand-accent-light" />
+								<TrendingUp size={13} class="text-emerald-400" />
 								<div class="text-left leading-tight">
-									<p class="text-[10px] font-semibold text-white/60">{study.calloutTitle}</p>
-									<p class="font-cabinet text-xs font-bold text-brand-accent-light">
+									<p class="text-[10px] font-semibold text-slate-400">{study.calloutTitle}</p>
+									<p class="text-xs font-bold text-white">
 										{study.calloutMetric}
 									</p>
 								</div>
@@ -595,8 +530,8 @@
 							>
 								<defs>
 									<linearGradient id={`blueArea-${idx}`} x1="0" y1="0" x2="0" y2="1">
-										<stop offset="0%" stop-color="#2563EB" stop-opacity="0.42" />
-										<stop offset="100%" stop-color="#2563EB" stop-opacity="0.02" />
+										<stop offset="0%" stop-color="#0284C7" stop-opacity="0.25" />
+										<stop offset="100%" stop-color="#0284C7" stop-opacity="0.0" />
 									</linearGradient>
 								</defs>
 
@@ -612,7 +547,7 @@
 								<path
 									d={study.pathD}
 									fill="none"
-									stroke="#2563EB"
+									stroke="#0284C7"
 									stroke-width="2.5"
 									stroke-linecap="round"
 								/>
@@ -623,25 +558,25 @@
 									y1={study.markerY}
 									x2={study.markerX}
 									y2="156"
-									stroke="#0B0F1A"
-									stroke-opacity="0.2"
+									stroke="#64748B"
+									stroke-opacity="0.4"
 									stroke-dasharray="3 3"
 								/>
 								<circle
 									cx={study.markerX}
 									cy={study.markerY}
-									r="5"
-									fill="#0B0F1A"
-									stroke="#60A5FA"
-									stroke-width="2.5"
+									r="4.5"
+									fill="#090D14"
+									stroke="#38BDF8"
+									stroke-width="2"
 								/>
 
-								<!-- End Peak Marker -->
+								<!-- End Peak Marker (Semantic Green: Validated outcome) -->
 								<circle
 									cx="576"
 									cy={study.endY}
 									r="5"
-									fill="#2563EB"
+									fill="#16A34A"
 									stroke="#FFFFFF"
 									stroke-width="2"
 								/>
@@ -652,7 +587,7 @@
 										x={24 + i * 110.4}
 										y="171"
 										text-anchor="middle"
-										class="fill-[#64748B] text-[10px] font-medium"
+										class="fill-slate-500 text-[10px] font-medium"
 									>
 										{label}
 									</text>
@@ -720,10 +655,10 @@
 					<div class="pt-2">
 						<a
 							href="/#contact"
-							class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-xs font-bold text-white transition-all hover:bg-brand-accent-hover md:text-sm"
+							class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-slate-800 hover:shadow-sm active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-slate-900"
 						>
 							Scope Your Sprint
-							<ArrowRight size={15} strokeWidth={2.5} />
+							<ArrowRight size={15} strokeWidth={2.2} />
 						</a>
 					</div>
 				</div>
@@ -811,7 +746,7 @@
 					</h3>
 					<a
 						href="/#contact"
-						class="inline-flex items-center gap-1.5 text-xs font-bold text-ink-primary underline decoration-lime-accent decoration-2 underline-offset-4 hover:opacity-75"
+						class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-900 underline decoration-slate-400 decoration-2 underline-offset-4 hover:opacity-75"
 					>
 						Request sample dossier
 						<ArrowUpRight size={14} />
@@ -821,29 +756,30 @@
 				<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 					{#each projects as project}
 						<div
-							class="group overflow-hidden rounded-2xl border border-black/8 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-black/20 hover:shadow-md"
+							class="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm"
 						>
-							<div class="relative h-40 w-full overflow-hidden bg-surface-dark">
+							<div class="relative h-40 w-full overflow-hidden bg-slate-900">
 								<img
 									src={project.image}
 									alt={project.title}
-									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+									class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+									loading="lazy"
 								/>
 								<span
-									class="absolute top-3 left-3 rounded-full bg-brand-accent px-2.5 py-0.5 text-[10px] font-extrabold text-white"
+									class="absolute top-3 left-3 rounded-md bg-slate-900/90 px-2 py-0.5 text-[10px] font-semibold text-white backdrop-blur-xs"
 								>
 									{project.category}
 								</span>
 							</div>
 							<div class="space-y-2 p-4">
 								<div class="flex items-center justify-between">
-									<h4 class="font-cabinet text-base font-extrabold text-ink-primary">
+									<h4 class="text-base font-bold text-slate-900">
 										{project.title}
 									</h4>
-									<span class="text-[11px] font-semibold text-ink-muted">{project.duration}</span>
+									<span class="text-xs font-medium text-slate-500">{project.duration}</span>
 								</div>
-								<p class="text-[11px] font-semibold text-ink-primary/80">{project.type}</p>
-								<p class="text-xs leading-snug text-ink-secondary">{project.outcome}</p>
+								<p class="text-xs font-medium text-slate-700">{project.type}</p>
+								<p class="text-xs leading-snug text-slate-500">{project.outcome}</p>
 							</div>
 						</div>
 					{/each}
@@ -858,7 +794,7 @@
 	<!-- 11. SPRINT SCOPER / CONTACT FORM -->
 	<ContactUs />
 
-	<!-- 12. FINAL OVERLAPPING-AVATAR CTA BAND (Matches Reference Bottom Band) -->
+	<!-- 12. FINAL OVERLAPPING-AVATAR CTA BAND -->
 	<section class="bg-white px-4 py-20 text-center md:px-8 md:py-24">
 		<div class="mx-auto max-w-2xl">
 			<!-- Overlapping Founder Avatars -->
@@ -867,43 +803,44 @@
 					src="/images/profile1.png"
 					alt="Founder"
 					class="h-10 w-10 rounded-full border-2 border-white object-cover shadow-xs"
+					loading="lazy"
 				/>
 				<img
 					src="/images/profile2.jpg"
 					alt="Founder"
 					class="h-10 w-10 rounded-full border-2 border-white object-cover shadow-xs"
+					loading="lazy"
 				/>
 				<img
 					src="/images/profile3.jpg"
 					alt="Founder"
 					class="h-10 w-10 rounded-full border-2 border-white object-cover shadow-xs"
+					loading="lazy"
 				/>
 			</div>
 
 			<h2
-				class="font-cabinet text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-ink-primary sm:text-4xl md:text-5xl"
+				class="text-3xl leading-[1.1] font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl"
 			>
 				Ready to validate before you build?
 			</h2>
-			<p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-ink-secondary md:text-base">
-				Book a 30-minute scoping call. We’ll map your riskiest assumptions and show you how to prove
-				demand in 14 days.
+			<p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-600 md:text-base">
+				Book a 30-minute scoping call. We will examine your riskiest assumptions and outline how to prove demand in 14 days.
 			</p>
 
 			<div class="mt-7 flex flex-wrap items-center justify-center gap-3">
-				<a
-					href="https://calendly.com/groupnivabit/30min"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-7 py-3.5 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-accent-hover hover:shadow-md"
+				<button
+					type="button"
+					onclick={bookingModal.open}
+					class="inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center gap-2 rounded-xl bg-slate-900 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-slate-800 hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
 				>
 					Book Your Discovery Call
-					<ArrowUpRight size={16} strokeWidth={2.5} />
-				</a>
+					<ArrowUpRight size={16} strokeWidth={2.2} />
+				</button>
 			</div>
 
-			<p class="mt-4 inline-flex items-center gap-1.5 text-xs text-ink-muted">
-				<ShieldCheck size={14} class="text-ink-primary" />
+			<p class="mt-4 inline-flex items-center gap-1.5 text-xs text-slate-500">
+				<ShieldCheck size={14} class="text-slate-700" />
 				No obligation • Confidential NDA available on request
 			</p>
 		</div>

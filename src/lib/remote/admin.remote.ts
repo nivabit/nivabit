@@ -5,7 +5,7 @@ import { prisma } from '#lib/server/prisma.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import { getDateRanges } from '#lib/utils/date.ts';
 import { clearAllAuthCookies, setUserCookie } from '#lib/utils/auth.ts';
-import { profileSchema, changePasswordSchema } from '#lib/validation/validation.ts';
+import { profileSchema, changePasswordSchema, updateMetricSchema } from '#lib/validation/validation.ts';
 
 export const getDashboardStats = query(async () => {
 	const event = getRequestEvent();
@@ -19,6 +19,8 @@ export const getDashboardStats = query(async () => {
 		totalAdmins,
 		totalContacts,
 		unreadContacts,
+		totalBookings,
+		totalSubscribers,
 		articlesThisWeek,
 		articlesThisMonth,
 		viewsThisMonthAgg
@@ -28,6 +30,8 @@ export const getDashboardStats = query(async () => {
 		prisma.admin.count(),
 		prisma.contact.count(),
 		prisma.contact.count({ where: { isread: false } }),
+		prisma.booking.count(),
+		prisma.newsletterSubscriber.count(),
 		prisma.article.count({
 			where: { createdAt: { gte: startOfWeek }, status: 'PUBLISHED' }
 		}),
@@ -46,7 +50,9 @@ export const getDashboardStats = query(async () => {
 			totalViews: totalViewsAgg._sum.views ?? 0,
 			totalAdmins,
 			totalContacts,
-			unreadContacts
+			unreadContacts,
+			totalBookings,
+			totalSubscribers
 		},
 		quickStats: {
 			articlesThisWeek,
@@ -54,6 +60,55 @@ export const getDashboardStats = query(async () => {
 			totalViewsThisMonth: viewsThisMonthAgg._sum.views ?? 0
 		}
 	};
+});
+
+export const getPlatformMetrics = query(async () => {
+	const event = getRequestEvent();
+	await requireUser(event);
+
+	let metrics = await prisma.platformMetric.findMany({
+		orderBy: { createdAt: 'asc' }
+	});
+
+	if (metrics.length === 0) {
+		const defaults = [
+			{ key: 'active_founders', label: 'Active Founders in Community', value: '2,500+', change: '+18% MoM', category: 'community' },
+			{ key: 'validation_sprints', label: 'Validation Sprints Completed', value: '140+', change: '+12% MoM', category: 'operations' },
+			{ key: 'demand_signals', label: 'Demand Signals Mined', value: '100,000+', change: '+35% MoM', category: 'intel' },
+			{ key: 'pre_code_savings', label: 'Client Runway Saved ($)', value: '$1.4M+', change: '+28% YoY', category: 'impact' }
+		];
+
+		for (const item of defaults) {
+			await prisma.platformMetric.create({ data: item });
+		}
+		metrics = await prisma.platformMetric.findMany({ orderBy: { createdAt: 'asc' } });
+	}
+
+	return metrics;
+});
+
+export const upsertPlatformMetric = form(updateMetricSchema, async (data) => {
+	const event = getRequestEvent();
+	await requireUser(event);
+
+	const metric = await prisma.platformMetric.upsert({
+		where: { key: data.key },
+		update: {
+			label: data.label,
+			value: data.value,
+			change: data.change || '',
+			category: data.category || 'growth'
+		},
+		create: {
+			key: data.key,
+			label: data.label,
+			value: data.value,
+			change: data.change || '',
+			category: data.category || 'growth'
+		}
+	});
+
+	return { success: true, message: `Metric "${data.label}" updated.`, metric };
 });
 
 export const getAdminProfile = query(async () => {

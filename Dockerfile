@@ -12,11 +12,32 @@ RUN --mount=type=cache,target=/root/.bun/install/cache \
 COPY prisma ./prisma
 RUN bunx prisma generate
 
+# Development stage (used for local development with live reload / HMR)
+FROM deps AS dev
+
+WORKDIR /app
+
+COPY . .
+
+ENV NODE_ENV=development
+ENV PORT=3000
+
+COPY docker-entrypoint.sh ./docker-entrypoint.sh
+RUN mkdir -p /app/uploads && chmod +x ./docker-entrypoint.sh
+
+EXPOSE 3000
+
+ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
+
+# Production builder
 FROM deps AS builder
+
+WORKDIR /app
 
 COPY . .
 RUN bun --bun ./node_modules/.bin/vite build
 
+# Production runner
 FROM oven/bun:1-slim AS runner
 
 WORKDIR /app

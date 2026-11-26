@@ -6,10 +6,25 @@ import path from 'path';
 export const handle: Handle = async ({ event, resolve }) => {
 	const user = getUserCookie(event.cookies) || null;
 
-	if (event.url.pathname.startsWith('/bits/admin/dashboard')) {
+	// Backwards compatibility: redirect legacy /bits routes to /ceo
+	if (event.url.pathname.startsWith('/bits')) {
+		const newPath = event.url.pathname.replace(/^\/bits(\/admin(\/dashboard)?)?/, '/ceo');
+		throw redirect(301, newPath || '/ceo');
+	}
+
+	// CEO route protection
+	const isCeoAuthRoute =
+		event.url.pathname === '/ceo/login' ||
+		event.url.pathname === '/ceo/forgotpassword' ||
+		event.url.pathname === '/ceo/reset-password';
+
+	if (event.url.pathname === '/ceo' || event.url.pathname.startsWith('/ceo/')) {
 		const token = getAuthCookie(event.cookies);
-		if (!token && !user) {
-			throw redirect(303, '/');
+		if (!isCeoAuthRoute && (!token || !user)) {
+			throw redirect(303, '/ceo/login');
+		}
+		if (isCeoAuthRoute && token && user) {
+			throw redirect(303, '/ceo');
 		}
 	}
 

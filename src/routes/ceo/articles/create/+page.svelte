@@ -79,7 +79,7 @@
 			}
 
 			setTimeout(() => {
-				goto('/bits/admin/dashboard/articles');
+				goto('/ceo/articles');
 			}, 1200);
 		})}
 	>
@@ -93,7 +93,7 @@
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-4">
 				<a
-					href="/bits/admin/dashboard/articles"
+					href="/ceo/articles"
 					class="rounded-lg p-2 text-brand-grey-400 transition-colors hover:bg-brand-grey-50 hover:text-brand-grey-500"
 				>
 					<ArrowLeft size={20} />

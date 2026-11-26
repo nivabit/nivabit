@@ -1,83 +1,102 @@
 <script lang="ts">
-	import ChartBarIcon from '@tabler/icons-svelte/icons/chart-bar';
 	import SettingsIcon from '@tabler/icons-svelte/icons/settings';
 	import NavMain from './nav-main.svelte';
 	import NavSecondary from './nav-secondary.svelte';
 	import NavUser from './nav-user.svelte';
 	import * as Sidebar from '#lib/components/ui/sidebar/index.js';
 	import type { ComponentProps } from 'svelte';
-	import { FileText, LayoutDashboard, Mail } from 'lucide-svelte';
+	import {
+		FileText,
+		LayoutDashboard,
+		Mail,
+		Users,
+		Calendar,
+		TrendingUp,
+		MessageSquare,
+		Layers
+	} from 'lucide-svelte';
 	import { page } from '$app/state';
+	import NivabitLogo from '#lib/components/icon/NivabitLogo.svelte';
 
-	const data: any = {
-		user: {
-			name: 'shadcn',
-			email: 'm@example.com',
-			avatar: '/avatars/shadcn.jpg'
+	let navMain = $derived([
+		{
+			title: 'Command Center',
+			url: '/ceo',
+			icon: LayoutDashboard,
+			current: page.url.pathname === '/ceo'
 		},
-		navMain: [
-			{
-				title: 'Dashboard',
-				url: '/bits/admin/dashboard',
-				icon: LayoutDashboard,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard')
-			},
-			{
-				title: 'Articles',
-				url: '/bits/admin/dashboard/articles',
-				icon: FileText,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/articles')
-			},
-			{
-				title: 'Analytics',
-				url: '/bits/admin/dashboard/analytics',
-				icon: ChartBarIcon,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/analytics')
-			},
-			{
-				title: 'Messages',
-				url: '/bits/admin/dashboard/messages',
-				icon: Mail,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/messages')
-			},
-			{
-				title: 'Newsletter',
-				url: '/bits/admin/dashboard/newsletter',
-				icon: Mail,
-				current: page.url.pathname.startsWith('/bits/admin/dashboard/newsletter')
-			}
-		],
-		navSecondary: [
-			{
-				title: 'Settings',
-				url: '/bits/admin/dashboard/settings',
-				icon: SettingsIcon
-			}
-		]
-	};
+		{
+			title: 'Articles & Content',
+			url: '/ceo/articles',
+			icon: FileText,
+			current: page.url.pathname.startsWith('/ceo/articles')
+		},
+		{
+			title: 'Strategy Bookings',
+			url: '/ceo/bookings',
+			icon: Calendar,
+			current: page.url.pathname.startsWith('/ceo/bookings')
+		},
+		{
+			title: 'Subscribers',
+			url: '/ceo/subscribers',
+			icon: Users,
+			current: page.url.pathname.startsWith('/ceo/subscribers')
+		},
+		{
+			title: 'Send Newsletter',
+			url: '/ceo/newsletter',
+			icon: Mail,
+			current: page.url.pathname.startsWith('/ceo/newsletter')
+		},
+		{
+			title: 'Platform Metrics',
+			url: '/ceo/metrics',
+			icon: TrendingUp,
+			current: page.url.pathname.startsWith('/ceo/metrics')
+		},
+		{
+			title: 'Inquiries & Leads',
+			url: '/ceo/messages',
+			icon: MessageSquare,
+			current: page.url.pathname.startsWith('/ceo/messages')
+		}
+	]);
+
+	const navSecondary = [
+		{
+			title: 'Account Settings',
+			url: '/ceo/settings',
+			icon: SettingsIcon
+		}
+	];
 
 	let { ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 </script>
 
-<Sidebar.Root collapsible="offcanvas" {...restProps} class="bg-brand-blue-900">
-	<Sidebar.Header class="bg-brand-blue-900">
+<Sidebar.Root collapsible="offcanvas" {...restProps} class="bg-[#090d14] border-r border-white/10">
+	<Sidebar.Header class="bg-[#090d14] border-b border-white/5 py-4 px-4">
 		<Sidebar.Menu>
 			<Sidebar.MenuItem>
-				<Sidebar.MenuButton class="data-[slot=sidebar-menu-button]:!p-1.5">
-					{#snippet child({ props })}
-						<a href="##" {...props}>
-							<img src="/images/logo.png" alt="logo" />
-						</a>
-					{/snippet}
-				</Sidebar.MenuButton>
+				<a href="/ceo" class="flex items-center gap-2.5 transition-opacity hover:opacity-85">
+					<NivabitLogo variant="light" class="h-6 w-auto" />
+				</a>
+				<div class="mt-2 flex items-center gap-1.5 pl-0.5">
+					<span class="h-1.5 w-1.5 rounded-[1px] bg-[#0284c7]"></span>
+					<span class="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+						CEO Command Suite
+					</span>
+				</div>
 			</Sidebar.MenuItem>
 		</Sidebar.Menu>
 	</Sidebar.Header>
-	<Sidebar.Content class="bg-brand-blue-900 text-white">
-		<NavMain items={data.navMain} />
-		<NavSecondary items={data.navSecondary} class="mt-auto" />
+
+	<Sidebar.Content class="bg-[#090d14] text-white">
+		<NavMain items={navMain} />
+		<NavSecondary items={navSecondary} class="mt-auto" />
 	</Sidebar.Content>
-	<Sidebar.Footer class="bg-brand-blue-900 text-white">
+
+	<Sidebar.Footer class="bg-[#090d14] border-t border-white/5 text-white">
 		<NavUser />
 	</Sidebar.Footer>
 </Sidebar.Root>

@@ -23,13 +23,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: ${BUILD_TARGET:-dev}
     container_name: nivabit-app
     restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
     environment:
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-development}
       PORT: 3000
       ORIGIN: http://localhost:${APP_PORT:-3001}
       DATABASE_URL: postgresql://${POSTGRES_USER:-nivabit}:${POSTGRES_PASSWORD:-nivabit_secret}@db:5432/${POSTGRES_DB:-nivabit}?schema=public
@@ -44,15 +45,11 @@ services:
     ports:
       - "127.0.0.1:${APP_PORT:-3001}:3000"
     volumes:
+      - ./src:/app/src
+      - ./static:/app/static
+      - ./prisma:/app/prisma
+      - ./vite.config.ts:/app/vite.config.ts
       - uploads_data:/app/uploads
-    develop:
-      watch:
-        - action: rebuild
-          path: ./src
-        - action: rebuild
-          path: ./static
-        - action: rebuild
-          path: ./package.json
     networks:
       - nivabit-network
 

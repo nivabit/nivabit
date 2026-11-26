@@ -77,6 +77,25 @@ export const profileSchema = v.object({
 	)
 });
 
+export const updateMetricSchema = v.object({
+	key: v.pipe(v.string(), v.trim(), v.nonEmpty('Key is required')),
+	label: v.pipe(v.string(), v.trim(), v.nonEmpty('Label is required')),
+	value: v.pipe(v.string(), v.trim(), v.nonEmpty('Value is required')),
+	change: v.optional(v.string(), ''),
+	category: v.optional(v.string(), 'growth')
+});
+
+export const createBookingSchema = v.object({
+	firstName: v.pipe(v.string(), v.trim(), v.minLength(1, 'First name is required.')),
+	lastName: v.pipe(v.string(), v.trim(), v.minLength(1, 'Last name is required.')),
+	email: v.pipe(v.string(), v.trim(), v.email('Enter a valid email address.')),
+	phone: v.pipe(v.string(), v.trim(), v.minLength(5, 'Enter a valid phone number.')),
+	date: v.pipe(v.string(), v.trim(), v.minLength(1, 'Please select a date.')),
+	timeSlot: v.pipe(v.string(), v.trim(), v.minLength(1, 'Please select a time slot.')),
+	timezone: v.optional(v.string(), 'Africa/Lagos'),
+	notes: v.optional(v.string(), '')
+});
+
 export const changePasswordSchema = v.pipe(
 	v.object({
 		_oldPassword: v.pipe(

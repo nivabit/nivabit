@@ -126,7 +126,7 @@
 
 		<div class="mt-6 text-center">
 			<CustomButton
-				href="/bits/admin/auth/login"
+				href="/ceo/login"
 				className="inline-flex items-center gap-2 text-brand-blue-100 font-synonym text-sm transition-colors"
 			>
 				<div class="inline-flex items-center gap-2 text-brand-blue-100">

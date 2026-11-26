@@ -83,7 +83,7 @@
 			<p class="font-synonym text-brand-grey-400">Manage all your blog articles and content</p>
 		</div>
 		<a
-			href="/bits/admin/dashboard/articles/create"
+			href="/ceo/articles/create"
 			class="font-synonym flex items-center gap-2 rounded-lg bg-brand-orange-500 px-6 py-3 font-medium text-white transition-colors hover:bg-brand-orange-500/90"
 		>
 			<Plus size={18} />
@@ -166,7 +166,7 @@
 					</p>
 					{#if !searchTerm && statusFilter === 'All'}
 						<a
-							href="/bits/admin/dashboard/articles/create"
+							href="/ceo/articles/create"
 							class="font-synonym inline-flex items-center gap-2 rounded-lg bg-brand-orange-500 px-6 py-3 font-medium text-white transition-colors hover:bg-brand-orange-500/90"
 						>
 							<Plus size={18} />
@@ -235,7 +235,7 @@
 										<!-- Actions -->
 										<div class="flex items-center gap-1">
 											<a
-												href={`/bits/admin/dashboard/articles/${article.id}/edit`}
+												href={`/ceo/articles/${article.id}/edit`}
 												class="rounded-lg p-2 text-brand-grey-400 transition-colors hover:bg-brand-blue-50 hover:text-brand-blue-500"
 												title="Edit article"
 											>

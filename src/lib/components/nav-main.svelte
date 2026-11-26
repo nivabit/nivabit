@@ -45,7 +45,7 @@
 									{/if}
 									<span>{item.title}</span>
 								</span>
-								<span class="text-bottom !flex w-full items-center gap-2 text-brand-orange-500">
+								<span class="text-bottom !flex w-full items-center gap-2 text-[#fa8212]">
 									{#if item.icon}
 										<item.icon class="size-4" />
 									{/if}

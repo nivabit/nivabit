@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import NivabitLogo from '#lib/components/icon/NivabitLogo.svelte';
+	import { bookingModal } from '#lib/stores/bookingModal.svelte.ts';
 
 	let isMenuOpen = $state(false);
 	let scrolled = $state(false);
@@ -85,15 +86,14 @@
 
 		<!-- CTA & Mobile Toggle -->
 		<div class="flex items-center gap-2">
-			<a
-				href="https://calendly.com/groupnivabit/30min"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="hidden items-center gap-1.5 rounded-full bg-brand-accent px-4 py-2 text-xs font-bold text-white transition-all hover:bg-brand-accent-hover hover:shadow-sm lg:inline-flex"
+			<button
+				type="button"
+				onclick={bookingModal.open}
+				class="hidden cursor-pointer items-center gap-1.5 rounded-full bg-brand-accent px-4 py-2 text-xs font-bold text-white transition-all hover:bg-brand-accent-hover hover:shadow-sm lg:inline-flex"
 			>
 				Book a Call
 				<ArrowUpRight size={14} strokeWidth={2.5} />
-			</a>
+			</button>
 
 			<button
 				type="button"
@@ -126,16 +126,17 @@
 						{link.label}
 					</a>
 				{/each}
-				<a
-					href="https://calendly.com/groupnivabit/30min"
-					target="_blank"
-					rel="noopener noreferrer"
-					onclick={closeMenu}
-					class="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-accent px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-accent-hover"
+				<button
+					type="button"
+					onclick={() => {
+						closeMenu();
+						bookingModal.open();
+					}}
+					class="mt-2 inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full bg-brand-accent px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-accent-hover"
 				>
 					Book a Discovery Call
 					<ArrowUpRight size={16} strokeWidth={2.5} />
-				</a>
+				</button>
 			</nav>
 		</div>
 	{/if}
