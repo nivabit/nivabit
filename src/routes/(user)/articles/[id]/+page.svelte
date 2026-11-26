@@ -50,7 +50,7 @@
 			<div class="mx-auto max-w-3xl text-center">
 				<a
 					href="/articles"
-					class="mb-8 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-white/75 transition-colors hover:border-lime-accent hover:text-lime-accent"
+					class="mb-8 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-white/75 transition-colors hover:border-brand-accent hover:text-brand-accent-light"
 				>
 					<ArrowLeft size={13} />
 					All Research
@@ -59,7 +59,7 @@
 				<div class="mb-5 flex flex-wrap items-center justify-center gap-2">
 					{#each singleArticles?.categories || [] as category}
 						<span
-							class="rounded-full bg-lime-accent px-3 py-1 text-[11px] font-extrabold text-ink-primary"
+							class="rounded-full bg-brand-accent px-3 py-1 text-[11px] font-extrabold text-white"
 						>
 							{category}
 						</span>

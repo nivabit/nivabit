@@ -28,7 +28,7 @@
 		<div class="rounded-3xl border border-black/10 bg-surface-dark p-6 text-white shadow-xl md:p-12">
 			<div class="mb-10 max-w-xl space-y-3">
 				<span
-					class="inline-block rounded-full border border-lime-accent/30 bg-lime-accent/10 px-3.5 py-1 text-[11px] font-bold tracking-wider text-lime-accent uppercase"
+					class="inline-block rounded-full border border-brand-accent/40 bg-brand-accent/15 px-3.5 py-1 text-[11px] font-bold tracking-wider text-brand-accent-light uppercase"
 				>
 					Start a Sprint
 				</span>
@@ -76,7 +76,7 @@
 								onclick={() => toggleService(service)}
 								class={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold transition-all ${
 									active
-										? 'border-lime-accent bg-lime-accent text-ink-primary'
+										? 'border-brand-accent bg-brand-accent text-white'
 										: 'border-white/15 bg-white/[0.04] text-white/80 hover:border-white/35 hover:bg-white/[0.08]'
 								}`}
 							>
@@ -153,7 +153,7 @@
 					<button
 						disabled={Boolean(submitContact.pending)}
 						type="submit"
-						class="inline-flex cursor-pointer items-center gap-2 rounded-full bg-lime-accent px-7 py-3.5 text-sm font-extrabold text-ink-primary transition-all hover:-translate-y-0.5 hover:bg-lime-accent-hover disabled:opacity-60"
+						class="inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand-accent px-7 py-3.5 text-sm font-extrabold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-accent-hover disabled:opacity-60"
 					>
 						{submitContact.pending ? 'Sending...' : 'Request Validation Scope'}
 						<ArrowRight size={15} strokeWidth={2.5} />
@@ -161,7 +161,7 @@
 					<p class="text-xs text-white/45">
 						Or email directly at <a
 							href="mailto:contact@nivabit.com"
-							class="text-lime-accent hover:underline">contact@nivabit.com</a
+							class="text-brand-accent-light hover:underline">contact@nivabit.com</a
 						>
 					</p>
 				</div>

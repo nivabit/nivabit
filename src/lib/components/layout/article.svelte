@@ -41,7 +41,7 @@
 				</p>
 				<a
 					href="/"
-					class="inline-flex items-center gap-2 rounded-full bg-lime-accent px-6 py-3 text-xs font-extrabold text-ink-primary transition-colors hover:bg-lime-accent-hover"
+					class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-xs font-extrabold text-white transition-colors hover:bg-brand-accent-hover"
 				>
 					Back to Home
 				</a>

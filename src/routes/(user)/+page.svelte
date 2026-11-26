@@ -239,7 +239,7 @@
 		<div class="relative mx-auto max-w-5xl">
 			<div class="mx-auto max-w-2xl text-center">
 				<span
-					class="inline-block rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-[11px] font-bold tracking-wider text-lime-accent uppercase"
+					class="inline-block rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-[11px] font-bold tracking-wider text-brand-accent-light uppercase"
 				>
 					System Architecture
 				</span>
@@ -260,10 +260,10 @@
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
 					{#each systemNodesTop as node}
 						<div
-							class="rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-lime-accent/50"
+							class="rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-brand-accent/70"
 						>
 							<div class="mb-2.5 flex items-center gap-2">
-								<CheckCircle2 size={15} class="shrink-0 text-lime-accent" />
+								<CheckCircle2 size={15} class="shrink-0 text-brand-accent-light" />
 								<h3 class="font-cabinet text-sm font-bold text-white">{node.title}</h3>
 							</div>
 							<p class="text-xs leading-relaxed text-white/60">{node.desc}</p>
@@ -273,13 +273,13 @@
 
 				<!-- Connector Lines + Central Hub -->
 				<div class="relative flex flex-col items-center py-2">
-					<div class="hidden h-6 w-px bg-lime-accent/40 md:block"></div>
+					<div class="hidden h-6 w-px bg-brand-accent/50 md:block"></div>
 
 					<div
-						class="w-full max-w-md rounded-2xl border-2 border-lime-accent bg-[#16190E] p-6 text-center shadow-[0_0_50px_rgba(200,243,29,0.12)]"
+						class="w-full max-w-md rounded-2xl border-2 border-brand-accent bg-[#0F172A] p-6 text-center shadow-[0_0_55px_rgba(37,99,235,0.28)]"
 					>
 						<span
-							class="inline-block rounded-full bg-lime-accent px-3 py-0.5 text-[10px] font-black tracking-wider text-ink-primary uppercase"
+							class="inline-block rounded-full bg-brand-accent px-3 py-0.5 text-[10px] font-black tracking-wider text-white uppercase"
 						>
 							Core Engine
 						</span>
@@ -292,17 +292,17 @@
 						</p>
 					</div>
 
-					<div class="hidden h-6 w-px bg-lime-accent/40 md:block"></div>
+					<div class="hidden h-6 w-px bg-brand-accent/50 md:block"></div>
 				</div>
 
 				<!-- Bottom 3 Satellites -->
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
 					{#each systemNodesBottom as node}
 						<div
-							class="rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-lime-accent/50"
+							class="rounded-2xl border border-white/10 bg-surface-dark-elevated p-5 transition-colors hover:border-brand-accent/70"
 						>
 							<div class="mb-2.5 flex items-center gap-2">
-								<CheckCircle2 size={15} class="shrink-0 text-lime-accent" />
+								<CheckCircle2 size={15} class="shrink-0 text-brand-accent-light" />
 								<h3 class="font-cabinet text-sm font-bold text-white">{node.title}</h3>
 							</div>
 							<p class="text-xs leading-relaxed text-white/60">{node.desc}</p>
@@ -381,22 +381,22 @@
 		</div>
 	</section>
 
-	<!-- 4. FULL-BLEED ELECTRIC LIME CTA STRIP -->
-	<section class="bg-lime-accent px-4 py-14 md:px-8 md:py-16">
+	<!-- 4. FULL-BLEED BRAND BLUE CTA STRIP -->
+	<section class="bg-brand-accent px-4 py-14 text-white md:px-8 md:py-16">
 		<div class="mx-auto max-w-3xl text-center">
 			<h2
-				class="font-cabinet text-2xl leading-[1.1] font-extrabold tracking-[-0.025em] text-ink-primary sm:text-3xl md:text-4xl"
+				class="font-cabinet text-2xl leading-[1.1] font-extrabold tracking-[-0.025em] text-white sm:text-3xl md:text-4xl"
 			>
 				You focus on building what wins. We prove the demand first.
 			</h2>
-			<p class="mx-auto mt-3 max-w-xl text-sm font-medium text-ink-primary/75">
+			<p class="mx-auto mt-3 max-w-xl text-sm font-medium text-white/85">
 				Stop guessing whether customers will pay. Scope a 14-day sprint and get hard market proof
 				before committing engineering capital.
 			</p>
 			<div class="mt-6">
 				<a
 					href="/#contact"
-					class="inline-flex items-center gap-2 rounded-full bg-ink-primary px-6 py-3 text-xs font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-black/85 md:text-sm"
+					class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-extrabold text-brand-accent shadow-sm transition-all hover:-translate-y-0.5 hover:bg-surface-light md:text-sm"
 				>
 					Request a Validation Audit
 					<ArrowRight size={15} />
@@ -442,7 +442,7 @@
 										{study.name}
 									</h3>
 									<span
-										class="rounded-full bg-lime-accent px-2.5 py-0.5 text-[11px] font-bold text-ink-primary"
+										class="rounded-full bg-brand-accent px-2.5 py-0.5 text-[11px] font-bold text-white"
 									>
 										{study.badge}
 									</span>
@@ -458,16 +458,16 @@
 							</div>
 						</div>
 
-						<!-- Lime Gradient Area Chart -->
-						<div class="relative mt-6 rounded-2xl border border-black/6 bg-[#FCFDF9] p-4 pt-6">
-							<!-- Floating Dark Callout Pill (like reference) -->
+						<!-- Blue Gradient Area Chart -->
+						<div class="relative mt-6 rounded-2xl border border-black/6 bg-[#F8FAFF] p-4 pt-6">
+							<!-- Floating Dark Callout Pill -->
 							<div
 								class="mb-3 inline-flex items-center gap-2 rounded-xl bg-surface-dark px-3.5 py-2 text-white shadow-sm sm:absolute sm:top-5 sm:left-[44%] sm:mb-0"
 							>
-								<TrendingUp size={13} class="text-lime-accent" />
+								<TrendingUp size={13} class="text-brand-accent-light" />
 								<div class="text-left leading-tight">
 									<p class="text-[10px] font-semibold text-white/60">{study.calloutTitle}</p>
-									<p class="font-cabinet text-xs font-bold text-lime-accent">
+									<p class="font-cabinet text-xs font-bold text-brand-accent-light">
 										{study.calloutMetric}
 									</p>
 								</div>
@@ -480,25 +480,25 @@
 								aria-label={`${study.name} validation growth chart`}
 							>
 								<defs>
-									<linearGradient id={`limeArea-${idx}`} x1="0" y1="0" x2="0" y2="1">
-										<stop offset="0%" stop-color="#C8F31D" stop-opacity="0.55" />
-										<stop offset="100%" stop-color="#C8F31D" stop-opacity="0.02" />
+									<linearGradient id={`blueArea-${idx}`} x1="0" y1="0" x2="0" y2="1">
+										<stop offset="0%" stop-color="#2563EB" stop-opacity="0.42" />
+										<stop offset="100%" stop-color="#2563EB" stop-opacity="0.02" />
 									</linearGradient>
 								</defs>
 
 								<!-- Horizontal guide lines -->
-								<line x1="24" y1="36" x2="576" y2="36" stroke="#EAEAE4" stroke-dasharray="4 4" />
-								<line x1="24" y1="96" x2="576" y2="96" stroke="#EAEAE4" stroke-dasharray="4 4" />
-								<line x1="24" y1="156" x2="576" y2="156" stroke="#E2E2DA" />
+								<line x1="24" y1="36" x2="576" y2="36" stroke="#E2E8F0" stroke-dasharray="4 4" />
+								<line x1="24" y1="96" x2="576" y2="96" stroke="#E2E8F0" stroke-dasharray="4 4" />
+								<line x1="24" y1="156" x2="576" y2="156" stroke="#CBD5E1" />
 
 								<!-- Area fill -->
-								<path d={study.areaD} fill={`url(#limeArea-${idx})`} />
+								<path d={study.areaD} fill={`url(#blueArea-${idx})`} />
 
 								<!-- Curve stroke -->
 								<path
 									d={study.pathD}
 									fill="none"
-									stroke="#8CB800"
+									stroke="#2563EB"
 									stroke-width="2.5"
 									stroke-linecap="round"
 								/>
@@ -509,7 +509,7 @@
 									y1={study.markerY}
 									x2={study.markerX}
 									y2="156"
-									stroke="#111111"
+									stroke="#0B0F1A"
 									stroke-opacity="0.2"
 									stroke-dasharray="3 3"
 								/>
@@ -517,8 +517,8 @@
 									cx={study.markerX}
 									cy={study.markerY}
 									r="5"
-									fill="#111111"
-									stroke="#C8F31D"
+									fill="#0B0F1A"
+									stroke="#60A5FA"
 									stroke-width="2.5"
 								/>
 
@@ -527,8 +527,8 @@
 									cx="576"
 									cy={study.endY}
 									r="5"
-									fill="#C8F31D"
-									stroke="#111111"
+									fill="#2563EB"
+									stroke="#FFFFFF"
 									stroke-width="2"
 								/>
 
@@ -538,7 +538,7 @@
 										x={24 + i * 110.4}
 										y="171"
 										text-anchor="middle"
-										class="fill-[#787872] text-[10px] font-medium"
+										class="fill-[#64748B] text-[10px] font-medium"
 									>
 										{label}
 									</text>
@@ -606,7 +606,7 @@
 					<div class="pt-2">
 						<a
 							href="/#contact"
-							class="inline-flex items-center gap-2 rounded-full bg-lime-accent px-6 py-3 text-xs font-bold text-ink-primary transition-all hover:bg-lime-accent-hover md:text-sm"
+							class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-xs font-bold text-white transition-all hover:bg-brand-accent-hover md:text-sm"
 						>
 							Scope Your Sprint
 							<ArrowRight size={15} strokeWidth={2.5} />
@@ -634,7 +634,7 @@
 						class="flex items-center gap-2.5 rounded-xl border border-black/8 bg-white px-3 py-2.5 shadow-2xs transition-colors hover:border-black/20"
 					>
 						<span
-							class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-dark text-[10px] font-extrabold text-lime-accent"
+							class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-dark text-[10px] font-extrabold text-brand-accent-light"
 						>
 							{team.initials}
 						</span>
@@ -716,7 +716,7 @@
 									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 								/>
 								<span
-									class="absolute top-3 left-3 rounded-full bg-lime-accent px-2.5 py-0.5 text-[10px] font-extrabold text-ink-primary"
+									class="absolute top-3 left-3 rounded-full bg-brand-accent px-2.5 py-0.5 text-[10px] font-extrabold text-white"
 								>
 									{project.category}
 								</span>
@@ -781,7 +781,7 @@
 					href="https://calendly.com/groupnivabit/30min"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center gap-2 rounded-full bg-lime-accent px-7 py-3.5 text-sm font-bold text-ink-primary shadow-sm transition-all hover:-translate-y-0.5 hover:bg-lime-accent-hover hover:shadow-md"
+					class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-7 py-3.5 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-accent-hover hover:shadow-md"
 				>
 					Book Your Discovery Call
 					<ArrowUpRight size={16} strokeWidth={2.5} />

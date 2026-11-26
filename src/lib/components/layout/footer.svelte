@@ -6,6 +6,7 @@
 	import Linkedin from '../icon/linkedin.svelte';
 	import Instagram from '../icon/instagram.svelte';
 	import Tiktok from '../icon/tiktok.svelte';
+	import NivabitLogo from '../icon/NivabitLogo.svelte';
 
 	const socialLinks = [
 		{ name: 'X / Twitter', icon: Twitter, url: 'https://x.com/@groupnivabit' },
@@ -55,15 +56,8 @@
 		<div class="grid grid-cols-1 gap-12 border-b border-white/10 pb-14 md:grid-cols-12">
 			<!-- Brand Column -->
 			<div class="space-y-5 md:col-span-5">
-				<a href="/" class="inline-flex items-center gap-2.5">
-					<span
-						class="flex h-7 w-7 items-center justify-center rounded-full bg-lime-accent text-xs font-black text-ink-primary"
-					>
-						N
-					</span>
-					<span class="font-cabinet text-xl font-extrabold tracking-tight text-white">
-						Nivabit
-					</span>
+				<a href="/" class="inline-flex items-center" aria-label="Nivabit Home">
+					<NivabitLogo variant="light" class="text-xl" />
 				</a>
 				<p class="max-w-sm text-sm leading-relaxed text-white/60">
 					The product idea validation and market research studio. We install evidence-backed
@@ -77,7 +71,7 @@
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label={social.name}
-							class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all hover:border-lime-accent hover:bg-lime-accent hover:text-ink-primary"
+							class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all hover:border-brand-accent hover:bg-brand-accent hover:text-white"
 						>
 							<span class="scale-75">
 								<Icon fill="currentColor" />
@@ -99,7 +93,7 @@
 								<a
 									href={link.href}
 									onclick={(e) => handleNavClick(e, link.id)}
-									class="text-sm text-white/70 transition-colors hover:text-lime-accent"
+									class="text-sm text-white/70 transition-colors hover:text-brand-accent-light"
 								>
 									{link.label}
 								</a>
@@ -117,11 +111,11 @@
 				<div class="space-y-2.5 text-sm text-white/70">
 					<a
 						href="mailto:contact@nivabit.com"
-						class="block transition-colors hover:text-lime-accent"
+						class="block transition-colors hover:text-brand-accent-light"
 					>
 						contact@nivabit.com
 					</a>
-					<a href="tel:+2349066809821" class="block transition-colors hover:text-lime-accent">
+					<a href="tel:+2349066809821" class="block transition-colors hover:text-brand-accent-light">
 						+234 906 680 9821
 					</a>
 					<div class="pt-2">
@@ -129,7 +123,7 @@
 							href="https://calendly.com/groupnivabit/30min"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inline-flex items-center gap-1.5 rounded-full bg-lime-accent px-4 py-2 text-xs font-bold text-ink-primary transition-colors hover:bg-lime-accent-hover"
+							class="inline-flex items-center gap-1.5 rounded-full bg-brand-accent px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-accent-hover"
 						>
 							Book a 30-Min Call
 						</a>

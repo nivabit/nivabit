@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 36" fill="none" role="img" aria-label="Nivabit">
+	<!-- Iconic Nivabit Pixel-Bit "N" Mark (4x4 grid) -->
+	<g fill="#2563EB">
+		<rect x="0" y="2" width="8" height="8" rx="1" />
+		<rect x="0" y="10" width="8" height="8" rx="1" />
+		<rect x="0" y="26" width="8" height="8" rx="1" />
+		<rect x="8" y="18" width="8" height="8" rx="1" />
+		<rect x="16" y="10" width="8" height="8" rx="1" />
+		<rect x="24" y="2" width="8" height="8" rx="1" />
+		<rect x="24" y="18" width="8" height="8" rx="1" />
+		<rect x="24" y="26" width="8" height="8" rx="1" />
+	</g>
+	<!-- Clean Geometric "ivabit" Wordmark -->
+	<text
+		x="38"
+		y="31"
+		fill="#0B0F1A"
+		font-family="CabinetGrotesk, system-ui, -apple-system, sans-serif"
+		font-size="33"
+		font-weight="800"
+		letter-spacing="-0.03em"
+	>ivabit</text>
+</svg>

@@ -40,8 +40,8 @@ export const submitContact = form(contactSchema, async (data) => {
         <td align="center">
           <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e5e5e0;">
             <tr>
-              <td style="background:#111111;padding:24px 40px;" align="center">
-                <span style="color:#C8F31D;font-size:20px;font-weight:800;letter-spacing:-0.02em;">Nivabit</span>
+              <td style="background:#0B0F1A;padding:24px 40px;" align="center">
+                <span style="color:#60A5FA;font-size:20px;font-weight:800;letter-spacing:-0.02em;">Nivabit</span>
               </td>
             </tr>
             <tr>

@@ -85,7 +85,7 @@ export const forgotPassword = form(forgotPasswordSchema, async ({ email }) => {
 			<h2>Password Reset Request</h2>
 			<p>Click the button below to reset your administrator password (expires in 1 hour):</p>
 			<p style="text-align:center;margin:28px 0;">
-				<a href="${resetLink}" target="_blank" style="background:#C8F31D;color:#111;padding:12px 24px;text-decoration:none;border-radius:999px;font-weight:bold;">
+				<a href="${resetLink}" target="_blank" style="background:#2563EB;color:#FFFFFF;padding:12px 24px;text-decoration:none;border-radius:999px;font-weight:bold;">
 					Reset Password
 				</a>
 			</p>

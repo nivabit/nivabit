@@ -156,17 +156,21 @@
 }
 
 @theme {
-	/* Redesigned Nivabit System Tokens */
-	--color-lime-accent: #c8f31d;
-	--color-lime-accent-hover: #b6e012;
-	--color-lime-soft: #eefad0;
-	--color-surface-light: #f8f8f6;
+	/* Redesigned Nivabit System Tokens (Brand Blue) */
+	--color-brand-accent: #2563eb;
+	--color-brand-accent-hover: #1d4ed8;
+	--color-brand-accent-light: #60a5fa;
+	--color-brand-accent-soft: #e8f0fe;
+	--color-lime-accent: #2563eb;
+	--color-lime-accent-hover: #1d4ed8;
+	--color-lime-soft: #e8f0fe;
+	--color-surface-light: #f7f9fc;
 	--color-surface-card: #ffffff;
-	--color-surface-dark: #111111;
-	--color-surface-dark-elevated: #1a1a1a;
-	--color-ink-primary: #111111;
-	--color-ink-secondary: #52524e;
-	--color-ink-muted: #787872;
+	--color-surface-dark: #0b0f1a;
+	--color-surface-dark-elevated: #131a2c;
+	--color-ink-primary: #0b0f1a;
+	--color-ink-secondary: #475569;
+	--color-ink-muted: #64748b;
 	--font-cabinet: 'CabinetGrotesk', sans-serif;
 	--font-synonym: 'Synonym', sans-serif;
 

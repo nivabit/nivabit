@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
+	import NivabitLogo from '#lib/components/icon/NivabitLogo.svelte';
 
 	let isMenuOpen = $state(false);
 	let scrolled = $state(false);
@@ -65,15 +66,8 @@
 		}`}
 	>
 		<!-- Brand Mark -->
-		<a href="/" class="flex items-center gap-2.5 pl-1.5" aria-label="Nivabit Home">
-			<span
-				class="flex h-7 w-7 items-center justify-center rounded-full bg-lime-accent text-xs font-black text-ink-primary shadow-xs"
-			>
-				N
-			</span>
-			<span class="font-cabinet text-lg font-extrabold tracking-tight text-ink-primary">
-				Nivabit
-			</span>
+		<a href="/" class="flex items-center pl-2" aria-label="Nivabit Home">
+			<NivabitLogo variant="dark" class="text-lg" />
 		</a>
 
 		<!-- Desktop Navigation -->
@@ -95,7 +89,7 @@
 				href="https://calendly.com/groupnivabit/30min"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="hidden items-center gap-1.5 rounded-full bg-lime-accent px-4 py-2 text-xs font-bold text-ink-primary transition-all hover:bg-lime-accent-hover hover:shadow-sm lg:inline-flex"
+				class="hidden items-center gap-1.5 rounded-full bg-brand-accent px-4 py-2 text-xs font-bold text-white transition-all hover:bg-brand-accent-hover hover:shadow-sm lg:inline-flex"
 			>
 				Book a Call
 				<ArrowUpRight size={14} strokeWidth={2.5} />
@@ -137,7 +131,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 					onclick={closeMenu}
-					class="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-lime-accent px-5 py-3 text-sm font-bold text-ink-primary transition-colors hover:bg-lime-accent-hover"
+					class="mt-2 inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-accent px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-accent-hover"
 				>
 					Book a Discovery Call
 					<ArrowUpRight size={16} strokeWidth={2.5} />

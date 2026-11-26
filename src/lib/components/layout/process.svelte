@@ -81,12 +81,12 @@
 			<div
 				class="relative z-10 inline-flex items-center gap-3 rounded-2xl border border-black/15 bg-surface-dark px-6 py-3.5 text-white shadow-md"
 			>
-				<span class="h-2.5 w-2.5 rounded-full bg-lime-accent"></span>
+				<span class="h-2.5 w-2.5 rounded-full bg-brand-accent-light"></span>
 				<span class="font-cabinet text-sm font-bold tracking-tight md:text-base">
 					Your Product Hypothesis &amp; Target ICP
 				</span>
 				<span
-					class="rounded-full bg-lime-accent px-2.5 py-0.5 text-[10px] font-black text-ink-primary uppercase"
+					class="rounded-full bg-brand-accent px-2.5 py-0.5 text-[10px] font-black text-white uppercase"
 				>
 					Day 0
 				</span>
@@ -108,15 +108,15 @@
 
 						<!-- Dark Compact Module Card -->
 						<div
-							class="group flex w-full flex-col items-center rounded-2xl border border-black/10 bg-surface-dark px-3 py-4 text-white shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-lime-accent"
+							class="group flex w-full flex-col items-center rounded-2xl border border-black/10 bg-surface-dark px-3 py-4 text-white shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-brand-accent"
 						>
 							<div
-								class="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white/8 text-lime-accent transition-colors group-hover:bg-lime-accent group-hover:text-ink-primary"
+								class="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white/8 text-brand-accent-light transition-colors group-hover:bg-brand-accent group-hover:text-white"
 							>
 								<Icon size={16} strokeWidth={2.2} />
 							</div>
 							<span class="font-cabinet text-xs font-bold text-white">{step.label}</span>
-							<span class="mt-0.5 text-[10px] font-semibold text-lime-accent/90">
+							<span class="mt-0.5 text-[10px] font-semibold text-brand-accent-light">
 								Step {step.code}
 							</span>
 						</div>

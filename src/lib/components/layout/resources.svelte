@@ -27,7 +27,7 @@
 
 				<a
 					href="/articles"
-					class="inline-flex items-center gap-1.5 rounded-full border border-black/12 bg-surface-light px-5 py-2.5 text-xs font-bold text-ink-primary transition-colors hover:bg-lime-accent"
+					class="inline-flex items-center gap-1.5 rounded-full border border-black/12 bg-surface-light px-5 py-2.5 text-xs font-bold text-ink-primary transition-colors hover:border-brand-accent hover:bg-brand-accent hover:text-white"
 				>
 					View all research
 					<ArrowRight size={14} />

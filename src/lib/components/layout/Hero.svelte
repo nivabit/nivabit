@@ -62,7 +62,7 @@
 			<div class="mt-7 flex flex-wrap items-center justify-center gap-3">
 				<a
 					href="/#contact"
-					class="inline-flex items-center gap-2 rounded-full bg-lime-accent px-6 py-3 text-sm font-bold text-ink-primary shadow-sm transition-all hover:-translate-y-0.5 hover:bg-lime-accent-hover hover:shadow-md"
+					class="inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-accent-hover hover:shadow-md"
 				>
 					Validate Your Idea
 					<ArrowRight size={15} strokeWidth={2.5} />
@@ -131,31 +131,31 @@
 					</div>
 				</div>
 
-				<!-- Right Card: Electric Lime (With Nivabit Validation OS) -->
+				<!-- Right Card: Brand Blue (With Nivabit Validation OS) -->
 				<div
-					class="flex flex-col justify-between gap-5 rounded-2xl border border-black/10 bg-lime-accent p-6 shadow-xs sm:flex-row sm:items-center"
+					class="flex flex-col justify-between gap-5 rounded-2xl border border-brand-accent bg-brand-accent p-6 text-white shadow-sm sm:flex-row sm:items-center"
 				>
 					<div class="space-y-3">
 						<span
-							class="inline-flex items-center gap-1 rounded-full bg-ink-primary px-2.5 py-1 text-[11px] font-bold tracking-wide text-lime-accent uppercase"
+							class="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white uppercase"
 						>
 							<Sparkles size={11} />
 							Nivabit OS
 						</span>
-						<h3 class="font-cabinet text-lg font-extrabold text-ink-primary">
+						<h3 class="font-cabinet text-lg font-extrabold text-white">
 							Validated Demand Engine
 						</h3>
-						<ul class="space-y-1.5 text-xs font-medium text-ink-primary/85">
+						<ul class="space-y-1.5 text-xs font-medium text-white/90">
 							<li class="flex items-center gap-2">
-								<Check size={13} strokeWidth={3} class="shrink-0 text-ink-primary" />
+								<Check size={13} strokeWidth={3} class="shrink-0 text-white" />
 								20+ verified ICP buyer interviews
 							</li>
 							<li class="flex items-center gap-2">
-								<Check size={13} strokeWidth={3} class="shrink-0 text-ink-primary" />
+								<Check size={13} strokeWidth={3} class="shrink-0 text-white" />
 								Live smoke-test conversion metrics
 							</li>
 							<li class="flex items-center gap-2">
-								<Check size={13} strokeWidth={3} class="shrink-0 text-ink-primary" />
+								<Check size={13} strokeWidth={3} class="shrink-0 text-white" />
 								Investor-grade Go / No-Go scorecard
 							</li>
 						</ul>
@@ -164,12 +164,12 @@
 					<!-- Structured System SVG -->
 					<div class="hidden shrink-0 sm:block" aria-hidden="true">
 						<svg width="110" height="84" viewBox="0 0 110 84" fill="none">
-							<rect x="6" y="10" width="38" height="22" rx="6" fill="#111111" fill-opacity="0.08" stroke="#111111" stroke-width="1.3" />
-							<rect x="64" y="10" width="40" height="22" rx="6" fill="#111111" fill-opacity="0.08" stroke="#111111" stroke-width="1.3" />
-							<rect x="26" y="52" width="58" height="24" rx="6" fill="#111111" />
-							<path d="M25 32V42H84V32M55 42V52" stroke="#111111" stroke-width="1.4" />
-							<circle cx="55" cy="42" r="3" fill="#111111" />
-							<rect x="38" y="61" width="34" height="5" rx="2.5" fill="#C8F31D" />
+							<rect x="6" y="10" width="38" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-width="1.3" />
+							<rect x="64" y="10" width="40" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-width="1.3" />
+							<rect x="26" y="52" width="58" height="24" rx="6" fill="#0B0F1A" />
+							<path d="M25 32V42H84V32M55 42V52" stroke="#FFFFFF" stroke-width="1.4" />
+							<circle cx="55" cy="42" r="3" fill="#FFFFFF" />
+							<rect x="38" y="61" width="34" height="5" rx="2.5" fill="#60A5FA" />
 						</svg>
 					</div>
 				</div>
@@ -182,13 +182,13 @@
 				</div>
 			</div>
 
-			<!-- Row 2: Wide Electric Lime Pipeline Container with 4 Dark Cards -->
-			<div class="rounded-3xl border border-black/10 bg-lime-accent p-5 shadow-md shadow-lime-accent/20 md:p-7">
+			<!-- Row 2: Wide Brand Blue Pipeline Container with 4 Dark Cards -->
+			<div class="rounded-3xl border border-brand-accent bg-brand-accent p-5 text-white shadow-lg shadow-brand-accent/20 md:p-7">
 				<div class="mb-5 flex flex-col items-center justify-between gap-2 text-center sm:flex-row sm:text-left">
-					<p class="font-cabinet text-sm font-extrabold tracking-tight text-ink-primary md:text-base">
+					<p class="font-cabinet text-sm font-extrabold tracking-tight text-white md:text-base">
 						Your 14-Day Validation Pipeline
 					</p>
-					<span class="rounded-full bg-ink-primary/10 px-3 py-1 text-[11px] font-bold text-ink-primary">
+					<span class="rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold text-white">
 						$500k+ Wasted Runway Saved • 40+ Market Teardowns
 					</span>
 				</div>
@@ -200,11 +200,11 @@
 						>
 							<div class="mb-2.5 flex items-center justify-between">
 								<span
-									class="flex h-5 w-5 items-center justify-center rounded-full bg-lime-accent text-[10px] font-black text-ink-primary"
+									class="flex h-5 w-5 items-center justify-center rounded-full bg-brand-accent text-[10px] font-black text-white"
 								>
 									{step.num}
 								</span>
-								<span class="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white/75">
+								<span class="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white/80">
 									{step.tag}
 								</span>
 							</div>
@@ -218,12 +218,12 @@
 							</div>
 
 							<p class="font-cabinet text-sm font-bold text-white">{step.title}</p>
-							<p class="mt-0.5 text-[11px] text-white/55">{step.meta}</p>
+							<p class="mt-0.5 text-[11px] text-white/60">{step.meta}</p>
 						</div>
 					{/each}
 				</div>
 
-				<p class="mt-4 text-center text-xs font-semibold text-ink-primary/75">
+				<p class="mt-4 text-center text-xs font-semibold text-white/85">
 					Delivered in 14 days with full interview transcripts, live demand metrics, and an
 					investor-ready Go / No-Go dossier.
 				</p>

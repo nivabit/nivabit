@@ -4,6 +4,7 @@
 	import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-svelte';
 	import { subscribeNewsletter } from '#lib/remote/newsletter.remote.ts';
 	import { subscribeNewsletterSchema } from '#lib/validation/validation.ts';
+	import NivabitLogo from '#lib/components/icon/NivabitLogo.svelte';
 
 	let { class: customClass = '' } = $props();
 </script>
@@ -18,7 +19,7 @@
 			<!-- Left Copy & Remote Form -->
 			<div class="space-y-6 lg:col-span-7">
 				<span
-					class="inline-flex items-center gap-1.5 rounded-full border border-lime-accent/30 bg-lime-accent/10 px-3 py-1 text-[11px] font-bold tracking-wider text-lime-accent uppercase"
+					class="inline-flex items-center gap-1.5 rounded-full border border-brand-accent/40 bg-brand-accent/15 px-3 py-1 text-[11px] font-bold tracking-wider text-brand-accent-light uppercase"
 				>
 					<Sparkles size={12} />
 					The Validation Memo • Weekly
@@ -60,12 +61,12 @@
 							required
 							{...subscribeNewsletter.fields.email.as('email')}
 							placeholder="founder@company.com"
-							class="w-full flex-1 rounded-full border border-white/15 bg-white/[0.06] px-5 py-3 text-sm text-white placeholder:text-white/40 focus:border-lime-accent focus:outline-none sm:border-0 sm:bg-transparent sm:py-2"
+							class="w-full flex-1 rounded-full border border-white/15 bg-white/[0.06] px-5 py-3 text-sm text-white placeholder:text-white/40 focus:border-brand-accent focus:outline-none sm:border-0 sm:bg-transparent sm:py-2"
 						/>
 						<button
 							disabled={Boolean(subscribeNewsletter.pending)}
 							type="submit"
-							class="inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-lime-accent px-5 py-3 text-xs font-extrabold text-ink-primary transition-colors hover:bg-lime-accent-hover disabled:opacity-60 sm:py-2.5"
+							class="inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-brand-accent px-5 py-3 text-xs font-extrabold text-white transition-colors hover:bg-brand-accent-hover disabled:opacity-60 sm:py-2.5"
 						>
 							{#if subscribeNewsletter.pending}
 								Subscribing...
@@ -85,15 +86,11 @@
 			<!-- Right Tilted 3D Validation Dossier Preview Card -->
 			<div class="flex justify-center lg:col-span-5 lg:justify-end">
 				<div
-					class="relative w-full max-w-[300px] -rotate-2 rounded-3xl border border-white/15 bg-gradient-to-b from-[#1E1F1A] to-[#121210] p-6 shadow-2xl shadow-black/60 transition-transform duration-500 hover:rotate-0"
+					class="relative w-full max-w-[300px] -rotate-2 rounded-3xl border border-white/15 bg-gradient-to-b from-[#131B2E] to-[#0B0F1A] p-6 shadow-2xl shadow-black/60 transition-transform duration-500 hover:rotate-0"
 				>
 					<div class="flex items-center justify-between border-b border-white/10 pb-4">
 						<div class="flex items-center gap-2">
-							<span
-								class="flex h-6 w-6 items-center justify-center rounded-full bg-lime-accent text-[10px] font-black text-ink-primary"
-							>
-								N
-							</span>
+							<NivabitLogo variant="light" iconOnly class="h-5 w-5" />
 							<span class="font-cabinet text-xs font-bold text-white">THE VALIDATION MEMO</span>
 						</div>
 						<span class="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-white/70">
@@ -102,7 +99,7 @@
 					</div>
 
 					<div class="mt-5 space-y-3">
-						<p class="text-[10px] font-bold tracking-wider text-lime-accent uppercase">
+						<p class="text-[10px] font-bold tracking-wider text-brand-accent-light uppercase">
 							Market Teardown Scorecard
 						</p>
 						<h3 class="font-cabinet text-lg leading-tight font-extrabold text-white">
@@ -113,38 +110,38 @@
 							<div>
 								<div class="mb-1 flex justify-between text-[11px]">
 									<span class="text-white/60">Pain Urgency</span>
-									<span class="font-bold text-lime-accent">92/100</span>
+									<span class="font-bold text-brand-accent-light">92/100</span>
 								</div>
 								<div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-									<div class="h-full w-[92%] rounded-full bg-lime-accent"></div>
+									<div class="h-full w-[92%] rounded-full bg-brand-accent"></div>
 								</div>
 							</div>
 
 							<div>
 								<div class="mb-1 flex justify-between text-[11px]">
 									<span class="text-white/60">Willingness to Pay</span>
-									<span class="font-bold text-lime-accent">84/100</span>
+									<span class="font-bold text-brand-accent-light">84/100</span>
 								</div>
 								<div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-									<div class="h-full w-[84%] rounded-full bg-lime-accent"></div>
+									<div class="h-full w-[84%] rounded-full bg-brand-accent"></div>
 								</div>
 							</div>
 
 							<div>
 								<div class="mb-1 flex justify-between text-[11px]">
 									<span class="text-white/60">Whitespace Moat</span>
-									<span class="font-bold text-lime-accent">88/100</span>
+									<span class="font-bold text-brand-accent-light">88/100</span>
 								</div>
 								<div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-									<div class="h-full w-[88%] rounded-full bg-lime-accent"></div>
+									<div class="h-full w-[88%] rounded-full bg-brand-accent"></div>
 								</div>
 							</div>
 						</div>
 
 						<div
-							class="mt-4 flex items-center justify-between rounded-xl border border-lime-accent/30 bg-lime-accent/10 px-3.5 py-2.5"
+							class="mt-4 flex items-center justify-between rounded-xl border border-brand-accent/40 bg-brand-accent/15 px-3.5 py-2.5"
 						>
-							<span class="inline-flex items-center gap-1.5 text-xs font-bold text-lime-accent">
+							<span class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-accent-light">
 								<CheckCircle2 size={14} />
 								VERDICT: GO
 							</span>
