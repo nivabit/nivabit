@@ -16,11 +16,11 @@
 	<title>CEO Login | Nivabit Command Center</title>
 </svelte:head>
 
-<section class="relative flex min-h-screen w-full items-center justify-center bg-[#090d14] px-4 py-12 text-slate-100 selection:bg-[#0284c7]/20 selection:text-[#38bdf8]">
+<section class="relative flex min-h-screen w-full items-center justify-center bg-[#090d14] px-4 py-12 text-slate-100 selection:bg-[#2563eb]/20 selection:text-[#60a5fa]">
 	<!-- Ambient Background Glow -->
 	<div class="pointer-events-none absolute inset-0 overflow-hidden">
-		<div class="absolute -top-40 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-[#0284c7]/10 blur-3xl"></div>
-		<div class="absolute -bottom-40 right-10 h-80 w-80 rounded-full bg-[#0284c7]/5 blur-3xl"></div>
+		<div class="absolute -top-40 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-[#2563eb]/10 blur-3xl"></div>
+		<div class="absolute -bottom-40 right-10 h-80 w-80 rounded-full bg-[#2563eb]/5 blur-3xl"></div>
 	</div>
 
 	<div class="relative w-full max-w-md">
@@ -63,7 +63,7 @@
 						<input
 							id="email"
 							{...loginAdmin.fields.email.as('email')}
-							class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2.5 pr-4 pl-10 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:bg-white focus:ring-2 focus:ring-[#0284c7]/15 focus:outline-none"
+							class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2.5 pr-4 pl-10 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:bg-white focus:ring-2 focus:ring-[#2563eb]/15 focus:outline-none"
 							placeholder="admin@nivabit.com"
 						/>
 					</div>
@@ -84,7 +84,7 @@
 						<input
 							id="password"
 							{...loginAdmin.fields._password.as(showPassword ? 'text' : 'password')}
-							class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2.5 pr-10 pl-10 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:bg-white focus:ring-2 focus:ring-[#0284c7]/15 focus:outline-none"
+							class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2.5 pr-10 pl-10 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:bg-white focus:ring-2 focus:ring-[#2563eb]/15 focus:outline-none"
 							placeholder="Enter password"
 						/>
 						<button
@@ -115,7 +115,7 @@
 				<div class="flex items-center justify-between text-xs">
 					<a
 						href="/ceo/forgotpassword"
-						class="font-medium text-[#0284c7] hover:underline"
+						class="font-medium text-[#2563eb] hover:underline"
 					>
 						Forgot password?
 					</a>
@@ -124,7 +124,7 @@
 				<button
 					type="submit"
 					disabled={loading}
-					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0284c7] py-3 text-xs font-bold text-white shadow-md shadow-[#0284c7]/20 transition-all hover:bg-[#0369a1] disabled:cursor-not-allowed disabled:opacity-50"
+					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#2563eb] py-3 text-xs font-bold text-white shadow-md shadow-[#2563eb]/20 transition-all hover:bg-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					{#if loading}
 						<div class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>

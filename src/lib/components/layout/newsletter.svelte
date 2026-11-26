@@ -61,12 +61,12 @@
 							required
 							{...subscribeNewsletter.fields.email.as('email')}
 							placeholder="founder@company.com"
-							class="w-full flex-1 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3 text-base text-white placeholder:text-white/40 focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/25 focus:outline-none sm:border-0 sm:bg-transparent sm:py-2.5 sm:text-sm"
+							class="w-full flex-1 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3 text-base text-white placeholder:text-white/40 focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/25 focus:outline-none sm:border-0 sm:bg-transparent sm:py-2.5 sm:text-sm"
 						/>
 						<button
 							disabled={Boolean(subscribeNewsletter.pending)}
 							type="submit"
-							class="inline-flex min-h-[44px] shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-[#0284C7] px-5 py-3 text-xs font-bold text-white transition-all duration-200 hover:bg-[#0369A1] hover:shadow disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#0284C7] sm:py-2.5"
+							class="inline-flex min-h-[44px] shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-[#2563eb] px-5 py-3 text-xs font-bold text-white transition-all duration-200 hover:bg-[#1d4ed8] hover:shadow disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-[#2563eb] sm:py-2.5"
 						>
 							{#if subscribeNewsletter.pending}
 								Subscribing...

@@ -26,7 +26,7 @@ const templateSources: Record<string, string> = {
               <table role="presentation" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td style="vertical-align:middle;padding-right:10px;">
-                    <span style="display:inline-block;width:10px;height:10px;background-color:#0284c7;border-radius:2px;"></span>
+                    <span style="display:inline-block;width:10px;height:10px;background-color:#2563eb;border-radius:2px;"></span>
                   </td>
                   <td style="vertical-align:middle;">
                     <span style="font-family:'Segoe UI',sans-serif;font-size:16px;font-weight:900;letter-spacing:1px;color:#ffffff;">NIVABIT</span>
@@ -63,7 +63,7 @@ const templateSources: Record<string, string> = {
                         </td>
                       </tr>
                       <tr>
-                        <td style="font-size:16px;font-weight:700;color:#0284c7;padding-bottom:16px;">
+                        <td style="font-size:16px;font-weight:700;color:#2563eb;padding-bottom:16px;">
                           {{formattedDate}} at {{timeSlot}} ({{timezone}})
                         </td>
                       </tr>
@@ -96,7 +96,7 @@ const templateSources: Record<string, string> = {
               <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td align="center">
-                    <a href="https://wa.me/2349066809821?text=Hi%20Nivabit,%20I%20just%20booked%20a%20call%20for%20{{formattedDate}}%20at%20{{timeSlot}}" target="_blank" style="display:inline-block;background-color:#0284c7;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;padding:14px 28px;border-radius:10px;box-shadow:0 2px 8px rgba(2,132,199,0.25);">
+                    <a href="https://wa.me/2349066809821?text=Hi%20Nivabit,%20I%20just%20booked%20a%20call%20for%20{{formattedDate}}%20at%20{{timeSlot}}" target="_blank" style="display:inline-block;background-color:#2563eb;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;padding:14px 28px;border-radius:10px;box-shadow:0 2px 8px rgba(37, 99, 235,0.25);">
                       Message Us on WhatsApp
                     </a>
                   </td>
@@ -133,7 +133,7 @@ const templateSources: Record<string, string> = {
 </head>
 <body style="background-color:#f8fafc;font-family:sans-serif;color:#0f172a;padding:24px;">
   <div style="max-width:540px;margin:auto;background:#ffffff;border-radius:12px;border:1px solid #e2e8f0;padding:28px;">
-    <h2 style="margin:0 0 8px 0;color:#0284c7;">⚡ New Strategy Call Booked</h2>
+    <h2 style="margin:0 0 8px 0;color:#2563eb;">⚡ New Strategy Call Booked</h2>
     <p style="margin:0 0 20px 0;color:#64748b;font-size:14px;">A new founder has booked an intro strategy call.</p>
     
     <table style="width:100%;font-size:14px;line-height:1.8;border-collapse:collapse;">
@@ -143,11 +143,11 @@ const templateSources: Record<string, string> = {
       </tr>
       <tr>
         <td style="color:#64748b;font-weight:bold;">Email:</td>
-        <td><a href="mailto:{{email}}" style="color:#0284c7;">{{email}}</a></td>
+        <td><a href="mailto:{{email}}" style="color:#2563eb;">{{email}}</a></td>
       </tr>
       <tr>
         <td style="color:#64748b;font-weight:bold;">Phone:</td>
-        <td><a href="tel:{{phone}}" style="color:#0284c7;">{{phone}}</a></td>
+        <td><a href="tel:{{phone}}" style="color:#2563eb;">{{phone}}</a></td>
       </tr>
       <tr>
         <td style="color:#64748b;font-weight:bold;">Date:</td>
@@ -155,7 +155,7 @@ const templateSources: Record<string, string> = {
       </tr>
       <tr>
         <td style="color:#64748b;font-weight:bold;">Time Slot:</td>
-        <td style="font-weight:bold;color:#0284c7;">{{timeSlot}} ({{timezone}})</td>
+        <td style="font-weight:bold;color:#2563eb;">{{timeSlot}} ({{timezone}})</td>
       </tr>
       {{#if notes}}
       <tr>
@@ -166,7 +166,7 @@ const templateSources: Record<string, string> = {
     </table>
 
     <div style="margin-top:24px;text-align:center;">
-      <a href="https://wa.me/{{cleanPhone}}" style="background:#0284c7;color:#ffffff;padding:10px 20px;text-decoration:none;border-radius:8px;font-size:13px;font-weight:bold;display:inline-block;">
+      <a href="https://wa.me/{{cleanPhone}}" style="background:#2563eb;color:#ffffff;padding:10px 20px;text-decoration:none;border-radius:8px;font-size:13px;font-weight:bold;display:inline-block;">
         WhatsApp Contact
       </a>
     </div>
@@ -188,7 +188,7 @@ const templateSources: Record<string, string> = {
         <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width:580px;background:#ffffff;border-radius:16px;border:1px solid #e2e8f0;overflow:hidden;">
           <tr>
             <td style="background-color:#090d14;padding:32px 36px;">
-              <span style="display:inline-block;width:10px;height:10px;background-color:#0284c7;border-radius:2px;margin-right:8px;vertical-align:middle;"></span>
+              <span style="display:inline-block;width:10px;height:10px;background-color:#2563eb;border-radius:2px;margin-right:8px;vertical-align:middle;"></span>
               <span style="font-size:16px;font-weight:900;letter-spacing:1px;color:#ffffff;vertical-align:middle;">NIVABIT</span>
               <h1 style="margin:20px 0 0 0;font-size:22px;color:#ffffff;font-weight:800;">Welcome to The Validation Memo</h1>
               <p style="margin:6px 0 0 0;font-size:13px;color:#94a3b8;">Issue Zero • Pre-Code Dossier Inside</p>
@@ -202,12 +202,12 @@ const templateSources: Record<string, string> = {
               <p style="font-size:15px;line-height:1.6;color:#334155;margin:0 0 24px 0;">
                 Every Tuesday, we break down untapped product opportunities, customer willingness-to-pay teardowns, and actionable validation frameworks so you never burn runway on features nobody wants.
               </p>
-              <div style="background:#f8fafc;border-left:4px solid #0284c7;padding:16px 20px;border-radius:0 8px 8px 0;margin-bottom:28px;">
+              <div style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 20px;border-radius:0 8px 8px 0;margin-bottom:28px;">
                 <p style="margin:0;font-size:13px;font-weight:bold;color:#0f172a;">Your Welcome Deliverable:</p>
                 <p style="margin:4px 0 0 0;font-size:13px;color:#475569;">The 14-Day Software Validation Framework + Pre-Code Buyer Discovery Checklist.</p>
               </div>
               <div style="text-align:center;">
-                <a href="https://nivabit.com/#system" style="background:#0284c7;color:#ffffff;text-decoration:none;font-size:14px;font-weight:bold;padding:12px 24px;border-radius:8px;display:inline-block;">
+                <a href="https://nivabit.com/#system" style="background:#2563eb;color:#ffffff;text-decoration:none;font-size:14px;font-weight:bold;padding:12px 24px;border-radius:8px;display:inline-block;">
                   Explore The Framework
                 </a>
               </div>

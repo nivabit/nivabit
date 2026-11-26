@@ -238,7 +238,7 @@
 						<span
 							class="inline-block h-2 w-2 rounded-[1.5px] transition-colors {step === 1
 								? 'bg-[#fa8212]'
-								: 'bg-[#0284c7]'}"
+								: 'bg-[#2563eb]'}"
 						></span>
 						Fill out the form
 					</button>
@@ -258,7 +258,7 @@
 							class="inline-block h-2 w-2 rounded-[1.5px] transition-colors {step === 2
 								? 'bg-[#fa8212]'
 								: step > 2
-									? 'bg-[#0284c7]'
+									? 'bg-[#2563eb]'
 									: 'bg-slate-300'}"
 						></span>
 						Book your event
@@ -280,15 +280,15 @@
 				<!-- Step 3: Success Confirmation State -->
 				<div class="p-8 text-center sm:p-12">
 					<div
-						class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0284c7]/10 text-[#0284c7] ring-8 ring-[#0284c7]/5"
+						class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#2563eb]/10 text-[#2563eb] ring-8 ring-[#2563eb]/5"
 					>
 						<Check class="h-8 w-8 stroke-[2.5]" />
 					</div>
 
 					<span
-						class="inline-flex items-center gap-1.5 rounded-full border border-sky-100 bg-sky-50 px-3 py-1 text-xs font-bold text-[#0284c7]"
+						class="inline-flex items-center gap-1.5 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold text-[#2563eb]"
 					>
-						<span class="h-1.5 w-1.5 rounded-[1.5px] bg-[#0284c7]"></span>
+						<span class="h-1.5 w-1.5 rounded-[1.5px] bg-[#2563eb]"></span>
 						Strategy Session Confirmed
 					</span>
 
@@ -312,7 +312,7 @@
 						</div>
 						<div class="flex items-center justify-between pt-2">
 							<span class="font-bold text-slate-500 uppercase">Time Slot</span>
-							<span class="font-bold text-[#0284c7]">{confirmedDetails?.timeSlot} (WAT)</span>
+							<span class="font-bold text-[#2563eb]">{confirmedDetails?.timeSlot} (WAT)</span>
 						</div>
 					</div>
 
@@ -320,7 +320,7 @@
 						<button
 							type="button"
 							onclick={openWhatsAppFollowup}
-							class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0284c7] px-6 py-3 text-xs font-bold text-white shadow-md shadow-[#0284c7]/20 transition-all hover:bg-[#0369a1]"
+							class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-6 py-3 text-xs font-bold text-white shadow-md shadow-[#2563eb]/20 transition-all hover:bg-[#1d4ed8]"
 						>
 							Message Us on WhatsApp
 						</button>
@@ -342,7 +342,7 @@
 							<h3 class="text-lg font-black tracking-tight text-slate-900 sm:text-xl">
 								Nivabit Strategy Call
 							</h3>
-							<p class="mt-1 text-xs font-bold text-[#0284c7]">
+							<p class="mt-1 text-xs font-bold text-[#2563eb]">
 								A quick call to map your validation roadmap.
 							</p>
 						</div>
@@ -363,7 +363,7 @@
 								<div class="flex gap-2">
 									<select
 										bind:value={countryCode}
-										class="rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-xs font-medium text-slate-700 focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 focus:outline-none"
+										class="rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-xs font-medium text-slate-700 focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/10 focus:outline-none"
 									>
 										{#each countryCodes as c}
 											<option value={c.code}>{c.flag} {c.code}</option>
@@ -374,7 +374,7 @@
 										type="tel"
 										bind:value={phone}
 										placeholder="801 234 5678"
-										class="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 focus:outline-none"
+										class="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/10 focus:outline-none"
 									/>
 								</div>
 							</div>
@@ -390,7 +390,7 @@
 										type="text"
 										bind:value={firstName}
 										placeholder="e.g. Alex"
-										class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 focus:outline-none"
+										class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/10 focus:outline-none"
 									/>
 								</div>
 								<div>
@@ -402,7 +402,7 @@
 										type="text"
 										bind:value={lastName}
 										placeholder="e.g. Vance"
-										class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 focus:outline-none"
+										class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/10 focus:outline-none"
 									/>
 								</div>
 							</div>
@@ -417,7 +417,7 @@
 									type="email"
 									bind:value={email}
 									placeholder="alex@company.com"
-									class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 focus:outline-none"
+									class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/10 focus:outline-none"
 								/>
 							</div>
 
@@ -431,7 +431,7 @@
 									bind:value={notes}
 									rows="2"
 									placeholder="Tell us about the problem or target audience..."
-									class="w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:ring-2 focus:ring-[#0284c7]/10 focus:outline-none"
+									class="w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/10 focus:outline-none"
 								></textarea>
 							</div>
 
@@ -450,7 +450,7 @@
 									type="button"
 									onclick={handleFinalSubmit}
 									disabled={isSubmitting || !selectedDateStr || !selectedTimeSlot}
-									class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0284c7] py-2.5 text-xs font-bold text-white shadow-sm shadow-[#0284c7]/20 transition-all hover:bg-[#0369a1] disabled:cursor-not-allowed disabled:opacity-50"
+									class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#2563eb] py-2.5 text-xs font-bold text-white shadow-sm shadow-[#2563eb]/20 transition-all hover:bg-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-50"
 								>
 									{#if isSubmitting}
 										<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
@@ -478,7 +478,7 @@
 								<div
 									class="pointer-events-auto rounded-xl border border-slate-200/90 bg-white px-5 py-4 text-center shadow-lg"
 								>
-									<span class="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-sky-50 text-[#0284c7]">
+									<span class="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-[#2563eb]">
 										<CalendarIcon class="h-4 w-4" />
 									</span>
 									<p class="text-xs font-bold text-slate-800">
@@ -540,10 +540,10 @@
 											onclick={() => selectDay(day)}
 											class="relative flex h-8 w-full cursor-pointer items-center justify-center rounded-lg text-xs font-semibold transition-all {selectedDateStr ===
 											day.dateStr
-												? 'bg-[#fa8212] font-bold text-white shadow-md shadow-[#fa8212]/30'
+												? 'bg-[#2563eb] font-bold text-white shadow-md shadow-[#2563eb]/30'
 												: day.isPast
 													? 'cursor-not-allowed text-slate-300'
-													: 'text-slate-700 hover:bg-orange-50 hover:text-[#fa8212]'}"
+													: 'text-slate-700 hover:bg-blue-50 hover:text-[#2563eb]'}"
 										>
 											{day.dayNum}
 											{#if day.isToday && selectedDateStr !== day.dateStr}
@@ -563,7 +563,7 @@
 										Available Time Slots (15 Mins)
 									</span>
 									{#if selectedDateStr}
-										<span class="text-[11px] font-bold text-[#0284c7]">
+										<span class="text-[11px] font-bold text-[#2563eb]">
 											{selectedDateStr}
 										</span>
 									{/if}
@@ -576,10 +576,10 @@
 											onclick={() => (selectedTimeSlot = slot)}
 											class="flex cursor-pointer items-center justify-center gap-1.5 rounded-xl border py-2 text-xs font-bold transition-all {selectedTimeSlot ===
 											slot
-												? 'border-[#0284c7] bg-[#0284c7]/10 text-[#0284c7] ring-1 ring-[#0284c7]'
+												? 'border-[#2563eb] bg-[#2563eb]/10 text-[#2563eb] ring-1 ring-[#2563eb]'
 												: 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'}"
 										>
-											<Clock class="h-3 w-3 {selectedTimeSlot === slot ? 'text-[#0284c7]' : 'text-slate-400'}" />
+											<Clock class="h-3 w-3 {selectedTimeSlot === slot ? 'text-[#2563eb]' : 'text-slate-400'}" />
 											{slot}
 										</button>
 									{/each}
@@ -594,7 +594,7 @@
 									type="button"
 									onclick={handleFinalSubmit}
 									disabled={isSubmitting || !selectedDateStr || !selectedTimeSlot}
-									class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#fa8212] py-3 text-xs font-bold text-white shadow-md shadow-[#fa8212]/20 transition-all hover:bg-[#e47610] disabled:cursor-not-allowed disabled:opacity-50"
+									class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#2563eb] py-3 text-xs font-bold text-white shadow-md shadow-[#2563eb]/20 transition-all hover:bg-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-50"
 								>
 									{#if isSubmitting}
 										<span class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
@@ -615,7 +615,7 @@
 				class="flex items-center justify-between border-t border-slate-100 bg-slate-50/50 px-6 py-2.5 text-[11px] text-slate-400"
 			>
 				<div class="flex items-center gap-1.5">
-					<span class="inline-block h-2 w-2 rounded-[2px] bg-[#0284c7]"></span>
+					<span class="inline-block h-2 w-2 rounded-[2px] bg-[#2563eb]"></span>
 					<span class="font-bold tracking-tight text-slate-700">NIVABIT</span>
 					<span>— We innovate the bit.</span>
 				</div>

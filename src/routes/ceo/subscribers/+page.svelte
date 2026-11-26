@@ -63,8 +63,8 @@
 	<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 		<div>
 			<div class="flex items-center gap-2">
-				<span class="h-2 w-2 rounded-[1.5px] bg-[#0284c7]"></span>
-				<span class="font-mono text-xs font-bold tracking-wider text-[#0284c7] uppercase">
+				<span class="h-2 w-2 rounded-[1.5px] bg-[#2563eb]"></span>
+				<span class="font-mono text-xs font-bold tracking-wider text-[#2563eb] uppercase">
 					Audience Management
 				</span>
 			</div>
@@ -88,7 +88,7 @@
 
 			<a
 				href="/ceo/newsletter"
-				class="inline-flex items-center gap-1.5 rounded-xl bg-[#0284c7] px-4 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#0284c7]/20 transition-all hover:bg-[#0369a1]"
+				class="inline-flex items-center gap-1.5 rounded-xl bg-[#2563eb] px-4 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#2563eb]/20 transition-all hover:bg-[#1d4ed8]"
 			>
 				<Send class="h-3.5 w-3.5" />
 				Send Newsletter
@@ -104,12 +104,12 @@
 				type="text"
 				bind:value={searchTerm}
 				placeholder="Search subscriber emails..."
-				class="w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2 pr-4 pl-9 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:bg-white focus:ring-2 focus:ring-[#0284c7]/15 focus:outline-none"
+				class="w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2 pr-4 pl-9 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:bg-white focus:ring-2 focus:ring-[#2563eb]/15 focus:outline-none"
 			/>
 		</div>
 
 		<div class="flex items-center gap-2">
-			<span class="rounded-xl bg-sky-50 px-3.5 py-2 text-xs font-bold text-[#0284c7]">
+			<span class="rounded-xl bg-blue-50 px-3.5 py-2 text-xs font-bold text-[#2563eb]">
 				{subscribers.length} Active Subscribers
 			</span>
 		</div>

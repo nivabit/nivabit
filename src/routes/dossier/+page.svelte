@@ -26,11 +26,11 @@
 	/>
 </svelte:head>
 
-<div class="min-h-screen bg-[#f8fafc] text-slate-900 selection:bg-[#0284c7]/15 selection:text-[#0284c7]">
+<div class="min-h-screen bg-[#f8fafc] text-slate-900 selection:bg-[#2563eb]/15 selection:text-[#2563eb]">
 	<!-- Top Minimal Navbar with Official Nivabit Logo -->
 	<header class="sticky top-0 z-50 px-4 pt-4 md:px-8">
 		<div
-			class="mx-auto flex max-w-6xl items-center justify-between rounded-xl border border-slate-200/80 bg-white/95 px-5 py-3 shadow-[0_4px_20px_-4px_rgba(2,132,199,0.06)] backdrop-blur-md"
+			class="mx-auto flex max-w-6xl items-center justify-between rounded-xl border border-slate-200/80 bg-white/95 px-5 py-3 shadow-[0_4px_20px_-4px_rgba(37, 99, 235,0.06)] backdrop-blur-md"
 		>
 			<!-- Official Nivabit Brand Mark -->
 			<a href="/" class="flex items-center transition-opacity hover:opacity-85">
@@ -41,19 +41,19 @@
 			<nav class="hidden items-center gap-8 md:flex">
 				<a
 					href="/#system"
-					class="text-xs font-semibold tracking-wider text-slate-600 uppercase transition-colors hover:text-[#0284c7]"
+					class="text-xs font-semibold tracking-wider text-slate-600 uppercase transition-colors hover:text-[#2563eb]"
 				>
 					Validation Sprint
 				</a>
 				<a
 					href="/#evidence"
-					class="text-xs font-semibold tracking-wider text-slate-600 uppercase transition-colors hover:text-[#0284c7]"
+					class="text-xs font-semibold tracking-wider text-slate-600 uppercase transition-colors hover:text-[#2563eb]"
 				>
 					Case Studies
 				</a>
 				<a
 					href="/#about"
-					class="text-xs font-semibold tracking-wider text-slate-600 uppercase transition-colors hover:text-[#0284c7]"
+					class="text-xs font-semibold tracking-wider text-slate-600 uppercase transition-colors hover:text-[#2563eb]"
 				>
 					About
 				</a>
@@ -63,7 +63,7 @@
 			<div class="flex items-center gap-3">
 				<button
 					onclick={bookingModal.open}
-					class="inline-flex cursor-pointer items-center justify-center rounded-lg bg-[#0284c7] px-5 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#0284c7]/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0369a1] hover:shadow-md active:translate-y-0 active:scale-95"
+					class="inline-flex cursor-pointer items-center justify-center rounded-lg bg-[#2563eb] px-5 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#2563eb]/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1d4ed8] hover:shadow-md active:translate-y-0 active:scale-95"
 				>
 					Book a Call
 				</button>
@@ -93,7 +93,7 @@
 					>
 						Build trust.<br />
 						Test the demand.<br />
-						Build what <span class="text-[#0284c7]">sells</span>.
+						Build what <span class="text-[#2563eb]">sells</span>.
 					</h1>
 
 					<!-- Subhead -->
@@ -122,7 +122,7 @@
 							{/each}
 
 							<div
-								class="flex flex-col gap-2.5 rounded-xl border border-slate-300 bg-white p-1.5 shadow-sm transition-all focus-within:border-[#0284c7] focus-within:ring-2 focus-within:ring-[#0284c7]/20 sm:flex-row sm:items-center"
+								class="flex flex-col gap-2.5 rounded-xl border border-slate-300 bg-white p-1.5 shadow-sm transition-all focus-within:border-[#2563eb] focus-within:ring-2 focus-within:ring-[#2563eb]/20 sm:flex-row sm:items-center"
 							>
 								<input
 									required
@@ -135,7 +135,7 @@
 								<button
 									disabled={Boolean(subscribeNewsletter.pending)}
 									type="submit"
-									class="inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-[#fa8212] px-6 py-3 text-xs font-bold text-white shadow-md shadow-[#fa8212]/20 transition-all duration-200 hover:bg-[#e47610] hover:shadow-lg hover:shadow-[#fa8212]/30 disabled:opacity-50"
+									class="inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-[#2563eb] px-6 py-3 text-xs font-bold text-white shadow-md shadow-[#2563eb]/20 transition-all duration-200 hover:bg-[#1d4ed8] hover:shadow-lg hover:shadow-[#2563eb]/25 disabled:opacity-50"
 								>
 									{#if subscribeNewsletter.pending}
 										Sending...
@@ -150,15 +150,15 @@
 						<!-- Micro-Proof Checklist -->
 						<div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-slate-500">
 							<span class="inline-flex items-center gap-1.5">
-								<Check class="h-3.5 w-3.5 text-[#0284c7]" strokeWidth={3} />
+								<Check class="h-3.5 w-3.5 text-[#2563eb]" strokeWidth={3} />
 								2-min read
 							</span>
 							<span class="inline-flex items-center gap-1.5">
-								<Check class="h-3.5 w-3.5 text-[#0284c7]" strokeWidth={3} />
+								<Check class="h-3.5 w-3.5 text-[#2563eb]" strokeWidth={3} />
 								0% fluff
 							</span>
 							<span class="inline-flex items-center gap-1.5">
-								<Check class="h-3.5 w-3.5 text-[#0284c7]" strokeWidth={3} />
+								<Check class="h-3.5 w-3.5 text-[#2563eb]" strokeWidth={3} />
 								Easy to implement
 							</span>
 						</div>
@@ -193,7 +193,7 @@
 				<div class="relative flex items-center justify-center py-6 lg:col-span-5 lg:justify-end">
 					<!-- Ambient Glow Anchor -->
 					<div
-						class="pointer-events-none absolute h-72 w-72 rounded-full bg-[#0284c7]/18 blur-3xl"
+						class="pointer-events-none absolute h-72 w-72 rounded-full bg-[#2563eb]/18 blur-3xl"
 						aria-hidden="true"
 					></div>
 
@@ -235,7 +235,7 @@
 
 					<!-- 3D Book Graphic (Nivabit Bit-Matrix Engineering) -->
 					<div
-						class="relative z-10 w-[260px] sm:w-[290px] rotate-[-5deg] rounded-2xl bg-gradient-to-tr from-[#090d14] via-[#0f172a] to-[#1e293b] p-6 shadow-[20px_25px_50px_rgba(2,132,199,0.18)] ring-1 ring-white/10 transition-transform duration-500 hover:rotate-0"
+						class="relative z-10 w-[260px] sm:w-[290px] rotate-[-5deg] rounded-2xl bg-gradient-to-tr from-[#090d14] via-[#0f172a] to-[#1e293b] p-6 shadow-[20px_25px_50px_rgba(37, 99, 235,0.18)] ring-1 ring-white/10 transition-transform duration-500 hover:rotate-0"
 					>
 						<!-- Book Spine Line -->
 						<div
@@ -244,8 +244,8 @@
 
 						<!-- Book Cover Header with Bit Indicator -->
 						<div class="flex items-center gap-2">
-							<span class="h-2 w-2 rounded-[1.5px] bg-[#38bdf8]"></span>
-							<span class="font-mono text-[10px] font-bold tracking-widest text-[#38bdf8] uppercase">
+							<span class="h-2 w-2 rounded-[1.5px] bg-[#60a5fa]"></span>
+							<span class="font-mono text-[10px] font-bold tracking-widest text-[#60a5fa] uppercase">
 								NIVABIT // DOSSIER
 							</span>
 						</div>
@@ -266,14 +266,14 @@
 
 							<!-- Bit Matrix (Visualizing discrete bits of customer information) -->
 							<div class="mt-3 grid grid-cols-8 gap-1">
-								<div class="h-2 rounded-[1px] bg-[#0284c7]"></div>
-								<div class="h-2 rounded-[1px] bg-[#0284c7]"></div>
+								<div class="h-2 rounded-[1px] bg-[#2563eb]"></div>
+								<div class="h-2 rounded-[1px] bg-[#2563eb]"></div>
 								<div class="h-2 rounded-[1px] bg-[#fa8212] shadow-[0_0_8px_#fa8212]"></div>
-								<div class="h-2 rounded-[1px] bg-[#38bdf8]"></div>
-								<div class="h-2 rounded-[1px] bg-[#0284c7]"></div>
-								<div class="h-2 rounded-[1px] bg-[#0284c7]/40"></div>
+								<div class="h-2 rounded-[1px] bg-[#60a5fa]"></div>
+								<div class="h-2 rounded-[1px] bg-[#2563eb]"></div>
+								<div class="h-2 rounded-[1px] bg-[#2563eb]/40"></div>
 								<div class="h-2 rounded-[1px] bg-white/10"></div>
-								<div class="h-2 rounded-[1px] bg-[#38bdf8]"></div>
+								<div class="h-2 rounded-[1px] bg-[#60a5fa]"></div>
 							</div>
 
 							<div class="mt-3 text-[11px] font-medium text-slate-300">
@@ -315,7 +315,7 @@
 							target="_blank"
 							rel="noreferrer"
 							aria-label="X (Twitter)"
-							class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-400 transition-colors hover:border-[#0284c7] hover:text-[#38bdf8]"
+							class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-400 transition-colors hover:border-[#2563eb] hover:text-[#60a5fa]"
 						>
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
 								<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -326,7 +326,7 @@
 							target="_blank"
 							rel="noreferrer"
 							aria-label="LinkedIn"
-							class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-400 transition-colors hover:border-[#0284c7] hover:text-[#38bdf8]"
+							class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-400 transition-colors hover:border-[#2563eb] hover:text-[#60a5fa]"
 						>
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
 								<path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
@@ -335,7 +335,7 @@
 						<button
 							onclick={openWhatsApp}
 							aria-label="WhatsApp"
-							class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-400 transition-colors hover:border-[#0284c7] hover:text-[#38bdf8]"
+							class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-400 transition-colors hover:border-[#2563eb] hover:text-[#60a5fa]"
 						>
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
 								<path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.57.13.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.17-.48-.29z"/>
@@ -350,17 +350,17 @@
 						<h4 class="text-xs font-bold tracking-widest text-slate-500 uppercase">PROGRAMS</h4>
 						<ul class="mt-4 space-y-2.5 text-xs text-slate-300">
 							<li>
-								<a href="/#system" class="transition-colors hover:text-[#38bdf8]">
+								<a href="/#system" class="transition-colors hover:text-[#60a5fa]">
 									14-Day Validation Sprint
 								</a>
 							</li>
 							<li>
-								<a href="/#pipeline" class="transition-colors hover:text-[#38bdf8]">
+								<a href="/#pipeline" class="transition-colors hover:text-[#60a5fa]">
 									Customer Discovery &amp; WTP
 								</a>
 							</li>
 							<li>
-								<a href="/#evidence" class="transition-colors hover:text-[#38bdf8]">
+								<a href="/#evidence" class="transition-colors hover:text-[#60a5fa]">
 									Production Engineering
 								</a>
 							</li>
@@ -371,17 +371,17 @@
 						<h4 class="text-xs font-bold tracking-widest text-slate-500 uppercase">CONNECT</h4>
 						<ul class="mt-4 space-y-2.5 text-xs text-slate-300">
 							<li>
-								<button onclick={bookingModal.open} class="cursor-pointer transition-colors hover:text-[#38bdf8]">
+								<button onclick={bookingModal.open} class="cursor-pointer transition-colors hover:text-[#60a5fa]">
 									Book a Sprint
 								</button>
 							</li>
 							<li>
-								<a href="https://linkedin.com" target="_blank" rel="noreferrer" class="transition-colors hover:text-[#38bdf8]">
+								<a href="https://linkedin.com" target="_blank" rel="noreferrer" class="transition-colors hover:text-[#60a5fa]">
 									Founder's LinkedIn
 								</a>
 							</li>
 							<li>
-								<a href="/#about" class="transition-colors hover:text-[#38bdf8]">
+								<a href="/#about" class="transition-colors hover:text-[#60a5fa]">
 									About Nivabit
 								</a>
 							</li>

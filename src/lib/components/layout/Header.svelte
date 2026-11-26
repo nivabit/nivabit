@@ -89,7 +89,7 @@
 			<button
 				type="button"
 				onclick={bookingModal.open}
-				class="hidden cursor-pointer items-center gap-1.5 rounded-full bg-brand-accent px-4 py-2 text-xs font-bold text-white transition-all hover:bg-brand-accent-hover hover:shadow-sm lg:inline-flex"
+				class="hidden cursor-pointer items-center gap-1.5 rounded-full bg-[#2563eb] px-4 py-2 text-xs font-bold text-white transition-all hover:bg-[#1d4ed8] hover:shadow-sm lg:inline-flex"
 			>
 				Book a Call
 				<ArrowUpRight size={14} strokeWidth={2.5} />

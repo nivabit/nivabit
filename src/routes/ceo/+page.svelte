@@ -36,8 +36,8 @@
 			trend: 'Active Inbounds',
 			icon: Calendar,
 			href: '/ceo/bookings',
-			accent: 'text-[#0284c7]',
-			bg: 'bg-sky-50'
+			accent: 'text-[#2563eb]',
+			bg: 'bg-blue-50'
 		},
 		{
 			name: 'Newsletter Subscribers',
@@ -85,7 +85,7 @@
 	<!-- Executive Welcome Hero -->
 	<div class="relative overflow-hidden rounded-2xl bg-[#090d14] p-8 text-white shadow-xl">
 		<div class="pointer-events-none absolute inset-0 overflow-hidden">
-			<div class="absolute -top-24 right-0 h-64 w-64 rounded-full bg-[#0284c7]/20 blur-3xl"></div>
+			<div class="absolute -top-24 right-0 h-64 w-64 rounded-full bg-[#2563eb]/20 blur-3xl"></div>
 		</div>
 
 		<div class="relative z-10 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
@@ -107,7 +107,7 @@
 			<div class="flex flex-wrap items-center gap-3">
 				<a
 					href="/ceo/articles/create"
-					class="inline-flex items-center gap-2 rounded-xl bg-[#fa8212] px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-[#fa8212]/25 transition-all hover:bg-[#e47610]"
+					class="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-[#2563eb]/20 transition-all hover:bg-[#1d4ed8]"
 				>
 					<Plus class="h-4 w-4" />
 					New Article
@@ -146,7 +146,7 @@
 					</h3>
 					<div class="mt-1 flex items-center justify-between text-xs">
 						<span class="font-semibold text-slate-500">{stat.trend}</span>
-						<span class="flex items-center gap-1 font-bold text-[#0284c7] group-hover:underline">
+						<span class="flex items-center gap-1 font-bold text-[#2563eb] group-hover:underline">
 							View &rarr;
 						</span>
 					</div>
@@ -162,10 +162,10 @@
 			<div class="rounded-2xl border border-slate-200/80 bg-white shadow-xs">
 				<div class="flex items-center justify-between border-b border-slate-100 p-5">
 					<div class="flex items-center gap-2">
-						<Calendar class="h-4 w-4 text-[#0284c7]" />
+						<Calendar class="h-4 w-4 text-[#2563eb]" />
 						<h2 class="text-base font-black text-slate-900">Recent Strategy Calls</h2>
 					</div>
-					<a href="/ceo/bookings" class="text-xs font-bold text-[#0284c7] hover:underline">
+					<a href="/ceo/bookings" class="text-xs font-bold text-[#2563eb] hover:underline">
 						View All ({bookings.length})
 					</a>
 				</div>
@@ -183,7 +183,7 @@
 										{b.firstName} {b.lastName}
 									</h4>
 									<div class="mt-0.5 flex flex-wrap items-center gap-x-3 text-[11px] text-slate-500">
-										<span class="flex items-center gap-1 font-semibold text-[#0284c7]">
+										<span class="flex items-center gap-1 font-semibold text-[#2563eb]">
 											<Clock class="h-3 w-3" />
 											{b.date} @ {b.timeSlot}
 										</span>
@@ -218,10 +218,10 @@
 				<div class="space-y-2.5">
 					<a
 						href="/ceo/articles/create"
-						class="flex items-center justify-between rounded-xl border border-slate-200/70 p-3 transition-colors hover:border-[#0284c7] hover:bg-sky-50/40"
+						class="flex items-center justify-between rounded-xl border border-slate-200/70 p-3 transition-colors hover:border-[#2563eb] hover:bg-blue-50/40"
 					>
 						<div class="flex items-center gap-3">
-							<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-50 text-[#0284c7]">
+							<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-[#2563eb]">
 								<FileText class="h-4 w-4" />
 							</div>
 							<div>
@@ -234,7 +234,7 @@
 
 					<a
 						href="/ceo/newsletter"
-						class="flex items-center justify-between rounded-xl border border-slate-200/70 p-3 transition-colors hover:border-[#0284c7] hover:bg-sky-50/40"
+						class="flex items-center justify-between rounded-xl border border-slate-200/70 p-3 transition-colors hover:border-[#2563eb] hover:bg-blue-50/40"
 					>
 						<div class="flex items-center gap-3">
 							<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
@@ -250,7 +250,7 @@
 
 					<a
 						href="/ceo/metrics"
-						class="flex items-center justify-between rounded-xl border border-slate-200/70 p-3 transition-colors hover:border-[#0284c7] hover:bg-sky-50/40"
+						class="flex items-center justify-between rounded-xl border border-slate-200/70 p-3 transition-colors hover:border-[#2563eb] hover:bg-blue-50/40"
 					>
 						<div class="flex items-center gap-3">
 							<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
@@ -275,7 +275,7 @@
 			<div class="rounded-2xl border border-slate-200/80 bg-white shadow-xs">
 				<div class="flex items-center justify-between border-b border-slate-100 p-5">
 					<h2 class="text-base font-black text-slate-900">Published Content</h2>
-					<a href="/ceo/articles" class="text-xs font-bold text-[#0284c7] hover:underline">
+					<a href="/ceo/articles" class="text-xs font-bold text-[#2563eb] hover:underline">
 						Manage Articles
 					</a>
 				</div>
@@ -327,7 +327,7 @@
 					<h3 class="text-xs font-bold tracking-wider text-slate-500 uppercase">
 						Live Proof Metrics
 					</h3>
-					<a href="/ceo/metrics" class="text-xs font-bold text-[#0284c7] hover:underline">
+					<a href="/ceo/metrics" class="text-xs font-bold text-[#2563eb] hover:underline">
 						Edit Metrics
 					</a>
 				</div>
@@ -340,7 +340,7 @@
 								<p class="text-[10px] text-slate-400">{m.category}</p>
 							</div>
 							<div class="text-right">
-								<p class="text-base font-black text-[#0284c7]">{m.value}</p>
+								<p class="text-base font-black text-[#2563eb]">{m.value}</p>
 								<p class="text-[10px] font-bold text-emerald-600">{m.change || 'Verified'}</p>
 							</div>
 						</div>

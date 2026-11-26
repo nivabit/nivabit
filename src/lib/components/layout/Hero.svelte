@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ArrowRight, ArrowDown, Check, Clock, TrendingUp } from 'lucide-svelte';
+	import { bookingModal } from '#lib/stores/bookingModal.svelte.ts';
 
 	const pipelineSteps = [
 		{
@@ -33,13 +34,14 @@
 	];
 
 	const clientLogos = [
-		{ name: 'Facity', src: '/images/clients/7.png' },
-		{ name: 'Tichly', src: '/images/clients/8.png' },
-		{ name: 'EDGD Media', src: '/images/clients/1.png' },
-		{ name: 'Project Enable Africa', src: '/images/clients/2.png' },
-		{ name: 'Stanforte Edge', src: '/images/clients/4.png' },
-		{ name: 'Lofiqmi', src: '/images/clients/5.png' },
-		{ name: 'The ImisiOluwa', src: '/images/clients/6.png' }
+		{ name: 'EDGD Media', src: '/images/clients/1_dark.png' },
+		{ name: 'Project Enable Africa', src: '/images/clients/2_dark.png' },
+		{ name: 'Stanforte Edge', src: '/images/clients/4_dark.png' },
+		{ name: 'Lofiqmi', src: '/images/clients/5_dark.png' },
+		{ name: 'The ImisiOluwa', src: '/images/clients/6_dark.png' },
+		{ name: 'Facity', src: '/images/clients/7_dark.png' },
+		{ name: 'Tichly', src: '/images/clients/8_dark.png' },
+		{ name: 'Broglux', src: '/images/clients/9_dark.png' }
 	];
 </script>
 
@@ -49,7 +51,7 @@
 >
 	<!-- Accent Place 1: Hero ambient anchor light (subtle top-center beacon) -->
 	<div
-		class="pointer-events-none absolute -top-28 left-1/2 h-64 w-[480px] -translate-x-1/2 rounded-full bg-[#0284c7]/12 blur-3xl"
+		class="pointer-events-none absolute -top-28 left-1/2 h-64 w-[480px] -translate-x-1/2 rounded-full bg-[#2563eb]/12 blur-3xl"
 		aria-hidden="true"
 	></div>
 
@@ -61,7 +63,7 @@
 				class="text-3xl leading-[1.1] font-bold tracking-tight text-slate-900 sm:text-5xl md:text-[56px]"
 			>
 				We test your software concept with paying customers before you write <span
-					class="text-[#0284c7]">code</span
+					class="text-[#fa8212]">code</span
 				>.
 			</h1>
 
@@ -72,14 +74,15 @@
 
 			<!-- Primary & Secondary Actions (Hit target minimum 44x44px, real hover) -->
 			<div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-				<!-- Accent Place 3: Primary CTA button -->
-				<a
-					href="/#contact"
-					class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-xl bg-[#0284c7] px-7 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0369a1] hover:shadow-md focus-visible:ring-2 focus-visible:ring-[#0284c7] focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.99]"
+				<!-- Primary CTA button (Primary Royal Blue #2563eb) -->
+				<button
+					type="button"
+					onclick={bookingModal.open}
+					class="inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-7 py-3 text-sm font-bold text-white shadow-md shadow-[#2563eb]/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1d4ed8] hover:shadow-lg hover:shadow-[#2563eb]/25 focus-visible:ring-2 focus-visible:ring-[#2563eb] focus-visible:ring-offset-2 active:translate-y-0 active:scale-[0.99]"
 				>
 					Book a Validation Sprint
 					<ArrowRight size={16} strokeWidth={2.2} />
-				</a>
+				</button>
 				<a
 					href="#system"
 					class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-medium text-slate-700 transition-all duration-200 hover:border-slate-400 hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 active:bg-slate-200"

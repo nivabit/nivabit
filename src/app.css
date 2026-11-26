@@ -157,16 +157,20 @@
 
 @theme {
 	/* Nivabit Precision Design System (60-30-10 Palette) */
-	--color-brand-accent: #0284c7;
-	--color-brand-accent-hover: #0369a1;
-	--color-brand-accent-light: #38bdf8;
-	--color-brand-accent-soft: #e0f2fe;
+	--color-brand-primary: #2563eb;
+	--color-brand-primary-hover: #1d4ed8;
+	--color-brand-primary-light: #60a5fa;
+	--color-brand-primary-soft: #eff6ff;
+	--color-brand-accent: #fa8212;
+	--color-brand-accent-hover: #e47610;
+	--color-brand-accent-light: #fdbb74;
+	--color-brand-accent-soft: #fff7ed;
 	--color-brand-orange: #fa8212;
 	--color-brand-orange-hover: #e47610;
 	--color-brand-orange-light: #fdbb74;
 	--color-brand-orange-soft: #fff7ed;
-	--color-lime-accent: #0284c7;
-	--color-lime-accent-hover: #0369a1;
+	--color-lime-accent: #2563eb;
+	--color-lime-accent-hover: #1d4ed8;
 	--color-lime-soft: #e0f2fe;
 	--color-surface-light: #f8fafc;
 	--color-surface-card: #ffffff;

@@ -132,22 +132,15 @@
 		}
 	];
 
-	const trustedTeams = [
-		{ name: 'Facity', sector: 'Fintech • 2 wks', initials: 'FA' },
-		{ name: 'Tichly', sector: 'EdTech • 3 wks', initials: 'TI' },
-		{ name: 'Stanforte', sector: 'Tech Inclusion • 2 wks', initials: 'SE' },
-		{ name: 'HealthPulse', sector: 'Digital Health • 4 wks', initials: 'HP' },
-		{ name: 'Grace Inc.', sector: 'Consumer • 2 wks', initials: 'GR' },
-		{ name: 'PayStackr', sector: 'B2B Payments', initials: 'PS' },
-		{ name: 'Kova Labs', sector: 'AI Workflow', initials: 'KL' },
-		{ name: 'VeriFleet', sector: 'Logistics SaaS', initials: 'VF' },
-		{ name: 'Noma Care', sector: 'Telehealth', initials: 'NC' },
-		{ name: 'CredoFlow', sector: 'Embedded Fin', initials: 'CF' },
-		{ name: 'Looma Studio', sector: 'Venture Studio', initials: 'LS' },
-		{ name: 'MetricGrid', sector: 'DevTools', initials: 'MG' },
-		{ name: 'SabiTrade', sector: 'B2B Commerce', initials: 'ST' },
-		{ name: 'Aurelia AI', sector: 'Enterprise AI', initials: 'AA' },
-		{ name: 'PulseOps', sector: 'Cloud Infra', initials: 'PO' }
+	const realClientLogos = [
+		{ name: 'EDGD Media', src: '/images/clients/1_dark.png' },
+		{ name: 'Project Enable Africa', src: '/images/clients/2_dark.png' },
+		{ name: 'Stanforte Edge', src: '/images/clients/4_dark.png' },
+		{ name: 'Lofiqmi', src: '/images/clients/5_dark.png' },
+		{ name: 'The ImisiOluwa', src: '/images/clients/6_dark.png' },
+		{ name: 'Facity', src: '/images/clients/7_dark.png' },
+		{ name: 'Tichly', src: '/images/clients/8_dark.png' },
+		{ name: 'Broglux', src: '/images/clients/9_dark.png' }
 	];
 
 	const testimonialsGrid = [
@@ -265,7 +258,7 @@
 						>
 							<div class="mb-2.5 flex items-center justify-between gap-2">
 								<div class="flex items-center gap-2.5">
-									<span class="h-2 w-2 shrink-0 rounded-[1.5px] bg-[#38bdf8]"></span>
+									<span class="h-2 w-2 shrink-0 rounded-[1.5px] bg-[#60a5fa]"></span>
 									<h3 class="text-sm font-bold text-white">{node.title}</h3>
 								</div>
 								<span class="font-mono text-[10px] font-semibold text-slate-400">
@@ -290,11 +283,11 @@
 						<path id="sys-top-1" d="M 450 64 L 450 0" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
 						<path id="sys-top-2" d="M 450 64 C 450 28, 750 36, 750 0" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
 
-						<!-- Synapse terminal nodes -->
-						<circle cx="150" cy="1" r="3" fill="#38BDF8" />
-						<circle cx="450" cy="1" r="3" fill="#38BDF8" />
-						<circle cx="750" cy="1" r="3" fill="#38BDF8" />
-						<circle cx="450" cy="63" r="3.5" fill="#0284C7" stroke="#38BDF8" stroke-width="1.5" />
+						<!-- Synapse terminal square bits -->
+						<rect x="147" y="0" width="6" height="6" rx="1" fill="#60a5fa" />
+						<rect x="447" y="0" width="6" height="6" rx="1" fill="#60a5fa" />
+						<rect x="747" y="0" width="6" height="6" rx="1" fill="#60a5fa" />
+						<rect x="446.5" y="60" width="7" height="7" rx="1" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5" />
 					</svg>
 				</div>
 
@@ -330,11 +323,11 @@
 						<path id="sys-bot-1" d="M 450 0 L 450 64" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
 						<path id="sys-bot-2" d="M 450 0 C 450 36, 750 28, 750 64" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
 
-						<!-- Synapse terminal nodes -->
-						<circle cx="450" cy="1" r="3.5" fill="#0284C7" stroke="#38BDF8" stroke-width="1.5" />
-						<circle cx="150" cy="63" r="3" fill="#38BDF8" />
-						<circle cx="450" cy="63" r="3" fill="#38BDF8" />
-						<circle cx="750" cy="63" r="3" fill="#38BDF8" />
+						<!-- Synapse terminal square bits -->
+						<rect x="446.5" y="0" width="7" height="7" rx="1" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5" />
+						<rect x="147" y="60" width="6" height="6" rx="1" fill="#60a5fa" />
+						<rect x="447" y="60" width="6" height="6" rx="1" fill="#60a5fa" />
+						<rect x="747" y="60" width="6" height="6" rx="1" fill="#60a5fa" />
 					</svg>
 				</div>
 
@@ -347,7 +340,7 @@
 						>
 							<div class="mb-2.5 flex items-center justify-between gap-2">
 								<div class="flex items-center gap-2.5">
-									<span class="h-2 w-2 shrink-0 rounded-[1.5px] bg-[#38bdf8]"></span>
+									<span class="h-2 w-2 shrink-0 rounded-[1.5px] bg-[#60a5fa]"></span>
 									<h3 class="text-sm font-bold text-white">{node.title}</h3>
 								</div>
 								<span class="font-mono text-[10px] font-semibold text-slate-400">
@@ -530,8 +523,8 @@
 							>
 								<defs>
 									<linearGradient id={`blueArea-${idx}`} x1="0" y1="0" x2="0" y2="1">
-										<stop offset="0%" stop-color="#0284C7" stop-opacity="0.25" />
-										<stop offset="100%" stop-color="#0284C7" stop-opacity="0.0" />
+										<stop offset="0%" stop-color="#2563eb" stop-opacity="0.25" />
+										<stop offset="100%" stop-color="#2563eb" stop-opacity="0.0" />
 									</linearGradient>
 								</defs>
 
@@ -547,7 +540,7 @@
 								<path
 									d={study.pathD}
 									fill="none"
-									stroke="#0284C7"
+									stroke="#2563eb"
 									stroke-width="2.5"
 									stroke-linecap="round"
 								/>
@@ -567,7 +560,7 @@
 									cy={study.markerY}
 									r="4.5"
 									fill="#090D14"
-									stroke="#38BDF8"
+									stroke="#60a5fa"
 									stroke-width="2"
 								/>
 
@@ -666,31 +659,36 @@
 		</div>
 	</section>
 
-	<!-- 8. COMPACT TRUSTED FOUNDERS / VENTURE TEAMS GRID -->
-	<section class="bg-surface-light px-4 py-16 md:px-8 md:py-20">
+	<!-- 8. REAL CLIENT & PARTNER LOGOS -->
+	<section class="border-y border-slate-200/80 bg-white px-4 py-16 md:px-8 md:py-20">
 		<div class="mx-auto max-w-5xl">
 			<div class="mb-10 text-center">
-				<h2
-					class="font-cabinet text-2xl font-extrabold tracking-[-0.02em] text-ink-primary sm:text-3xl"
+				<span
+					class="inline-block rounded-md border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold tracking-wider text-slate-600 uppercase"
 				>
-					Trusted across 15+ high-growth verticals
+					Client Track Record
+				</span>
+				<h2
+					class="font-cabinet mt-3 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl md:text-4xl"
+				>
+					Trusted by Ambitious Founders &amp; Engineering Teams
 				</h2>
+				<p class="mx-auto mt-2 max-w-xl text-xs text-slate-500 sm:text-sm">
+					From early-stage market validation sprints to full-scale digital product development.
+				</p>
 			</div>
 
-			<div class="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-5">
-				{#each trustedTeams as team}
+			<div class="flex flex-wrap items-center justify-center gap-5 md:gap-8">
+				{#each realClientLogos as client}
 					<div
-						class="flex items-center gap-2.5 rounded-xl border border-black/8 bg-white px-3 py-2.5 shadow-2xs transition-colors hover:border-black/20"
+						class="flex h-16 w-36 items-center justify-center rounded-xl border border-slate-200/90 bg-white p-3.5 shadow-xs transition-all duration-300 hover:border-[#2563eb]/40 hover:shadow-md"
 					>
-						<span
-							class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-dark text-[10px] font-extrabold text-brand-accent-light"
-						>
-							{team.initials}
-						</span>
-						<div class="min-w-0">
-							<p class="truncate font-cabinet text-xs font-bold text-ink-primary">{team.name}</p>
-							<p class="truncate text-[10px] text-ink-muted">{team.sector}</p>
-						</div>
+						<img
+							src={client.src}
+							alt={`${client.name} logo`}
+							class="max-h-7 max-w-[110px] object-contain opacity-85 transition-all duration-300 hover:opacity-100 hover:scale-105"
+							loading="lazy"
+						/>
 					</div>
 				{/each}
 			</div>

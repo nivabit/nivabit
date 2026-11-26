@@ -44,8 +44,8 @@
 	<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 		<div>
 			<div class="flex items-center gap-2">
-				<span class="h-2 w-2 rounded-[1.5px] bg-[#0284c7]"></span>
-				<span class="font-mono text-xs font-bold tracking-wider text-[#0284c7] uppercase">
+				<span class="h-2 w-2 rounded-[1.5px] bg-[#2563eb]"></span>
+				<span class="font-mono text-xs font-bold tracking-wider text-[#2563eb] uppercase">
 					Calendar Intel
 				</span>
 			</div>
@@ -59,7 +59,7 @@
 
 		<div class="flex items-center gap-2">
 			<span class="rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-xs">
-				Total Sessions: <strong class="text-[#0284c7]">{bookings.length}</strong>
+				Total Sessions: <strong class="text-[#2563eb]">{bookings.length}</strong>
 			</span>
 		</div>
 	</div>
@@ -72,14 +72,14 @@
 				type="text"
 				bind:value={searchTerm}
 				placeholder="Search bookings by founder name, email, phone..."
-				class="w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2 pr-4 pl-9 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0284c7] focus:bg-white focus:ring-2 focus:ring-[#0284c7]/15 focus:outline-none"
+				class="w-full rounded-xl border border-slate-200 bg-slate-50/50 py-2 pr-4 pl-9 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#2563eb] focus:bg-white focus:ring-2 focus:ring-[#2563eb]/15 focus:outline-none"
 			/>
 		</div>
 
 		<div class="flex items-center gap-2">
 			<select
 				bind:value={statusFilter}
-				class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 focus:border-[#0284c7] focus:outline-none"
+				class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 focus:border-[#2563eb] focus:outline-none"
 			>
 				<option value="All">All Statuses</option>
 				<option value="CONFIRMED">Confirmed</option>
@@ -104,7 +104,7 @@
 				{#each filteredBookings as b}
 					<div class="flex flex-col justify-between gap-4 p-5 transition-colors hover:bg-slate-50/60 sm:flex-row sm:items-center">
 						<div class="flex items-start gap-3.5">
-							<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-[#0284c7]">
+							<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-[#2563eb]">
 								<User class="h-5 w-5" />
 							</div>
 
@@ -120,7 +120,7 @@
 
 								<div class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
 									<span class="flex items-center gap-1">
-										<Calendar class="h-3.5 w-3.5 text-[#0284c7]" />
+										<Calendar class="h-3.5 w-3.5 text-[#2563eb]" />
 										<strong class="text-slate-700">{b.date}</strong>
 									</span>
 									<span class="flex items-center gap-1">
@@ -129,11 +129,11 @@
 									</span>
 									<span class="flex items-center gap-1">
 										<Mail class="h-3.5 w-3.5 text-slate-400" />
-										<a href="mailto:{b.email}" class="hover:text-[#0284c7]">{b.email}</a>
+										<a href="mailto:{b.email}" class="hover:text-[#2563eb]">{b.email}</a>
 									</span>
 									<span class="flex items-center gap-1">
 										<Phone class="h-3.5 w-3.5 text-slate-400" />
-										<a href="tel:{b.phone}" class="hover:text-[#0284c7]">{b.phone}</a>
+										<a href="tel:{b.phone}" class="hover:text-[#2563eb]">{b.phone}</a>
 									</span>
 								</div>
 

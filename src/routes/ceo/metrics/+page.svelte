@@ -95,8 +95,8 @@
 	<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 		<div>
 			<div class="flex items-center gap-2">
-				<span class="h-2 w-2 rounded-[1.5px] bg-[#0284c7]"></span>
-				<span class="font-mono text-xs font-bold tracking-wider text-[#0284c7] uppercase">
+				<span class="h-2 w-2 rounded-[1.5px] bg-[#2563eb]"></span>
+				<span class="font-mono text-xs font-bold tracking-wider text-[#2563eb] uppercase">
 					Platform Performance
 				</span>
 			</div>
@@ -111,7 +111,7 @@
 		<button
 			type="button"
 			onclick={() => (showNewMetricForm = !showNewMetricForm)}
-			class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-[#0284c7] px-4 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#0284c7]/20 transition-all hover:bg-[#0369a1]"
+			class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-[#2563eb] px-4 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#2563eb]/20 transition-all hover:bg-[#1d4ed8]"
 		>
 			<Plus class="h-3.5 w-3.5" />
 			{showNewMetricForm ? 'Close Form' : 'Add New Metric'}
@@ -120,7 +120,7 @@
 
 	<!-- Add New Metric Drawer / Box -->
 	{#if showNewMetricForm}
-		<div class="rounded-2xl border border-sky-100 bg-sky-50/50 p-6 shadow-xs">
+		<div class="rounded-2xl border border-blue-100 bg-blue-50/50 p-6 shadow-xs">
 			<h3 class="text-sm font-bold text-slate-900">Add New Platform Metric</h3>
 			<p class="text-xs text-slate-500">Create a new key metric to track and display on the platform.</p>
 
@@ -131,7 +131,7 @@
 						type="text"
 						bind:value={newKey}
 						placeholder="e.g. client_nps"
-						class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:border-[#0284c7] focus:outline-none"
+						class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:border-[#2563eb] focus:outline-none"
 					/>
 				</div>
 				<div>
@@ -140,7 +140,7 @@
 						type="text"
 						bind:value={newLabel}
 						placeholder="e.g. Founder Net Promoter Score"
-						class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:border-[#0284c7] focus:outline-none"
+						class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:border-[#2563eb] focus:outline-none"
 					/>
 				</div>
 				<div>
@@ -149,7 +149,7 @@
 						type="text"
 						bind:value={newValue}
 						placeholder="e.g. 98/100 or 80%+"
-						class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:border-[#0284c7] focus:outline-none"
+						class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:border-[#2563eb] focus:outline-none"
 					/>
 				</div>
 				<div>
@@ -158,7 +158,7 @@
 						type="text"
 						bind:value={newChange}
 						placeholder="e.g. +14% QoQ or Top 1%"
-						class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:border-[#0284c7] focus:outline-none"
+						class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs focus:border-[#2563eb] focus:outline-none"
 					/>
 				</div>
 			</div>
@@ -174,7 +174,7 @@
 				<button
 					type="button"
 					onclick={createNewMetric}
-					class="rounded-xl bg-[#0284c7] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#0369a1]"
+					class="rounded-xl bg-[#2563eb] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-[#1d4ed8]"
 				>
 					Save Metric
 				</button>
@@ -201,7 +201,7 @@
 							<input
 								type="text"
 								bind:value={editValue}
-								class="w-full rounded-lg border border-slate-200 bg-slate-50 p-2 text-sm font-black text-[#0284c7]"
+								class="w-full rounded-lg border border-slate-200 bg-slate-50 p-2 text-sm font-black text-[#2563eb]"
 							/>
 						</div>
 						<div>
@@ -216,7 +216,7 @@
 							<button
 								type="button"
 								onclick={saveEdit}
-								class="flex flex-1 items-center justify-center gap-1 rounded-lg bg-[#0284c7] py-1.5 text-xs font-bold text-white shadow-xs hover:bg-[#0369a1]"
+								class="flex flex-1 items-center justify-center gap-1 rounded-lg bg-[#2563eb] py-1.5 text-xs font-bold text-white shadow-xs hover:bg-[#1d4ed8]"
 							>
 								<Save class="h-3 w-3" />
 								Save
@@ -233,7 +233,7 @@
 				{:else}
 					<div>
 						<div class="flex items-center justify-between">
-							<span class="rounded-md bg-sky-50 px-2 py-0.5 font-mono text-[10px] font-bold text-[#0284c7] uppercase">
+							<span class="rounded-md bg-blue-50 px-2 py-0.5 font-mono text-[10px] font-bold text-[#2563eb] uppercase">
 								{m.category || 'Metric'}
 							</span>
 							<button

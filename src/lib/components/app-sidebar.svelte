@@ -82,7 +82,7 @@
 					<NivabitLogo variant="light" class="h-6 w-auto" />
 				</a>
 				<div class="mt-2 flex items-center gap-1.5 pl-0.5">
-					<span class="h-1.5 w-1.5 rounded-[1px] bg-[#0284c7]"></span>
+					<span class="h-1.5 w-1.5 rounded-[1px] bg-[#2563eb]"></span>
 					<span class="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
 						CEO Command Suite
 					</span>

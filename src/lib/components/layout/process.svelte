@@ -67,7 +67,7 @@
 			<div
 				class="relative z-10 inline-flex items-center gap-3 rounded-2xl border border-brand-accent/40 bg-surface-dark px-6 py-3.5 text-white shadow-md"
 			>
-				<span class="h-2.5 w-2.5 rounded-[2px] bg-brand-accent-light shadow-[0_0_8px_#38bdf8]"></span>
+				<span class="h-2.5 w-2.5 rounded-[2px] bg-brand-accent-light shadow-[0_0_8px_#60a5fa]"></span>
 				<span class="font-cabinet text-sm font-bold tracking-tight md:text-base">
 					Your Product Hypothesis &amp; Target ICP
 				</span>
@@ -103,26 +103,26 @@
 								? 'M 525 0 L 525 64'
 								: `M 525 0 C 525 32, ${targetX} 26, ${targetX} 64`}
 						<!-- Base line -->
-						<path id={pathId} {d} stroke="#0284C7" stroke-opacity="0.25" stroke-width="1.5" />
+						<path id={pathId} {d} stroke="#2563eb" stroke-opacity="0.25" stroke-width="1.5" />
 						<!-- Animated traveling pulse -->
 						<path
 							{d}
-							stroke="#0284C7"
+							stroke="#2563eb"
 							stroke-width="2"
 							stroke-linecap="round"
 							class="neuron-trace"
 							style={`animation-delay: ${i * 0.25}s;`}
 						/>
 						<!-- Signal orb firing down to card -->
-						<circle r="3.5" fill="#38BDF8" filter="url(#procNeuronGlow)">
+						<circle r="3.5" fill="#60a5fa" filter="url(#procNeuronGlow)">
 							<animateMotion dur="2.1s" repeatCount="indefinite" begin={`${i * 0.25}s`}>
 								<mpath href={`#${pathId}`} />
 							</animateMotion>
 						</circle>
 						<!-- Terminal node -->
-						<circle cx={targetX} cy="63" r="2.5" fill="#0284C7" />
+						<circle cx={targetX} cy="63" r="2.5" fill="#2563eb" />
 					{/each}
-					<circle cx="525" cy="1" r="3.5" fill="#0284C7" />
+					<circle cx="525" cy="1" r="3.5" fill="#2563eb" />
 				</svg>
 			</div>
 

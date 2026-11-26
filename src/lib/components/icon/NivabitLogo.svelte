@@ -10,7 +10,7 @@
 	} = $props();
 
 	let wordColor = $derived(variant === 'light' ? '#FFFFFF' : '#0B0F1A');
-	let markColor = $derived(variant === 'light' ? '#38bdf8' : '#0284c7');
+	let markColor = $derived(variant === 'light' ? '#60a5fa' : '#2563eb');
 </script>
 
 {#if iconOnly}
