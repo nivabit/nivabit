@@ -1,5 +1,4 @@
-import { form, query, getRequestEvent } from '$app/server';
-import { invalid } from '@sveltejs/kit';
+import { command, query, getRequestEvent } from '$app/server';
 import { prisma } from '#lib/server/prisma.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import { sendTemplatedMail } from '#lib/server/mailer.ts';
@@ -23,7 +22,7 @@ function formatBookingDate(dateStr: string): string {
 	}
 }
 
-export const createBooking = form(createBookingSchema, async (data) => {
+export const createBooking = command(createBookingSchema, async (data) => {
 	try {
 		const booking = await prisma.booking.create({
 			data: {
@@ -92,7 +91,7 @@ export const createBooking = form(createBookingSchema, async (data) => {
 		};
 	} catch (err: any) {
 		console.error('[createBooking error]:', err);
-		return invalid(err?.message || 'Unable to schedule call. Please try again or reach out on WhatsApp.');
+		throw new Error(err?.message || 'Unable to schedule call. Please try again or reach out on WhatsApp.');
 	}
 });
 

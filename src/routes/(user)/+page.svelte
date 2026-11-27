@@ -58,8 +58,8 @@
 			duration: '2–3 Weeks',
 			tags: ['20+ Target Interviews', 'Pricing Elasticity', 'MVP Priority Matrix'],
 			desc: 'Direct discovery with your exact buyer persona. Separate polite compliments from genuine purchasing intent and rank must-have MVP features.',
-			image: '/images/project/lafiami.png',
-			domain: 'lafiami.com'
+			image: '/images/project/tichly.png',
+			domain: 'tichly.com'
 		},
 		{
 			title: 'Enterprise Opportunity Dossiers',
@@ -143,7 +143,7 @@
 		{ name: 'Ability-X', src: '/images/clients/abilityx.png', url: 'https://ability-x.org/' },
 		{ name: 'Project Enable Africa', src: '/images/clients/projectenable.png', url: 'https://projectenable.africa/' },
 		{ name: 'Unclutter', src: '/images/clients/unclutter.png', url: 'https://unclutter.com.ng/' },
-		{ name: 'Tichly', textOnly: true }
+		{ name: 'Tichly', textOnly: true, url: 'https://tichly.com' }
 	];
 
 	const testimonialsGrid = [
@@ -225,6 +225,14 @@
 			category: 'Productivity',
 			outcome: 'Mobile-first booking engine with zero-friction conversions',
 			image: '/images/project/unclutter.png'
+		},
+		{
+			title: 'Tichly',
+			duration: '3 weeks',
+			type: 'Client Payment & Asset Delivery SaaS',
+			category: 'Creative Tech',
+			outcome: '3.8x waitlist conversion and 4 months of engineering runway saved',
+			image: '/images/project/tichly.png'
 		}
 	];
 </script>
@@ -736,7 +744,19 @@
 
 			<div class="flex flex-wrap items-center justify-center gap-5 md:gap-8">
 				{#each realClientLogos as client}
-					{#if client.url}
+					{#if client.textOnly}
+						<a
+							href={client.url || 'https://tichly.com'}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="flex h-16 w-36 items-center justify-center rounded-xl border border-slate-200/90 bg-white p-3.5 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563eb]/40 hover:shadow-md"
+							aria-label={`Visit ${client.name}`}
+						>
+							<span class="font-cabinet text-base font-black tracking-tight text-slate-900">
+								{client.name}
+							</span>
+						</a>
+					{:else if client.url}
 						<a
 							href={client.url}
 							target="_blank"

@@ -14,7 +14,7 @@
 			num: '02',
 			title: 'Pain-Point Mining',
 			meta: 'Days 4–6 • 1,000+ Signals',
-			image: '/images/project/lafiami.png',
+			image: '/images/project/tichly.png',
 			tag: 'ICP Intel'
 		},
 		{
