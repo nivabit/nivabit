@@ -1,11 +1,49 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { ArrowUpRight } from 'lucide-svelte';
+	import { ArrowUpRight, Search } from 'lucide-svelte';
 	import { getPublishedArticles } from '#lib/remote/articles.remote.ts';
 	import { getArticleImage, onArticleImageError } from '#lib/constants/articleCategories.ts';
 
-	let { showHeader = false, limit = 10 } = $props();
+	let {
+		showHeader = false,
+		limit = undefined,
+		showFilters = false
+	}: {
+		showHeader?: boolean;
+		limit?: number;
+		showFilters?: boolean;
+	} = $props();
+
 	const articles = $derived(await getPublishedArticles());
+
+	let selectedCategory = $state<string>('All');
+	let searchQuery = $state('');
+
+	const allCategories = $derived.by(() => {
+		const set = new Set<string>();
+		for (const article of articles ?? []) {
+			for (const cat of article.categories ?? []) {
+				if (cat) set.add(cat);
+			}
+		}
+		return ['All', ...Array.from(set)];
+	});
+
+	const visibleArticles = $derived.by(() => {
+		const list = (articles ?? []).filter((article: any) => {
+			if (selectedCategory !== 'All' && !(article.categories ?? []).includes(selectedCategory)) {
+				return false;
+			}
+			if (searchQuery.trim()) {
+				const q = searchQuery.trim().toLowerCase();
+				const inTitle = article.title?.toLowerCase().includes(q);
+				const inExcerpt = article.excerpt?.toLowerCase().includes(q);
+				const inCat = (article.categories ?? []).some((c: string) => c.toLowerCase().includes(q));
+				return inTitle || inExcerpt || inCat;
+			}
+			return true;
+		});
+		return typeof limit === 'number' ? list.slice(0, limit) : list;
+	});
 </script>
 
 <section id="articles" class="bg-surface-light px-4 py-16 md:px-8 md:py-24">
@@ -22,6 +60,39 @@
 				>
 					Other Articles &amp; Teardowns
 				</h2>
+			</div>
+		{/if}
+
+		{#if showFilters && articles?.length > 0}
+			<div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+				<div class="flex flex-wrap gap-2">
+					{#each allCategories as category}
+						<button
+							type="button"
+							onclick={() => (selectedCategory = category)}
+							class={`cursor-pointer rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors ${
+								selectedCategory === category
+									? 'bg-brand-accent text-white shadow-xs'
+									: 'border border-black/10 bg-white text-ink-secondary hover:border-black/20 hover:text-ink-primary'
+							}`}
+						>
+							{category}
+						</button>
+					{/each}
+				</div>
+
+				<div class="relative w-full sm:w-64">
+					<Search
+						size={14}
+						class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-secondary"
+					/>
+					<input
+						type="search"
+						bind:value={searchQuery}
+						placeholder="Search research..."
+						class="w-full rounded-full border border-black/10 bg-white py-2 pr-4 pl-9 text-xs text-ink-primary placeholder:text-ink-secondary/60 focus:border-brand-accent focus:outline-none"
+					/>
+				</div>
 			</div>
 		{/if}
 
@@ -47,9 +118,30 @@
 					Back to Home
 				</a>
 			</div>
+		{:else if visibleArticles.length === 0}
+			<div
+				class="mx-auto flex max-w-md flex-col items-center rounded-3xl border border-black/8 bg-white px-6 py-12 text-center shadow-xs"
+			>
+				<h3 class="font-cabinet mb-2 text-xl font-extrabold text-ink-primary">
+					No matching research found
+				</h3>
+				<p class="mb-5 text-xs text-ink-secondary">
+					Try clearing your search or selecting another category.
+				</p>
+				<button
+					type="button"
+					onclick={() => {
+						selectedCategory = 'All';
+						searchQuery = '';
+					}}
+					class="cursor-pointer rounded-full bg-brand-accent px-5 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-accent-hover"
+				>
+					Reset filters
+				</button>
+			</div>
 		{:else}
 			<div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-				{#each articles.slice(0, limit) as article}
+				{#each visibleArticles as article}
 					<article
 						class="group flex flex-col overflow-hidden rounded-2xl border border-black/8 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-black/20 hover:shadow-md"
 					>

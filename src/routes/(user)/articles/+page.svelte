@@ -17,7 +17,7 @@
 				Research Library
 			</span>
 			<h1
-				class="font-cabinet mt-4 text-4xl leading-[1.05] font-extrabold tracking-[-0.03em] text-ink-primary sm:text-5xl md:text-6xl"
+				class="mt-4 font-cabinet text-4xl leading-[1.05] font-extrabold tracking-[-0.03em] text-ink-primary sm:text-5xl md:text-6xl"
 			>
 				Market teardowns &amp; validation essays.
 			</h1>
@@ -28,7 +28,7 @@
 		</div>
 	</section>
 
-	<Article />
+	<Article showFilters={true} />
 	<Newsletter />
 	<ContactUs />
 </div>

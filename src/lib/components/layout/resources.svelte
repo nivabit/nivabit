@@ -36,7 +36,7 @@
 			</div>
 
 			<div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-				{#each articles as article}
+				{#each articles.slice(0, 3) as article}
 					<article
 						class="group flex flex-col overflow-hidden rounded-2xl border border-black/8 bg-surface-light transition-all duration-300 hover:-translate-y-1 hover:border-black/20 hover:bg-white hover:shadow-md"
 					>
