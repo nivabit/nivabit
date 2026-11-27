@@ -41,6 +41,6 @@ export async function authorize(event: RequestEvent) {
  */
 export async function requireUser(event: RequestEvent) {
 	const user = await authorize(event);
-	if (!user) throw error(401, { message: 'Unauthorized' });
+	if (!user) throw error(401, 'Unauthorized');
 	return user;
 }

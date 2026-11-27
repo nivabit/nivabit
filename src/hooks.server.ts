@@ -1,7 +1,20 @@
-import { getAuthCookie, getUserCookie } from '#lib/utils/auth.ts';
+import jwt from 'jsonwebtoken';
+import { clearAllAuthCookies, getAuthCookie, getUserCookie } from '#lib/utils/auth.ts';
 import { redirect, type Handle } from '@sveltejs/kit';
 import fs from 'fs';
 import path from 'path';
+
+const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET || 'supersecret';
+
+function hasValidJwt(token: string | undefined): boolean {
+	if (!token) return false;
+	try {
+		const decoded: any = jwt.verify(token, JWT_SECRET);
+		return Boolean(decoded?.id);
+	} catch {
+		return false;
+	}
+}
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const user = getUserCookie(event.cookies) || null;
@@ -20,10 +33,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	if (event.url.pathname === '/ceo' || event.url.pathname.startsWith('/ceo/')) {
 		const token = getAuthCookie(event.cookies);
-		if (!isCeoAuthRoute && (!token || !user)) {
+		const isAuthenticated = Boolean(user) && hasValidJwt(token);
+
+		if (!isCeoAuthRoute && !isAuthenticated) {
+			if (token || user) clearAllAuthCookies(event.cookies);
 			throw redirect(303, '/ceo/login');
 		}
-		if (isCeoAuthRoute && token && user) {
+		if (isCeoAuthRoute && isAuthenticated) {
 			throw redirect(303, '/ceo');
 		}
 	}
