@@ -32,17 +32,6 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
 
-      - name: Set Environment Variables
-        run: |
-          echo "NODE_ENV=production" >> $GITHUB_ENV
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
-          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> $GITHUB_ENV
-          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> $GITHUB_ENV
-          echo "SMTP_USERNAME=${{ secrets.SMTP_USERNAME }}" >> $GITHUB_ENV
-          echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> $GITHUB_ENV
-          echo "CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}" >> $GITHUB_ENV
-
       - name: Verify Build
         run: bun --bun ./node_modules/.bin/vite build
         env:
@@ -56,21 +45,10 @@ jobs:
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
 
-      # - name: Run Linting
-      #   run: bun run lint
-
-      # - name: Run Type Checking
-      #   run: bun run check
-
-      # - name: Run Unit Tests
-      #   run: bun run test:unit
-
-      # - name: Run E2E Tests
-      #   run: bun run test:e2e
-
   deploy:
-    name: Nivabit Frontend Deployment
+    name: Nivabit Docker Deployment
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/version2'
     needs:
       - integration
 
@@ -78,162 +56,70 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Cache Bun Dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
-      - name: Install Dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Build Application
-        run: bun --bun ./node_modules/.bin/vite build
-        env:
-          NODE_ENV: production
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
-          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
-
-      - name: Create deployment package
+      - name: Create Deployment Bundle
         run: |
-          mkdir -p deployment/src/lib/server
-          # Copy the built application
-          cp -r build deployment/
-          cp -r static deployment/
-          cp drizzle.config.ts deployment/
-          cp -r src/lib/server/db deployment/src/lib/server/
-          if [ -d "drizzle" ]; then
-            cp -r drizzle deployment/
-          fi
-
-          # Create .env file
-          cat > deployment/.env << EOF
+          cat > .env.prod << EOF
           NODE_ENV=production
+          PORT=3000
+          ORIGIN=${{ secrets.PUBLIC_SITE_URL || 'https://nivabit.com' }}
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           JWT_SECRET=${{ secrets.JWT_SECRET }}
+          ACCESS_TOKEN_SECRET=${{ secrets.JWT_SECRET }}
           SMTP_HOST=${{ secrets.SMTP_HOST }}
           SMTP_PORT=${{ secrets.SMTP_PORT }}
           SMTP_USERNAME=${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
           CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}
           PUBLIC_SITE_URL=${{ secrets.PUBLIC_SITE_URL }}
-          PORT=3000
           EOF
 
-          # Create package.json for production
-          cat > deployment/package.json << 'EOL'
-          {
-            "name": "nivabit-production",
-            "version": "1.0.0",
-            "type": "module",
-            "scripts": {
-              "start": "bun build/index.js",
-              "db:push": "drizzle-kit push",
-              "db:migrate": "drizzle-kit migrate",
-              "db:seed": "bun src/lib/server/db/seed.ts"
-            },
-            "dependencies": {
-              "argon2": "^0.44.0",
-              "bcryptjs": "^3.0.2",
-              "dotenv": "^17.2.3",
-              "drizzle-kit": "^0.31.1",
-              "drizzle-orm": "^0.44.2",
-              "handlebars": "^4.7.10",
-              "jsonwebtoken": "^9.0.2",
-              "jwt-decode": "^4.0.0",
-              "mjml": "^4.15.3",
-              "nodemailer": "^7.0.5",
-              "postgres": "^3.4.5",
-              "uuid": "^11.1.0",
-              "valibot": "^1.5.0"
-            }
-          }
-          EOL
+          tar -czf nivabit-docker.tar.gz \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='.svelte-kit' \
+            --exclude='build' \
+            --exclude='.env' \
+            --exclude='nivabit-docker.tar.gz' \
+            .
 
-          tar -czf nivabit-frontend.tar.gz -C deployment .
-
-      - name: Deploy to Server
+      - name: Upload Bundle to Server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: 'nivabit-frontend.tar.gz'
+          source: 'nivabit-docker.tar.gz'
           target: '~/public_html'
 
-      - name: Set Permissions and Restart Application
+      - name: Build and Start Docker Container
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            export PATH="$HOME/.bun/bin:$PATH"
-            if ! command -v bun >/dev/null 2>&1; then
-              curl -fsSL https://bun.sh/install | bash
-              export PATH="$HOME/.bun/bin:$PATH"
-            fi
-
+            set -e
             cd ~/public_html
 
-            # Extract the deployment package
-            tar -xzf nivabit-frontend.tar.gz
-            rm nivabit-frontend.tar.gz
+            # Extract fresh source & production env
+            tar -xzf nivabit-docker.tar.gz
+            rm -f nivabit-docker.tar.gz
+            mv .env.prod .env
+            mkdir -p uploads
 
-            # Install production dependencies with Bun
-            bun install --production
-
-            # Sync Drizzle database schema
-            if [ -f "./drizzle/meta/_journal.json" ]; then
-              bunx drizzle-kit migrate
-            else
-              bunx drizzle-kit push --force
+            # Stop legacy PM2 process so port 3000 is free for Docker
+            if command -v pm2 >/dev/null 2>&1; then
+              pm2 delete "${{ secrets.SERVICE_NAME }}" || true
+              pm2 delete nivabit || true
+              pm2 save || true
             fi
 
-            # Load .env into shell so PM2 inherits all environment variables
-            set -a
-            . ./.env
-            set +a
+            # Build and start the production Docker container
+            docker compose -f docker-compose.prod.yml up -d --build --remove-orphans
 
-            # Create PM2 config file
-            cat > ecosystem.config.js << 'EOL'
-            module.exports = {
-              apps: [{
-                name: '${{ secrets.SERVICE_NAME }}',
-                script: 'build/index.js',
-                instances: 1,
-                autorestart: true,
-                watch: false,
-                max_memory_restart: '1G',
-                env: {
-                  NODE_ENV: 'production',
-                  PORT: 3000
-                }
-              }]
-            };
-            EOL
-
-            # Recreate PM2 process so updated env vars take effect
-            pm2 delete "${{ secrets.SERVICE_NAME }}" || pm2 delete nivabit || true
-            pm2 start ecosystem.config.js --update-env
-
-            # Save PM2 configuration
-            pm2 save
-
-            # Verify the app is running and print recent logs
-            sleep 3
-            pm2 list
-            pm2 logs "${{ secrets.SERVICE_NAME }}" --nostream --lines 30 || true
+            # Verify container health & HTTP response on port 3000
+            sleep 5
+            docker ps --filter "name=nivabit-prod"
+            docker logs --tail 30 nivabit-prod
+            curl -fsS http://127.0.0.1:3000/ > /dev/null
+            echo "Deployment verified: http://127.0.0.1:3000/ returned 200 OK"

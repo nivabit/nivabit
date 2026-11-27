@@ -20,7 +20,7 @@ ENV NODE_ENV=development
 ENV PORT=3000
 
 COPY docker-entrypoint.sh ./docker-entrypoint.sh
-RUN mkdir -p /app/uploads && chmod +x ./docker-entrypoint.sh
+RUN mkdir -p /app/uploads && sed -i 's/\r$//' ./docker-entrypoint.sh && chmod +x ./docker-entrypoint.sh
 
 EXPOSE 3000
 
@@ -46,9 +46,7 @@ ENV PORT=3000
 
 COPY --from=deps /app/package.json ./package.json
 COPY --from=deps /app/bun.lock ./bun.lock
-RUN --mount=type=cache,target=/root/.bun/install/cache \
-    bun install --production
-
+COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
 COPY --from=builder /app/src/lib/server/db ./src/lib/server/db
@@ -56,7 +54,7 @@ COPY --from=builder /app/static ./static
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY docker-entrypoint.sh ./docker-entrypoint.sh
 
-RUN mkdir -p /app/uploads && chmod +x ./docker-entrypoint.sh
+RUN mkdir -p /app/uploads && sed -i 's/\r$//' ./docker-entrypoint.sh && chmod +x ./docker-entrypoint.sh
 
 EXPOSE 3000
 
