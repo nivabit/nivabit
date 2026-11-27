@@ -199,7 +199,10 @@
 				step = 3;
 				toast.success('Strategy call confirmed! Check your email for details.');
 			} else {
-				toast.error('Could not complete booking. Please try again.');
+				toast.error(
+					(result && 'error' in result && result.error) ||
+						'Could not complete booking. Please try again.'
+				);
 			}
 		} catch (err: any) {
 			toast.error(err?.body?.message || err?.message || 'Error scheduling call. Please try again.');

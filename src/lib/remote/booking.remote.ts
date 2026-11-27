@@ -52,30 +52,26 @@ export const createBooking = command(createBookingSchema, async (data) => {
 			notes: data.notes || ''
 		};
 
-		// 1. Send confirmation to attendee using Handlebars template
-		try {
-			await sendTemplatedMail({
+		// Fire confirmation & admin emails in the background so slow/failing SMTP never blocks or fails a booking
+		const adminRecipient = process.env.SMTP_USERNAME || 'contact@nivabit.com';
+		void Promise.allSettled([
+			sendTemplatedMail({
 				to: data.email,
 				subject: 'Your Strategy Call is Confirmed — Nivabit',
 				template: 'booking-confirmation',
 				context: emailContext
-			});
-		} catch (mailErr) {
-			console.error('[createBooking] User confirmation email failed:', mailErr);
-		}
-
-		// 2. Send notification to Nivabit team using Handlebars template
-		try {
-			const adminRecipient = process.env.SMTP_USERNAME || 'contact@nivabit.com';
-			await sendTemplatedMail({
+			}).catch((mailErr) => {
+				console.error('[createBooking] User confirmation email failed:', mailErr);
+			}),
+			sendTemplatedMail({
 				to: adminRecipient,
 				subject: `⚡ New Strategy Call: ${data.firstName} ${data.lastName} (${data.date} @ ${data.timeSlot})`,
 				template: 'booking-admin-notification',
 				context: emailContext
-			});
-		} catch (mailErr) {
-			console.error('[createBooking] Admin notification email failed:', mailErr);
-		}
+			}).catch((mailErr) => {
+				console.error('[createBooking] Admin notification email failed:', mailErr);
+			})
+		]);
 
 		return {
 			success: true,
@@ -92,8 +88,20 @@ export const createBooking = command(createBookingSchema, async (data) => {
 			}
 		};
 	} catch (err: any) {
-		console.error('[createBooking error]:', err);
-		throw new Error(err?.message || 'Unable to schedule call. Please try again or reach out on WhatsApp.');
+		const cause = err?.cause;
+		console.error('[createBooking error]:', {
+			message: err?.message,
+			code: cause?.code || err?.code,
+			detail: cause?.detail,
+			cause: cause?.message
+		});
+		return {
+			success: false,
+			error:
+				cause?.message ||
+				err?.message ||
+				'Unable to schedule call. Please try again or reach out on WhatsApp.'
+		};
 	}
 });
 

@@ -1,10 +1,12 @@
 #!/bin/sh
 set -e
 
-echo "==> Syncing Drizzle database schema with Bun..."
-if [ "$NODE_ENV" = "development" ] || [ ! -f "./drizzle/meta/_journal.json" ]; then
-    bunx drizzle-kit push --force
-else
+echo "==> Ensuring Drizzle database schema with Bun..."
+bun src/lib/server/db/ensure-schema.ts
+
+if [ "$NODE_ENV" = "development" ]; then
+    bunx drizzle-kit push --force || true
+elif [ -f "./drizzle/meta/_journal.json" ]; then
     bunx drizzle-kit migrate
 fi
 
