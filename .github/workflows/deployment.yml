@@ -214,7 +214,6 @@ jobs:
               apps: [{
                 name: '${{ secrets.SERVICE_NAME }}',
                 script: 'build/index.js',
-                interpreter: 'bun',
                 instances: 1,
                 autorestart: true,
                 watch: false,
@@ -227,7 +226,7 @@ jobs:
             };
             EOL
 
-            # Recreate PM2 process so updated interpreter & env vars take effect
+            # Recreate PM2 process so updated env vars take effect
             pm2 delete "${{ secrets.SERVICE_NAME }}" || pm2 delete nivabit || true
             pm2 start ecosystem.config.js --update-env
 
@@ -235,6 +234,6 @@ jobs:
             pm2 save
 
             # Verify the app is running and print recent logs
-            sleep 2
+            sleep 3
             pm2 list
-            pm2 logs "${{ secrets.SERVICE_NAME }}" --nostream --lines 20 || true
+            pm2 logs "${{ secrets.SERVICE_NAME }}" --nostream --lines 30 || true
