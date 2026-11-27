@@ -13,7 +13,7 @@
 		{ name: 'X / Twitter', icon: Twitter, url: 'https://x.com/@groupnivabit' },
 		{ name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/company/nivabit/' },
 		{ name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/groupnivabit/' },
-		{ name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/nivabit' },
+		{ name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/nvabitng' },
 		{ name: 'TikTok', icon: Tiktok, url: 'https://www.tiktok.com/@nivabit' }
 	];
 
@@ -116,7 +116,10 @@
 					>
 						contact@nivabit.com
 					</a>
-					<a href="tel:+2349066809821" class="block transition-colors hover:text-brand-accent-light">
+					<a
+						href="tel:+2349066809821"
+						class="block transition-colors hover:text-brand-accent-light"
+					>
 						+234 906 680 9821
 					</a>
 					<div class="pt-2">
