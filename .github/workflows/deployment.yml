@@ -46,52 +46,58 @@ jobs:
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
 
   deploy:
-    name: Nivabit Docker Deployment
+    name: Build, Push to GHCR & Deploy
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/version2'
     needs:
       - integration
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Create Deployment Bundle
+      - name: Set lowercase image name
+        id: meta
         run: |
-          cat > .env.prod << EOF
-          NODE_ENV=production
-          PORT=3000
-          ORIGIN=${{ secrets.PUBLIC_SITE_URL || 'https://nivabit.com' }}
-          DATABASE_URL=${{ secrets.DATABASE_URL }}
-          JWT_SECRET=${{ secrets.JWT_SECRET }}
-          ACCESS_TOKEN_SECRET=${{ secrets.JWT_SECRET }}
-          SMTP_HOST=${{ secrets.SMTP_HOST }}
-          SMTP_PORT=${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME=${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
-          CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}
-          PUBLIC_SITE_URL=${{ secrets.PUBLIC_SITE_URL }}
-          EOF
+          IMAGE_LOWER=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "image=${IMAGE_LOWER}" >> "$GITHUB_OUTPUT"
 
-          tar -czf nivabit-docker.tar.gz \
-            --exclude='.git' \
-            --exclude='node_modules' \
-            --exclude='.svelte-kit' \
-            --exclude='build' \
-            --exclude='.env' \
-            --exclude='nivabit-docker.tar.gz' \
-            .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Upload Bundle to Server
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          target: runner
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.image }}:latest
+            ${{ steps.meta.outputs.image }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Upload docker-compose.prod.yml to Server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: 'nivabit-docker.tar.gz'
+          source: 'docker-compose.prod.yml'
           target: '~/public_html'
 
-      - name: Build and Start Docker Container
+      - name: Pull Image and Restart Container on Server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -100,22 +106,42 @@ jobs:
           script: |
             set -e
             cd ~/public_html
-
-            # Extract fresh source & production env
-            tar -xzf nivabit-docker.tar.gz
-            rm -f nivabit-docker.tar.gz
-            mv .env.prod .env
             mkdir -p uploads
 
-            # Stop legacy PM2 process so port 3000 is free for Docker
+            # Write production .env
+            cat > .env << 'EOF'
+            IMAGE_NAME=${{ steps.meta.outputs.image }}:${{ github.sha }}
+            NODE_ENV=production
+            PORT=3000
+            ORIGIN=${{ secrets.PUBLIC_SITE_URL || 'https://nivabit.com' }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            ACCESS_TOKEN_SECRET=${{ secrets.JWT_SECRET }}
+            SMTP_HOST=${{ secrets.SMTP_HOST }}
+            SMTP_PORT=${{ secrets.SMTP_PORT }}
+            SMTP_USERNAME=${{ secrets.SMTP_USERNAME }}
+            SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
+            CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}
+            PUBLIC_SITE_URL=${{ secrets.PUBLIC_SITE_URL }}
+            EOF
+
+            # Log in to GHCR on server to pull the image
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+            # Stop legacy PM2 process so port 3000 is free
             if command -v pm2 >/dev/null 2>&1; then
               pm2 delete "${{ secrets.SERVICE_NAME }}" || true
               pm2 delete nivabit || true
               pm2 save || true
             fi
 
-            # Build and start the production Docker container
-            docker compose -f docker-compose.prod.yml up -d --build --remove-orphans
+            # Pull and start the new image
+            export IMAGE_NAME="${{ steps.meta.outputs.image }}:${{ github.sha }}"
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
+
+            # Clean up old dangling images
+            docker image prune -f || true
 
             # Verify container health & HTTP response on port 3000
             sleep 5

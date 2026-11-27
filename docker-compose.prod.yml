@@ -1,9 +1,6 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: runner
+    image: ${IMAGE_NAME}
     container_name: nivabit-prod
     restart: unless-stopped
     network_mode: host
