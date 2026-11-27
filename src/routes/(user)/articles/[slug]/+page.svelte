@@ -5,14 +5,13 @@
 	import ContactUs from '#lib/components/layout/contactUs.svelte';
 	import Newsletter from '#lib/components/layout/newsletter.svelte';
 	import RichTextEditor from '#lib/components/layout/RichTextEditor.svelte';
-	import { getArticleById, incrementArticleViews } from '#lib/remote/articles.remote.ts';
+	import { getArticleBySlug, incrementArticleViews } from '#lib/remote/articles.remote.ts';
 	import { getArticleImage, onArticleImageError } from '#lib/constants/articleCategories.ts';
-	import { ArrowLeft } from 'lucide-svelte';
 
-	let singleArticles: any = $derived(await getArticleById({ id: page.params.id! }));
+	let singleArticles: any = $derived(await getArticleBySlug({ slug: page.params.slug! }));
 
 	onMount(() => {
-		const id = page.params.id;
+		const id = singleArticles?.id;
 		if (id) {
 			incrementArticleViews({ id }).catch(() => {});
 		}
@@ -50,16 +49,8 @@
 	<div class="bg-surface-light text-ink-primary">
 		<section class="bg-surface-dark px-4 pt-14 pb-20 text-white md:px-8 md:pt-20 md:pb-24">
 			<div class="mx-auto max-w-3xl text-center">
-				<a
-					href="/articles"
-					class="mb-8 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-white/75 transition-colors hover:border-brand-accent hover:text-brand-accent-light"
-				>
-					<ArrowLeft size={13} />
-					All Research
-				</a>
-
 				<div class="mb-5 flex flex-wrap items-center justify-center gap-2">
-					{#each singleArticles?.categories || [] as category}
+					{#each singleArticles?.categories ?? [] as category}
 						<span
 							class="rounded-full bg-brand-accent px-3 py-1 text-[11px] font-extrabold text-white"
 						>

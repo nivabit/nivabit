@@ -16,7 +16,7 @@
 	>
 		<span class="slide-text">
 			<span class="text-top">{@render children?.()}</span>
-			<span class="text-bottom text-brand-orange-500">{@render children?.()}</span>
+			<span class="text-bottom text-[#2563eb]">{@render children?.()}</span>
 		</span>
 	</a>
 {:else}
@@ -30,7 +30,7 @@
 	>
 		<span class="slide-text">
 			<span class="text-top">{@render children?.()}</span>
-			<span class="text-bottom text-brand-orange-500">{@render children?.()}</span>
+			<span class="text-bottom text-[#2563eb]">{@render children?.()}</span>
 		</span>
 	</button>
 {/if}

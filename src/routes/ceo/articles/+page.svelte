@@ -85,7 +85,7 @@
 		</div>
 		<a
 			href="/ceo/articles/create"
-			class="font-synonym flex items-center gap-2 rounded-lg bg-brand-orange-500 px-6 py-3 font-medium text-white transition-colors hover:bg-brand-orange-500/90"
+			class="font-synonym flex items-center gap-2 rounded-lg bg-[#2563eb] px-6 py-3 font-medium text-white transition-colors hover:bg-[#1d4ed8]"
 		>
 			<Plus size={18} />
 			Create Article
@@ -104,7 +104,7 @@
 					type="text"
 					placeholder="Search articles..."
 					bind:value={searchTerm}
-					class="font-synonym w-full rounded-lg border border-brand-grey-50 py-2 pr-4 pl-10 placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+					class="font-synonym w-full rounded-lg border border-brand-grey-50 py-2 pr-4 pl-10 placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 				/>
 			</div>
 
@@ -113,7 +113,7 @@
 				<Filter class="h-4 w-4 text-brand-grey-400" />
 				<select
 					bind:value={statusFilter}
-					class="font-synonym rounded-lg border border-brand-grey-50 px-3 py-2 text-brand-grey-500 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+					class="font-synonym rounded-lg border border-brand-grey-50 px-3 py-2 text-brand-grey-500 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 				>
 					<option value="All">All Status</option>
 					<option value="Published">Published</option>
@@ -144,7 +144,7 @@
 					checked={selectedArticles.length === filteredArticles.length &&
 						filteredArticles.length > 0}
 					onchange={handleSelectAll}
-					class="rounded border-brand-grey-200 text-brand-orange-500 focus:ring-brand-orange-500 focus:ring-offset-0"
+					class="rounded border-brand-grey-200 accent-[#2563eb] text-[#2563eb] focus:ring-[#2563eb] focus:ring-offset-0"
 				/>
 				<span class="font-synonym text-sm font-medium text-brand-grey-500">
 					{articles.length} Articles
@@ -168,7 +168,7 @@
 					{#if !searchTerm && statusFilter === 'All'}
 						<a
 							href="/ceo/articles/create"
-							class="font-synonym inline-flex items-center gap-2 rounded-lg bg-brand-orange-500 px-6 py-3 font-medium text-white transition-colors hover:bg-brand-orange-500/90"
+							class="font-synonym inline-flex items-center gap-2 rounded-lg bg-[#2563eb] px-6 py-3 font-medium text-white transition-colors hover:bg-[#1d4ed8]"
 						>
 							<Plus size={18} />
 							Create First Article
@@ -184,7 +184,7 @@
 								type="checkbox"
 								checked={selectedArticles.includes(article.id)}
 								onchange={() => handleSelectArticle(article.id)}
-								class="mt-1 rounded border-brand-grey-200 text-brand-orange-500 focus:ring-brand-orange-500 focus:ring-offset-0"
+								class="mt-1 rounded border-brand-grey-200 accent-[#2563eb] text-[#2563eb] focus:ring-[#2563eb] focus:ring-offset-0"
 							/>
 
 							<!-- Article Image -->
@@ -328,7 +328,7 @@
 				>
 					Previous
 				</button>
-				<span class="font-synonym rounded-lg bg-brand-orange-500 px-3 py-2 text-sm text-white">
+				<span class="font-synonym rounded-lg bg-[#2563eb] px-3 py-2 text-sm text-white">
 					1
 				</span>
 				<button

@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { getSqlClient } from './index.ts';
+import { slugify } from '../../utils/slug.ts';
 
 async function ensureSchema() {
 	const sql = getSqlClient();
@@ -35,6 +36,7 @@ async function ensureSchema() {
 
 			CREATE TABLE IF NOT EXISTS "Article" (
 				"id" text PRIMARY KEY NOT NULL,
+				"slug" text,
 				"title" text NOT NULL,
 				"excerpt" text NOT NULL,
 				"content" text NOT NULL,
@@ -50,6 +52,8 @@ async function ensureSchema() {
 				"views" integer NOT NULL DEFAULT 0,
 				"authorId" text NOT NULL REFERENCES "Admin"("id")
 			);
+			ALTER TABLE "Article" ADD COLUMN IF NOT EXISTS "slug" text;
+			CREATE UNIQUE INDEX IF NOT EXISTS "Article_slug_key" ON "Article" ("slug");
 
 			CREATE TABLE IF NOT EXISTS "Contact" (
 				"id" text PRIMARY KEY NOT NULL,
@@ -108,6 +112,24 @@ async function ensureSchema() {
 			);
 			CREATE UNIQUE INDEX IF NOT EXISTS "PlatformMetric_key_key" ON "PlatformMetric" ("key");
 		`);
+
+		// Backfill slugs for any existing articles missing one
+		const missingSlugs = await sql<{ id: string; title: string }[]>`
+			SELECT "id", "title" FROM "Article" WHERE "slug" IS NULL OR "slug" = ''
+		`;
+		for (const row of missingSlugs) {
+			const base = slugify(row.title) || row.id.slice(0, 8);
+			let candidate = base;
+			let suffix = 2;
+			while (true) {
+				const existing = await sql<{ id: string }[]>`
+					SELECT "id" FROM "Article" WHERE "slug" = ${candidate} AND "id" != ${row.id} LIMIT 1
+				`;
+				if (existing.length === 0) break;
+				candidate = `${base}-${suffix++}`;
+			}
+			await sql`UPDATE "Article" SET "slug" = ${candidate} WHERE "id" = ${row.id}`;
+		}
 
 		console.log('Database schema verified ✅');
 	} finally {

@@ -84,14 +84,13 @@
 								</p>
 							</div>
 
-							<button
-								type="button"
-								onclick={() => goto(`/articles/${article.id}`)}
-								class="inline-flex w-fit cursor-pointer items-center gap-1 text-xs font-bold text-ink-primary underline decoration-lime-accent decoration-2 underline-offset-4 transition-opacity hover:opacity-75"
+							<a
+								href={`/articles/${article.slug || article.id}`}
+								class="inline-flex w-fit items-center gap-1 text-xs font-bold text-ink-primary underline decoration-lime-accent decoration-2 underline-offset-4 transition-opacity hover:opacity-75"
 							>
 								Read Article
 								<ArrowUpRight size={13} />
-							</button>
+							</a>
 						</div>
 					</article>
 				{/each}

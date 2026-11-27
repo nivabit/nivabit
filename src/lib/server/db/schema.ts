@@ -37,30 +37,35 @@ export const admins = pgTable(
 	]
 );
 
-export const articles = pgTable('Article', {
-	id: text('id')
-		.primaryKey()
-		.$defaultFn(() => crypto.randomUUID()),
-	title: text('title').notNull(),
-	excerpt: text('excerpt').notNull(),
-	content: text('content').notNull(),
-	categories: text('categories').array(),
-	status: articleStatusEnum('status').notNull().default('DRAFT'),
-	publishDate: timestamp('publishDate', { mode: 'date' }),
-	tags: text('tags').array(),
-	featuredImage: text('featuredImage'),
-	seoTitle: text('seoTitle').notNull(),
-	seoDescription: text('seoDescription').notNull(),
-	createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
-	updatedAt: timestamp('updatedAt', { mode: 'date' })
-		.notNull()
-		.$defaultFn(() => new Date())
-		.$onUpdate(() => new Date()),
-	views: integer('views').notNull().default(0),
-	authorId: text('authorId')
-		.notNull()
-		.references(() => admins.id)
-});
+export const articles = pgTable(
+	'Article',
+	{
+		id: text('id')
+			.primaryKey()
+			.$defaultFn(() => crypto.randomUUID()),
+		slug: text('slug'),
+		title: text('title').notNull(),
+		excerpt: text('excerpt').notNull(),
+		content: text('content').notNull(),
+		categories: text('categories').array(),
+		status: articleStatusEnum('status').notNull().default('DRAFT'),
+		publishDate: timestamp('publishDate', { mode: 'date' }),
+		tags: text('tags').array(),
+		featuredImage: text('featuredImage'),
+		seoTitle: text('seoTitle').notNull(),
+		seoDescription: text('seoDescription').notNull(),
+		createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
+		updatedAt: timestamp('updatedAt', { mode: 'date' })
+			.notNull()
+			.$defaultFn(() => new Date())
+			.$onUpdate(() => new Date()),
+		views: integer('views').notNull().default(0),
+		authorId: text('authorId')
+			.notNull()
+			.references(() => admins.id)
+	},
+	(table) => [uniqueIndex('Article_slug_key').on(table.slug)]
+);
 
 export const contacts = pgTable('Contact', {
 	id: text('id')

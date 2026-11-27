@@ -3,9 +3,10 @@ import { error, invalid } from '@sveltejs/kit';
 import * as v from 'valibot';
 import fs from 'node:fs';
 import path from 'node:path';
-import { desc, eq, ne, sql } from 'drizzle-orm';
+import { and, desc, eq, ne, or, sql } from 'drizzle-orm';
 import { db, articles } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
+import { slugify } from '#lib/utils/slug.ts';
 import {
 	ACCEPTED_IMAGE_TYPES,
 	IMAGE_MAX_FILE_SIZE_BYTES,
@@ -16,6 +17,29 @@ import { articleFormSchema } from '#lib/validation/articleSchema.ts';
 const idSchema = v.object({
 	id: v.pipe(v.string(), v.nonEmpty('Article ID is required'))
 });
+
+const slugOrIdSchema = v.object({
+	slug: v.pipe(v.string(), v.nonEmpty('Article slug is required'))
+});
+
+async function generateUniqueSlug(title: string, excludeId?: string): Promise<string> {
+	const base = slugify(title) || `article-${Date.now()}`;
+	let candidate = base;
+	let suffix = 2;
+
+	while (true) {
+		const condition = excludeId
+			? and(eq(articles.slug, candidate), ne(articles.id, excludeId))
+			: eq(articles.slug, candidate);
+		const [existing] = await db
+			.select({ id: articles.id })
+			.from(articles)
+			.where(condition)
+			.limit(1);
+		if (!existing) return candidate;
+		candidate = `${base}-${suffix++}`;
+	}
+}
 
 async function saveUploadedImage(file: File): Promise<string> {
 	const buffer = Buffer.from(await file.arrayBuffer());
@@ -43,7 +67,23 @@ export const getPublishedArticles = query(async () => {
 });
 
 export const getArticleById = query(idSchema, async ({ id }) => {
-	const [article] = await db.select().from(articles).where(eq(articles.id, id)).limit(1);
+	const [article] = await db
+		.select()
+		.from(articles)
+		.where(or(eq(articles.slug, id), eq(articles.id, id)))
+		.limit(1);
+	if (!article) {
+		throw error(404, 'Article not found');
+	}
+	return article;
+});
+
+export const getArticleBySlug = query(slugOrIdSchema, async ({ slug }) => {
+	const [article] = await db
+		.select()
+		.from(articles)
+		.where(or(eq(articles.slug, slug), eq(articles.id, slug)))
+		.limit(1);
 	if (!article) {
 		throw error(404, 'Article not found');
 	}
@@ -100,9 +140,12 @@ export const createArticle = form(articleFormSchema, async (data, issue) => {
 				: new Date()
 			: null;
 
+	const slug = await generateUniqueSlug(data.title);
+
 	const [article] = await db
 		.insert(articles)
 		.values({
+			slug,
 			title: data.title,
 			excerpt: data.excerpt,
 			content: data.content,
@@ -160,9 +203,12 @@ export const updateArticle = form(articleFormSchema, async (data, issue) => {
 		publishDate = data.publishDate ? new Date(data.publishDate) : new Date();
 	}
 
+	const slug = existing.slug || (await generateUniqueSlug(data.title, data.id));
+
 	await db
 		.update(articles)
 		.set({
+			slug,
 			title: data.title,
 			excerpt: data.excerpt,
 			content: data.content,

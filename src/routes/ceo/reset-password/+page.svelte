@@ -80,7 +80,7 @@
 
 				<a
 					href="/ceo/forgotpassword"
-					class="font-synonym inline-block w-full rounded-lg bg-brand-orange-500 px-4 py-3 text-center font-medium text-white transition-colors hover:bg-brand-orange-500/90"
+					class="font-synonym inline-block w-full rounded-lg bg-[#2563eb] px-4 py-3 text-center font-medium text-white transition-colors hover:bg-[#2563eb]/90"
 				>
 					Request New Link
 				</a>
@@ -99,7 +99,7 @@
 {:else}
 	<div class="flex min-h-screen items-center justify-center bg-brand-blue-900 px-4">
 		<div class="absolute inset-0 overflow-hidden">
-			<div class="absolute -top-48 -right-48 h-96 w-96 rounded-full bg-brand-orange-500 opacity-5"></div>
+			<div class="absolute -top-48 -right-48 h-96 w-96 rounded-full bg-[#2563eb] opacity-5"></div>
 			<div class="absolute -bottom-32 -left-32 h-64 w-64 rounded-full bg-white opacity-5"></div>
 		</div>
 
@@ -149,7 +149,7 @@
 								<input
 									id="password"
 									{...resetPassword.fields._password.as(showPassword ? 'text' : 'password')}
-									class="font-synonym w-full rounded-lg border border-brand-grey-50 py-3 pr-12 pl-10 transition-colors placeholder:text-brand-grey-200 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+									class="font-synonym w-full rounded-lg border border-brand-grey-50 py-3 pr-12 pl-10 transition-colors placeholder:text-brand-grey-200 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 									placeholder="Enter new password"
 								/>
 								<button
@@ -207,7 +207,7 @@
 									{...resetPassword.fields._confirmPassword.as(
 										showConfirmPassword ? 'text' : 'password'
 									)}
-									class="font-synonym w-full rounded-lg border border-brand-grey-50 py-3 pr-12 pl-10 transition-colors placeholder:text-brand-grey-200 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+									class="font-synonym w-full rounded-lg border border-brand-grey-50 py-3 pr-12 pl-10 transition-colors placeholder:text-brand-grey-200 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 									placeholder="Confirm new password"
 								/>
 								<button
@@ -245,7 +245,7 @@
 						<MainButton
 							type="submit"
 							disabled={isLoading || !passwordValidation.isValid || !passwordsMatch}
-							class="font-synonym w-full rounded-lg bg-brand-orange-500 font-medium text-white transition-colors hover:bg-brand-orange-500/90 focus:ring-2 focus:ring-brand-orange-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+							class="font-synonym w-full rounded-lg bg-[#2563eb] font-medium text-white transition-colors hover:bg-[#2563eb]/90 focus:ring-2 focus:ring-[#2563eb] focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 						>
 							{#if isLoading}
 								<div class="flex items-center justify-center">

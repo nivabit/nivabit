@@ -190,7 +190,7 @@
 							id="title"
 							{...updateArticle.fields.title.as('text')}
 							placeholder="Enter your article title..."
-							class="font-cabinet w-full rounded-lg border border-brand-grey-50 px-4 py-3 text-lg placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+							class="font-cabinet w-full rounded-lg border border-brand-grey-50 px-4 py-3 text-lg placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 						/>
 						{#each updateArticle.fields.title.issues() as issue}
 							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
@@ -206,7 +206,7 @@
 							{...updateArticle.fields.excerpt.as('text')}
 							placeholder="Write a brief description of your article..."
 							rows={3}
-							class="font-synonym w-full resize-none rounded-lg border border-brand-grey-50 px-4 py-3 placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+							class="font-synonym w-full resize-none rounded-lg border border-brand-grey-50 px-4 py-3 placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 						></textarea>
 						{#each updateArticle.fields.excerpt.issues() as issue}
 							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
@@ -286,7 +286,7 @@
 						<select
 							id="status"
 							{...updateArticle.fields.status.as('select')}
-							class="font-synonym w-full rounded-lg border border-brand-grey-50 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+							class="font-synonym w-full rounded-lg border border-brand-grey-50 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 						>
 							<option value="DRAFT">Draft</option>
 							<option value="PUBLISHED">Published</option>
@@ -341,7 +341,7 @@
 							bind:value={tagInput}
 							onkeypress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
 							placeholder="Add a tag..."
-							class="font-synonym flex-1 rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+							class="font-synonym flex-1 rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 						/>
 						<button
 							type="button"
@@ -386,7 +386,7 @@
 							id="seoTitle"
 							{...updateArticle.fields.seoTitle.as('text')}
 							placeholder="SEO optimized title..."
-							class="font-synonym w-full rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+							class="font-synonym w-full rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 						/>
 						{#each updateArticle.fields.seoTitle.issues() as issue}
 							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
@@ -405,7 +405,7 @@
 							{...updateArticle.fields.seoDescription.as('text')}
 							placeholder="SEO meta description..."
 							rows={3}
-							class="font-synonym w-full resize-none rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-brand-orange-500 focus:outline-none"
+							class="font-synonym w-full resize-none rounded-lg border border-brand-grey-50 px-3 py-2 text-sm placeholder:text-brand-grey-400 focus:border-transparent focus:ring-2 focus:ring-[#2563eb] focus:outline-none"
 						></textarea>
 						{#each updateArticle.fields.seoDescription.issues() as issue}
 							<p class="mt-1 text-sm text-red-500">{issue.message}</p>
