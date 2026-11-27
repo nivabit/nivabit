@@ -1,10 +1,16 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import { ArrowRight, Check } from 'lucide-svelte';
 	import { submitContact } from '#lib/remote/contact.remote.ts';
 	import { contactSchema } from '#lib/validation/validation.ts';
 
 	let selectedServices: string[] = $state([]);
+	let startedAt = $state('');
+
+	onMount(() => {
+		startedAt = String(Date.now());
+	});
 	const services = [
 		'Idea Validation Sprint',
 		'Customer Discovery Interviews',
@@ -62,6 +68,17 @@
 			>
 				<input {...submitContact.fields.services.as('hidden', selectedServices.join(', '))} />
 				<input {...submitContact.fields.subject.as('hidden', 'Lead from contact')} />
+				<input {...submitContact.fields._startedAt.as('hidden', startedAt)} />
+				<!-- Anti-spam honeypot (hidden from humans) -->
+				<div class="pointer-events-none absolute -left-[9999px] h-0 w-0 overflow-hidden opacity-0" aria-hidden="true">
+					<label for="contact-website">Website</label>
+					<input
+						id="contact-website"
+						tabindex="-1"
+						autocomplete="off"
+						{...submitContact.fields.website.as('text')}
+					/>
+				</div>
 
 				<!-- Service Selection Pills -->
 				<div>

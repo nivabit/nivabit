@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { cn } from '#lib/utils.ts';
 	import { toast } from 'svelte-sonner';
 	import { ArrowRight, CheckCircle2 } from 'lucide-svelte';
@@ -7,6 +8,11 @@
 	import NivabitLogo from '#lib/components/icon/NivabitLogo.svelte';
 
 	let { class: customClass = '' } = $props();
+	let startedAt = $state('');
+
+	onMount(() => {
+		startedAt = String(Date.now());
+	});
 </script>
 
 <!-- Dark Obsidian Spotlight Band (Matches Reference Dark Feature Showcase) -->
@@ -48,6 +54,15 @@
 					})}
 					oninput={() => subscribeNewsletter.validate()}
 				>
+					<input {...subscribeNewsletter.fields._startedAt.as('hidden', startedAt)} />
+					<div class="pointer-events-none absolute -left-[9999px] h-0 w-0 overflow-hidden opacity-0" aria-hidden="true">
+						<input
+							tabindex="-1"
+							autocomplete="off"
+							aria-label="Website"
+							{...subscribeNewsletter.fields.website.as('text')}
+						/>
+					</div>
 					{#each subscribeNewsletter.fields.email.issues() as issue}
 						<div class="mb-3 max-w-md rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2.5">
 							<p class="text-xs text-red-300">{issue.message}</p>

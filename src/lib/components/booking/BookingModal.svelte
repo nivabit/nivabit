@@ -23,6 +23,14 @@
 	let countryCode = $state('+234');
 	let phone = $state('');
 	let notes = $state('');
+	let website = $state(''); // Honeypot
+	let openedAt = $state(0);
+
+	$effect(() => {
+		if (open) {
+			openedAt = Date.now();
+		}
+	});
 
 	// Booking step: 1 = Form, 2 = Calendar & Time, 3 = Confirmed
 	let step = $state<1 | 2 | 3>(1);
@@ -186,7 +194,9 @@
 				date: selectedDateStr,
 				timeSlot: selectedTimeSlot,
 				timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Africa/Lagos',
-				notes: notes.trim()
+				notes: notes.trim(),
+				website,
+				_startedAt: openedAt
 			});
 
 			if (result && 'booking' in result && result.booking) {
@@ -396,6 +406,10 @@
 
 							<!-- Form Fields -->
 							<div class="space-y-3.5">
+								<!-- Anti-spam honeypot -->
+								<div class="pointer-events-none absolute -left-[9999px] h-0 w-0 overflow-hidden opacity-0" aria-hidden="true">
+									<input type="text" tabindex="-1" autocomplete="off" bind:value={website} aria-label="Website" />
+								</div>
 								<!-- Phone input with Country selector -->
 								<div>
 									<label

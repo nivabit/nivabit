@@ -47,11 +47,15 @@ export const contactSchema = v.object({
 		v.string(),
 		v.trim(),
 		v.minLength(5, 'Tell us a little about your product idea (min 5 characters).')
-	)
+	),
+	website: v.optional(v.string(), ''),
+	_startedAt: v.optional(v.string(), '')
 });
 
 export const subscribeNewsletterSchema = v.object({
-	email: v.pipe(v.string(), v.trim(), v.email('Please enter a valid email address'))
+	email: v.pipe(v.string(), v.trim(), v.email('Please enter a valid email address')),
+	website: v.optional(v.string(), ''),
+	_startedAt: v.optional(v.string(), '')
 });
 
 export const sendNewsletterSchema = v.object({
@@ -93,7 +97,9 @@ export const createBookingSchema = v.object({
 	date: v.pipe(v.string(), v.trim(), v.minLength(1, 'Please select a date.')),
 	timeSlot: v.pipe(v.string(), v.trim(), v.minLength(1, 'Please select a time slot.')),
 	timezone: v.optional(v.string(), 'Africa/Lagos'),
-	notes: v.optional(v.string(), '')
+	notes: v.optional(v.string(), ''),
+	website: v.optional(v.string(), ''),
+	_startedAt: v.optional(v.union([v.string(), v.number()]), '')
 });
 
 export const changePasswordSchema = v.pipe(

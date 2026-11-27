@@ -3,11 +3,29 @@ import { invalid } from '@sveltejs/kit';
 import { desc } from 'drizzle-orm';
 import { db, contacts } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
+import { checkSubmissionSpam } from '#lib/server/antiSpam.ts';
 import { transporter, mailOptions } from '#lib/server/email.ts';
 import { generateEmailContent } from '#lib/server/emailContent.ts';
 import { contactSchema } from '#lib/validation/validation.ts';
 
 export const submitContact = form(contactSchema, async (data) => {
+	const event = getRequestEvent();
+	const spam = checkSubmissionSpam(event, {
+		scope: 'contact',
+		name: data.name,
+		email: data.email,
+		message: data.message,
+		honeypot: data.website,
+		startedAt: data._startedAt
+	});
+
+	if (spam.blocked) {
+		if (spam.silentDrop) {
+			return { success: true, message: 'Message sent successfully.' };
+		}
+		return invalid(spam.reason || 'Too many requests. Please try again later.');
+	}
+
 	const payload = {
 		name: data.name,
 		email: data.email,

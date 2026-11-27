@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { ArrowUpRight } from 'lucide-svelte';
 	import { getPublishedArticles } from '#lib/remote/articles.remote.ts';
+	import { getArticleImage, onArticleImageError } from '#lib/constants/articleCategories.ts';
 
 	let { showHeader = false, limit = 10 } = $props();
 	const articles = $derived(await getPublishedArticles());
@@ -54,8 +55,10 @@
 					>
 						<div class="relative h-48 w-full overflow-hidden bg-surface-dark">
 							<img
-								src={`${article.featuredImage}`}
+								src={getArticleImage(article.featuredImage)}
 								alt={article.title}
+								onerror={onArticleImageError}
+								loading="lazy"
 								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 							/>
 						</div>
@@ -63,7 +66,7 @@
 						<div class="flex flex-1 flex-col justify-between space-y-4 p-5">
 							<div class="space-y-3">
 								<div class="flex flex-wrap gap-1.5">
-									{#each article.categories as category}
+									{#each article.categories ?? [] as category}
 										<span
 											class="rounded-full bg-lime-soft px-2.5 py-0.5 text-[10px] font-bold text-ink-primary"
 										>

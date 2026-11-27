@@ -5,6 +5,7 @@ import mjml2html from 'mjml';
 import { desc, eq } from 'drizzle-orm';
 import { db, newsletterSubscribers } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
+import { checkSubmissionSpam } from '#lib/server/antiSpam.ts';
 import { validateEmail } from '#lib/server/emailValidator.ts';
 import { sendMail } from '#lib/server/mailer.ts';
 import { subscribeNewsletterSchema, sendNewsletterSchema } from '#lib/validation/validation.ts';
@@ -23,8 +24,25 @@ function subscriptionTemplate(email: string) {
   `;
 }
 
-export const subscribeNewsletter = form(subscribeNewsletterSchema, async ({ email }, issue) => {
-	const check = await validateEmail(email);
+export const subscribeNewsletter = form(
+	subscribeNewsletterSchema,
+	async ({ email, website, _startedAt }, issue) => {
+		const event = getRequestEvent();
+		const spam = checkSubmissionSpam(event, {
+			scope: 'newsletter',
+			email,
+			honeypot: website,
+			startedAt: _startedAt
+		});
+
+		if (spam.blocked) {
+			if (spam.silentDrop) {
+				return { success: true, message: 'Successfully subscribed!' };
+			}
+			return invalid(issue.email(spam.reason || 'Too many attempts. Please try again later.'));
+		}
+
+		const check = await validateEmail(email);
 	if (!check.valid) {
 		return invalid(issue.email(check.error || 'Invalid email address'));
 	}

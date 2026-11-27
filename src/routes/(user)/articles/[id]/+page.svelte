@@ -1,15 +1,17 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import Article from '#lib/components/layout/article.svelte';
 	import ContactUs from '#lib/components/layout/contactUs.svelte';
 	import Newsletter from '#lib/components/layout/newsletter.svelte';
 	import RichTextEditor from '#lib/components/layout/RichTextEditor.svelte';
 	import { getArticleById, incrementArticleViews } from '#lib/remote/articles.remote.ts';
+	import { getArticleImage, onArticleImageError } from '#lib/constants/articleCategories.ts';
 	import { ArrowLeft } from 'lucide-svelte';
 
 	let singleArticles: any = $derived(await getArticleById({ id: page.params.id! }));
 
-	$effect(() => {
+	onMount(() => {
 		const id = page.params.id;
 		if (id) {
 			incrementArticleViews({ id }).catch(() => {});
@@ -26,7 +28,7 @@
 		property="og:description"
 		content={singleArticles.seoDescription || singleArticles.excerpt}
 	/>
-	<meta property="og:image" content={singleArticles.featuredImage} />
+	<meta property="og:image" content={getArticleImage(singleArticles.featuredImage)} />
 	<meta property="og:type" content="article" />
 	<meta name="keywords" content={singleArticles.tags?.join(', ')} />
 
@@ -35,7 +37,7 @@
 		"@context": "https://schema.org",
 		"@type": "Article",
 		"headline": singleArticles.title,
-		"image": singleArticles.featuredImage,
+		"image": getArticleImage(singleArticles.featuredImage),
 		"author": { "@type": "Person", "name": singleArticles.authorId },
 		"datePublished": singleArticles.publishDate,
 		"dateModified": singleArticles.updatedAt,
@@ -79,13 +81,12 @@
 
 		<section class="bg-surface-light px-4 py-12 md:px-8 md:py-16">
 			<div class="mx-auto max-w-3xl">
-				{#if singleArticles?.featuredImage}
-					<img
-						src={singleArticles.featuredImage}
-						alt={singleArticles.title}
-						class="-mt-20 mb-10 h-64 w-full rounded-3xl border border-black/10 object-cover shadow-lg sm:h-96"
-					/>
-				{/if}
+				<img
+					src={getArticleImage(singleArticles?.featuredImage)}
+					alt={singleArticles?.title}
+					onerror={onArticleImageError}
+					class="-mt-20 mb-10 h-64 w-full rounded-3xl border border-black/10 bg-surface-dark object-cover shadow-lg sm:h-96"
+				/>
 
 				<div class="rounded-3xl border border-black/8 bg-white p-6 shadow-xs md:p-10">
 					<RichTextEditor value={singleArticles.content} readOnly={true} />

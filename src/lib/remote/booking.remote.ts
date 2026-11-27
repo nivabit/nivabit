@@ -2,6 +2,7 @@ import { command, query, getRequestEvent } from '$app/server';
 import { desc } from 'drizzle-orm';
 import { db, bookings } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
+import { checkSubmissionSpam } from '#lib/server/antiSpam.ts';
 import { sendTemplatedMail } from '#lib/server/mailer.ts';
 import { createBookingSchema } from '#lib/validation/validation.ts';
 
@@ -24,6 +25,25 @@ function formatBookingDate(dateStr: string): string {
 }
 
 export const createBooking = command(createBookingSchema, async (data) => {
+	const event = getRequestEvent();
+	const spam = checkSubmissionSpam(event, {
+		scope: 'booking',
+		name: `${data.firstName} ${data.lastName}`,
+		email: data.email,
+		message: data.notes,
+		honeypot: data.website,
+		startedAt: data._startedAt
+	});
+
+	if (spam.blocked) {
+		return {
+			success: false,
+			error: spam.silentDrop
+				? 'Unable to schedule call. Please contact us directly.'
+				: spam.reason || 'Too many requests. Please try again later.'
+		};
+	}
+
 	try {
 		const [booking] = await db
 			.insert(bookings)

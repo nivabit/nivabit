@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { GetarticleData } from '#lib/types/article.type.ts';
+	import { getArticleImage, onArticleImageError } from '#lib/constants/articleCategories.ts';
 	import {
 		Plus,
 		Search,
@@ -189,9 +190,10 @@
 							<!-- Article Image -->
 							<div class="shrink-0">
 								<img
-									src={article.featuredImage || "/images/placeholder.jpeg"}
+									src={getArticleImage(article.featuredImage)}
 									alt={article.title}
-									class="h-20 w-20 rounded-lg object-cover"
+									onerror={onArticleImageError}
+									class="h-20 w-20 rounded-lg bg-surface-dark object-cover"
 								/>
 							</div>
 

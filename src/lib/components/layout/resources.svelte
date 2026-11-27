@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { ArrowRight, ArrowUpRight } from 'lucide-svelte';
 	import { getPublishedArticles } from '#lib/remote/articles.remote.ts';
+	import { getArticleImage, onArticleImageError } from '#lib/constants/articleCategories.ts';
 
 	const articles = $derived(await getPublishedArticles());
 </script>
@@ -19,7 +20,7 @@
 						Research &amp; Insights
 					</span>
 					<h2
-						class="font-cabinet mt-3 text-3xl font-extrabold tracking-[-0.025em] text-ink-primary sm:text-4xl"
+						class="mt-3 font-cabinet text-3xl font-extrabold tracking-[-0.025em] text-ink-primary sm:text-4xl"
 					>
 						Latest teardowns &amp; articles
 					</h2>
@@ -41,8 +42,10 @@
 					>
 						<div class="relative h-48 w-full overflow-hidden bg-surface-dark">
 							<img
-								src={article.featuredImage}
+								src={getArticleImage(article.featuredImage)}
 								alt={article.title}
+								onerror={onArticleImageError}
+								loading="lazy"
 								class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
 							/>
 						</div>
@@ -50,7 +53,7 @@
 						<div class="flex flex-1 flex-col justify-between space-y-4 p-5">
 							<div class="space-y-3">
 								<div class="flex flex-wrap gap-1.5">
-									{#each article.categories as category}
+									{#each article.categories ?? [] as category}
 										<span
 											class="rounded-full bg-lime-soft px-2.5 py-0.5 text-[10px] font-bold text-ink-primary"
 										>
@@ -59,7 +62,7 @@
 									{/each}
 								</div>
 
-								<h3 class="font-cabinet line-clamp-2 text-lg font-extrabold text-ink-primary">
+								<h3 class="line-clamp-2 font-cabinet text-lg font-extrabold text-ink-primary">
 									{article.title}
 								</h3>
 

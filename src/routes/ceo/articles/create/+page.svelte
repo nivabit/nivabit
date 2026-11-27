@@ -4,12 +4,14 @@
 	import RichTextEditor from '#lib/components/layout/RichTextEditor.svelte';
 	import Button from '#lib/components/ui/button/button.svelte';
 	import { IMAGE_MAX_FILE_SIZE_BYTES, IMAGE_MAX_FILE_SIZE_MB } from '#lib/constants/imageLimit.ts';
+	import { DEFAULT_ARTICLE_CATEGORIES } from '#lib/constants/articleCategories.ts';
 	import { toast } from 'svelte-sonner';
 	import { X } from '@lucide/svelte';
 	import { createArticle } from '#lib/remote/articles.remote.ts';
 	import { articleFormSchema } from '#lib/validation/articleSchema.ts';
 
-	const availableCategories = ['Development', 'Design', 'Research', 'Technology', 'Business'];
+	let availableCategories = $state<string[]>([...DEFAULT_ARTICLE_CATEGORIES]);
+	let categoryInput = $state('');
 
 	let isSaving = $derived(Boolean(createArticle.pending));
 	let tagInput = $state('');
@@ -25,6 +27,19 @@
 	let rootIssues = $derived(
 		(createArticle.fields.allIssues() ?? []).filter((i) => !i.path?.length)
 	);
+
+	function handleAddCategory() {
+		const trimmed = categoryInput.trim();
+		if (!trimmed) return;
+		if (!availableCategories.some((c) => c.toLowerCase() === trimmed.toLowerCase())) {
+			availableCategories = [...availableCategories, trimmed];
+		}
+		const current = createArticle.fields.categories.value() ?? [];
+		if (!current.includes(trimmed)) {
+			createArticle.fields.categories.set([...current, trimmed]);
+		}
+		categoryInput = '';
+	}
 
 	function handleAddTag() {
 		const trimmed = tagInput.trim();
@@ -122,7 +137,7 @@
 					<button
 						type="submit"
 						disabled={isSaving}
-						class="flex items-center gap-2 rounded-lg bg-brand-orange-500 px-6 py-2 text-white transition-colors hover:bg-brand-orange-500/90 disabled:opacity-50"
+						class="flex cursor-pointer items-center gap-2 rounded-lg bg-[#2563eb] px-6 py-2 text-white transition-colors hover:bg-[#1d4ed8] disabled:opacity-50"
 					>
 						{#if isSaving}
 							<div class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
@@ -255,14 +270,31 @@
 
 						<div class="grid grid-cols-2 gap-2">
 							{#each availableCategories as cat}
-								<label class="font-synonym flex items-center gap-2 text-sm text-brand-grey-500">
+								<label class="font-synonym flex cursor-pointer items-center gap-2 text-sm text-brand-grey-500">
 									<input
 										{...createArticle.fields.categories.as('checkbox', cat)}
-										class="accent-brand-orange-500"
+										class="h-4 w-4 rounded accent-[#2563eb]"
 									/>
-									{cat}
+									<span class="truncate">{cat}</span>
 								</label>
 							{/each}
+						</div>
+
+						<div class="mt-3 flex gap-2">
+							<input
+								type="text"
+								bind:value={categoryInput}
+								onkeydown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddCategory())}
+								placeholder="Add custom category..."
+								class="font-synonym min-w-0 flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm placeholder:text-slate-400 focus:border-[#2563eb] focus:ring-2 focus:ring-[#2563eb]/20 focus:outline-none"
+							/>
+							<button
+								type="button"
+								onclick={handleAddCategory}
+								class="shrink-0 cursor-pointer rounded-lg bg-[#2563eb] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+							>
+								Add
+							</button>
 						</div>
 
 						{#each createArticle.fields.categories.issues() as issue}
@@ -286,7 +318,7 @@
 						<button
 							type="button"
 							onclick={handleAddTag}
-							class="rounded-lg bg-brand-orange-500 px-3 py-2 text-white transition-colors hover:bg-brand-orange-500/90"
+							class="cursor-pointer rounded-lg bg-[#2563eb] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
 						>
 							Add
 						</button>

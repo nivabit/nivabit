@@ -79,9 +79,6 @@ export const createArticle = form(articleFormSchema, async (data, issue) => {
 	const admin = await requireUser(event);
 
 	const file = data.featuredImage;
-	if (data.status === 'PUBLISHED' && (!file || file.size === 0)) {
-		return invalid(issue.featuredImage('Featured image is required for published articles.'));
-	}
 
 	let featuredImage: string | null = null;
 	if (file && file.size > 0) {
@@ -138,9 +135,6 @@ export const updateArticle = form(articleFormSchema, async (data, issue) => {
 	}
 
 	const file = data.featuredImage;
-	if (data.status === 'PUBLISHED' && (!file || file.size === 0) && !existing.featuredImage) {
-		return invalid(issue.featuredImage('Featured image is required for published articles.'));
-	}
 
 	let featuredImage = existing.featuredImage;
 	if (file && file.size > 0) {
