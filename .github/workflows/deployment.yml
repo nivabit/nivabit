@@ -127,28 +127,34 @@ jobs:
             PUBLIC_SITE_URL=${{ secrets.PUBLIC_SITE_URL }}
             EOF
 
-            # Log in to GHCR on server to pull the image
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            # Use docker directly if user is in docker group, otherwise fall back to sudo
+            run_docker() {
+              if docker info >/dev/null 2>&1; then
+                docker "$@"
+              else
+                echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker "$@"
+              fi
+            }
 
-            # Stop legacy PM2 process so port 3000 is free
-            if command -v pm2 >/dev/null 2>&1; then
-              pm2 delete "${{ secrets.SERVICE_NAME }}" || true
-              pm2 delete nivabit || true
-              pm2 save || true
+            # Log in to GHCR on server to pull the image
+            if docker info >/dev/null 2>&1; then
+              echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            else
+              echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S sh -c 'echo "$1" | docker login ghcr.io -u "$2" --password-stdin' _ "${{ secrets.GITHUB_TOKEN }}" "${{ github.actor }}"
             fi
 
             # Pull and start the new image
             export IMAGE_NAME="${{ steps.meta.outputs.image }}:${{ github.sha }}"
-            docker compose -f docker-compose.prod.yml pull
-            docker compose -f docker-compose.prod.yml up -d --remove-orphans
+            run_docker compose -f docker-compose.prod.yml pull
+            run_docker compose -f docker-compose.prod.yml up -d --remove-orphans
 
             # Clean up all unused/old images on the server (keeps currently running image)
-            docker image prune -af || true
+            run_docker image prune -af || true
 
             # Verify container health & HTTP response on port 3000
             sleep 5
-            docker ps --filter "name=nivabit-prod"
-            docker logs --tail 30 nivabit-prod
+            run_docker ps --filter "name=nivabit-prod"
+            run_docker logs --tail 30 nivabit-prod
             curl -fsS http://127.0.0.1:3000/ > /dev/null
             echo "Deployment verified: http://127.0.0.1:3000/ returned 200 OK"
 
