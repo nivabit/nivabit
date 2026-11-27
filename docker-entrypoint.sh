@@ -1,14 +1,8 @@
 #!/bin/sh
 set -e
 
-echo "==> Ensuring Drizzle database schema with Bun..."
-bun src/lib/server/db/ensure-schema.ts
-
-if [ "$NODE_ENV" = "development" ]; then
-    bunx drizzle-kit push --force || true
-elif [ -f "./drizzle/meta/_journal.json" ]; then
-    bunx drizzle-kit migrate
-fi
+echo "==> Running Drizzle database migrations with Bun..."
+bun src/lib/server/db/migrate.ts
 
 echo "==> Seeding database with Bun..."
 bun src/lib/server/db/seed.ts || echo "==> Seeding completed or skipped."

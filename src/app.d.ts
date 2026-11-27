@@ -25,6 +25,10 @@ declare global {
 		interface PageData {
 			user?: Locals['user'];
 		}
+
+		interface PageState {
+			showBookingModal?: boolean;
+		}
 	}
 }
 

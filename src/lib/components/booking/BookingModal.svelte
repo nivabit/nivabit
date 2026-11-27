@@ -519,7 +519,10 @@
 								{/if}
 
 								<p class="pt-1 text-[11px] leading-snug text-slate-500">
-									By entering your information, you consent to our Terms and Privacy Policy.
+									By entering your information, you consent to our
+									<a href="/terms" target="_blank" class="font-semibold text-[#2563eb] underline underline-offset-2 hover:text-[#1d4ed8]">Terms</a>
+									and
+									<a href="/privacy" target="_blank" class="font-semibold text-[#2563eb] underline underline-offset-2 hover:text-[#1d4ed8]">Privacy Policy</a>.
 								</p>
 							</div>
 						</div>

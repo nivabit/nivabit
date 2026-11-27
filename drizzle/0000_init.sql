@@ -1,6 +1,14 @@
-CREATE TYPE "public"."ArticleStatus" AS ENUM('DRAFT', 'PUBLISHED', 'SCHEDULED');--> statement-breakpoint
-CREATE TYPE "public"."BookingStatus" AS ENUM('PENDING', 'CONFIRMED', 'CANCELLED');--> statement-breakpoint
-CREATE TABLE "Admin" (
+DO $$ BEGIN
+ CREATE TYPE "public"."ArticleStatus" AS ENUM('DRAFT', 'PUBLISHED', 'SCHEDULED');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;--> statement-breakpoint
+DO $$ BEGIN
+ CREATE TYPE "public"."BookingStatus" AS ENUM('PENDING', 'CONFIRMED', 'CANCELLED');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "Admin" (
 	"id" text PRIMARY KEY NOT NULL,
 	"email" text NOT NULL,
 	"passwordHash" text NOT NULL,
@@ -13,7 +21,7 @@ CREATE TABLE "Admin" (
 	"updatedAt" timestamp NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "Article" (
+CREATE TABLE IF NOT EXISTS "Article" (
 	"id" text PRIMARY KEY NOT NULL,
 	"slug" text,
 	"title" text NOT NULL,
@@ -32,7 +40,8 @@ CREATE TABLE "Article" (
 	"authorId" text NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "Booking" (
+ALTER TABLE "Article" ADD COLUMN IF NOT EXISTS "slug" text;--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "Booking" (
 	"id" text PRIMARY KEY NOT NULL,
 	"firstName" text NOT NULL,
 	"lastName" text NOT NULL,
@@ -47,7 +56,7 @@ CREATE TABLE "Booking" (
 	"updatedAt" timestamp NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "Contact" (
+CREATE TABLE IF NOT EXISTS "Contact" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"services" text,
@@ -59,7 +68,7 @@ CREATE TABLE "Contact" (
 	"createdAt" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "NewsletterBroadcast" (
+CREATE TABLE IF NOT EXISTS "NewsletterBroadcast" (
 	"id" text PRIMARY KEY NOT NULL,
 	"subject" text NOT NULL,
 	"totalRecipients" integer DEFAULT 0 NOT NULL,
@@ -70,13 +79,13 @@ CREATE TABLE "NewsletterBroadcast" (
 	"completedAt" timestamp
 );
 --> statement-breakpoint
-CREATE TABLE "NewsletterSubscriber" (
+CREATE TABLE IF NOT EXISTS "NewsletterSubscriber" (
 	"id" text PRIMARY KEY NOT NULL,
 	"email" text NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE "PlatformMetric" (
+CREATE TABLE IF NOT EXISTS "PlatformMetric" (
 	"id" text PRIMARY KEY NOT NULL,
 	"key" text NOT NULL,
 	"label" text NOT NULL,
@@ -87,9 +96,13 @@ CREATE TABLE "PlatformMetric" (
 	"createdAt" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-ALTER TABLE "Article" ADD CONSTRAINT "Article_authorId_Admin_id_fk" FOREIGN KEY ("authorId") REFERENCES "public"."Admin"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-CREATE UNIQUE INDEX "Admin_email_key" ON "Admin" USING btree ("email");--> statement-breakpoint
-CREATE UNIQUE INDEX "Admin_phone_key" ON "Admin" USING btree ("phone");--> statement-breakpoint
-CREATE UNIQUE INDEX "Article_slug_key" ON "Article" USING btree ("slug");--> statement-breakpoint
-CREATE UNIQUE INDEX "NewsletterSubscriber_email_key" ON "NewsletterSubscriber" USING btree ("email");--> statement-breakpoint
-CREATE UNIQUE INDEX "PlatformMetric_key_key" ON "PlatformMetric" USING btree ("key");
+DO $$ BEGIN
+ ALTER TABLE "Article" ADD CONSTRAINT "Article_authorId_Admin_id_fk" FOREIGN KEY ("authorId") REFERENCES "public"."Admin"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "Admin_email_key" ON "Admin" USING btree ("email");--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "Admin_phone_key" ON "Admin" USING btree ("phone");--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "Article_slug_key" ON "Article" USING btree ("slug");--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "NewsletterSubscriber_email_key" ON "NewsletterSubscriber" USING btree ("email");--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "PlatformMetric_key_key" ON "PlatformMetric" USING btree ("key");

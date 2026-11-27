@@ -4,7 +4,6 @@
 	import { subscribeNewsletter } from '#lib/remote/newsletter.remote.ts';
 	import { subscribeNewsletterSchema } from '#lib/validation/validation.ts';
 	import NivabitLogo from '#lib/components/icon/NivabitLogo.svelte';
-	import BookingModal from '#lib/components/booking/BookingModal.svelte';
 	import { bookingModal } from '#lib/stores/bookingModal.svelte.ts';
 
 	function openWhatsApp() {
@@ -409,7 +408,4 @@
 			</div>
 		</div>
 	</footer>
-
-	<!-- In-house Booking & Calendar Modal -->
-	<BookingModal bind:open={bookingModal.isOpen} />
 </div>
