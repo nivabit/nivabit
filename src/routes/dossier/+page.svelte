@@ -183,7 +183,6 @@
 								/>
 								<img
 									class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
-									src="/images/profile1.png"
 									src="/images/imisi.jpg"
 									alt="ImisiOluwa"
 								/>
