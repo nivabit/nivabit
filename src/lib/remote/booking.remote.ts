@@ -1,5 +1,6 @@
 import { command, query, getRequestEvent } from '$app/server';
-import { prisma } from '#lib/server/prisma.ts';
+import { desc } from 'drizzle-orm';
+import { db, bookings } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import { sendTemplatedMail } from '#lib/server/mailer.ts';
 import { createBookingSchema } from '#lib/validation/validation.ts';
@@ -24,8 +25,9 @@ function formatBookingDate(dateStr: string): string {
 
 export const createBooking = command(createBookingSchema, async (data) => {
 	try {
-		const booking = await prisma.booking.create({
-			data: {
+		const [booking] = await db
+			.insert(bookings)
+			.values({
 				firstName: data.firstName,
 				lastName: data.lastName,
 				email: data.email,
@@ -35,8 +37,8 @@ export const createBooking = command(createBookingSchema, async (data) => {
 				timezone: data.timezone || 'Africa/Lagos',
 				notes: data.notes || '',
 				status: 'CONFIRMED'
-			}
-		});
+			})
+			.returning();
 
 		const formattedDate = formatBookingDate(data.date);
 		const emailContext = {
@@ -99,7 +101,5 @@ export const getBookings = query(async () => {
 	const event = getRequestEvent();
 	await requireUser(event);
 
-	return prisma.booking.findMany({
-		orderBy: { createdAt: 'desc' }
-	});
+	return db.select().from(bookings).orderBy(desc(bookings.createdAt));
 });

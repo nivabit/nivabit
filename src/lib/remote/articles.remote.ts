@@ -3,7 +3,8 @@ import { error, invalid } from '@sveltejs/kit';
 import * as v from 'valibot';
 import fs from 'node:fs';
 import path from 'node:path';
-import { prisma } from '#lib/server/prisma.ts';
+import { desc, eq, ne, sql } from 'drizzle-orm';
+import { db, articles } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import {
 	ACCEPTED_IMAGE_TYPES,
@@ -29,16 +30,15 @@ async function saveUploadedImage(file: File): Promise<string> {
 }
 
 export const getPublishedArticles = query(async () => {
-	return prisma.article.findMany({
-		where: {
-			NOT: { status: 'DRAFT' }
-		},
-		orderBy: { createdAt: 'desc' }
-	});
+	return db
+		.select()
+		.from(articles)
+		.where(ne(articles.status, 'DRAFT'))
+		.orderBy(desc(articles.createdAt));
 });
 
 export const getArticleById = query(idSchema, async ({ id }) => {
-	const article = await prisma.article.findUnique({ where: { id } });
+	const [article] = await db.select().from(articles).where(eq(articles.id, id)).limit(1);
 	if (!article) {
 		throw error(404, 'Article not found');
 	}
@@ -46,26 +46,24 @@ export const getArticleById = query(idSchema, async ({ id }) => {
 });
 
 export const incrementArticleViews = command(idSchema, async ({ id }) => {
-	const existing = await prisma.article.findUnique({ where: { id } });
-	if (!existing) return { views: 0 };
+	const [updated] = await db
+		.update(articles)
+		.set({ views: sql`${articles.views} + 1` })
+		.where(eq(articles.id, id))
+		.returning({ views: articles.views });
 
-	const updated = await prisma.article.update({
-		where: { id },
-		data: { views: (existing.views ?? 0) + 1 }
-	});
-
-	return { views: updated.views };
+	return { views: updated?.views ?? 0 };
 });
 
 export const getAdminArticles = query(async () => {
 	const event = getRequestEvent();
 	await requireUser(event);
 
-	return prisma.article.findMany({
-		orderBy: { createdAt: 'desc' },
-		include: {
+	return db.query.articles.findMany({
+		orderBy: [desc(articles.createdAt)],
+		with: {
 			author: {
-				select: { id: true, name: true }
+				columns: { id: true, name: true }
 			}
 		}
 	});
@@ -100,21 +98,22 @@ export const createArticle = form(articleFormSchema, async (data, issue) => {
 				: new Date()
 			: null;
 
-	const article = await prisma.article.create({
-		data: {
+	const [article] = await db
+		.insert(articles)
+		.values({
 			title: data.title,
 			excerpt: data.excerpt,
 			content: data.content,
 			categories: data.categories,
-			status: data.status as any,
+			status: data.status as 'DRAFT' | 'PUBLISHED' | 'SCHEDULED',
 			publishDate,
 			tags: data.tags,
 			featuredImage,
 			seoTitle: data.seoTitle,
 			seoDescription: data.seoDescription,
 			authorId: admin.id
-		}
-	});
+		})
+		.returning();
 
 	await getAdminArticles().refresh();
 	return { success: true, id: article.id, url: '/bits/admin/dashboard/articles' };
@@ -128,7 +127,7 @@ export const updateArticle = form(articleFormSchema, async (data, issue) => {
 		return invalid('Missing article ID');
 	}
 
-	const existing = await prisma.article.findUnique({ where: { id: data.id } });
+	const [existing] = await db.select().from(articles).where(eq(articles.id, data.id)).limit(1);
 	if (!existing) {
 		throw error(404, 'Article not found');
 	}
@@ -162,21 +161,21 @@ export const updateArticle = form(articleFormSchema, async (data, issue) => {
 		publishDate = data.publishDate ? new Date(data.publishDate) : new Date();
 	}
 
-	await prisma.article.update({
-		where: { id: data.id },
-		data: {
+	await db
+		.update(articles)
+		.set({
 			title: data.title,
 			excerpt: data.excerpt,
 			content: data.content,
 			categories: data.categories,
-			status: data.status as any,
+			status: data.status as 'DRAFT' | 'PUBLISHED' | 'SCHEDULED',
 			publishDate,
 			tags: data.tags,
 			featuredImage,
 			seoTitle: data.seoTitle,
 			seoDescription: data.seoDescription
-		}
-	});
+		})
+		.where(eq(articles.id, data.id));
 
 	await getAdminArticles().refresh();
 	return { success: true, url: '/bits/admin/dashboard/articles' };
@@ -186,12 +185,12 @@ export const deleteArticle = command(idSchema, async ({ id }) => {
 	const event = getRequestEvent();
 	await requireUser(event);
 
-	const existing = await prisma.article.findUnique({ where: { id } });
+	const [existing] = await db.select().from(articles).where(eq(articles.id, id)).limit(1);
 	if (!existing) {
 		throw error(404, 'Article not found');
 	}
 
-	await prisma.article.delete({ where: { id } });
+	await db.delete(articles).where(eq(articles.id, id));
 	await getAdminArticles().refresh();
 	return { success: true };
 });

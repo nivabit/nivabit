@@ -18,10 +18,12 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
-		"test:e2e": "playwright test"
-	},
-	"prisma": {
-		"seed": "node prisma/seed.js"
+		"test:e2e": "playwright test",
+		"db:push": "drizzle-kit push",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate",
+		"db:studio": "drizzle-kit studio",
+		"db:seed": "bun src/lib/server/db/seed.ts"
 	},
 	"devDependencies": {
 		"@dnd-kit-svelte/core": "^0.0.8",
@@ -50,6 +52,7 @@
 		"clsx": "^2.1.1",
 		"d3-scale": "^4.0.2",
 		"d3-shape": "^3.2.0",
+		"drizzle-kit": "^0.31.1",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.0.0",
@@ -62,7 +65,6 @@
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
-		"prisma": "^6.16.1",
 		"svelte": "^5.59.2",
 		"svelte-check": "^4.3.0",
 		"sveltekit-superforms": "^2.27.1",
@@ -80,11 +82,11 @@
 		"vitest-browser-svelte": "^0.1.0"
 	},
 	"dependencies": {
-		"@prisma/client": "^6.16.1",
 		"@sveltejs/adapter-node": "^6.0.6",
 		"argon2": "^0.44.0",
 		"bcryptjs": "^3.0.2",
 		"dotenv": "^17.2.3",
+		"drizzle-orm": "^0.44.2",
 		"grapesjs": "^0.22.13",
 		"grapesjs-mjml": "^1.0.7",
 		"handlebars": "^4.7.10",
@@ -94,6 +96,7 @@
 		"mjml": "^4.15.3",
 		"motion-svelte": "^0.0.1",
 		"nodemailer": "^7.0.5",
+		"postgres": "^3.4.5",
 		"quill": "^2.0.3",
 		"svelte-inview": "^4.0.4",
 		"svelte-sonner": "^1.0.5",

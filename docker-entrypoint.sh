@@ -1,12 +1,15 @@
 #!/bin/sh
 set -e
 
-echo "==> Running Prisma database migrations with Bun..."
-bunx prisma db push --skip-generate
-bunx prisma generate
+echo "==> Syncing Drizzle database schema with Bun..."
+if [ "$NODE_ENV" = "development" ] || [ ! -f "./drizzle/meta/_journal.json" ]; then
+    bunx drizzle-kit push --force
+else
+    bunx drizzle-kit migrate
+fi
 
 echo "==> Seeding database with Bun..."
-bun prisma/seed.js || echo "==> Seeding completed or skipped."
+bun src/lib/server/db/seed.ts || echo "==> Seeding completed or skipped."
 
 if [ "$NODE_ENV" = "development" ]; then
     echo "==> Starting Nivabit in DEVELOPMENT mode with Live HMR on port ${PORT:-3000}..."

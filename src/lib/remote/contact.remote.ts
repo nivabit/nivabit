@@ -1,6 +1,7 @@
 import { form, query, getRequestEvent } from '$app/server';
 import { invalid } from '@sveltejs/kit';
-import { prisma } from '#lib/server/prisma.ts';
+import { desc } from 'drizzle-orm';
+import { db, contacts } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import { transporter, mailOptions } from '#lib/server/email.ts';
 import { generateEmailContent } from '#lib/server/emailContent.ts';
@@ -16,7 +17,7 @@ export const submitContact = form(contactSchema, async (data) => {
 	};
 
 	try {
-		await prisma.contact.create({ data: payload });
+		await db.insert(contacts).values(payload);
 
 		// 1. Notify admin
 		await transporter.sendMail({
@@ -87,7 +88,5 @@ export const getContacts = query(async () => {
 	const event = getRequestEvent();
 	await requireUser(event);
 
-	return prisma.contact.findMany({
-		orderBy: { createdAt: 'desc' }
-	});
+	return db.select().from(contacts).orderBy(desc(contacts.createdAt));
 });

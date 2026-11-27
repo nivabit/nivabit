@@ -9,9 +9,6 @@ COPY package.json bun.lock* package-lock.json* ./
 RUN --mount=type=cache,target=/root/.bun/install/cache \
     bun install
 
-COPY prisma ./prisma
-RUN bunx prisma generate
-
 # Development stage (used for local development with live reload / HMR)
 FROM deps AS dev
 
@@ -52,12 +49,9 @@ COPY --from=deps /app/bun.lock ./bun.lock
 RUN --mount=type=cache,target=/root/.bun/install/cache \
     bun install --production
 
-COPY --from=deps /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=deps /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=deps /app/node_modules/prisma ./node_modules/prisma
-COPY --from=deps /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
+COPY --from=builder /app/src/lib/server/db ./src/lib/server/db
 COPY --from=builder /app/static ./static
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY docker-entrypoint.sh ./docker-entrypoint.sh

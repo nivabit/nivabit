@@ -2,7 +2,8 @@ import { form, query, command, getRequestEvent } from '$app/server';
 import { error, invalid } from '@sveltejs/kit';
 import * as v from 'valibot';
 import mjml2html from 'mjml';
-import { prisma } from '#lib/server/prisma.ts';
+import { desc, eq } from 'drizzle-orm';
+import { db, newsletterSubscribers } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import { validateEmail } from '#lib/server/emailValidator.ts';
 import { sendMail } from '#lib/server/mailer.ts';
@@ -28,14 +29,19 @@ export const subscribeNewsletter = form(subscribeNewsletterSchema, async ({ emai
 		return invalid(issue.email(check.error || 'Invalid email address'));
 	}
 
-	const exists = await prisma.newsletterSubscriber.findUnique({ where: { email } });
+	const [exists] = await db
+		.select()
+		.from(newsletterSubscribers)
+		.where(eq(newsletterSubscribers.email, email))
+		.limit(1);
 	if (exists) {
 		return invalid(issue.email('This email is already subscribed to The Validation Memo.'));
 	}
 
-	const subscriber = await prisma.newsletterSubscriber.create({
-		data: { email }
-	});
+	const [subscriber] = await db
+		.insert(newsletterSubscribers)
+		.values({ email })
+		.returning();
 
 	await sendMail({
 		to: subscriber.email,
@@ -51,9 +57,7 @@ export const getSubscribers = query(async () => {
 	const event = getRequestEvent();
 	await requireUser(event);
 
-	return prisma.newsletterSubscriber.findMany({
-		orderBy: { createdAt: 'desc' }
-	});
+	return db.select().from(newsletterSubscribers).orderBy(desc(newsletterSubscribers.createdAt));
 });
 
 export const sendNewsletter = form(sendNewsletterSchema, async ({ subject, message }) => {
@@ -65,7 +69,7 @@ export const sendNewsletter = form(sendNewsletterSchema, async ({ subject, messa
 		console.warn('MJML validation warnings:', errors);
 	}
 
-	const subscribers = await prisma.newsletterSubscriber.findMany();
+	const subscribers = await db.select().from(newsletterSubscribers);
 	if (subscribers.length === 0) {
 		return invalid('No subscribers found to send to.');
 	}
@@ -92,12 +96,16 @@ export const deleteSubscriber = command(deleteSubscriberSchema, async ({ id }) =
 	const event = getRequestEvent();
 	await requireUser(event);
 
-	const subscriber = await prisma.newsletterSubscriber.findUnique({ where: { id } });
+	const [subscriber] = await db
+		.select()
+		.from(newsletterSubscribers)
+		.where(eq(newsletterSubscribers.id, id))
+		.limit(1);
 	if (!subscriber) {
 		throw error(404, 'Subscriber not found');
 	}
 
-	await prisma.newsletterSubscriber.delete({ where: { id } });
+	await db.delete(newsletterSubscribers).where(eq(newsletterSubscribers.id, id));
 	await getSubscribers().refresh();
 
 	return { success: true, message: 'Subscriber removed successfully.' };
@@ -109,11 +117,15 @@ export const unsubscribeNewsletter = form(subscribeNewsletterSchema, async ({ em
 		return invalid(issue.email(check.error || 'Invalid email address'));
 	}
 
-	const subscriber = await prisma.newsletterSubscriber.findUnique({ where: { email } });
+	const [subscriber] = await db
+		.select()
+		.from(newsletterSubscribers)
+		.where(eq(newsletterSubscribers.email, email))
+		.limit(1);
 	if (!subscriber) {
 		return invalid(issue.email('Email not found in our subscriber list.'));
 	}
 
-	await prisma.newsletterSubscriber.delete({ where: { email } });
+	await db.delete(newsletterSubscribers).where(eq(newsletterSubscribers.email, email));
 	return { success: true, message: 'Successfully unsubscribed.' };
 });

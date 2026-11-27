@@ -2,7 +2,8 @@ import { form, command, getRequestEvent } from '$app/server';
 import { invalid, redirect } from '@sveltejs/kit';
 import argon2 from 'argon2';
 import crypto from 'node:crypto';
-import { prisma } from '#lib/server/prisma.ts';
+import { eq } from 'drizzle-orm';
+import { db, admins } from '#lib/server/db/index.ts';
 import { generateAccessToken, generateRefreshToken } from '#lib/auth.ts';
 import { sendMail } from '#lib/server/mailer.ts';
 import {
@@ -21,7 +22,7 @@ import {
 export const loginAdmin = form(loginSchema, async ({ email, _password }) => {
 	const { cookies } = getRequestEvent();
 
-	const admin = await prisma.admin.findUnique({ where: { email } });
+	const [admin] = await db.select().from(admins).where(eq(admins.email, email)).limit(1);
 	if (!admin || !(await argon2.verify(admin.passwordHash, _password))) {
 		return invalid('Invalid email or password.');
 	}
@@ -59,7 +60,7 @@ export const logoutAdmin = command(async () => {
 
 export const forgotPassword = form(forgotPasswordSchema, async ({ email }) => {
 	const { url } = getRequestEvent();
-	const admin = await prisma.admin.findUnique({ where: { email } });
+	const [admin] = await db.select().from(admins).where(eq(admins.email, email)).limit(1);
 
 	if (!admin) {
 		return {
@@ -71,10 +72,10 @@ export const forgotPassword = form(forgotPasswordSchema, async ({ email }) => {
 	const token = crypto.randomBytes(32).toString('hex');
 	const expiration = new Date(Date.now() + 1000 * 60 * 60);
 
-	await prisma.admin.update({
-		where: { email },
-		data: { resetToken: token, resetTokenExp: expiration }
-	});
+	await db
+		.update(admins)
+		.set({ resetToken: token, resetTokenExp: expiration })
+		.where(eq(admins.email, email));
 
 	const resetLink = `${url.origin}/bits/admin/auth/reset-password?token=${token}&email=${encodeURIComponent(
 		email
@@ -107,9 +108,7 @@ export const forgotPassword = form(forgotPasswordSchema, async ({ email }) => {
 });
 
 export const resetPassword = form(resetPasswordSchema, async ({ token, _password }) => {
-	const admin = await prisma.admin.findFirst({
-		where: { resetToken: token }
-	});
+	const [admin] = await db.select().from(admins).where(eq(admins.resetToken, token)).limit(1);
 
 	if (!admin || !admin.resetTokenExp) {
 		return invalid('Invalid or expired reset token.');
@@ -120,14 +119,14 @@ export const resetPassword = form(resetPasswordSchema, async ({ token, _password
 	}
 
 	const passwordHash = await argon2.hash(_password);
-	await prisma.admin.update({
-		where: { id: admin.id },
-		data: {
+	await db
+		.update(admins)
+		.set({
 			passwordHash,
 			resetToken: null,
 			resetTokenExp: null
-		}
-	});
+		})
+		.where(eq(admins.id, admin.id));
 
 	return { success: true, message: 'Password reset successful.' };
 });

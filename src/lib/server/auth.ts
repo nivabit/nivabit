@@ -1,6 +1,7 @@
 
 import jwt from 'jsonwebtoken';
-import { prisma } from '#lib/server/prisma.ts';
+import { eq } from 'drizzle-orm';
+import { db, admins } from '#lib/server/db/index.ts';
 import type { RequestEvent } from '@sveltejs/kit';
 import { AUTH_COOKIE_NAME } from '#lib/utils/auth.ts';
 import { error } from '@sveltejs/kit';
@@ -16,17 +17,18 @@ export async function authorize(event: RequestEvent) {
 
 		if (!decoded?.id) return null;
 
-		const user = await prisma.admin.findUnique({
-			where: { id: decoded.id },
-			select: {
-				id: true,
-				name: true,
-				email: true,
-				role: true,
-				phone: true,
-				passwordHash: true // ✅ add this line
-			}
-		});
+		const [user] = await db
+			.select({
+				id: admins.id,
+				name: admins.name,
+				email: admins.email,
+				role: admins.role,
+				phone: admins.phone,
+				passwordHash: admins.passwordHash
+			})
+			.from(admins)
+			.where(eq(admins.id, decoded.id))
+			.limit(1);
 
 		return user || null;
 	} catch {
