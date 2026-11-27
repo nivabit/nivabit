@@ -180,14 +180,23 @@
 	}
 
 	.quill-view :global(a) {
-		color: #2563eb;
+		color: #2563eb !important;
 		font-weight: 600;
-		text-decoration: underline;
-		text-underline-offset: 3px;
+		text-decoration: underline !important;
+		text-decoration-color: rgba(37, 99, 235, 0.45);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 4px;
+		transition: color 0.15s ease, text-decoration-color 0.15s ease;
+	}
+
+	.quill-view :global(a *) {
+		color: inherit !important;
+		text-decoration: inherit !important;
 	}
 
 	.quill-view :global(a:hover) {
-		color: #1d4ed8;
+		color: #1d4ed8 !important;
+		text-decoration-color: #1d4ed8;
 	}
 
 	.quill-view :global(strong) {

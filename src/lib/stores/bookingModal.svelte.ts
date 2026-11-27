@@ -1,4 +1,4 @@
-import { pushState, replaceState } from '$app/navigation';
+import { goto } from '$app/navigation';
 import { browser } from '$app/env';
 import { page } from '$app/state';
 
@@ -13,13 +13,17 @@ class BookingModalState {
 		if (!browser || this.isOpen) return;
 		const targetUrl = typeof url === 'string' && url.length > 0 ? url : '/book';
 		this.#pushed = true;
-		pushState(targetUrl, { showBookingModal: true });
+		void goto(targetUrl, { state: { showBookingModal: true }, shallow: true });
 	};
 
 	openFromUrl = (cleanUrl: string) => {
 		if (!browser) return;
 		this.#pushed = false;
-		replaceState(cleanUrl, { showBookingModal: true });
+		void goto(cleanUrl, {
+			state: { showBookingModal: true },
+			shallow: true,
+			replace: true
+		});
 	};
 
 	close = () => {
@@ -28,7 +32,11 @@ class BookingModalState {
 			this.#pushed = false;
 			history.back();
 		} else {
-			replaceState(window.location.href, { showBookingModal: false });
+			void goto(window.location.href, {
+				state: { showBookingModal: false },
+				shallow: true,
+				replace: true
+			});
 		}
 	};
 }

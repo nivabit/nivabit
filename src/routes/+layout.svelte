@@ -33,11 +33,17 @@
 		}
 	}
 
+	function scheduleBookingUrlCheck() {
+		if (!browser) return;
+		setTimeout(checkBookingUrl, 0);
+	}
+
 	afterNavigate(() => {
-		checkBookingUrl();
+		scheduleBookingUrlCheck();
 	});
 
 	onMount(() => {
+		scheduleBookingUrlCheck();
 		const onHashChange = () => checkBookingUrl();
 
 		const onDocumentClick = (e: MouseEvent) => {
