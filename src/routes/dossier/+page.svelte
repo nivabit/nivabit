@@ -18,11 +18,35 @@
 </script>
 
 <svelte:head>
-	<title>14-Day Software Validation Dossier | Nivabit</title>
+	<title>Software Validation Dossier (Free) | Nivabit</title>
 	<meta
 		name="description"
-		content="Get the 14-Day Software Validation Dossier and Pre-Code Buyer Discovery Checklist. Test customer demand before writing code."
+		content="Get the Software Validation Dossier and Pre-Code Buyer Discovery Checklist. Test customer demand before writing code."
 	/>
+
+	<!-- Open Graph / LinkedIn / Facebook / WhatsApp -->
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Nivabit" />
+	<meta property="og:url" content="https://nivabit.com/dossier" />
+	<meta property="og:title" content="Get the Software Validation Dossier (Free)" />
+	<meta
+		property="og:description"
+		content="Test customer demand before writing code. Get the Software Validation Dossier and Pre-Code Buyer Discovery Checklist."
+	/>
+	<meta property="og:image" content="https://nivabit.com/images/dossier-og.jpg" />
+	<meta property="og:image:secure_url" content="https://nivabit.com/images/dossier-og.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:alt" content="Nivabit Software Validation Dossier" />
+
+	<!-- Twitter / X -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Get the Software Validation Dossier (Free)" />
+	<meta
+		name="twitter:description"
+		content="Test customer demand before writing code. Get the Software Validation Dossier and Pre-Code Buyer Discovery Checklist."
+	/>
+	<meta name="twitter:image" content="https://nivabit.com/images/dossier-og.jpg" />
 </svelte:head>
 
 <div class="min-h-screen bg-[#f8fafc] text-slate-900 selection:bg-[#2563eb]/15 selection:text-[#2563eb]">
