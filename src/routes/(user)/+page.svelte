@@ -32,7 +32,7 @@
 	const systemNodesBottom = [
 		{
 			title: '20+ Buyer Interviews',
-			desc: 'Unbiased discovery calls with verified decision-makers — never friends or family.'
+			desc: 'Unbiased discovery calls with verified decision-makers, never friends or family.'
 		},
 		{
 			title: 'Pricing Elasticity',
@@ -63,9 +63,9 @@
 		},
 		{
 			title: 'Enterprise Opportunity Dossiers',
-			duration: '3–4 Weeks',
+			duration: '4–6 Weeks',
 			tags: ['Market Sizing', 'Moat Audits', 'Venture Feasibility'],
-			desc: 'Deep-dive intelligence for venture studios and innovation teams evaluating new product verticals, acquisitions, or geographic expansion.',
+			desc: 'Deep-dive intelligence for large-scale platforms, venture studios, and innovation teams evaluating complex verticals, regulated markets, or multi-sided products.',
 			image: '/images/project/stanforteedge.png',
 			domain: 'stanforteedge.com'
 		},
@@ -105,7 +105,7 @@
 			metric: 'Product Model Validated',
 			avatar: '/images/profile3.jpg',
 			summary:
-				'The user discovery research Nivabit conducted completely reshaped our product strategy and accessibility workflows — validating critical user pathways before full rollout.',
+				'The user discovery research Nivabit conducted completely reshaped our product strategy and accessibility workflows, validating critical user pathways before full rollout.',
 			calloutTitle: 'Workflow Validated',
 			calloutMetric: '+62% onboarding retention',
 			xLabels: ['Pre-Sprint', 'Day 5', 'Day 10', 'Day 14', 'Month 2', 'Month 3'],
@@ -241,7 +241,7 @@
 	<title>Nivabit — We Install Your Validation Operating System</title>
 	<meta
 		name="description"
-		content="Product idea validation and market research studio. Prove customer demand, pricing elasticity, and competitive whitespace in 14 days before writing code."
+		content="Product idea validation and market research studio. Prove customer demand, pricing elasticity, and competitive whitespace before writing code, from rapid sprints to multi-week enterprise discovery."
 	/>
 </svelte:head>
 
@@ -274,10 +274,79 @@
 				</p>
 			</div>
 
-			<!-- Modular Architecture Bento -->
-			<div class="mt-14">
+			<!-- Mobile Architecture Layout (< md): Core Engine Hub at top feeding a connected vertical bit rail -->
+			<div class="mt-10 md:hidden">
+				<!-- Core Engine Anchor Card -->
+				<div
+					class="neuron-hub relative rounded-2xl border border-brand-accent/40 bg-slate-900 p-5 text-left shadow-lg"
+				>
+					<div class="flex items-center justify-between gap-2">
+						<span
+							class="inline-flex items-center gap-1.5 rounded-md bg-brand-accent/20 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-brand-accent-light uppercase"
+						>
+							<span class="h-1.5 w-1.5 rounded-[1px] bg-brand-accent-light"></span>
+							Core Engine
+						</span>
+						<span class="font-mono text-[10px] font-semibold text-slate-400">6 Modules</span>
+					</div>
+					<h3 class="mt-3 text-lg font-bold text-white">Nivabit Validation OS</h3>
+					<p class="mt-1 text-xs leading-relaxed text-slate-300">
+						Synthesizes competitor whitespace, live smoke-test intent, and 20+ buyer discovery calls into a clear Go / No-Go verdict paced to your scope.
+					</p>
+				</div>
+
+				<!-- Vertical Bit Signal Rail connecting Core Engine to all 6 modules -->
+				<div class="relative mt-2 ml-4 border-l border-slate-700/80 pl-5">
+					<!-- Animated vertical bit pulse traveling down the rail -->
+					<svg
+						class="pointer-events-none absolute top-0 -left-[5px] h-full w-2.5 overflow-visible"
+						viewBox="0 0 10 100"
+						preserveAspectRatio="none"
+						aria-hidden="true"
+					>
+						<path id="sys-mobile-rail" d="M 5 0 L 5 100" stroke="#2563eb" stroke-opacity="0.35" stroke-width="1.5" />
+						<rect x="-2.5" y="-2.5" width="5" height="5" rx="1" fill="#60a5fa">
+							<animateMotion dur="2.8s" repeatCount="indefinite">
+								<mpath href="#sys-mobile-rail" />
+							</animateMotion>
+						</rect>
+					</svg>
+
+					<div class="space-y-3 pt-4">
+						{#each [...systemNodesTop, ...systemNodesBottom] as node, idx}
+							<div class="relative">
+								<!-- Horizontal branch & bit node -->
+								<span
+									class="absolute top-4 -left-[21px] h-px w-4 bg-slate-700/80"
+									aria-hidden="true"
+								></span>
+								<span
+									class="absolute top-[13px] -left-[24px] h-2 w-2 rounded-[2px] bg-[#60a5fa] ring-2 ring-[#090D14]"
+									aria-hidden="true"
+								></span>
+
+								<div
+									class="neuron-card rounded-xl border border-slate-800 bg-[#111827]/95 px-4 py-3.5"
+									style={`--pulse-delay: ${idx * 0.35}s;`}
+								>
+									<div class="flex items-center justify-between gap-2">
+										<h3 class="text-sm font-bold text-white">{node.title}</h3>
+										<span class="font-mono text-[10px] font-semibold text-brand-accent-light">
+											0{idx + 1}
+										</span>
+									</div>
+									<p class="mt-1 text-xs leading-relaxed text-slate-400">{node.desc}</p>
+								</div>
+							</div>
+						{/each}
+					</div>
+				</div>
+			</div>
+
+			<!-- Desktop Modular Architecture Bento (md+) -->
+			<div class="mt-14 hidden md:block">
 				<!-- Top 3 Satellites -->
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+				<div class="grid grid-cols-3 gap-4">
 					{#each systemNodesTop as node, idx}
 						<div
 							class="neuron-card relative rounded-xl border border-slate-800 bg-[#111827] p-5 transition-colors hover:border-slate-700"
@@ -297,18 +366,50 @@
 					{/each}
 				</div>
 
-				<!-- Top Traces -->
-				<div class="relative hidden h-16 w-full md:block" aria-hidden="true">
+				<!-- Top Bit Traces -->
+				<div class="relative h-16 w-full" aria-hidden="true">
 					<svg
 						viewBox="0 0 900 64"
 						fill="none"
 						preserveAspectRatio="none"
 						class="h-full w-full overflow-visible"
 					>
+						<defs>
+							<filter id="sysBitGlowTop" x="-40%" y="-40%" width="180%" height="180%">
+								<feGaussianBlur stdDeviation="2" result="blur" />
+								<feMerge>
+									<feMergeNode in="blur" />
+									<feMergeNode in="SourceGraphic" />
+								</feMerge>
+							</filter>
+						</defs>
+
 						<!-- Base neural pathways -->
-						<path id="sys-top-0" d="M 450 64 C 450 28, 150 36, 150 0" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
-						<path id="sys-top-1" d="M 450 64 L 450 0" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
-						<path id="sys-top-2" d="M 450 64 C 450 28, 750 36, 750 0" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
+						<path id="sys-top-0" d="M 450 64 C 450 28, 150 36, 150 0" stroke="#334155" stroke-opacity="0.45" stroke-width="1.5" />
+						<path id="sys-top-1" d="M 450 64 L 450 0" stroke="#334155" stroke-opacity="0.45" stroke-width="1.5" />
+						<path id="sys-top-2" d="M 450 64 C 450 28, 750 36, 750 0" stroke="#334155" stroke-opacity="0.45" stroke-width="1.5" />
+
+						<!-- Animated traveling pulse traces -->
+						<path d="M 450 64 C 450 28, 150 36, 150 0" stroke="#2563eb" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0s;" />
+						<path d="M 450 64 L 450 0" stroke="#2563eb" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.45s;" />
+						<path d="M 450 64 C 450 28, 750 36, 750 0" stroke="#2563eb" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.9s;" />
+
+						<!-- Traveling square bit signals -->
+						<rect x="-2.5" y="-2.5" width="5" height="5" rx="1" fill="#60a5fa" filter="url(#sysBitGlowTop)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0s">
+								<mpath href="#sys-top-0" />
+							</animateMotion>
+						</rect>
+						<rect x="-2.5" y="-2.5" width="5" height="5" rx="1" fill="#60a5fa" filter="url(#sysBitGlowTop)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.45s">
+								<mpath href="#sys-top-1" />
+							</animateMotion>
+						</rect>
+						<rect x="-2.5" y="-2.5" width="5" height="5" rx="1" fill="#60a5fa" filter="url(#sysBitGlowTop)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.9s">
+								<mpath href="#sys-top-2" />
+							</animateMotion>
+						</rect>
 
 						<!-- Synapse terminal square bits -->
 						<rect x="147" y="0" width="6" height="6" rx="1" fill="#60a5fa" />
@@ -319,9 +420,9 @@
 				</div>
 
 				<!-- Central Hub -->
-				<div class="relative my-4 flex flex-col items-center md:my-0">
+				<div class="relative flex flex-col items-center">
 					<div
-						class="relative w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 text-center shadow-lg"
+						class="neuron-hub relative w-full max-w-md rounded-2xl border border-brand-accent/40 bg-slate-900 p-6 text-center shadow-lg"
 					>
 						<span
 							class="inline-block rounded-md bg-slate-800 px-3 py-0.5 text-[10px] font-bold tracking-wider text-slate-300 uppercase"
@@ -332,23 +433,55 @@
 							Nivabit Validation OS
 						</h3>
 						<p class="mt-1.5 text-xs leading-relaxed text-slate-300">
-							Synthesizes competitor whitespace, live smoke-test intent, and 20+ buyer discovery calls into a clear Go / No-Go verdict in 14 days.
+							Synthesizes competitor whitespace, live smoke-test intent, and 20+ buyer discovery calls into a clear Go / No-Go verdict paced to your scope.
 						</p>
 					</div>
 				</div>
 
-				<!-- Bottom Traces -->
-				<div class="relative hidden h-16 w-full md:block" aria-hidden="true">
+				<!-- Bottom Bit Traces -->
+				<div class="relative h-16 w-full" aria-hidden="true">
 					<svg
 						viewBox="0 0 900 64"
 						fill="none"
 						preserveAspectRatio="none"
 						class="h-full w-full overflow-visible"
 					>
+						<defs>
+							<filter id="sysBitGlowBot" x="-40%" y="-40%" width="180%" height="180%">
+								<feGaussianBlur stdDeviation="2" result="blur" />
+								<feMerge>
+									<feMergeNode in="blur" />
+									<feMergeNode in="SourceGraphic" />
+								</feMerge>
+							</filter>
+						</defs>
+
 						<!-- Base pathways -->
-						<path id="sys-bot-0" d="M 450 0 C 450 36, 150 28, 150 64" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
-						<path id="sys-bot-1" d="M 450 0 L 450 64" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
-						<path id="sys-bot-2" d="M 450 0 C 450 36, 750 28, 750 64" stroke="#334155" stroke-opacity="0.4" stroke-width="1.5" />
+						<path id="sys-bot-0" d="M 450 0 C 450 36, 150 28, 150 64" stroke="#334155" stroke-opacity="0.45" stroke-width="1.5" />
+						<path id="sys-bot-1" d="M 450 0 L 450 64" stroke="#334155" stroke-opacity="0.45" stroke-width="1.5" />
+						<path id="sys-bot-2" d="M 450 0 C 450 36, 750 28, 750 64" stroke="#334155" stroke-opacity="0.45" stroke-width="1.5" />
+
+						<!-- Animated traveling pulse traces -->
+						<path d="M 450 0 C 450 36, 150 28, 150 64" stroke="#2563eb" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.45s;" />
+						<path d="M 450 0 L 450 64" stroke="#2563eb" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 0.9s;" />
+						<path d="M 450 0 C 450 36, 750 28, 750 64" stroke="#2563eb" stroke-width="2" stroke-linecap="round" class="neuron-trace" style="animation-delay: 1.35s;" />
+
+						<!-- Traveling square bit signals -->
+						<rect x="-2.5" y="-2.5" width="5" height="5" rx="1" fill="#60a5fa" filter="url(#sysBitGlowBot)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.45s">
+								<mpath href="#sys-bot-0" />
+							</animateMotion>
+						</rect>
+						<rect x="-2.5" y="-2.5" width="5" height="5" rx="1" fill="#60a5fa" filter="url(#sysBitGlowBot)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="0.9s">
+								<mpath href="#sys-bot-1" />
+							</animateMotion>
+						</rect>
+						<rect x="-2.5" y="-2.5" width="5" height="5" rx="1" fill="#60a5fa" filter="url(#sysBitGlowBot)">
+							<animateMotion dur="2.2s" repeatCount="indefinite" begin="1.35s">
+								<mpath href="#sys-bot-2" />
+							</animateMotion>
+						</rect>
 
 						<!-- Synapse terminal square bits -->
 						<rect x="446.5" y="0" width="7" height="7" rx="1" fill="#2563eb" stroke="#60a5fa" stroke-width="1.5" />
@@ -359,7 +492,7 @@
 				</div>
 
 				<!-- Bottom 3 Satellites -->
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+				<div class="grid grid-cols-3 gap-4">
 					{#each systemNodesBottom as node, idx}
 						<div
 							class="neuron-card relative rounded-xl border border-slate-800 bg-[#111827] p-5 transition-colors hover:border-slate-700"
@@ -480,7 +613,7 @@
 				You focus on building what wins. We prove customer demand first.
 			</h2>
 			<p class="mx-auto mt-3 max-w-xl text-sm font-medium text-slate-300">
-				Stop guessing whether buyers will pay. Scope a 14-day sprint and get verifiable market proof before spending engineering capital.
+				Stop guessing whether buyers will pay. Scope a 14-day rapid sprint or a multi-week enterprise discovery and get verifiable market proof before spending engineering capital.
 			</p>
 			<div class="mt-7">
 				<a
@@ -645,9 +778,9 @@
 					Why Evidence Beats Intuition
 				</p>
 				<p class="mt-3 text-sm leading-relaxed text-ink-secondary md:text-base">
-					Most startups don’t fail because of bad code — they fail because they spend six months
-					shipping a product nobody will pay for. Nivabit compresses months of painful trial and
-					error into a rigorous 14-day sprint backed by real buyer behavior.
+					Most startups fail because they spend six months shipping a product nobody will pay for.
+					Nivabit compresses months of trial and error into a focused validation track backed by
+					real buyer behavior.
 				</p>
 			</div>
 		</div>
@@ -696,7 +829,7 @@
 				<div class="space-y-5 md:col-span-6">
 					<p class="font-cabinet text-xl leading-snug font-bold text-ink-primary md:text-2xl">
 						We started Nivabit after watching brilliant founders burn $100k+ building features
-						customers politely praised — and never bought.
+						customers politely praised, yet never bought.
 					</p>
 					<p class="text-sm leading-relaxed text-ink-secondary md:text-base">
 						Traditional agencies want to sell you a 6-month build. We do the opposite: we uncover
@@ -919,7 +1052,7 @@
 				Ready to validate before you build?
 			</h2>
 			<p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-600 md:text-base">
-				Book a 30-minute scoping call. We will examine your riskiest assumptions and outline how to prove demand in 14 days.
+				Book a scoping call. We will examine your riskiest assumptions and match you with the right validation track for your product.
 			</p>
 
 			<div class="mt-7 flex flex-wrap items-center justify-center gap-3">

@@ -6,28 +6,28 @@
 		{
 			num: '01',
 			title: 'Whitespace Audit',
-			meta: 'Days 1–3 • 15+ Competitors',
+			meta: 'Phase 1 • 15+ Competitors',
 			image: '/images/project/facity.png',
 			tag: 'Market Map'
 		},
 		{
 			num: '02',
 			title: 'Pain-Point Mining',
-			meta: 'Days 4–6 • 1,000+ Signals',
+			meta: 'Phase 2 • 1,000+ Signals',
 			image: '/images/project/tichly.png',
 			tag: 'ICP Intel'
 		},
 		{
 			num: '03',
 			title: 'Live Smoke Tests',
-			meta: 'Days 7–10 • Real Intent',
+			meta: 'Phase 3 • Real Intent',
 			image: '/images/project/unclutter.png',
 			tag: 'Demand Data'
 		},
 		{
 			num: '04',
 			title: 'Go / No-Go Dossier',
-			meta: 'Days 11–14 • 20+ Interviews',
+			meta: 'Phase 4 • 20+ Interviews',
 			image: '/images/project/stanforteedge.png',
 			tag: 'Final Verdict'
 		}
@@ -67,8 +67,8 @@
 			</h1>
 
 			<p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-				Most software ideas burn capital building features nobody uses. Nivabit runs 14-day market
-				validation sprints, then engineers production systems once demand is verified.
+				Most software burns capital on features nobody uses. Nivabit validates real buyer demand
+				first, then builds your product once it is proven.
 			</p>
 
 			<!-- Primary & Secondary Actions (Hit target minimum 44x44px, real hover) -->
@@ -93,8 +93,8 @@
 			<!-- Hero Metric Row: Big numbers, small labels -->
 			<div class="mt-10 grid grid-cols-2 gap-4 border-y border-slate-200/80 py-4 sm:grid-cols-4">
 				<div class="text-center">
-					<p class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">14 Days</p>
-					<p class="mt-0.5 text-xs font-medium text-slate-500 uppercase">Sprint Turnaround</p>
+					<p class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">2–6 Wks</p>
+					<p class="mt-0.5 text-xs font-medium text-slate-500 uppercase">Scoped to Complexity</p>
 				</div>
 				<div class="text-center">
 					<p class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">20+</p>
@@ -267,9 +267,11 @@
 			<div class="mt-8">
 				<div class="mb-4 flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
 					<h3 class="text-sm font-bold tracking-tight text-slate-900 uppercase">
-						14-Day Validation Workflow
+						Core Validation Workflow
 					</h3>
-					<span class="text-xs font-medium text-slate-500"> 40+ market teardowns completed </span>
+					<span class="text-xs font-medium text-slate-500">
+						14-day rapid sprints • 3–6 week deep-dives for complex builds
+					</span>
 				</div>
 
 				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

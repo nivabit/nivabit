@@ -45,9 +45,17 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (event.url.pathname.startsWith('/uploads/')) {
-		const filePath = path.join(process.cwd(), event.url.pathname);
+		let decodedPath: string;
+		try {
+			decodedPath = decodeURIComponent(event.url.pathname);
+		} catch {
+			decodedPath = event.url.pathname;
+		}
 
-		if (fs.existsSync(filePath)) {
+		const uploadsRoot = path.resolve(process.cwd(), 'uploads');
+		const filePath = path.resolve(process.cwd(), decodedPath.replace(/^\/+/, ''));
+
+		if (filePath.startsWith(uploadsRoot + path.sep) && fs.existsSync(filePath)) {
 			const file = await fs.promises.readFile(filePath);
 			const ext = path.extname(filePath).toLowerCase();
 
@@ -59,11 +67,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 					? 'image/png'
 					: ext === '.webp'
 					? 'image/webp'
+					: ext === '.gif'
+					? 'image/gif'
+					: ext === '.svg'
+					? 'image/svg+xml'
 					: 'application/octet-stream';
 
 			return new Response(file, {
 				headers: {
-					'Content-Type': contentType
+					'Content-Type': contentType,
+					'Cache-Control': 'public, max-age=31536000, immutable'
 				}
 			});
 		}

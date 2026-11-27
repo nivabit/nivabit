@@ -88,7 +88,7 @@
 				{/if}
 
 				<div class="rounded-3xl border border-black/8 bg-white p-6 shadow-xs md:p-10">
-					<RichTextEditor bind:value={singleArticles.content} readOnly={true} />
+					<RichTextEditor value={singleArticles.content} readOnly={true} />
 				</div>
 			</div>
 		</section>

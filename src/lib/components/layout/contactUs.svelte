@@ -39,7 +39,7 @@
 				</h2>
 				<p class="text-sm leading-relaxed text-white/65">
 					Select the research modules you need and tell us about your hypothesis. We’ll reply within
-					24 hours with a tailored 14-day scope.
+					24 hours with a tailored validation scope and timeline matched to your project’s size.
 				</p>
 			</div>
 
@@ -53,7 +53,7 @@
 						return;
 					}
 					toast.success('Sprint inquiry sent', {
-						description: 'Thanks for reaching out — our research team will reply within 24 hours.'
+						description: 'Thanks for reaching out. Our research team will reply within 24 hours.'
 					});
 					form.reset();
 					selectedServices = [];

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { untrack } from 'svelte';
 	import { browser } from '$app/env';
 	import 'quill/dist/quill.snow.css';
 	import { safeHTML } from '#lib/utils/safeHTML.ts';
@@ -11,7 +11,7 @@
 
 	let { value = $bindable(), readOnly = false }: Props = $props();
 
-	let editorContainer: HTMLDivElement | string =  $state("");
+	let editorContainer = $state<HTMLDivElement | undefined>(undefined);
 	let quill: any;
 
 	const toolbar = [
@@ -30,25 +30,31 @@
 	];
 
 	function onTextChange() {
-		value = quill.root.innerHTML;
+		if (quill) {
+			value = quill.root.innerHTML;
+		}
 	}
 
 	$effect(() => {
-		if (!browser) return;
+		if (!browser || readOnly || !editorContainer) return;
 
+		const container = editorContainer;
+		const initialValue = untrack(() => value);
+		let cancelled = false;
 		let quillInstance: any;
 
 		(async () => {
 			const Quill = (await import('quill')).default;
+			if (cancelled) return;
 
-			quillInstance = new Quill(editorContainer, {
+			quillInstance = new Quill(container, {
 				theme: 'snow',
 				modules: { toolbar },
 				placeholder: 'Write your article content here...'
 			});
 
-			if (value) {
-				quillInstance.clipboard.dangerouslyPasteHTML(value, 'user');
+			if (initialValue) {
+				quillInstance.clipboard.dangerouslyPasteHTML(initialValue, 'silent');
 			}
 
 			quillInstance.on('text-change', onTextChange);
@@ -56,18 +62,20 @@
 		})();
 
 		return () => {
+			cancelled = true;
 			quillInstance?.off('text-change', onTextChange);
+			quill = undefined;
 		};
 	});
 </script>
 
-{#if browser}
-	{#if readOnly}
-		<!-- Safe HTML display -->
-		<div class="quill-view" use:safeHTML={value}></div>
-	{:else}
-		<div bind:this={editorContainer} class="quill-editor"></div>
-	{/if}
+{#if readOnly}
+	<!-- Safe HTML display (SSR + client) -->
+	<div class="quill-view prose prose-slate max-w-none" use:safeHTML={value}>
+		{@html value ?? ''}
+	</div>
+{:else if browser}
+	<div bind:this={editorContainer} class="quill-editor"></div>
 {/if}
 
 <style>
