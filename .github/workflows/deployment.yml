@@ -63,7 +63,9 @@ jobs:
         id: meta
         run: |
           IMAGE_LOWER=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          PKG_LOWER=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
           echo "image=${IMAGE_LOWER}" >> "$GITHUB_OUTPUT"
+          echo "package=${PKG_LOWER}" >> "$GITHUB_OUTPUT"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -140,8 +142,8 @@ jobs:
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
 
-            # Clean up old dangling images
-            docker image prune -f || true
+            # Clean up all unused/old images on the server (keeps currently running image)
+            docker image prune -af || true
 
             # Verify container health & HTTP response on port 3000
             sleep 5
@@ -149,3 +151,12 @@ jobs:
             docker logs --tail 30 nivabit-prod
             curl -fsS http://127.0.0.1:3000/ > /dev/null
             echo "Deployment verified: http://127.0.0.1:3000/ returned 200 OK"
+
+      - name: Clean up old GHCR image versions
+        uses: actions/delete-package-versions@v5
+        continue-on-error: true
+        with:
+          package-name: ${{ steps.meta.outputs.package }}
+          package-type: container
+          min-versions-to-keep: 1
+          delete-only-untagged-versions: false

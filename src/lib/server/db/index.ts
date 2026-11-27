@@ -18,20 +18,40 @@ function sanitizeDatabaseUrl(rawUrl: string): string {
 	}
 }
 
-const rawConnectionString = process.env.DATABASE_URL;
+export function getSqlClient() {
+	if (globalThis.__nivabitSql) return globalThis.__nivabitSql;
 
-if (!rawConnectionString) {
-	throw new Error('DATABASE_URL environment variable is not set');
-}
+		const rawConnectionString = process.env.DATABASE_URL;
+		if (!rawConnectionString) {
+			throw new Error('DATABASE_URL environment variable is not set');
+		}
 
-const connectionString = sanitizeDatabaseUrl(rawConnectionString);
+		const client = postgres(sanitizeDatabaseUrl(rawConnectionString));
+		globalThis.__nivabitSql = client;
+		return client;
+	}
 
-export const sqlClient = globalThis.__nivabitSql ?? postgres(connectionString);
-export const db = globalThis.__nivabitDb ?? drizzle(sqlClient, { schema });
+	export function getDb(): PostgresJsDatabase<typeof schema> {
+		if (globalThis.__nivabitDb) return globalThis.__nivabitDb;
 
-if (process.env.NODE_ENV !== 'production') {
-	globalThis.__nivabitSql = sqlClient;
-	globalThis.__nivabitDb = db;
-}
+			const instance = drizzle(getSqlClient(), { schema });
+			globalThis.__nivabitDb = instance;
+			return instance;
+		}
 
-export * from './schema.ts';
+		export const db: PostgresJsDatabase<typeof schema> = new Proxy(
+			{} as PostgresJsDatabase<typeof schema>,
+			{
+				get(_target, prop, receiver) {
+					const instance = getDb();
+					const value = Reflect.get(instance, prop, receiver);
+					return typeof value === 'function' ? value.bind(instance) : value;
+				}
+			}
+		);
+
+		export const sqlClient = {
+			end: () => globalThis.__nivabitSql?.end() ?? Promise.resolve()
+		};
+
+		export * from './schema.ts';
