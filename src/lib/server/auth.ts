@@ -1,39 +1,94 @@
-
-import jwt from 'jsonwebtoken';
 import { eq } from 'drizzle-orm';
 import { db, admins } from '#lib/server/db/index.ts';
 import type { RequestEvent } from '@sveltejs/kit';
-import { AUTH_COOKIE_NAME } from '#lib/utils/auth.ts';
 import { error } from '@sveltejs/kit';
+import {
+	AUTH_COOKIE_NAME,
+	REFRESH_COOKIE_NAME,
+	clearAllAuthCookies,
+	isSessionIdleExpired,
+	setAuthCookie,
+	setLastActiveCookie,
+	setUserCookie
+} from '#lib/utils/auth.ts';
+import {
+	generateAccessToken,
+	verifyAccessToken,
+	verifyRefreshToken
+} from '#lib/auth.ts';
 
-const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET || 'supersecret';
+async function loadAdminById(id: string) {
+	const [user] = await db
+		.select({
+			id: admins.id,
+			name: admins.name,
+			email: admins.email,
+			role: admins.role,
+			phone: admins.phone,
+			passwordHash: admins.passwordHash
+		})
+		.from(admins)
+		.where(eq(admins.id, id))
+		.limit(1);
 
-export async function authorize(event: RequestEvent) {	
-	const token = event.cookies.get(AUTH_COOKIE_NAME);
-	if (!token) return null;
+	return user || null;
+}
 
-	try {
-		const decoded: any = jwt.verify(token, JWT_SECRET);
+export async function authorize(event: RequestEvent) {
+	const accessToken = event.cookies.get(AUTH_COOKIE_NAME);
+	const refreshToken = event.cookies.get(REFRESH_COOKIE_NAME);
 
-		if (!decoded?.id) return null;
+	if (!accessToken && !refreshToken) return null;
 
-		const [user] = await db
-			.select({
-				id: admins.id,
-				name: admins.name,
-				email: admins.email,
-				role: admins.role,
-				phone: admins.phone,
-				passwordHash: admins.passwordHash
-			})
-			.from(admins)
-			.where(eq(admins.id, decoded.id))
-			.limit(1);
-
-		return user || null;
-	} catch {
+	// Enforce 5-minute server-side inactivity timeout
+	if (isSessionIdleExpired(event.cookies)) {
+		clearAllAuthCookies(event.cookies);
 		return null;
 	}
+
+	// 1. Try current access token
+	if (accessToken) {
+		try {
+			const decoded: any = verifyAccessToken(accessToken);
+			if (decoded?.id) {
+				const user = await loadAdminById(decoded.id);
+				if (user) {
+					setLastActiveCookie(event.cookies);
+					return user;
+				}
+			}
+		} catch {
+			// Access token expired or invalid — fall through to refresh token
+		}
+	}
+
+	// 2. Silently renew access token from refresh_token while user is active
+	if (refreshToken) {
+		try {
+			const decoded: any = verifyRefreshToken(refreshToken);
+			if (decoded?.id) {
+				const user = await loadAdminById(decoded.id);
+				if (user) {
+					const newAccessToken = generateAccessToken(user);
+					setAuthCookie(event.cookies, newAccessToken);
+					setUserCookie(event.cookies, {
+						id: user.id,
+						name: user.name,
+						role: user.role,
+						email: user.email,
+						phone: user.phone
+					});
+					setLastActiveCookie(event.cookies);
+					return user;
+				}
+			}
+		} catch {
+			clearAllAuthCookies(event.cookies);
+			return null;
+		}
+	}
+
+	return null;
 }
 
 /**

@@ -1,9 +1,12 @@
-import { form, query, getRequestEvent } from '$app/server';
-import { invalid } from '@sveltejs/kit';
-import { desc } from 'drizzle-orm';
+import { command, form, query, getRequestEvent } from '$app/server';
+import { error, invalid } from '@sveltejs/kit';
+import * as v from 'valibot';
+import { desc, eq, inArray } from 'drizzle-orm';
 import { db, contacts } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import { checkSubmissionSpam } from '#lib/server/antiSpam.ts';
+import { getPlatformEmailValue } from '#lib/server/platformSettings.ts';
+import { sendTemplatedMail } from '#lib/server/mailer.ts';
 import { transporter, mailOptions } from '#lib/server/email.ts';
 import { generateEmailContent } from '#lib/server/emailContent.ts';
 import { contactSchema } from '#lib/validation/validation.ts';
@@ -37,9 +40,11 @@ export const submitContact = form(contactSchema, async (data) => {
 	try {
 		await db.insert(contacts).values(payload);
 
-		// 1. Notify admin
+		// 1. Notify admin at configured Platform Email
+		const platformEmail = await getPlatformEmailValue();
 		await transporter.sendMail({
 			...mailOptions,
+			to: platformEmail,
 			...generateEmailContent(payload),
 			subject: payload.subject
 		});
@@ -107,4 +112,84 @@ export const getContacts = query(async () => {
 	await requireUser(event);
 
 	return db.select().from(contacts).orderBy(desc(contacts.createdAt));
+});
+
+const contactIdsSchema = v.object({
+	ids: v.pipe(v.array(v.pipe(v.string(), v.nonEmpty())), v.minLength(1))
+});
+
+const replyContactSchema = v.object({
+	id: v.pipe(v.string(), v.nonEmpty()),
+	message: v.pipe(v.string(), v.trim(), v.minLength(1, 'Reply cannot be empty'))
+});
+
+export const markContactsRead = command(contactIdsSchema, async ({ ids }) => {
+	const event = getRequestEvent();
+	await requireUser(event);
+
+	await db
+		.update(contacts)
+		.set({ isread: true, isreadAt: new Date() })
+		.where(inArray(contacts.id, ids));
+	await getContacts().refresh();
+
+	return { success: true, count: ids.length };
+});
+
+export const markAllContactsRead = command(async () => {
+	const event = getRequestEvent();
+	await requireUser(event);
+
+	await db
+		.update(contacts)
+		.set({ isread: true, isreadAt: new Date() })
+		.where(eq(contacts.isread, false));
+	await getContacts().refresh();
+
+	return { success: true };
+});
+
+export const deleteContactsBulk = command(contactIdsSchema, async ({ ids }) => {
+	const event = getRequestEvent();
+	await requireUser(event);
+
+	await db.delete(contacts).where(inArray(contacts.id, ids));
+	await getContacts().refresh();
+
+	return {
+		success: true,
+		deletedCount: ids.length,
+		message: `Deleted ${ids.length} message${ids.length === 1 ? '' : 's'}.`
+	};
+});
+
+export const replyToContact = command(replyContactSchema, async ({ id, message }) => {
+	const event = getRequestEvent();
+	await requireUser(event);
+
+	const [contact] = await db.select().from(contacts).where(eq(contacts.id, id)).limit(1);
+	if (!contact) {
+		throw error(404, 'Contact message not found');
+	}
+
+	const replySubject = `Re: ${contact.subject || 'Your Nivabit Inquiry'}`;
+	await sendTemplatedMail({
+		to: contact.email,
+		subject: replySubject,
+		template: 'contact-reply',
+		text: message,
+		context: {
+			name: contact.name,
+			subject: replySubject,
+			message
+		}
+	});
+
+	await db
+		.update(contacts)
+		.set({ isread: true, isreadAt: new Date() })
+		.where(eq(contacts.id, id));
+	await getContacts().refresh();
+
+	return { success: true, message: `Reply sent to ${contact.email}` };
 });

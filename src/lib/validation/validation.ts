@@ -60,7 +60,8 @@ export const subscribeNewsletterSchema = v.object({
 
 export const sendNewsletterSchema = v.object({
 	subject: v.pipe(v.string(), v.trim(), v.nonEmpty('Subject is required')),
-	message: v.pipe(v.string(), v.trim(), v.nonEmpty('Message is required'))
+	message: v.pipe(v.string(), v.trim(), v.nonEmpty('Message is required')),
+	recipientEmails: v.optional(v.string(), '')
 });
 
 const phoneRegex = /^\+?[0-9\-\s()]{7,20}$/;
@@ -72,6 +73,7 @@ export const profileSchema = v.object({
 		v.minLength(2, 'Name must be at least 2 characters'),
 		v.maxLength(50, 'Name too long')
 	),
+	email: v.pipe(v.string(), v.trim(), v.email('Enter a valid email address')),
 	phone: v.optional(
 		v.union([
 			v.literal(''),
@@ -79,6 +81,10 @@ export const profileSchema = v.object({
 		]),
 		''
 	)
+});
+
+export const platformEmailSchema = v.object({
+	email: v.pipe(v.string(), v.trim(), v.email('Enter a valid platform email address'))
 });
 
 export const updateMetricSchema = v.object({

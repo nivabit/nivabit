@@ -7,12 +7,12 @@ import { db, admins } from '#lib/server/db/index.ts';
 import { generateAccessToken, generateRefreshToken } from '#lib/auth.ts';
 import { sendMail } from '#lib/server/mailer.ts';
 import {
-	clearAuthCookie,
-	clearRefreshCookie,
-	clearUserCookie,
+	clearAllAuthCookies,
 	setAuthCookie,
+	setLastActiveCookie,
 	setUserCookie
 } from '#lib/utils/auth.ts';
+import { authorize } from '#lib/server/auth.ts';
 import {
 	loginSchema,
 	forgotPasswordSchema,
@@ -32,8 +32,8 @@ export const loginAdmin = form(loginSchema, async ({ email, _password }) => {
 
 	cookies.set('refresh_token', refreshToken, {
 		httpOnly: true,
-		secure: true,
-		sameSite: 'strict',
+		secure: process.env.NODE_ENV === 'production',
+		sameSite: 'lax',
 		path: '/',
 		maxAge: 60 * 60 * 24 * 7
 	});
@@ -46,15 +46,24 @@ export const loginAdmin = form(loginSchema, async ({ email, _password }) => {
 		email: admin.email,
 		phone: admin.phone
 	});
+	setLastActiveCookie(cookies);
 
 	throw redirect(303, '/ceo');
 });
 
+export const heartbeatAdmin = command(async () => {
+	const event = getRequestEvent();
+	const user = await authorize(event);
+	if (!user) {
+		clearAllAuthCookies(event.cookies);
+		return { active: false };
+	}
+	return { active: true };
+});
+
 export const logoutAdmin = command(async () => {
 	const { cookies } = getRequestEvent();
-	clearAuthCookie(cookies);
-	clearUserCookie(cookies);
-	clearRefreshCookie(cookies);
+	clearAllAuthCookies(cookies);
 	return { success: true, redirectTo: '/ceo/login' };
 });
 

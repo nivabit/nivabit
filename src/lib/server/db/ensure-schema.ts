@@ -70,6 +70,17 @@ async function ensureSchema() {
 			);
 			CREATE UNIQUE INDEX IF NOT EXISTS "NewsletterSubscriber_email_key" ON "NewsletterSubscriber" ("email");
 
+			CREATE TABLE IF NOT EXISTS "NewsletterBroadcast" (
+				"id" text PRIMARY KEY NOT NULL,
+				"subject" text NOT NULL,
+				"totalRecipients" integer NOT NULL DEFAULT 0,
+				"sentCount" integer NOT NULL DEFAULT 0,
+				"failedCount" integer NOT NULL DEFAULT 0,
+				"status" text NOT NULL DEFAULT 'QUEUED',
+				"createdAt" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				"completedAt" timestamp
+			);
+
 			CREATE TABLE IF NOT EXISTS "Booking" (
 				"id" text PRIMARY KEY NOT NULL,
 				"firstName" text NOT NULL,

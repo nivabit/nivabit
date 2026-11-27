@@ -4,11 +4,11 @@ import { eq } from 'drizzle-orm';
 import { db, sqlClient, admins } from './index.ts';
 
 async function main() {
-	const email = 'fanekad466@reifide.com';
+	const email = 'superadmin@nivabit.com';
 	const password = 'SuperSecurePassword123!';
-	const name = 'John Doe';
+	const name = 'Olaoluwa Owonikoko';
 	const role = 'System Administrator';
-	const phone = '+2348012845678';
+	const phone = '+2349071133025';
 
 	const [existing] = await db.select().from(admins).where(eq(admins.email, email)).limit(1);
 

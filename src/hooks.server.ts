@@ -1,23 +1,11 @@
-import jwt from 'jsonwebtoken';
 import { clearAllAuthCookies, getAuthCookie, getUserCookie } from '#lib/utils/auth.ts';
+import { authorize } from '#lib/server/auth.ts';
 import { redirect, type Handle } from '@sveltejs/kit';
 import fs from 'fs';
 import path from 'path';
 
-const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET || 'supersecret';
-
-function hasValidJwt(token: string | undefined): boolean {
-	if (!token) return false;
-	try {
-		const decoded: any = jwt.verify(token, JWT_SECRET);
-		return Boolean(decoded?.id);
-	} catch {
-		return false;
-	}
-}
-
 export const handle: Handle = async ({ event, resolve }) => {
-	const user = getUserCookie(event.cookies) || null;
+	let user = getUserCookie(event.cookies) || null;
 
 	// Backwards compatibility: redirect legacy /bits routes to /ceo
 	if (event.url.pathname.startsWith('/bits')) {
@@ -25,18 +13,28 @@ export const handle: Handle = async ({ event, resolve }) => {
 		throw redirect(301, newPath || '/ceo');
 	}
 
-	// CEO route protection
+	// CEO route protection with silent token refresh & 5-min idle timeout
 	const isCeoAuthRoute =
 		event.url.pathname === '/ceo/login' ||
 		event.url.pathname === '/ceo/forgotpassword' ||
 		event.url.pathname === '/ceo/reset-password';
 
 	if (event.url.pathname === '/ceo' || event.url.pathname.startsWith('/ceo/')) {
-		const token = getAuthCookie(event.cookies);
-		const isAuthenticated = Boolean(user) && hasValidJwt(token);
+		const authedUser = await authorize(event);
+		const isAuthenticated = Boolean(authedUser);
+
+		if (authedUser) {
+			user = {
+				id: authedUser.id,
+				name: authedUser.name,
+				role: authedUser.role,
+				email: authedUser.email,
+				phone: authedUser.phone
+			};
+		}
 
 		if (!isCeoAuthRoute && !isAuthenticated) {
-			if (token || user) clearAllAuthCookies(event.cookies);
+			if (getAuthCookie(event.cookies) || user) clearAllAuthCookies(event.cookies);
 			throw redirect(303, '/ceo/login');
 		}
 		if (isCeoAuthRoute && isAuthenticated) {

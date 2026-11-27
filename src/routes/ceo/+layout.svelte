@@ -1,21 +1,86 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import { cubicIn, cubicOut } from 'svelte/easing';
+	import { cubicOut } from 'svelte/easing';
 	import * as Sidebar from '#lib/components/ui/sidebar/index.js';
 	import AppSidebar from '#lib/components/app-sidebar.svelte';
 	import SiteHeader from '#lib/components/site-header.svelte';
 	import { page } from '$app/state';
-
+	import { goto } from '$app/navigation';
 	import type { Snippet } from 'svelte';
 	import ProgressSpinner from '#lib/components/loader/ProgressSpinner.svelte';
 	import { Toaster } from '#lib/components/ui/sonner/index.ts';
+	import { toast } from 'svelte-sonner';
+	import { heartbeatAdmin, logoutAdmin } from '#lib/remote/auth.remote.ts';
+
 	let { children, data }: { data: { pathname: string }; children: Snippet } = $props();
 
 	let isAuthPage = $derived(
 		page.url.pathname.includes('/login') ||
-		page.url.pathname.includes('/forgotpassword') ||
-		page.url.pathname.includes('/reset-password')
+			page.url.pathname.includes('/forgotpassword') ||
+			page.url.pathname.includes('/reset-password')
 	);
+
+	// 5-minute inactivity auto-logout + silent heartbeat while active
+	$effect(() => {
+		if (isAuthPage) return;
+
+		const IDLE_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
+		const HEARTBEAT_INTERVAL_MS = 2 * 60 * 1000; // keep session fresh every 2 min while active
+
+		let lastActivity = Date.now();
+		let idleTimer: ReturnType<typeof setTimeout>;
+		let loggingOut = false;
+
+		async function triggerIdleLogout() {
+			if (loggingOut) return;
+			loggingOut = true;
+			try {
+				await logoutAdmin();
+			} catch {
+				// ignore network errors on logout
+			}
+			toast.info('Logged out after 5 minutes of inactivity.');
+			await goto('/ceo/login', { invalidateAll: true }).catch(() => {
+				window.location.href = '/ceo/login';
+			});
+		}
+
+		function resetIdleTimer() {
+			lastActivity = Date.now();
+			clearTimeout(idleTimer);
+			idleTimer = setTimeout(triggerIdleLogout, IDLE_TIMEOUT_MS);
+		}
+
+		const activityEvents = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart', 'click'];
+		for (const evt of activityEvents) {
+			window.addEventListener(evt, resetIdleTimer, { passive: true });
+		}
+
+		// Start initial 5-minute countdown
+		resetIdleTimer();
+
+		// Periodically refresh token & server last-active cookie while user is active
+		const heartbeatInterval = setInterval(async () => {
+			if (Date.now() - lastActivity < IDLE_TIMEOUT_MS) {
+				try {
+					const res = await heartbeatAdmin();
+					if (res && !res.active) {
+						await triggerIdleLogout();
+					}
+				} catch {
+					// ignore transient network glitches
+				}
+			}
+		}, HEARTBEAT_INTERVAL_MS);
+
+		return () => {
+			clearTimeout(idleTimer);
+			clearInterval(heartbeatInterval);
+			for (const evt of activityEvents) {
+				window.removeEventListener(evt, resetIdleTimer);
+			}
+		};
+	});
 </script>
 
 <Toaster theme="light" position="bottom-right" />

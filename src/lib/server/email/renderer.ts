@@ -2,6 +2,8 @@ import { createRequire } from 'node:module';
 import bookingConfirmation from './templates/booking-confirmation.hbs?raw';
 import bookingAdminNotification from './templates/booking-admin-notification.hbs?raw';
 import newsletterWelcome from './templates/newsletter-welcome.hbs?raw';
+import contactReply from './templates/contact-reply.hbs?raw';
+import newsletterBroadcast from './templates/newsletter-broadcast.hbs?raw';
 
 const require = createRequire(import.meta.url);
 const Handlebars = require('handlebars');
@@ -15,7 +17,9 @@ Handlebars.registerHelper('year', () => new Date().getFullYear());
 export const templateSources = {
 	'booking-confirmation': bookingConfirmation,
 	'booking-admin-notification': bookingAdminNotification,
-	'newsletter-welcome': newsletterWelcome
+	'newsletter-welcome': newsletterWelcome,
+	'contact-reply': contactReply,
+	'newsletter-broadcast': newsletterBroadcast
 } as const;
 
 export type EmailTemplateName = keyof typeof templateSources;

@@ -3,6 +3,7 @@ import { desc } from 'drizzle-orm';
 import { db, bookings } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import { checkSubmissionSpam } from '#lib/server/antiSpam.ts';
+import { getPlatformEmailValue } from '#lib/server/platformSettings.ts';
 import { sendTemplatedMail } from '#lib/server/mailer.ts';
 import { createBookingSchema } from '#lib/validation/validation.ts';
 
@@ -73,7 +74,7 @@ export const createBooking = command(createBookingSchema, async (data) => {
 		};
 
 		// Fire confirmation & admin emails in the background so slow/failing SMTP never blocks or fails a booking
-		const adminRecipient = process.env.SMTP_USERNAME || 'contact@nivabit.com';
+		const adminRecipient = await getPlatformEmailValue();
 		void Promise.allSettled([
 			sendTemplatedMail({
 				to: data.email,

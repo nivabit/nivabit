@@ -88,6 +88,19 @@ export const newsletterSubscribers = pgTable(
 	(table) => [uniqueIndex('NewsletterSubscriber_email_key').on(table.email)]
 );
 
+export const newsletterBroadcasts = pgTable('NewsletterBroadcast', {
+	id: text('id')
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
+	subject: text('subject').notNull(),
+	totalRecipients: integer('totalRecipients').notNull().default(0),
+	sentCount: integer('sentCount').notNull().default(0),
+	failedCount: integer('failedCount').notNull().default(0),
+	status: text('status').notNull().default('QUEUED'),
+	createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
+	completedAt: timestamp('completedAt', { mode: 'date' })
+});
+
 export const bookings = pgTable('Booking', {
 	id: text('id')
 		.primaryKey()
@@ -143,5 +156,6 @@ export type Admin = typeof admins.$inferSelect;
 export type Article = typeof articles.$inferSelect;
 export type Contact = typeof contacts.$inferSelect;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
+export type NewsletterBroadcast = typeof newsletterBroadcasts.$inferSelect;
 export type Booking = typeof bookings.$inferSelect;
 export type PlatformMetric = typeof platformMetrics.$inferSelect;

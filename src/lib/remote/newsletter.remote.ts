@@ -2,12 +2,13 @@ import { form, query, command, getRequestEvent } from '$app/server';
 import { error, invalid } from '@sveltejs/kit';
 import * as v from 'valibot';
 import mjml2html from 'mjml';
-import { desc, eq } from 'drizzle-orm';
-import { db, newsletterSubscribers } from '#lib/server/db/index.ts';
+import { desc, eq, inArray } from 'drizzle-orm';
+import { db, newsletterSubscribers, newsletterBroadcasts } from '#lib/server/db/index.ts';
 import { requireUser } from '#lib/server/auth.ts';
 import { checkSubmissionSpam } from '#lib/server/antiSpam.ts';
 import { validateEmail } from '#lib/server/emailValidator.ts';
-import { sendMail } from '#lib/server/mailer.ts';
+import { sendMail, sendBulkMail } from '#lib/server/mailer.ts';
+import { renderEmailTemplate } from '#lib/server/email/renderer.ts';
 import { subscribeNewsletterSchema, sendNewsletterSchema } from '#lib/validation/validation.ts';
 
 function subscriptionTemplate(email: string) {
@@ -78,36 +79,132 @@ export const getSubscribers = query(async () => {
 	return db.select().from(newsletterSubscribers).orderBy(desc(newsletterSubscribers.createdAt));
 });
 
-export const sendNewsletter = form(sendNewsletterSchema, async ({ subject, message }) => {
+export const getBroadcastHistory = query(async () => {
 	const event = getRequestEvent();
 	await requireUser(event);
 
-	const { html, errors } = mjml2html(message, { validationLevel: 'soft' });
-	if (errors && errors.length) {
-		console.warn('MJML validation warnings:', errors);
-	}
-
-	const subscribers = await db.select().from(newsletterSubscribers);
-	if (subscribers.length === 0) {
-		return invalid('No subscribers found to send to.');
-	}
-
-	await Promise.all(
-		subscribers.map((sub) =>
-			sendMail({
-				to: sub.email,
-				subject,
-				text: 'This email requires an HTML viewer',
-				html
-			})
-		)
-	);
-
-	return { success: true, message: 'Newsletter sent to all subscribers.' };
+	return db
+		.select()
+		.from(newsletterBroadcasts)
+		.orderBy(desc(newsletterBroadcasts.createdAt))
+		.limit(10);
 });
+
+async function runBroadcastWorker(
+	broadcastId: string,
+	targets: string[],
+	subject: string,
+	plainText: string,
+	html: string
+) {
+	try {
+		const { sent, failed } = await sendBulkMail({
+			recipients: targets,
+			subject,
+			text: plainText,
+			html,
+			batchSize: 10,
+			onBatchProgress: async (sentSoFar, failedSoFar) => {
+				await db
+					.update(newsletterBroadcasts)
+					.set({ sentCount: sentSoFar, failedCount: failedSoFar })
+					.where(eq(newsletterBroadcasts.id, broadcastId));
+			}
+		});
+
+		await db
+			.update(newsletterBroadcasts)
+			.set({
+				sentCount: sent,
+				failedCount: failed,
+				status: failed === targets.length && targets.length > 0 ? 'FAILED' : 'COMPLETED',
+				completedAt: new Date()
+			})
+			.where(eq(newsletterBroadcasts.id, broadcastId));
+	} catch (err) {
+		console.error(`[newsletter broadcast ${broadcastId}] worker error:`, err);
+		await db
+			.update(newsletterBroadcasts)
+			.set({ status: 'FAILED', completedAt: new Date() })
+			.where(eq(newsletterBroadcasts.id, broadcastId));
+	}
+}
+
+export const sendNewsletter = form(
+	sendNewsletterSchema,
+	async ({ subject, message, recipientEmails }) => {
+		const event = getRequestEvent();
+		await requireUser(event);
+
+		let html = '';
+		const trimmed = message.trim();
+		if (trimmed.toLowerCase().includes('<mjml')) {
+			try {
+				const compiled = mjml2html(trimmed, { validationLevel: 'soft' });
+				if (compiled.errors?.length) {
+					console.warn('MJML validation warnings:', compiled.errors);
+				}
+				html =
+					compiled.html || renderEmailTemplate('newsletter-broadcast', { subject, bodyHtml: trimmed });
+			} catch (err) {
+				console.warn('MJML compile fallback to template:', err);
+				html = renderEmailTemplate('newsletter-broadcast', { subject, bodyHtml: trimmed });
+			}
+		} else {
+			html = renderEmailTemplate('newsletter-broadcast', { subject, bodyHtml: trimmed });
+		}
+
+		const explicitRecipients = (recipientEmails || '')
+			.split(',')
+			.map((e) => e.trim())
+			.filter(Boolean);
+
+		let targets: string[] = explicitRecipients;
+		if (targets.length === 0) {
+			const subscribers = await db.select().from(newsletterSubscribers);
+			targets = subscribers.map((sub) => sub.email);
+		}
+
+		if (targets.length === 0) {
+			return invalid('No subscribers found to send to.');
+		}
+
+		const plainText = trimmed.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() || subject;
+
+		// Create broadcast job row and process in background over pooled SMTP
+		const [broadcast] = await db
+			.insert(newsletterBroadcasts)
+			.values({
+				subject,
+				totalRecipients: targets.length,
+				sentCount: 0,
+				failedCount: 0,
+				status: 'SENDING'
+			})
+			.returning();
+
+		void runBroadcastWorker(broadcast.id, targets, subject, plainText, html);
+		await getBroadcastHistory().refresh();
+
+		return {
+			success: true,
+			queued: true,
+			broadcastId: broadcast.id,
+			sentCount: targets.length,
+			message: `Broadcast queued for ${targets.length} subscriber${targets.length === 1 ? '' : 's'}. Sending in the background.`
+		};
+	}
+);
 
 const deleteSubscriberSchema = v.object({
 	id: v.pipe(v.string(), v.nonEmpty('Subscriber ID is required'))
+});
+
+const bulkDeleteSubscribersSchema = v.object({
+	ids: v.pipe(
+		v.array(v.pipe(v.string(), v.nonEmpty())),
+		v.minLength(1, 'Select at least one subscriber')
+	)
 });
 
 export const deleteSubscriber = command(deleteSubscriberSchema, async ({ id }) => {
@@ -127,6 +224,20 @@ export const deleteSubscriber = command(deleteSubscriberSchema, async ({ id }) =
 	await getSubscribers().refresh();
 
 	return { success: true, message: 'Subscriber removed successfully.' };
+});
+
+export const deleteSubscribersBulk = command(bulkDeleteSubscribersSchema, async ({ ids }) => {
+	const event = getRequestEvent();
+	await requireUser(event);
+
+	await db.delete(newsletterSubscribers).where(inArray(newsletterSubscribers.id, ids));
+	await getSubscribers().refresh();
+
+	return {
+		success: true,
+		deletedCount: ids.length,
+		message: `Removed ${ids.length} subscriber${ids.length === 1 ? '' : 's'}.`
+	};
 });
 
 export const unsubscribeNewsletter = form(subscribeNewsletterSchema, async ({ email }, issue) => {
