@@ -7,41 +7,40 @@
 			num: '01',
 			title: 'Whitespace Audit',
 			meta: 'Days 1–3 • 15+ Competitors',
-			image: '/images/project/Project-7.png',
+			image: '/images/project/facity.png',
 			tag: 'Market Map'
 		},
 		{
 			num: '02',
 			title: 'Pain-Point Mining',
 			meta: 'Days 4–6 • 1,000+ Signals',
-			image: '/images/project/Project-6.png',
+			image: '/images/project/lafiami.png',
 			tag: 'ICP Intel'
 		},
 		{
 			num: '03',
 			title: 'Live Smoke Tests',
 			meta: 'Days 7–10 • Real Intent',
-			image: '/images/project/Project-8.png',
+			image: '/images/project/unclutter.png',
 			tag: 'Demand Data'
 		},
 		{
 			num: '04',
 			title: 'Go / No-Go Dossier',
 			meta: 'Days 11–14 • 20+ Interviews',
-			image: '/images/project/Project-2.png',
+			image: '/images/project/stanforteedge.png',
 			tag: 'Final Verdict'
 		}
 	];
 
 	const clientLogos = [
-		{ name: 'EDGD Media', src: '/images/clients/1_dark.png' },
-		{ name: 'Project Enable Africa', src: '/images/clients/2_dark.png' },
-		{ name: 'Stanforte Edge', src: '/images/clients/4_dark.png' },
-		{ name: 'Lofiqmi', src: '/images/clients/5_dark.png' },
-		{ name: 'The ImisiOluwa', src: '/images/clients/6_dark.png' },
-		{ name: 'Facity', src: '/images/clients/7_dark.png' },
-		{ name: 'Tichly', src: '/images/clients/8_dark.png' },
-		{ name: 'Broglux', src: '/images/clients/9_dark.png' }
+		{ name: 'Lafiami', src: '/images/clients/lafiami.png' },
+		{ name: 'Facity', src: '/images/clients/facity.png' },
+		{ name: 'Stanforte Edge', src: '/images/clients/stanforteedge.png' },
+		{ name: 'Ability-X', src: '/images/clients/abilityx.png' },
+		{ name: 'Project Enable Africa', src: '/images/clients/projectenable.png' },
+		{ name: 'Unclutter', src: '/images/clients/unclutter.png' },
+		{ name: 'Tichly', textOnly: true }
 	];
 </script>
 
@@ -63,7 +62,7 @@
 				class="text-3xl leading-[1.1] font-bold tracking-tight text-slate-900 sm:text-5xl md:text-[56px]"
 			>
 				We test your software concept with paying customers before you write <span
-					class="text-[#fa8212]">code</span
+					class="text-[#2563eb]">code</span
 				>.
 			</h1>
 
@@ -291,11 +290,11 @@
 								</span>
 							</div>
 
-							<div class="relative mb-3 h-28 overflow-hidden rounded-lg bg-slate-100">
+							<div class="relative mb-3 aspect-[16/10] w-full overflow-hidden rounded-lg border border-slate-200/80 bg-slate-100">
 								<img
 									src={step.image}
 									alt={step.title}
-									class="h-full w-full object-cover"
+									class="h-full w-full object-cover object-top transition-transform duration-300 hover:scale-102"
 									loading="lazy"
 								/>
 							</div>
@@ -315,12 +314,18 @@
 			</p>
 			<div class="mt-6 flex flex-wrap items-center justify-center gap-8 md:gap-12">
 				{#each clientLogos as client}
-					<img
-						src={client.src}
-						alt={`${client.name} logo`}
-						class="h-6 w-auto max-w-[130px] object-contain opacity-55 grayscale transition-all duration-200 hover:opacity-100 hover:grayscale-0"
-						loading="lazy"
-					/>
+					{#if client.textOnly}
+						<span class="font-cabinet text-base font-black tracking-tight text-slate-800 opacity-80 hover:opacity-100 transition-opacity">
+							{client.name}
+						</span>
+					{:else}
+						<img
+							src={client.src}
+							alt={`${client.name} logo`}
+							class="h-6 w-auto max-w-[130px] object-contain opacity-75 grayscale transition-all duration-200 hover:opacity-100 hover:grayscale-0"
+							loading="lazy"
+						/>
+					{/if}
 				{/each}
 			</div>
 		</div>

@@ -81,10 +81,10 @@
 					<div
 						class="inline-flex items-center gap-2 rounded-md border border-slate-200/80 bg-white px-3 py-1 text-[11px] font-medium tracking-wider text-slate-700 shadow-xs"
 					>
-						<span class="h-2 w-2 rounded-[1.5px] bg-[#fa8212]"></span>
+						<span class="h-2 w-2 rounded-[1.5px] bg-[#2563eb]"></span>
 						<span class="font-semibold text-slate-800">THE VALIDATION MEMO</span>
 						<span class="text-slate-300">/</span>
-						<span class="font-mono font-bold text-[#fa8212]">FREE</span>
+						<span class="font-mono font-bold text-[#2563eb]">FREE</span>
 					</div>
 
 					<!-- Bold Display Headline -->
@@ -168,18 +168,24 @@
 							<div class="flex -space-x-2 overflow-hidden">
 								<img
 									class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
-									src="/images/profile3.jpg"
-									alt="Allen Zito"
+									src="/images/profile2.jpg"
+									alt="Eniola Awotunde"
 								/>
 								<img
 									class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
-									src="/images/profile2.jpg"
-									alt="Stanley Onyebuchi"
+									src="/images/profile3.jpg"
+									alt="Allen Abu"
+								/>
+								<img
+									class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
+									src="/images/temiloluwa.jpg"
+									alt="Temiloluwa Olaniyan"
 								/>
 								<img
 									class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover"
 									src="/images/profile1.png"
-									alt="Owonikoko Olaoluwa"
+									src="/images/imisi.jpg"
+									alt="ImisiOluwa"
 								/>
 							</div>
 							<p class="text-xs font-medium text-slate-600">
@@ -202,8 +208,8 @@
 						class="absolute -top-3 left-0 z-20 flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white/95 px-4 py-2 shadow-lg backdrop-blur-xs transition-transform hover:scale-105 sm:-left-4"
 					>
 						<img
-							src="/images/profile3.jpg"
-							alt="Allen Zito"
+							src="/images/profile2.jpg"
+							alt="Eniola Awotunde"
 							class="h-7 w-7 rounded-full object-cover ring-1 ring-slate-200"
 						/>
 						<span class="text-xs font-bold text-slate-800">“Saved us 4 months of dev”</span>
@@ -214,8 +220,8 @@
 						class="absolute top-1/2 -right-2 z-20 -translate-y-1/2 flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white/95 px-4 py-2 shadow-lg backdrop-blur-xs transition-transform hover:scale-105 sm:-right-6"
 					>
 						<img
-							src="/images/profile2.jpg"
-							alt="Stanley Onyebuchi"
+							src="/images/profile3.jpg"
+							alt="Allen Abu"
 							class="h-7 w-7 rounded-full object-cover ring-1 ring-slate-200"
 						/>
 						<span class="text-xs font-bold text-slate-800">“Only validation memo I read”</span>
@@ -226,8 +232,8 @@
 						class="absolute -bottom-3 left-4 z-20 flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white/95 px-4 py-2 shadow-lg backdrop-blur-xs transition-transform hover:scale-105 sm:-left-2"
 					>
 						<img
-							src="/images/profile1.png"
-							alt="Founder"
+							src="/images/temiloluwa.jpg"
+							alt="Temiloluwa Olaniyan"
 							class="h-7 w-7 rounded-full object-cover ring-1 ring-slate-200"
 						/>
 						<span class="text-xs font-bold text-slate-800">“Blown away by the real buyer data”</span>
@@ -261,14 +267,14 @@
 						<div class="my-6 rounded-xl border border-white/10 bg-[#090d14]/80 p-4">
 							<div class="flex items-center justify-between text-[10px] font-mono text-slate-400">
 								<span>DATA SPRINT</span>
-								<span class="text-[#fa8212] font-bold">14 DAYS</span>
+								<span class="text-[#60a5fa] font-bold">14 DAYS</span>
 							</div>
 
 							<!-- Bit Matrix (Visualizing discrete bits of customer information) -->
 							<div class="mt-3 grid grid-cols-8 gap-1">
 								<div class="h-2 rounded-[1px] bg-[#2563eb]"></div>
 								<div class="h-2 rounded-[1px] bg-[#2563eb]"></div>
-								<div class="h-2 rounded-[1px] bg-[#fa8212] shadow-[0_0_8px_#fa8212]"></div>
+								<div class="h-2 rounded-[1px] bg-[#60a5fa]"></div>
 								<div class="h-2 rounded-[1px] bg-[#60a5fa]"></div>
 								<div class="h-2 rounded-[1px] bg-[#2563eb]"></div>
 								<div class="h-2 rounded-[1px] bg-[#2563eb]/40"></div>

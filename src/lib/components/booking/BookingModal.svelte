@@ -236,9 +236,9 @@
 							: 'text-slate-400 hover:text-slate-600'}"
 					>
 						<span
-							class="inline-block h-2 w-2 rounded-[1.5px] transition-colors {step === 1
-								? 'bg-[#fa8212]'
-								: 'bg-[#2563eb]'}"
+							class="inline-block h-2 w-2 rounded-[1.5px] transition-colors {step >= 1
+								? 'bg-[#2563eb]'
+								: 'bg-slate-300'}"
 						></span>
 						Fill out the form
 					</button>
@@ -255,11 +255,9 @@
 							: 'text-slate-400 hover:text-slate-600'}"
 					>
 						<span
-							class="inline-block h-2 w-2 rounded-[1.5px] transition-colors {step === 2
-								? 'bg-[#fa8212]'
-								: step > 2
-									? 'bg-[#2563eb]'
-									: 'bg-slate-300'}"
+							class="inline-block h-2 w-2 rounded-[1.5px] transition-colors {step >= 2
+								? 'bg-[#2563eb]'
+								: 'bg-slate-300'}"
 						></span>
 						Book your event
 					</button>
@@ -548,7 +546,7 @@
 											{day.dayNum}
 											{#if day.isToday && selectedDateStr !== day.dateStr}
 												<span
-													class="absolute bottom-1 h-1.5 w-1.5 rounded-[1px] bg-[#fa8212]"
+													class="absolute bottom-1 h-1.5 w-1.5 rounded-[1px] bg-[#2563eb]"
 												></span>
 											{/if}
 										</button>

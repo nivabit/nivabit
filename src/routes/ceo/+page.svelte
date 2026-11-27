@@ -45,8 +45,8 @@
 			trend: '14-Day Dossier',
 			icon: Users,
 			href: '/ceo/subscribers',
-			accent: 'text-[#fa8212]',
-			bg: 'bg-[#fff7ed]'
+			accent: 'text-[#2563eb]',
+			bg: 'bg-blue-50'
 		},
 		{
 			name: 'Published Articles',
@@ -91,8 +91,8 @@
 		<div class="relative z-10 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
 			<div>
 				<div class="mb-2 flex items-center gap-2">
-					<span class="h-2 w-2 rounded-[1.5px] bg-[#fa8212]"></span>
-					<span class="font-mono text-xs font-bold tracking-wider text-[#fa8212] uppercase">
+					<span class="h-2 w-2 rounded-[1.5px] bg-[#2563eb]"></span>
+					<span class="font-mono text-xs font-bold tracking-wider text-[#60a5fa] uppercase">
 						CEO Executive Overview
 					</span>
 				</div>

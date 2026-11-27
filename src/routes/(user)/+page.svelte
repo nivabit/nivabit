@@ -50,38 +50,42 @@
 			duration: '10–14 Days',
 			tags: ['Competitive Whitespace', 'Smoke Testing', 'Demand Scorecard'],
 			desc: 'Before hiring engineers or writing code, we stress-test your core hypothesis in 14 days and deliver an unvarnished Go / No-Go verdict.',
-			image: '/images/project/Project-7.png'
+			image: '/images/project/facity.png',
+			domain: 'facity.co'
 		},
 		{
 			title: 'Customer Discovery & WTP',
 			duration: '2–3 Weeks',
 			tags: ['20+ Target Interviews', 'Pricing Elasticity', 'MVP Priority Matrix'],
 			desc: 'Direct discovery with your exact buyer persona. Separate polite compliments from genuine purchasing intent and rank must-have MVP features.',
-			image: '/images/project/Project-6.png'
+			image: '/images/project/lafiami.png',
+			domain: 'lafiami.com'
 		},
 		{
 			title: 'Enterprise Opportunity Dossiers',
 			duration: '3–4 Weeks',
 			tags: ['Market Sizing', 'Moat Audits', 'Venture Feasibility'],
 			desc: 'Deep-dive intelligence for venture studios and innovation teams evaluating new product verticals, acquisitions, or geographic expansion.',
-			image: '/images/project/Project-2.png'
+			image: '/images/project/stanforteedge.png',
+			domain: 'stanforteedge.com'
 		},
 		{
 			title: 'Investor-Ready Evidence Room',
 			duration: 'Included',
 			tags: ['Verified Transcripts', 'Conversion Proof', 'Unit Economics'],
 			desc: 'Walk into seed or board meetings with hard demand data, recorded buyer evidence, and validated CAC/LTV assumptions that close rounds.',
-			image: '/images/project/Project-8.png'
+			image: '/images/project/projectenable.png',
+			domain: 'projectenable.africa'
 		}
 	];
 
 	const caseStudyCharts = [
 		{
-			name: 'Allen Zito',
+			name: 'Eniola Awotunde',
 			role: 'Co-Founder, Tichly (EdTech)',
 			badge: '4+ Months Runway Saved',
 			metric: '3.8x Waitlist Conversion',
-			avatar: '/images/profile3.jpg',
+			avatar: '/images/profile2.jpg',
 			summary:
 				'Nivabit validated our student acquisition model and pricing elasticity before we built our platform. Their discovery findings eliminated 4 months of engineering false starts and tripled early signups.',
 			calloutTitle: 'Nivabit Validation Sprint',
@@ -95,11 +99,11 @@
 			endY: 14
 		},
 		{
-			name: 'Stanley Onyebuchi',
-			role: 'Director, Stanforte Edge',
+			name: 'Allen Abu',
+			role: 'Brand Strategy | Comms Development, Stanforte Edge',
 			badge: '+62% Workflow Adoption',
 			metric: 'Product Model Validated',
-			avatar: '/images/profile2.jpg',
+			avatar: '/images/profile3.jpg',
 			summary:
 				'The user discovery research Nivabit conducted completely reshaped our product strategy and accessibility workflows — validating critical user pathways before full rollout.',
 			calloutTitle: 'Workflow Validated',
@@ -113,16 +117,16 @@
 			endY: 18
 		},
 		{
-			name: 'Grace Adebayo',
-			role: 'Founder, Grace Inc. (Fintech)',
-			badge: 'Seed Round Closed',
-			metric: '24 Verified Buyer Calls',
-			avatar: '/images/profile1.png',
+			name: 'Temiloluwa Olaniyan',
+			role: 'Director, Lafiami (Digital Health)',
+			badge: 'Telemedicine Model Validated',
+			metric: 'Membership Demand Confirmed',
+			avatar: '/images/temiloluwa.jpg',
 			summary:
-				'Their rapid validation sprint gave our angel investors the exact demand data and customer interview evidence needed to close our seed round. Fast, rigorous, and brutally honest.',
-			calloutTitle: 'Dossier Delivered',
-			calloutMetric: 'Seed round oversubscribed',
-			xLabels: ['Hypothesis', 'Audit', 'Smoke Test', 'Interviews', 'Dossier', 'Seed Close'],
+				'Nivabit pressure-tested our healthcare membership model and patient booking workflows in 14 days. Their validation sprint gave us clarity on exact patient willingness-to-pay and accelerated our platform launch.',
+			calloutTitle: 'Model Validated',
+			calloutMetric: '14-Day Launch Sprint',
+			xLabels: ['Hypothesis', 'Audit', 'Smoke Test', 'Interviews', 'Dossier', 'Launch'],
 			pathD: 'M 24 146 C 110 145, 190 140, 260 128 C 325 116, 390 88, 455 56 C 505 32, 545 20, 576 12',
 			areaD:
 				'M 24 146 C 110 145, 190 140, 260 128 C 325 116, 390 88, 455 56 C 505 32, 545 20, 576 12 L 576 156 L 24 156 Z',
@@ -133,79 +137,94 @@
 	];
 
 	const realClientLogos = [
-		{ name: 'EDGD Media', src: '/images/clients/1_dark.png' },
-		{ name: 'Project Enable Africa', src: '/images/clients/2_dark.png' },
-		{ name: 'Stanforte Edge', src: '/images/clients/4_dark.png' },
-		{ name: 'Lofiqmi', src: '/images/clients/5_dark.png' },
-		{ name: 'The ImisiOluwa', src: '/images/clients/6_dark.png' },
-		{ name: 'Facity', src: '/images/clients/7_dark.png' },
-		{ name: 'Tichly', src: '/images/clients/8_dark.png' },
-		{ name: 'Broglux', src: '/images/clients/9_dark.png' }
+		{ name: 'Lafiami', src: '/images/clients/lafiami.png', url: 'https://lafiami.com/' },
+		{ name: 'Facity', src: '/images/clients/facity.png', url: 'https://facity.co/' },
+		{ name: 'Stanforte Edge', src: '/images/clients/stanforteedge.png', url: 'http://stanforteedge.com/' },
+		{ name: 'Ability-X', src: '/images/clients/abilityx.png', url: 'https://ability-x.org/' },
+		{ name: 'Project Enable Africa', src: '/images/clients/projectenable.png', url: 'https://projectenable.africa/' },
+		{ name: 'Unclutter', src: '/images/clients/unclutter.png', url: 'https://unclutter.com.ng/' },
+		{ name: 'Tichly', textOnly: true }
 	];
 
 	const testimonialsGrid = [
 		{
 			quote:
 				'Nivabit validated our target student acquisition model and pricing elasticity before we built our platform. Their discovery findings saved us over 4 months of engineering false starts.',
-			name: 'Allen Zito',
+			name: 'Eniola Awotunde',
 			role: 'Co-Founder, Tichly',
-			avatar: '/images/profile3.jpg'
-		},
-		{
-			quote:
-				'The user research Nivabit conducted completely clarified our product roadmap and accessibility workflows. An invaluable validation partner.',
-			name: 'Stanley Onyebuchi',
-			role: 'Director, Stanforte Edge',
 			avatar: '/images/profile2.jpg'
 		},
 		{
 			quote:
-				'Their rapid validation sprint gave our angel investors the exact demand data and customer interview evidence needed to close our seed round. Fast, rigorous, and brutally honest.',
-			name: 'Grace Adebayo',
-			role: 'Founder, Grace Inc.',
-			avatar: '/images/profile1.png'
+				'The user research Nivabit conducted completely clarified our product roadmap and accessibility workflows. An invaluable validation partner.',
+			name: 'Allen Abu',
+			role: 'Brand Strategy | Comms Development, Stanforte Edge',
+			avatar: '/images/profile3.jpg'
 		},
 		{
 			quote:
-				'Instead of burning $80k building an unvalidated telehealth workflow, Nivabit showed us in 14 days which exact clinic segment would pay upfront — and which features to cut completely.',
-			name: 'Dr. Tunde Balogun',
-			role: 'Product Lead, HealthPulse',
-			avatar: '/images/profile3.jpg'
+				'Nivabit pressure-tested our healthcare membership model and patient booking workflows in 14 days, giving us clarity on exact patient willingness-to-pay.',
+			name: 'Temiloluwa Olaniyan',
+			role: 'Director, Lafiami',
+			avatar: '/images/temiloluwa.jpg'
+		},
+		{
+			quote:
+				'Nivabit stress-tested our on-demand services marketplace and booking workflow before full development. Their demand data helped us streamline checkout and validate true user willingness-to-pay.',
+			name: 'ImisiOluwa',
+			role: 'Co-Founder, Unclutter NG',
+			avatar: '/images/imisi.jpg'
 		}
 	];
 
 	const projects = [
 		{
-			title: 'Facity',
-			duration: '2 weeks',
-			type: 'Demand Validation Sprint',
-			category: 'Fintech',
-			outcome: 'Validated $49/mo tier & 18% smoke-test signup rate',
-			image: '/images/project/Project-7.png'
+			title: 'Lafiami',
+			duration: '3 weeks',
+			type: 'Healthcare & Wellness Platform',
+			category: 'Digital Health',
+			outcome: 'High-converting telemedicine and wellness membership experience',
+			image: '/images/project/lafiami.png'
 		},
 		{
-			title: 'Tichly',
-			duration: '3 weeks',
-			type: 'Audience Discovery Study',
-			category: 'EdTech',
-			outcome: '4+ months of engineering runway saved',
-			image: '/images/project/Project-6.png'
+			title: 'Facity',
+			duration: '2 weeks',
+			type: 'Demand Validation & FinTech',
+			category: 'FinTech',
+			outcome: 'Validated customer demand and frictionless onboarding system',
+			image: '/images/project/facity.png'
 		},
 		{
 			title: 'Stanforte Edge',
 			duration: '2 weeks',
-			type: 'Product Model Validation',
-			category: 'Inclusion Tech',
-			outcome: '+62% retention lift on validated onboarding workflow',
-			image: '/images/project/Project-4.png'
+			type: 'Inclusion & Accessibility Portal',
+			category: 'Tech Inclusion',
+			outcome: 'Accessible user workflows with +62% retention lift',
+			image: '/images/project/stanforteedge.png'
 		},
 		{
-			title: 'HealthPulse Platform',
+			title: 'Project Enable Africa',
 			duration: '4 weeks',
-			type: 'Enterprise Feasibility Dossier',
-			category: 'Digital Health',
-			outcome: 'Cleared enterprise compliance & buyer sign-off',
-			image: '/images/project/Project-2.png'
+			type: 'Community Empowerment Hub',
+			category: 'Social Impact',
+			outcome: 'Scalable community hub serving disability inclusion across Africa',
+			image: '/images/project/projectenable.png'
+		},
+		{
+			title: 'Ability-X',
+			duration: '3 weeks',
+			type: 'Inclusive Tech Platform',
+			category: 'Inclusion Tech',
+			outcome: 'Assistive learning & digital skills validation architecture',
+			image: '/images/project/abilityx.png'
+		},
+		{
+			title: 'Unclutter',
+			duration: '2 weeks',
+			type: 'Modern Services Marketplace',
+			category: 'Productivity',
+			outcome: 'Mobile-first booking engine with zero-friction conversions',
+			image: '/images/project/unclutter.png'
 		}
 	];
 </script>
@@ -374,20 +393,26 @@
 				</p>
 			</div>
 
-			<!-- 2x2 Split Horizontal Cards -->
-			<div class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
+			<!-- 2x2 Bento Cards with True-to-Scale 16:10 Browser Mockups -->
+			<div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
 				{#each bentoPrograms as program}
 					<div
-						class="group flex flex-col justify-between gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 hover:border-slate-300 hover:shadow-sm sm:flex-row sm:items-center"
+						class="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs transition-all duration-300 hover:border-slate-300 hover:shadow-md"
 					>
-						<div class="flex-1 space-y-3">
-							<div class="flex items-center gap-2">
+						<!-- Content Area -->
+						<div class="space-y-3 p-6 pb-4">
+							<div class="flex items-center justify-between">
 								<span
 									class="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-800"
 								>
 									<Clock size={12} />
 									{program.duration}
 								</span>
+								{#if program.domain}
+									<span class="font-mono text-xs font-medium text-slate-400">
+										{program.domain}
+									</span>
+								{/if}
 							</div>
 							<h3 class="text-xl font-bold text-slate-900">
 								{program.title}
@@ -406,16 +431,31 @@
 							</div>
 						</div>
 
-						<!-- Right Preview Thumbnail -->
-						<div
-							class="h-36 w-full shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-900 sm:h-40 sm:w-36"
-						>
-							<img
-								src={program.image}
-								alt={program.title}
-								class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-								loading="lazy"
-							/>
+						<!-- Dedicated 16:10 Browser Mockup Window -->
+						<div class="px-6 pb-6 pt-1">
+							<div class="overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-xs">
+								<!-- Browser Window Header -->
+								<div class="flex items-center justify-between border-b border-slate-200 bg-slate-100/90 px-3 py-1.5">
+									<div class="flex items-center gap-1.5">
+										<span class="h-2 w-2 rounded-full bg-slate-300"></span>
+										<span class="h-2 w-2 rounded-full bg-slate-300"></span>
+										<span class="h-2 w-2 rounded-full bg-slate-300"></span>
+									</div>
+									<span class="rounded bg-white px-2.5 py-0.5 font-mono text-[10px] text-slate-500 border border-slate-200/80">
+										https://{program.domain}
+									</span>
+									<span class="w-6"></span>
+								</div>
+								<!-- Screenshot Viewport (native 16:10 ratio matching 1440x900 screenshots) -->
+								<div class="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
+									<img
+										src={program.image}
+										alt={program.title}
+										class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-102"
+										loading="lazy"
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				{/each}
@@ -617,14 +657,30 @@
 			</div>
 
 			<div class="grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-12">
-				<!-- Left Rounded Visual -->
+				<!-- Left Rounded Visual (Browser Frame matching 16:10 screenshot without stretching or side-cropping) -->
 				<div class="md:col-span-6">
-					<div class="overflow-hidden rounded-3xl border border-black/10 bg-surface-dark shadow-sm">
-						<img
-							src="/images/project/Project-1.png"
-							alt="Nivabit Validation Studio"
-							class="h-72 w-full object-cover md:h-96"
-						/>
+					<div class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-md">
+						<!-- Browser Chrome Bar -->
+						<div class="flex items-center justify-between border-b border-slate-200 bg-slate-100/90 px-3.5 py-2">
+							<div class="flex items-center gap-1.5">
+								<span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+								<span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+								<span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+							</div>
+							<span class="rounded bg-white px-3 py-0.5 font-mono text-[11px] text-slate-500 border border-slate-200">
+								https://ability-x.org
+							</span>
+							<span class="w-7"></span>
+						</div>
+						<!-- Native 16:10 Viewport -->
+						<div class="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
+							<img
+								src="/images/project/abilityx.png"
+								alt="Ability-X Platform Teardown"
+								class="h-full w-full object-cover object-top"
+								loading="lazy"
+							/>
+						</div>
 					</div>
 				</div>
 
@@ -680,16 +736,30 @@
 
 			<div class="flex flex-wrap items-center justify-center gap-5 md:gap-8">
 				{#each realClientLogos as client}
-					<div
-						class="flex h-16 w-36 items-center justify-center rounded-xl border border-slate-200/90 bg-white p-3.5 shadow-xs transition-all duration-300 hover:border-[#2563eb]/40 hover:shadow-md"
-					>
-						<img
-							src={client.src}
-							alt={`${client.name} logo`}
-							class="max-h-7 max-w-[110px] object-contain opacity-85 transition-all duration-300 hover:opacity-100 hover:scale-105"
-							loading="lazy"
-						/>
-					</div>
+					{#if client.url}
+						<a
+							href={client.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="flex h-16 w-36 items-center justify-center rounded-xl border border-slate-200/90 bg-white p-3.5 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2563eb]/40 hover:shadow-md"
+							aria-label={`Visit ${client.name}`}
+						>
+							<img
+								src={client.src}
+								alt={`${client.name} logo`}
+								class="max-h-7 max-w-[110px] object-contain opacity-85 transition-all duration-300 hover:opacity-100"
+								loading="lazy"
+							/>
+						</a>
+					{:else}
+						<div
+							class="flex h-16 w-36 items-center justify-center rounded-xl border border-slate-200/90 bg-white p-3.5 shadow-xs transition-all duration-300 hover:border-[#2563eb]/40 hover:shadow-md"
+						>
+							<span class="font-cabinet text-base font-black tracking-tight text-slate-900">
+								{client.name}
+							</span>
+						</div>
+					{/if}
 				{/each}
 			</div>
 		</div>
@@ -756,11 +826,11 @@
 						<div
 							class="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm"
 						>
-							<div class="relative h-40 w-full overflow-hidden bg-slate-900">
+							<div class="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
 								<img
 									src={project.image}
 									alt={project.title}
-									class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+									class="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
 									loading="lazy"
 								/>
 								<span
@@ -795,23 +865,29 @@
 	<!-- 12. FINAL OVERLAPPING-AVATAR CTA BAND -->
 	<section class="bg-white px-4 py-20 text-center md:px-8 md:py-24">
 		<div class="mx-auto max-w-2xl">
-			<!-- Overlapping Founder Avatars -->
+			<!-- Overlapping Founder Avatars (Verified Client Founders) -->
 			<div class="mb-5 flex items-center justify-center -space-x-2.5">
 				<img
-					src="/images/profile1.png"
-					alt="Founder"
+					src="/images/temiloluwa.jpg"
+					alt="Temiloluwa Olaniyan (Lafiami)"
 					class="h-10 w-10 rounded-full border-2 border-white object-cover shadow-xs"
 					loading="lazy"
 				/>
 				<img
 					src="/images/profile2.jpg"
-					alt="Founder"
+					alt="Eniola Awotunde (Tichly)"
 					class="h-10 w-10 rounded-full border-2 border-white object-cover shadow-xs"
 					loading="lazy"
 				/>
 				<img
 					src="/images/profile3.jpg"
-					alt="Founder"
+					alt="Allen Abu (Stanforte Edge)"
+					class="h-10 w-10 rounded-full border-2 border-white object-cover shadow-xs"
+					loading="lazy"
+				/>
+				<img
+					src="/images/imisi.jpg"
+					alt="ImisiOluwa (Unclutter NG)"
 					class="h-10 w-10 rounded-full border-2 border-white object-cover shadow-xs"
 					loading="lazy"
 				/>

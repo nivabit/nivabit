@@ -30,8 +30,8 @@
 				<NivabitLogo variant="light" class="h-8 w-auto" />
 			</a>
 			<div class="mt-4 flex items-center justify-center gap-2">
-				<span class="h-2 w-2 rounded-[1.5px] bg-[#fa8212]"></span>
-				<p class="font-mono text-xs font-bold tracking-widest text-[#fa8212] uppercase">
+				<span class="h-2 w-2 rounded-[1.5px] bg-[#2563eb]"></span>
+				<p class="font-mono text-xs font-bold tracking-widest text-[#60a5fa] uppercase">
 					CEO COMMAND CENTER
 				</p>
 			</div>

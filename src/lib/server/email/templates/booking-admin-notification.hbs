@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>New Strategy Call Booked</title>
+</head>
+<body style="background-color:#f8fafc;font-family:sans-serif;color:#0f172a;padding:24px;">
+  <div style="max-width:540px;margin:auto;background:#ffffff;border-radius:12px;border:1px solid #e2e8f0;padding:28px;">
+    <h2 style="margin:0 0 8px 0;color:#2563eb;">⚡ New Strategy Call Booked</h2>
+    <p style="margin:0 0 20px 0;color:#64748b;font-size:14px;">A new founder has booked an intro strategy call.</p>
+    
+    <table style="width:100%;font-size:14px;line-height:1.8;border-collapse:collapse;">
+      <tr>
+        <td style="color:#64748b;width:120px;font-weight:bold;">Name:</td>
+        <td style="color:#0f172a;font-weight:bold;">{{firstName}} {{lastName}}</td>
+      </tr>
+      <tr>
+        <td style="color:#64748b;font-weight:bold;">Email:</td>
+        <td><a href="mailto:{{email}}" style="color:#2563eb;">{{email}}</a></td>
+      </tr>
+      <tr>
+        <td style="color:#64748b;font-weight:bold;">Phone:</td>
+        <td><a href="tel:{{phone}}" style="color:#2563eb;">{{phone}}</a></td>
+      </tr>
+      <tr>
+        <td style="color:#64748b;font-weight:bold;">Date:</td>
+        <td style="font-weight:bold;">{{formattedDate}}</td>
+      </tr>
+      <tr>
+        <td style="color:#64748b;font-weight:bold;">Time Slot:</td>
+        <td style="font-weight:bold;color:#2563eb;">{{timeSlot}} ({{timezone}})</td>
+      </tr>
+      {{#if notes}}
+      <tr>
+        <td style="color:#64748b;font-weight:bold;vertical-align:top;">Notes / Brief:</td>
+        <td style="background:#f1f5f9;padding:8px;border-radius:6px;">{{notes}}</td>
+      </tr>
+      {{/if}}
+    </table>
+
+    <div style="margin-top:24px;text-align:center;">
+      <a href="https://wa.me/{{cleanPhone}}" style="background:#2563eb;color:#ffffff;padding:10px 20px;text-decoration:none;border-radius:8px;font-size:13px;font-weight:bold;display:inline-block;">
+        WhatsApp Contact
+      </a>
+    </div>
+  </div>
+</body>
+</html>
