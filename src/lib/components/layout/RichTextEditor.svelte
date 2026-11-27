@@ -85,15 +85,21 @@
 	.quill-view {
 		color: #1e293b;
 		font-size: 1rem;
-		line-height: 1.8;
+		line-height: 1.7;
 	}
 
 	.quill-view :global(p) {
-		margin-bottom: 1.15rem;
+		margin-bottom: 0.85rem;
 	}
 
 	.quill-view :global(p:last-child) {
 		margin-bottom: 0;
+	}
+
+	/* Collapse Quill's empty spacer paragraphs (<p><br></p>) so Enter/lists don't create giant gaps */
+	.quill-view :global(p:empty),
+	.quill-view :global(p:has(> br:only-child)) {
+		display: none;
 	}
 
 	.quill-view :global(h1),
@@ -104,8 +110,8 @@
 		font-weight: 800;
 		line-height: 1.25;
 		letter-spacing: -0.02em;
-		margin-top: 2rem;
-		margin-bottom: 0.75rem;
+		margin-top: 1.5rem;
+		margin-bottom: 0.5rem;
 	}
 
 	.quill-view :global(h1) {
@@ -127,8 +133,8 @@
 	/* Standard HTML lists & Quill v1/v2 lists */
 	.quill-view :global(ul),
 	.quill-view :global(ol) {
-		margin-top: 0.75rem;
-		margin-bottom: 1.25rem;
+		margin-top: 0.4rem;
+		margin-bottom: 1rem;
 		padding-left: 1.5rem;
 	}
 
@@ -141,7 +147,7 @@
 	}
 
 	.quill-view :global(li) {
-		margin-bottom: 0.45rem;
+		margin-bottom: 0.3rem;
 		padding-left: 0.25rem;
 	}
 
