@@ -82,12 +82,12 @@
 	const caseStudyCharts = [
 		{
 			name: 'Eniola Awotunde',
-			role: 'Co-Founder, Tichly (EdTech)',
+			role: 'Co-Founder, Tichly (Photography SaaS)',
 			badge: '4+ Months Runway Saved',
 			metric: '3.8x Waitlist Conversion',
 			avatar: '/images/profile2.jpg',
 			summary:
-				'Nivabit validated our student acquisition model and pricing elasticity before we built our platform. Their discovery findings eliminated 4 months of engineering false starts and tripled early signups.',
+				'Nivabit validated our paid client gallery workflow, automated Paystack balance collection, and photographer pricing model before we built our platform. Their discovery findings eliminated 4 months of engineering false starts and tripled early signups.',
 			calloutTitle: 'Nivabit Validation Sprint',
 			calloutMetric: '+284% qualified demand',
 			xLabels: ['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4', 'Wk 6', 'Wk 8'],
@@ -149,7 +149,7 @@
 	const testimonialsGrid = [
 		{
 			quote:
-				'Nivabit validated our target student acquisition model and pricing elasticity before we built our platform. Their discovery findings saved us over 4 months of engineering false starts.',
+				'Nivabit validated our paid client gallery workflow and photographer pricing elasticity before we built our platform. Their discovery findings saved us over 4 months of engineering false starts.',
 			name: 'Eniola Awotunde',
 			role: 'Co-Founder, Tichly',
 			avatar: '/images/profile2.jpg'
@@ -229,8 +229,8 @@
 		{
 			title: 'Tichly',
 			duration: '3 weeks',
-			type: 'Client Payment & Asset Delivery SaaS',
-			category: 'Creative Tech',
+			type: 'Paid Client Galleries & Photo Delivery for Photographers',
+			category: 'Photography SaaS',
 			outcome: '3.8x waitlist conversion and 4 months of engineering runway saved',
 			image: '/images/project/tichly.png'
 		}

@@ -1,29 +1,40 @@
 <script lang="ts">
-	import CreditCardIcon from '@tabler/icons-svelte/icons/credit-card';
 	import DotsVerticalIcon from '@tabler/icons-svelte/icons/dots-vertical';
 	import LogoutIcon from '@tabler/icons-svelte/icons/logout';
-	import NotificationIcon from '@tabler/icons-svelte/icons/notification';
-	import UserCircleIcon from '@tabler/icons-svelte/icons/user-circle';
 	import * as Avatar from '#lib/components/ui/avatar/index.js';
 	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
 	import * as Sidebar from '#lib/components/ui/sidebar/index.js';
-	import Button from './ui/button/button.svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { logoutAdmin } from '#lib/remote/auth.remote.ts';
 
 	const sidebar = Sidebar.useSidebar();
-	let user = page?.data?.user;
+	let user = $derived(page?.data?.user);
+	let isLoggingOut = $state(false);
 
 	let getInitials = $derived.by(() => {
 		if (!user?.name) return '??';
-		const parts = user?.name.trim().split(' ');
+		const parts = user.name.trim().split(' ');
 		if (parts.length === 1) {
 			return parts[0].charAt(0).toUpperCase();
 		}
 
 		return parts[0].charAt(0).toUpperCase() + parts[1].charAt(0).toUpperCase();
 	});
+
+	async function handleLogout() {
+		if (isLoggingOut) return;
+		isLoggingOut = true;
+		try {
+			const res = await logoutAdmin();
+			const target = res?.redirectTo || '/ceo/login';
+			await goto(target, { invalidateAll: true });
+		} catch {
+			window.location.href = '/ceo/login';
+		} finally {
+			isLoggingOut = false;
+		}
+	}
 </script>
 
 <Sidebar.Menu>
@@ -37,7 +48,6 @@
 						class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 					>
 						<Avatar.Root class="size-8 rounded-lg grayscale">
-							<!-- <Avatar.Image src={user?.avatar} alt={user.name} /> -->
 							<Avatar.Fallback class="rounded-lg text-black">{getInitials}</Avatar.Fallback>
 						</Avatar.Root>
 						<div class="grid flex-1 text-left text-sm leading-tight">
@@ -59,7 +69,6 @@
 				<DropdownMenu.Label class="p-0 font-normal">
 					<div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 						<Avatar.Root class="size-8 rounded-lg">
-							<!-- <Avatar.Image src={user.avatar} alt={user.name} /> -->
 							<Avatar.Fallback class="rounded-lg">{getInitials}</Avatar.Fallback>
 						</Avatar.Root>
 						<div class="grid flex-1 text-left text-sm leading-tight">
@@ -71,19 +80,13 @@
 					</div>
 				</DropdownMenu.Label>
 				<DropdownMenu.Separator />
-				<DropdownMenu.Item>
-					<LogoutIcon />
-					<Button
-						variant="ghost"
-						type="button"
-						class="btn"
-						onclick={async () => {
-							const res = await logoutAdmin();
-							goto(res.redirectTo);
-						}}
-					>
-						Log out
-					</Button>
+				<DropdownMenu.Item
+					class="cursor-pointer gap-2 text-red-600 focus:bg-red-50 focus:text-red-700"
+					disabled={isLoggingOut}
+					onSelect={handleLogout}
+				>
+					<LogoutIcon class="size-4" />
+					<span>{isLoggingOut ? 'Logging out...' : 'Log out'}</span>
 				</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
