@@ -34,7 +34,10 @@ async function loadAdminById(id: string) {
 	return user || null;
 }
 
-export async function authorize(event: RequestEvent) {
+export async function authorize(
+	event: RequestEvent,
+	{ mutateCookies = true }: { mutateCookies?: boolean } = {}
+) {
 	const accessToken = event.cookies.get(AUTH_COOKIE_NAME);
 	const refreshToken = event.cookies.get(REFRESH_COOKIE_NAME);
 
@@ -42,7 +45,7 @@ export async function authorize(event: RequestEvent) {
 
 	// Enforce 5-minute server-side inactivity timeout
 	if (isSessionIdleExpired(event.cookies)) {
-		clearAllAuthCookies(event.cookies);
+		if (mutateCookies) clearAllAuthCookies(event.cookies);
 		return null;
 	}
 
@@ -53,7 +56,7 @@ export async function authorize(event: RequestEvent) {
 			if (decoded?.id) {
 				const user = await loadAdminById(decoded.id);
 				if (user) {
-					setLastActiveCookie(event.cookies);
+					if (mutateCookies) setLastActiveCookie(event.cookies);
 					return user;
 				}
 			}
@@ -69,21 +72,23 @@ export async function authorize(event: RequestEvent) {
 			if (decoded?.id) {
 				const user = await loadAdminById(decoded.id);
 				if (user) {
-					const newAccessToken = generateAccessToken(user);
-					setAuthCookie(event.cookies, newAccessToken);
-					setUserCookie(event.cookies, {
-						id: user.id,
-						name: user.name,
-						role: user.role,
-						email: user.email,
-						phone: user.phone
-					});
-					setLastActiveCookie(event.cookies);
+					if (mutateCookies) {
+						const newAccessToken = generateAccessToken(user);
+						setAuthCookie(event.cookies, newAccessToken);
+						setUserCookie(event.cookies, {
+							id: user.id,
+							name: user.name,
+							role: user.role,
+							email: user.email,
+							phone: user.phone
+						});
+						setLastActiveCookie(event.cookies);
+					}
 					return user;
 				}
 			}
 		} catch {
-			clearAllAuthCookies(event.cookies);
+			if (mutateCookies) clearAllAuthCookies(event.cookies);
 			return null;
 		}
 	}
@@ -92,10 +97,15 @@ export async function authorize(event: RequestEvent) {
 }
 
 /**
- * Strict version: throws 401 if no user
+ * Strict version: throws 401 if no user.
+ * Defaults to mutateCookies: false because it is called inside SvelteKit `query()`
+ * remote functions, where setting or deleting cookies is forbidden (`remote_cookie_forbidden`).
  */
-export async function requireUser(event: RequestEvent) {
-	const user = await authorize(event);
+export async function requireUser(
+	event: RequestEvent,
+	options: { mutateCookies?: boolean } = { mutateCookies: false }
+) {
+	const user = await authorize(event, options);
 	if (!user) throw error(401, 'Unauthorized');
 	return user;
 }
