@@ -30,11 +30,16 @@ async function saveUploadedImage(file: File): Promise<string> {
 }
 
 export const getPublishedArticles = query(async () => {
-	return db
-		.select()
-		.from(articles)
-		.where(ne(articles.status, 'DRAFT'))
-		.orderBy(desc(articles.createdAt));
+	try {
+		return await db
+			.select()
+			.from(articles)
+			.where(ne(articles.status, 'DRAFT'))
+			.orderBy(desc(articles.createdAt));
+	} catch (err) {
+		console.error('[getPublishedArticles error]:', err);
+		return [];
+	}
 });
 
 export const getArticleById = query(idSchema, async ({ id }) => {

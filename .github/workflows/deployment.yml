@@ -203,6 +203,11 @@ jobs:
               bunx drizzle-kit push --force
             fi
 
+            # Load .env into shell so PM2 inherits all environment variables
+            set -a
+            . ./.env
+            set +a
+
             # Create PM2 config file
             cat > ecosystem.config.js << 'EOL'
             module.exports = {
@@ -214,7 +219,6 @@ jobs:
                 autorestart: true,
                 watch: false,
                 max_memory_restart: '1G',
-                env_file: './.env',
                 env: {
                   NODE_ENV: 'production',
                   PORT: 3000
@@ -223,17 +227,14 @@ jobs:
             };
             EOL
 
-            # Check if PM2 app exists and reload, otherwise start fresh
-            if pm2 list | grep -q "nivabit"; then
-              echo "Application exists, reloading..."
-              pm2 reload nivabit
-            else
-              echo "Application doesn't exist, starting fresh..."
-              pm2 start ecosystem.config.js
-            fi
+            # Recreate PM2 process so updated interpreter & env vars take effect
+            pm2 delete "${{ secrets.SERVICE_NAME }}" || pm2 delete nivabit || true
+            pm2 start ecosystem.config.js --update-env
 
             # Save PM2 configuration
             pm2 save
 
-            # Verify the app is running
+            # Verify the app is running and print recent logs
+            sleep 2
             pm2 list
+            pm2 logs "${{ secrets.SERVICE_NAME }}" --nostream --lines 20 || true
